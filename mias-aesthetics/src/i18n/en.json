@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "title": "Mia's Aesthetics — Premium Aesthetic Center in USA",
+    "description": "Personalized facial, body and beauty treatments. Elevate your natural beauty with Mia's Aesthetics."
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "about": "About",
+    "gallery": "Gallery",
+    "testimonials": "Reviews",
+    "contact": "Contact",
+    "book": "Book"
+  },
+  "hero": {
+    "eyebrow": "Mia's Aesthetics",
+    "title_1": "Your beauty,",
+    "title_2": "elevated.",
+    "subtitle": "Personalized aesthetic treatments that enhance your natural beauty, in a space designed to feel like home.",
+    "cta_book": "Book on WhatsApp",
+    "cta_services": "Explore services",
+    "trust_1": "100% Personalized",
+    "trust_2": "Premium products",
+    "trust_3": "Expert care"
+  },
+  "marquee": ["Premium facials", "Body treatments", "Pro skincare", "Full wellness", "Personalized beauty"],
+  "intro": {
+    "eyebrow": "Welcome",
+    "title": "A space made for you",
+    "p1": "At Mia's Aesthetics we believe every skin tells a unique story. That's why we tailor every treatment to you, combining technique, premium products and a close, personal touch that makes all the difference.",
+    "p2": "More than an aesthetic center — your corner to reconnect with yourself."
+  },
+  "services_preview": {
+    "eyebrow": "Services",
+    "title": "Treatments you'll love",
+    "subtitle": "A selection of our most requested services. Each one designed for visible, lasting results.",
+    "cta_all": "See all services",
+    "items": [
+      { "title": "Premium facials", "desc": "Deep cleansing, hydration and rejuvenation with high-end products." },
+      { "title": "Body treatments", "desc": "Reductive, lymphatic and firming protocols to look and feel amazing." },
+      { "title": "Custom skincare", "desc": "Personalized routines built from a real analysis of your skin type." },
+      { "title": "Beauty details", "desc": "Lashes, brows and finishing touches that enhance your natural look." }
+    ]
+  },
+  "why": {
+    "eyebrow": "Why Mia's?",
+    "title": "The difference is in the details",
+    "items": [
+      {
+        "title": "Personalized care",
+        "desc": "Every client is unique. We analyze your skin before recommending anything."
+      },
+      { "title": "Premium products", "desc": "Only professional brands with dermatological backing." },
+      { "title": "Intimate space", "desc": "An ambient designed to relax you from the moment you walk in." },
+      { "title": "Visible results", "desc": "Proven protocols with progress tracking session by session." }
+    ]
+  },
+  "testimonials": {
+    "eyebrow": "Reviews",
+    "title": "What our clients say",
+    "items": [
+      {
+        "name": "Carolina M.",
+        "service": "Premium facial",
+        "text": "Walked out with refreshed skin. Mia's care is impeccable — she makes you feel right at home."
+      },
+      {
+        "name": "Sofia R.",
+        "service": "Body treatment",
+        "text": "I saw results from the second session. 100% recommended."
+      },
+      {
+        "name": "Andrea L.",
+        "service": "Custom skincare",
+        "text": "My routine finally works. Mia analyzed my skin and changed my life."
+      }
+    ]
+  },
+  "cta_final": {
+    "title": "Ready for your next appointment?",
+    "subtitle": "Book your slot on WhatsApp. We reply personally.",
+    "cta": "Book on WhatsApp"
+  },
+  "footer": {
+    "tagline": "Your beauty, elevated.",
+    "explore": "Explore",
+    "contact_title": "Contact",
+    "follow": "Follow us",
+    "rights": "All rights reserved.",
+    "legal": {
+      "privacy": "Privacy",
+      "terms": "Terms"
+    }
+  },
+  "whatsapp_float_aria": "Chat on WhatsApp",
+  "lang_switch_aria": "Switch language",
+  "skip_to_content": "Skip to content"
+}

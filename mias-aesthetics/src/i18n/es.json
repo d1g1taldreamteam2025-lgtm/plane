@@ -1,0 +1,110 @@
+{
+  "meta": {
+    "title": "Mia's Aesthetics — Centro Estético en USA",
+    "description": "Tratamientos faciales, corporales y de belleza personalizados. Realza tu belleza natural con Mia's Aesthetics."
+  },
+  "nav": {
+    "home": "Inicio",
+    "services": "Servicios",
+    "about": "Nosotras",
+    "gallery": "Galería",
+    "testimonials": "Testimonios",
+    "contact": "Contacto",
+    "book": "Reservar"
+  },
+  "hero": {
+    "eyebrow": "Mia's Aesthetics",
+    "title_1": "Tu belleza,",
+    "title_2": "elevada.",
+    "subtitle": "Tratamientos estéticos personalizados que realzan tu belleza natural en un espacio diseñado para que te sientas como en casa.",
+    "cta_book": "Reservar por WhatsApp",
+    "cta_services": "Ver servicios",
+    "trust_1": "100% Personalizado",
+    "trust_2": "Productos premium",
+    "trust_3": "Atención experta"
+  },
+  "marquee": [
+    "Faciales premium",
+    "Tratamientos corporales",
+    "Skincare profesional",
+    "Bienestar integral",
+    "Belleza personalizada"
+  ],
+  "intro": {
+    "eyebrow": "Bienvenida",
+    "title": "Un espacio creado para vos",
+    "p1": "En Mia's Aesthetics creemos que cada piel cuenta una historia única. Por eso diseñamos cada tratamiento a tu medida, combinando técnica, productos premium y un trato cercano que hace toda la diferencia.",
+    "p2": "Más que un centro estético, somos tu rincón para reconectar con vos misma."
+  },
+  "services_preview": {
+    "eyebrow": "Servicios",
+    "title": "Tratamientos que te enamoran",
+    "subtitle": "Una selección de nuestros servicios más solicitados. Cada uno diseñado para resultados visibles y duraderos.",
+    "cta_all": "Ver todos los servicios",
+    "items": [
+      {
+        "title": "Faciales premium",
+        "desc": "Limpieza profunda, hidratación y rejuvenecimiento con productos de alta gama."
+      },
+      {
+        "title": "Tratamientos corporales",
+        "desc": "Reductivos, drenaje y reafirmantes para verte y sentirte increíble."
+      },
+      { "title": "Skincare a medida", "desc": "Rutinas personalizadas según el análisis de tu tipo de piel." },
+      { "title": "Belleza & detalles", "desc": "Pestañas, cejas y detalles que realzan tu mirada natural." }
+    ]
+  },
+  "why": {
+    "eyebrow": "¿Por qué Mia's?",
+    "title": "La diferencia está en los detalles",
+    "items": [
+      {
+        "title": "Atención personalizada",
+        "desc": "Cada cliente es único. Analizamos tu piel y necesidades antes de recomendarte algo."
+      },
+      { "title": "Productos premium", "desc": "Trabajamos solo con marcas profesionales con respaldo dermatológico." },
+      { "title": "Espacio íntimo", "desc": "Un ambiente diseñado para que te relajes desde el momento en que entrás." },
+      { "title": "Resultados visibles", "desc": "Protocolos probados con seguimiento de tu progreso sesión a sesión." }
+    ]
+  },
+  "testimonials": {
+    "eyebrow": "Testimonios",
+    "title": "Lo que dicen nuestras clientas",
+    "items": [
+      {
+        "name": "Carolina M.",
+        "service": "Facial premium",
+        "text": "Salí con la piel renovada. El trato de Mia es impecable, te hace sentir como en casa."
+      },
+      {
+        "name": "Sofía R.",
+        "service": "Tratamiento corporal",
+        "text": "Vi resultados desde la segunda sesión. Recomendado al 100%."
+      },
+      {
+        "name": "Andrea L.",
+        "service": "Skincare personalizado",
+        "text": "Mi rutina por fin funciona. Mia analizó mi piel y me cambió la vida."
+      }
+    ]
+  },
+  "cta_final": {
+    "title": "¿Lista para tu próxima cita?",
+    "subtitle": "Reservá tu turno por WhatsApp. Te respondemos personalmente.",
+    "cta": "Reservar por WhatsApp"
+  },
+  "footer": {
+    "tagline": "Tu belleza, elevada.",
+    "explore": "Explorá",
+    "contact_title": "Contacto",
+    "follow": "Seguinos",
+    "rights": "Todos los derechos reservados.",
+    "legal": {
+      "privacy": "Privacidad",
+      "terms": "Términos"
+    }
+  },
+  "whatsapp_float_aria": "Chatear por WhatsApp",
+  "lang_switch_aria": "Cambiar idioma",
+  "skip_to_content": "Saltar al contenido"
+}

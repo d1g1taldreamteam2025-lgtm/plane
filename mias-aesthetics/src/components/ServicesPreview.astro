@@ -1,0 +1,47 @@
+---
+import { t, getDict, type Lang } from '../i18n';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const items = getDict(lang).services_preview.items;
+
+const icons = [
+  // Facial - sparkle/face
+  '<path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/><circle cx="12" cy="12" r="4"/>',
+  // Body - heart/curve
+  '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>',
+  // Skincare - drop
+  '<path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0L12 2.69z"/>',
+  // Beauty - star
+  '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+];
+---
+<section id="services" class="relative bg-[var(--color-cream)] py-20 sm:py-28">
+  <div class="container-px mx-auto max-w-7xl">
+    <div class="reveal mx-auto max-w-2xl text-center">
+      <span class="eyebrow">{t(lang, 'services_preview.eyebrow')}</span>
+      <h2 class="h-display mt-5 text-[clamp(2rem,4.5vw,3.25rem)]">
+        {t(lang, 'services_preview.title')}
+      </h2>
+      <p class="mt-5 text-base text-[var(--color-gray-soft)] sm:text-lg">
+        {t(lang, 'services_preview.subtitle')}
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {items.map((it, i) => (
+        <article class="card reveal flex flex-col">
+          <div class="grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-[var(--color-rose-500)] to-[var(--color-rose-400)] text-white shadow-md">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icons[i]}></svg>
+          </div>
+          <h3 class="mt-5 font-display text-xl font-bold">{it.title}</h3>
+          <p class="mt-2 text-sm leading-relaxed text-[var(--color-gray-soft)]">{it.desc}</p>
+        </article>
+      ))}
+    </div>
+
+    <div class="reveal mt-12 text-center">
+      <a href="#contact" class="btn btn-outline">{t(lang, 'services_preview.cta_all')}</a>
+    </div>
+  </div>
+</section>

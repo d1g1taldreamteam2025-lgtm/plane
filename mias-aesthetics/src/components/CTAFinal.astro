@@ -1,0 +1,30 @@
+---
+import { t, type Lang } from '../i18n';
+import { waLink } from '../lib/site.ts';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const waHref = waLink(lang === 'es'
+  ? `Hola Mia's Aesthetics, quisiera reservar una cita.`
+  : `Hi Mia's Aesthetics, I'd like to book an appointment.`);
+---
+<section id="contact" class="relative overflow-hidden bg-[var(--color-ink)] py-20 sm:py-28">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0">
+    <div class="absolute -top-20 -left-20 h-96 w-96 rounded-full bg-[var(--color-rose-500)] opacity-20 blur-3xl"></div>
+    <div class="absolute -bottom-20 -right-20 h-[28rem] w-[28rem] rounded-full bg-[var(--color-rose-400)] opacity-15 blur-3xl"></div>
+  </div>
+  <div class="container-px relative mx-auto max-w-4xl text-center">
+    <h2 class="reveal h-display text-[clamp(2.25rem,5vw,3.75rem)] text-white">
+      {t(lang, 'cta_final.title')}
+    </h2>
+    <p class="reveal mx-auto mt-6 max-w-xl text-base text-white/70 sm:text-lg">
+      {t(lang, 'cta_final.subtitle')}
+    </p>
+    <div class="reveal mt-10">
+      <a href={waHref} target="_blank" rel="noopener" class="btn btn-whatsapp !px-8 !py-4 !text-sm">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.05 0C5.49 0 .2 5.3.2 11.86c0 2.09.55 4.13 1.6 5.93L0 24l6.36-1.67a11.84 11.84 0 0 0 5.69 1.45h.01c6.56 0 11.86-5.3 11.86-11.86 0-3.17-1.23-6.15-3.4-8.44Z"/></svg>
+        {t(lang, 'cta_final.cta')}
+      </a>
+    </div>
+  </div>
+</section>

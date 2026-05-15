@@ -1,0 +1,113 @@
+---
+import { t, type Lang } from '../i18n';
+import { waLink } from '../lib/site.ts';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+
+const waHref = waLink(lang === 'es'
+  ? `Hola Mia's Aesthetics, quisiera reservar una cita.`
+  : `Hi Mia's Aesthetics, I'd like to book an appointment.`);
+---
+<section class="relative overflow-hidden bg-gradient-to-b from-[var(--color-cream)] via-[var(--color-nude-50)] to-white">
+  <!-- Decorative blurred shapes -->
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0">
+    <div class="absolute -top-32 -left-20 h-[480px] w-[480px] rounded-full bg-[var(--color-nude-100)] opacity-50 blur-3xl"></div>
+    <div class="absolute top-20 -right-32 h-[520px] w-[520px] rounded-full bg-[var(--color-rose-300)] opacity-30 blur-3xl"></div>
+    <div class="absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-[var(--color-nude-200)] opacity-40 blur-3xl"></div>
+  </div>
+
+  <div class="container-px relative mx-auto grid max-w-7xl items-center gap-10 py-16 sm:py-20 lg:grid-cols-12 lg:gap-12 lg:py-24">
+    <div class="reveal lg:col-span-7">
+      <span class="eyebrow">{t(lang, 'hero.eyebrow')}</span>
+      <h1 class="h-display mt-5 text-[clamp(2.5rem,7vw,5rem)]">
+        {t(lang, 'hero.title_1')}<br/>
+        <span class="bg-gradient-to-r from-[var(--color-rose-500)] via-[var(--color-rose-400)] to-[var(--color-rose-600)] bg-clip-text italic text-transparent">
+          {t(lang, 'hero.title_2')}
+        </span>
+      </h1>
+      <p class="mt-6 max-w-xl text-base text-[var(--color-gray-soft)] sm:text-lg">
+        {t(lang, 'hero.subtitle')}
+      </p>
+
+      <div class="mt-8 flex flex-wrap items-center gap-3">
+        <a href={waHref} target="_blank" rel="noopener" class="btn btn-whatsapp">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.05 0C5.49 0 .2 5.3.2 11.86c0 2.09.55 4.13 1.6 5.93L0 24l6.36-1.67a11.84 11.84 0 0 0 5.69 1.45h.01c6.56 0 11.86-5.3 11.86-11.86 0-3.17-1.23-6.15-3.4-8.44Z"/></svg>
+          {t(lang, 'hero.cta_book')}
+        </a>
+        <a href="#services" class="btn btn-outline">{t(lang, 'hero.cta_services')}</a>
+      </div>
+
+      <ul class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-[var(--color-graphite)]">
+        {[1,2,3].map((i) => (
+          <li class="flex items-center gap-2">
+            <span class="grid h-6 w-6 place-items-center rounded-full bg-[var(--color-nude-100)] text-[var(--color-rose-600)]">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            {t(lang, `hero.trust_${i}`)}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="reveal relative lg:col-span-5">
+      <div class="relative mx-auto aspect-[4/5] w-full max-w-md">
+        <!-- Card stack -->
+        <div class="absolute inset-0 rotate-3 rounded-[2rem] bg-gradient-to-br from-[var(--color-rose-400)] to-[var(--color-rose-600)] opacity-20"></div>
+        <div class="absolute inset-0 -rotate-2 rounded-[2rem] border border-[var(--color-line)] bg-white"></div>
+        <div class="absolute inset-2 overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-[var(--color-nude-100)] via-white to-[var(--color-nude-50)] shadow-xl">
+          <!-- SVG illustration -->
+          <svg viewBox="0 0 400 500" class="h-full w-full" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mia's Aesthetics">
+            <defs>
+              <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fbf5f0"/>
+                <stop offset="100%" stop-color="#e8c7b8"/>
+              </linearGradient>
+              <linearGradient id="petal" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#d8a892"/>
+                <stop offset="100%" stop-color="#b88a6e"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="500" fill="url(#bg)"/>
+            <!-- Flower petals -->
+            <g transform="translate(200 250)" opacity="0.9">
+              <ellipse cx="0" cy="-90" rx="42" ry="80" fill="url(#petal)" opacity="0.85"/>
+              <ellipse cx="0" cy="-90" rx="42" ry="80" fill="url(#petal)" opacity="0.85" transform="rotate(60)"/>
+              <ellipse cx="0" cy="-90" rx="42" ry="80" fill="url(#petal)" opacity="0.85" transform="rotate(120)"/>
+              <ellipse cx="0" cy="-90" rx="42" ry="80" fill="url(#petal)" opacity="0.85" transform="rotate(180)"/>
+              <ellipse cx="0" cy="-90" rx="42" ry="80" fill="url(#petal)" opacity="0.85" transform="rotate(240)"/>
+              <ellipse cx="0" cy="-90" rx="42" ry="80" fill="url(#petal)" opacity="0.85" transform="rotate(300)"/>
+              <circle r="22" fill="#fbf5f0"/>
+              <circle r="10" fill="#9a6e54"/>
+            </g>
+            <!-- Sparkles -->
+            <g fill="#b88a6e" opacity="0.65">
+              <circle cx="60" cy="80" r="3"/>
+              <circle cx="340" cy="120" r="4"/>
+              <circle cx="80" cy="420" r="3"/>
+              <circle cx="320" cy="380" r="3"/>
+              <circle cx="180" cy="60" r="2"/>
+              <circle cx="60" cy="280" r="2"/>
+              <circle cx="350" cy="260" r="2"/>
+            </g>
+            <!-- Brand text -->
+            <text x="200" y="430" text-anchor="middle" font-family="Poppins, sans-serif" font-size="20" font-weight="700" fill="#1a1a1a" letter-spacing="2">MIA'S AESTHETICS</text>
+            <text x="200" y="455" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#5b6b7c" letter-spacing="4" text-transform="uppercase">EST. 2024</text>
+          </svg>
+        </div>
+        <!-- Floating badge -->
+        <div class="absolute -bottom-4 -left-4 rounded-2xl border border-[var(--color-line)] bg-white p-3 shadow-xl sm:-bottom-5 sm:-left-6 sm:p-4">
+          <div class="flex items-center gap-3">
+            <div class="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br from-[var(--color-rose-500)] to-[var(--color-rose-400)] text-white">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 14.6 8.5 21.5 9.2 16.3 13.8 17.9 20.5 12 17 6.1 20.5 7.7 13.8 2.5 9.2 9.4 8.5z"/></svg>
+            </div>
+            <div>
+              <div class="font-display text-lg font-bold leading-none">5.0</div>
+              <div class="text-xs text-[var(--color-gray-soft)]">{lang === 'es' ? 'Clientas felices' : 'Happy clients'}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

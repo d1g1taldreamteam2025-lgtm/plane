@@ -1,0 +1,99 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+import { t, type Lang } from '../i18n';
+import { SITE } from '../lib/site.ts';
+
+interface Props {
+  lang: Lang;
+  title?: string;
+  description?: string;
+  path?: string;
+}
+
+const { lang, title, description, path = '/' } = Astro.props;
+
+const pageTitle = title ?? t(lang, 'meta.title');
+const pageDesc = description ?? t(lang, 'meta.description');
+const canonical = new URL(path, Astro.site ?? SITE.url).toString();
+const altEs = new URL(path.replace(/^\/en/, '') || '/', Astro.site ?? SITE.url).toString();
+const altEn = new URL('/en' + (path === '/' ? '' : path), Astro.site ?? SITE.url).toString();
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BeautySalon',
+  name: SITE.name,
+  url: SITE.url,
+  image: `${SITE.url}/og-image.jpg`,
+  description: pageDesc,
+  address: { '@type': 'PostalAddress', addressCountry: 'US' },
+  sameAs: [SITE.instagram],
+  telephone: '+' + SITE.whatsappNumber,
+};
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#1a1a1a" />
+  <meta name="generator" content={Astro.generator} />
+
+  <title>{pageTitle}</title>
+  <meta name="description" content={pageDesc} />
+  <link rel="canonical" href={canonical} />
+
+  <link rel="alternate" hreflang="es" href={altEs} />
+  <link rel="alternate" hreflang="en" href={altEn} />
+  <link rel="alternate" hreflang="x-default" href={altEs} />
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content={SITE.name} />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={pageDesc} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={`${SITE.url}/og-image.jpg`} />
+  <meta property="og:locale" content={lang === 'es' ? 'es_US' : 'en_US'} />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={pageDesc} />
+  <meta name="twitter:image" content={`${SITE.url}/og-image.jpg`} />
+
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+</head>
+<body class="bg-white text-[var(--color-ink)]">
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[999] focus:rounded-full focus:bg-[var(--color-ink)] focus:px-4 focus:py-2 focus:text-white">
+    {t(lang, 'skip_to_content')}
+  </a>
+  <Header lang={lang} path={path} />
+  <main id="main">
+    <slot />
+  </main>
+  <Footer lang={lang} />
+  <WhatsAppFloat lang={lang} />
+
+  <script>
+    // Reveal on scroll
+    const els = document.querySelectorAll<HTMLElement>('.reveal');
+    if (els.length && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
+      els.forEach((el) => io.observe(el));
+    } else {
+      els.forEach((el) => el.classList.add('in'));
+    }
+  </script>
+</body>
+</html>
