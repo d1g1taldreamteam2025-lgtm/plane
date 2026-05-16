@@ -101,7 +101,24 @@ const socials = [
       </div>
     </div>
 
-    <div class="mt-14 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-6 text-xs text-white/50 sm:flex-row sm:items-center">
+    <!-- Payment methods -->
+    <div class="mt-14 border-t border-white/10 pt-8">
+      <div class="flex flex-col items-center gap-5 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
+        <div>
+          <h3 class="font-display text-xs font-semibold uppercase tracking-widest text-white/70">{t(lang, "footer.payments_title")}</h3>
+          <p class="mt-1 text-xs text-white/50">{t(lang, "footer.payments_note")}</p>
+        </div>
+        <ul class="flex flex-wrap items-center justify-center gap-2.5">
+          {SITE.payments.map((pm) => (
+            <li class="grid h-10 w-16 place-items-center rounded-lg bg-white px-2.5 shadow-md" title={pm.name}>
+              <img src={pm.icon} alt={pm.name} width="56" height="24" class="max-h-6 w-auto object-contain" loading="lazy" />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-8 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-6 text-xs text-white/50 sm:flex-row sm:items-center">
       <p>© {year} {SITE.name}. {t(lang, "footer.rights")}</p>
       <div class="flex items-center gap-4">
         <a href="#" class="transition hover:text-white">{t(lang, "footer.legal.privacy")}</a>

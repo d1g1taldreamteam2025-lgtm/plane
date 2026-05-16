@@ -25,6 +25,16 @@ export const SITE = {
     gmail: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1778898407/images_p5ftf4.png",
     whatsapp: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1778898491/WhatsApp_icon_ym0yfu.png",
   },
+  // Payment method logos served locally from /public/payments so they always load
+  // (Cloudinary del cliente bloquea hosts no autorizados via whitelist).
+  // Cuando Cloudinary esté configurado para el dominio final, podés reemplazar
+  // por las URLs originales del cliente.
+  payments: [
+    { name: "Visa", icon: "/payments/visa.svg" },
+    { name: "Mastercard", icon: "/payments/mastercard.svg" },
+    { name: "American Express", icon: "/payments/amex.svg" },
+    { name: "Zelle", icon: "/payments/zelle.svg" },
+  ],
   hours: {
     es: [
       { day: "Lun – Vie", time: "10:00 – 19:00" },
