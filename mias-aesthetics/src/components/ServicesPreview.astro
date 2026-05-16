@@ -7,43 +7,72 @@ const items = getDict(lang).services_preview.items;
 const base = lang === "en" ? "/en" : "";
 
 const palettes = [
-  { from: "#ffe6f1", to: "#ec6f9c", accent: "#ec6f9c" },
-  { from: "#fff5fa", to: "#d4b0e0", accent: "#6b3a73" },
-  { from: "#fff8e1", to: "#d4a85a", accent: "#d4a85a" },
-  { from: "#ffe6f1", to: "#ffa3c6", accent: "#d04b7e" },
+  // IV Therapy — blue glow
+  { from: "#cfe6ff", to: "#5da9ec", accent: "#3680c8", text: "#fff" },
+  // Botox — pink primary
+  { from: "#ffe6f1", to: "#ec6f9c", accent: "#d04b7e", text: "#fff" },
+  // Morpheus 8 — gold
+  { from: "#fff3d4", to: "#d4a85a", accent: "#b88a36", text: "#4a3210" },
+  // Thermage — plum
+  { from: "#e6d5ec", to: "#6b3a73", accent: "#3d1f48", text: "#fff" },
+  // Lips — blush
+  { from: "#ffc6dd", to: "#ff7eaf", accent: "#d04b7e", text: "#fff" },
+  // Lashes — dark
+  { from: "#3d1f48", to: "#1a0f1f", accent: "#d4a85a", text: "#fff" },
 ];
 
 const icons = [
-  // lashes
-  `<g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
-    <path d="M3 12 Q12 5 21 12"/>
-    <path d="M5 8 L4 4 M9 7 L8 3 M15 7 L16 3 M19 8 L20 4"/>
-    <circle cx="12" cy="12" r="2.5" fill="currentColor"/>
-  </g>`,
-  // lash lift
-  `<g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
-    <path d="M3 14 Q12 6 21 14"/>
-    <path d="M12 14 L12 18 M9 18 L15 18"/>
-    <path d="M6 9 L5 5 M9 8 L9 4 M15 8 L15 4 M18 9 L19 5"/>
-  </g>`,
-  // bb glow / drop
-  `<g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M12 3 C9 8 6 11 6 15 a6 6 0 0 0 12 0 c0-4-3-7-6-12z"/>
-    <circle cx="10" cy="14" r="1" fill="currentColor"/>
-  </g>`,
-  // facial / sparkle face
-  `<g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
-    <circle cx="12" cy="12" r="8"/>
-    <circle cx="9"  cy="10" r="1" fill="currentColor"/>
-    <circle cx="15" cy="10" r="1" fill="currentColor"/>
-    <path d="M9 14 Q12 17 15 14"/>
-    <path d="M4 4 L5 5 M19 4 L20 5"/>
-  </g>`,
+  // IV Therapy: drop + IV bag
+  `<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+     <rect x="9" y="3" width="6" height="9" rx="1"/>
+     <path d="M12 12 L12 17"/>
+     <path d="M12 17 C9.5 19, 10 22, 12 22 C14 22, 14.5 19, 12 17z" fill="currentColor"/>
+     <line x1="10" y1="6" x2="14" y2="6"/>
+     <line x1="10" y1="9" x2="14" y2="9"/>
+   </g>`,
+  // Botox: syringe
+  `<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+     <line x1="3" y1="21" x2="6" y2="18"/>
+     <path d="M9 15 L18 6 L21 9 L12 18 Z" fill="currentColor" fill-opacity="0.18"/>
+     <line x1="6" y1="18" x2="9" y2="15"/>
+     <line x1="14" y1="10" x2="17" y2="13"/>
+     <line x1="11" y1="13" x2="14" y2="16"/>
+     <path d="M18 6 L21 3"/>
+   </g>`,
+  // Morpheus 8: needle + sparks (radio-frequency)
+  `<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+     <line x1="6" y1="6" x2="3" y2="3"/>
+     <path d="M9 9 L19 19" stroke-width="2.4"/>
+     <line x1="14" y1="14" x2="12" y2="16"/>
+     <line x1="16" y1="12" x2="18" y2="14"/>
+     <circle cx="6" cy="10" r="0.8" fill="currentColor"/>
+     <circle cx="9" cy="6" r="0.8" fill="currentColor"/>
+     <circle cx="12" cy="5" r="0.8" fill="currentColor"/>
+   </g>`,
+  // Thermage: heat waves
+  `<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+     <path d="M5 17 Q8 14 12 17 Q16 20 19 17"/>
+     <path d="M5 13 Q8 10 12 13 Q16 16 19 13"/>
+     <path d="M5 9 Q8 6 12 9 Q16 12 19 9"/>
+   </g>`,
+  // Lips
+  `<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+     <path d="M4 12 Q7 7 12 9 Q17 7 20 12 Q17 17 12 16 Q7 17 4 12 Z" fill="currentColor" fill-opacity="0.22"/>
+     <path d="M4 12 Q8 13 12 13 Q16 13 20 12"/>
+     <path d="M12 9 L12 13"/>
+   </g>`,
+  // Lashes / eye
+  `<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+     <path d="M3 12 Q12 5 21 12"/>
+     <circle cx="12" cy="12" r="2.5" fill="currentColor"/>
+     <path d="M5 8 L4 4 M9 7 L8 3 M15 7 L16 3 M19 8 L20 4"/>
+   </g>`,
 ];
 ---
 <section id="services" class="relative bg-[var(--color-cream)] py-20 sm:py-28">
   <div aria-hidden="true" class="pointer-events-none absolute inset-0">
     <div class="absolute right-0 top-0 h-96 w-96 rounded-full bg-[var(--color-blush-100)] opacity-50 blur-3xl"></div>
+    <div class="absolute left-0 bottom-0 h-72 w-72 rounded-full bg-[var(--color-gold-300)] opacity-25 blur-3xl"></div>
   </div>
 
   <div class="container-px relative mx-auto max-w-7xl">
@@ -55,17 +84,17 @@ const icons = [
       <p class="mt-5 text-base text-[var(--color-gray-soft)] sm:text-lg">{t(lang, "services_preview.subtitle")}</p>
     </div>
 
-    <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((it, i) => {
         const p = palettes[i % palettes.length];
         return (
           <a href={`${base}/servicios/${it.slug}`} class="card reveal group flex flex-col">
             <div class="relative">
               <div
-                class="grid h-16 w-16 place-items-center rounded-2xl text-white shadow-lg transition group-hover:scale-110"
-                style={`background: linear-gradient(135deg, ${p.from}, ${p.to});`}
+                class="grid h-16 w-16 place-items-center rounded-2xl shadow-lg transition group-hover:scale-110 group-hover:rotate-3"
+                style={`background: linear-gradient(135deg, ${p.from}, ${p.to}); color: ${p.text};`}
               >
-                <svg width="30" height="30" viewBox="0 0 24 24" aria-hidden="true" style={`color: ${p.accent === '#d4a85a' ? '#4a3210' : '#ffffff'}`} set:html={icons[i]}></svg>
+                <svg width="32" height="32" viewBox="0 0 24 24" aria-hidden="true" set:html={icons[i]}></svg>
               </div>
               <span class="absolute -top-1 -right-1 grid h-6 w-6 place-items-center rounded-full bg-[var(--color-gold-400)] text-[10px] font-bold text-white shadow">★</span>
             </div>

@@ -27,38 +27,31 @@
   },
   "carousel": [
     {
-      "eyebrow": "Pestañas que enamoran",
-      "title_1": "Tu mirada,",
-      "title_2": "irresistible.",
-      "subtitle": "Extensiones de pestañas hechas con técnica y dedicación. Naturales, voluminosas o híbridas — vos elegís.",
-      "cta_book": "Reservar pestañas",
-      "cta_more": "Ver técnicas"
-    },
-    {
-      "eyebrow": "Faciales premium",
-      "title_1": "Tu piel,",
-      "title_2": "luminosa.",
-      "subtitle": "Limpiezas profundas, BB Glow, peelings y rejuvenecimiento con productos de alta gama.",
-      "cta_book": "Reservar facial",
+      "eyebrow": "Belleza desde adentro",
+      "title_1": "Tu energía,",
+      "title_2": "renovada.",
+      "subtitle": "Sueroterapia IV con vitaminas y antioxidantes. Hidratación profunda, vitalidad y piel radiante desde adentro.",
+      "cta_book": "Reservar IV Therapy",
       "cta_more": "Ver tratamientos"
     },
     {
-      "eyebrow": "Belleza personalizada",
-      "title_1": "Tu estilo,",
-      "title_2": "elevado.",
-      "subtitle": "Cejas, lifting, dermaplaning y más. Cada servicio diseñado a tu medida por Erlym.",
-      "cta_book": "Reservar cita",
-      "cta_more": "Ver todo"
+      "eyebrow": "Tecnología premium",
+      "title_1": "Tu piel,",
+      "title_2": "rejuvenecida.",
+      "subtitle": "Morpheus 8, Thermage y Botox. Tratamientos faciales avanzados con resultados visibles y duraderos.",
+      "cta_book": "Reservar facial",
+      "cta_more": "Ver técnicas"
+    },
+    {
+      "eyebrow": "Pestañas que enamoran",
+      "title_1": "Tu mirada,",
+      "title_2": "irresistible.",
+      "subtitle": "Pestañas pelo a pelo con técnica profesional. Look natural, elegante y de larga duración.",
+      "cta_book": "Reservar pestañas",
+      "cta_more": "Ver más"
     }
   ],
-  "marquee": [
-    "Pestañas premium",
-    "Faciales personalizados",
-    "BB Glow",
-    "Lifting de pestañas",
-    "Dermaplaning",
-    "Diseño de cejas"
-  ],
+  "marquee": ["IV Therapy", "Botox", "Morpheus 8", "Thermage", "Aumento de labios", "Pestañas pelo a pelo"],
   "trust_badges": [
     { "title": "Técnica certificada", "desc": "Años de experiencia y formación constante." },
     { "title": "5.0 ★ en Google", "desc": "Clientas felices que vuelven una y otra vez." },
@@ -78,24 +71,34 @@
     "cta_all": "Ver todos los servicios",
     "items": [
       {
-        "slug": "extensiones-pestanas",
-        "title": "Extensiones de pestañas",
-        "desc": "Clásicas, híbridas y volumen. Te asesoramos según tu mirada y rutina."
+        "slug": "sueroterapia",
+        "title": "IV Therapy / Sueroterapia",
+        "desc": "Vitaminas, antioxidantes y minerales por vía intravenosa. Energía, hidratación y belleza desde adentro."
       },
       {
-        "slug": "lifting-pestanas",
-        "title": "Lifting de pestañas",
-        "desc": "Realzá tus pestañas naturales con un efecto curvado de hasta 8 semanas."
+        "slug": "botox",
+        "title": "Botox",
+        "desc": "Suaviza arrugas dinámicas (frente, entrecejo, patas de gallo). Rejuvenecimiento natural sin perder expresión."
       },
       {
-        "slug": "bb-glow",
-        "title": "BB Glow",
-        "desc": "Piel uniforme, luminosa y con efecto maquillaje natural."
+        "slug": "morpheus-8",
+        "title": "Morpheus 8",
+        "desc": "Radiofrecuencia con microagujas. Estimula colágeno, mejora textura, firmeza y cicatrices."
       },
       {
-        "slug": "faciales",
-        "title": "Faciales premium",
-        "desc": "Limpiezas profundas, peelings y rejuvenecimiento con tecnología profesional."
+        "slug": "thermage",
+        "title": "Thermage",
+        "desc": "Radiofrecuencia no invasiva que tensa y reafirma la piel. Lifting sin cirugía y sin downtime."
+      },
+      {
+        "slug": "aumento-labios",
+        "title": "Aumento de labios",
+        "desc": "Relleno con ácido hialurónico. Volumen, definición e hidratación con resultado natural."
+      },
+      {
+        "slug": "pestanas-pelo-a-pelo",
+        "title": "Pestañas pelo a pelo",
+        "desc": "Extensiones clásicas, una por una. Mirada elegante con look 100% natural."
       }
     ]
   },

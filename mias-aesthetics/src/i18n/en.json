@@ -27,31 +27,31 @@
   },
   "carousel": [
     {
-      "eyebrow": "Lashes that wow",
-      "title_1": "Your gaze,",
-      "title_2": "irresistible.",
-      "subtitle": "Lash extensions crafted with technique and care. Natural, volume or hybrid — you choose.",
-      "cta_book": "Book lashes",
-      "cta_more": "See techniques"
-    },
-    {
-      "eyebrow": "Premium facials",
-      "title_1": "Your skin,",
-      "title_2": "luminous.",
-      "subtitle": "Deep cleanses, BB Glow, peels and rejuvenation with high-end products.",
-      "cta_book": "Book facial",
+      "eyebrow": "Beauty from within",
+      "title_1": "Your energy,",
+      "title_2": "renewed.",
+      "subtitle": "IV Therapy with vitamins and antioxidants. Deep hydration, vitality and radiant skin — from within.",
+      "cta_book": "Book IV Therapy",
       "cta_more": "See treatments"
     },
     {
-      "eyebrow": "Personalized beauty",
-      "title_1": "Your style,",
-      "title_2": "elevated.",
-      "subtitle": "Brows, lash lift, dermaplaning and more. Tailored to you by Erlym.",
-      "cta_book": "Book now",
-      "cta_more": "See all"
+      "eyebrow": "Premium technology",
+      "title_1": "Your skin,",
+      "title_2": "rejuvenated.",
+      "subtitle": "Morpheus 8, Thermage and Botox. Advanced facial treatments with visible, lasting results.",
+      "cta_book": "Book facial",
+      "cta_more": "See techniques"
+    },
+    {
+      "eyebrow": "Lashes that wow",
+      "title_1": "Your gaze,",
+      "title_2": "irresistible.",
+      "subtitle": "Hair-by-hair lash extensions with pro technique. Natural, elegant, long-lasting.",
+      "cta_book": "Book lashes",
+      "cta_more": "See more"
     }
   ],
-  "marquee": ["Premium lashes", "Custom facials", "BB Glow", "Lash lift", "Dermaplaning", "Brow design"],
+  "marquee": ["IV Therapy", "Botox", "Morpheus 8", "Thermage", "Lip filler", "Classic lashes"],
   "trust_badges": [
     { "title": "Certified technique", "desc": "Years of experience and ongoing training." },
     { "title": "5.0 ★ on Google", "desc": "Happy clients who come back again and again." },
@@ -71,24 +71,34 @@
     "cta_all": "See all services",
     "items": [
       {
-        "slug": "lash-extensions",
-        "title": "Lash extensions",
-        "desc": "Classic, hybrid and volume. Tailored to your gaze and lifestyle."
+        "slug": "iv-therapy",
+        "title": "IV Therapy",
+        "desc": "Vitamins, antioxidants and minerals delivered IV. Energy, hydration and beauty from within."
       },
       {
-        "slug": "lash-lift",
-        "title": "Lash lift",
-        "desc": "Enhance your natural lashes with a curl that lasts up to 8 weeks."
+        "slug": "botox",
+        "title": "Botox",
+        "desc": "Smooths dynamic wrinkles (forehead, frown lines, crow's feet). Natural rejuvenation without losing expression."
       },
       {
-        "slug": "bb-glow",
-        "title": "BB Glow",
-        "desc": "Even, glowing skin with a natural, no-makeup makeup effect."
+        "slug": "morpheus-8",
+        "title": "Morpheus 8",
+        "desc": "Microneedling radiofrequency. Stimulates collagen, improves texture, firmness and scarring."
       },
       {
-        "slug": "facials",
-        "title": "Premium facials",
-        "desc": "Deep cleanses, peels and rejuvenation with professional technology."
+        "slug": "thermage",
+        "title": "Thermage",
+        "desc": "Non-invasive radiofrequency that tightens and firms the skin. Lifting without surgery, no downtime."
+      },
+      {
+        "slug": "lip-augmentation",
+        "title": "Lip augmentation",
+        "desc": "Hyaluronic acid filler. Volume, definition and hydration with a natural result."
+      },
+      {
+        "slug": "classic-lashes",
+        "title": "Classic lashes",
+        "desc": "Hair-by-hair extensions, one by one. Elegant gaze with a 100% natural look."
       }
     ]
   },
