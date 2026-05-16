@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Mia's Aesthetics — Premium Aesthetic Center in USA",
-    "description": "Personalized facial, body and beauty treatments. Elevate your natural beauty with Mia's Aesthetics."
+    "title": "Mia's Aesthetics — Beauty Studio in Anaheim, CA",
+    "description": "Lashes, facials and personalized beauty by Erlym Monasterios in Anaheim, CA. Book on WhatsApp."
   },
   "nav": {
     "home": "Home",
@@ -12,34 +12,84 @@
     "contact": "Contact",
     "book": "Book"
   },
-  "hero": {
-    "eyebrow": "Mia's Aesthetics",
-    "title_1": "Your beauty,",
-    "title_2": "elevated.",
-    "subtitle": "Personalized aesthetic treatments that enhance your natural beauty, in a space designed to feel like home.",
-    "cta_book": "Book on WhatsApp",
-    "cta_services": "Explore services",
-    "trust_1": "100% Personalized",
-    "trust_2": "Premium products",
-    "trust_3": "Expert care"
+  "announcement": [
+    "✨ Book on WhatsApp — instant reply",
+    "💖 New clients: 15% OFF your first treatment",
+    "📍 Anaheim, CA — 160 S Old Springs Rd"
+  ],
+  "modal": {
+    "eyebrow": "Just for you",
+    "title": "15% OFF your first treatment",
+    "subtitle": "Book today on WhatsApp and get 15% off your first visit.",
+    "cta": "Claim my discount",
+    "dismiss": "No, thanks",
+    "fine_print": "New clients only. Cannot be combined with other promotions."
   },
-  "marquee": ["Premium facials", "Body treatments", "Pro skincare", "Full wellness", "Personalized beauty"],
+  "carousel": [
+    {
+      "eyebrow": "Lashes that wow",
+      "title_1": "Your gaze,",
+      "title_2": "irresistible.",
+      "subtitle": "Lash extensions crafted with technique and care. Natural, volume or hybrid — you choose.",
+      "cta_book": "Book lashes",
+      "cta_more": "See techniques"
+    },
+    {
+      "eyebrow": "Premium facials",
+      "title_1": "Your skin,",
+      "title_2": "luminous.",
+      "subtitle": "Deep cleanses, BB Glow, peels and rejuvenation with high-end products.",
+      "cta_book": "Book facial",
+      "cta_more": "See treatments"
+    },
+    {
+      "eyebrow": "Personalized beauty",
+      "title_1": "Your style,",
+      "title_2": "elevated.",
+      "subtitle": "Brows, lash lift, dermaplaning and more. Tailored to you by Erlym.",
+      "cta_book": "Book now",
+      "cta_more": "See all"
+    }
+  ],
+  "marquee": ["Premium lashes", "Custom facials", "BB Glow", "Lash lift", "Dermaplaning", "Brow design"],
+  "trust_badges": [
+    { "title": "Certified technique", "desc": "Years of experience and ongoing training." },
+    { "title": "5.0 ★ on Google", "desc": "Happy clients who come back again and again." },
+    { "title": "Premium products", "desc": "Only professional, dermatology-backed brands." },
+    { "title": "Personal touch", "desc": "We advise you before every treatment." }
+  ],
   "intro": {
     "eyebrow": "Welcome",
     "title": "A space made for you",
-    "p1": "At Mia's Aesthetics we believe every skin tells a unique story. That's why we tailor every treatment to you, combining technique, premium products and a close, personal touch that makes all the difference.",
-    "p2": "More than an aesthetic center — your corner to reconnect with yourself."
+    "p1": "At Mia's Aesthetics, Erlym tailors every treatment to you. We combine technique, premium products and a close, personal touch that makes all the difference.",
+    "p2": "More than an aesthetic studio — your corner in Anaheim to reconnect with yourself."
   },
   "services_preview": {
     "eyebrow": "Services",
     "title": "Treatments you'll love",
-    "subtitle": "A selection of our most requested services. Each one designed for visible, lasting results.",
+    "subtitle": "Our signature services. Each designed for visible, lasting results.",
     "cta_all": "See all services",
     "items": [
-      { "title": "Premium facials", "desc": "Deep cleansing, hydration and rejuvenation with high-end products." },
-      { "title": "Body treatments", "desc": "Reductive, lymphatic and firming protocols to look and feel amazing." },
-      { "title": "Custom skincare", "desc": "Personalized routines built from a real analysis of your skin type." },
-      { "title": "Beauty details", "desc": "Lashes, brows and finishing touches that enhance your natural look." }
+      {
+        "slug": "lash-extensions",
+        "title": "Lash extensions",
+        "desc": "Classic, hybrid and volume. Tailored to your gaze and lifestyle."
+      },
+      {
+        "slug": "lash-lift",
+        "title": "Lash lift",
+        "desc": "Enhance your natural lashes with a curl that lasts up to 8 weeks."
+      },
+      {
+        "slug": "bb-glow",
+        "title": "BB Glow",
+        "desc": "Even, glowing skin with a natural, no-makeup makeup effect."
+      },
+      {
+        "slug": "facials",
+        "title": "Premium facials",
+        "desc": "Deep cleanses, peels and rejuvenation with professional technology."
+      }
     ]
   },
   "why": {
@@ -56,26 +106,32 @@
     ]
   },
   "testimonials": {
-    "eyebrow": "Reviews",
+    "eyebrow": "Real reviews",
     "title": "What our clients say",
-    "items": [
-      {
-        "name": "Carolina M.",
-        "service": "Premium facial",
-        "text": "Walked out with refreshed skin. Mia's care is impeccable — she makes you feel right at home."
-      },
-      {
-        "name": "Sofia R.",
-        "service": "Body treatment",
-        "text": "I saw results from the second session. 100% recommended."
-      },
-      {
-        "name": "Andrea L.",
-        "service": "Custom skincare",
-        "text": "My routine finally works. Mia analyzed my skin and changed my life."
-      }
-    ]
+    "google_label": "Verified Google review"
   },
+  "reviews": [
+    {
+      "name": "Martha Razo",
+      "service": "Lashes",
+      "text": "I've been getting my lashes at Mia Lashes CA for about 6 months. Erlym does a beautiful job, my lashes last a long time. She is very polite and professional."
+    },
+    {
+      "name": "Maria Martin",
+      "service": "Lashes",
+      "text": "I loved them, they look very natural, nothing exaggerated. I was very happy with your work, thank you."
+    },
+    {
+      "name": "Le Martin",
+      "service": "Lashes",
+      "text": "Erlym is the kindest and pays attention to detail. I highly recommend Mia Lashes. Great quality, prices and the lashes stay fresh and last a long time."
+    },
+    {
+      "name": "Bon Bon",
+      "service": "BB Glow & Lashes",
+      "text": "I love Erlym's work. I came in for BB Glow and she was very honest with me. I came back for lash extensions and they turned out great."
+    }
+  ],
   "cta_final": {
     "title": "Ready for your next appointment?",
     "subtitle": "Book your slot on WhatsApp. We reply personally.",

@@ -1,47 +1,83 @@
 ---
-import { t, getDict, type Lang } from '../i18n';
+import { t, getDict, type Lang } from "../i18n";
 
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const items = getDict(lang).services_preview.items;
+const base = lang === "en" ? "/en" : "";
+
+const palettes = [
+  { from: "#ffe6f1", to: "#ec6f9c", accent: "#ec6f9c" },
+  { from: "#fff5fa", to: "#d4b0e0", accent: "#6b3a73" },
+  { from: "#fff8e1", to: "#d4a85a", accent: "#d4a85a" },
+  { from: "#ffe6f1", to: "#ffa3c6", accent: "#d04b7e" },
+];
 
 const icons = [
-  // Facial - sparkle/face
-  '<path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/><circle cx="12" cy="12" r="4"/>',
-  // Body - heart/curve
-  '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>',
-  // Skincare - drop
-  '<path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0L12 2.69z"/>',
-  // Beauty - star
-  '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+  // lashes
+  `<g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+    <path d="M3 12 Q12 5 21 12"/>
+    <path d="M5 8 L4 4 M9 7 L8 3 M15 7 L16 3 M19 8 L20 4"/>
+    <circle cx="12" cy="12" r="2.5" fill="currentColor"/>
+  </g>`,
+  // lash lift
+  `<g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+    <path d="M3 14 Q12 6 21 14"/>
+    <path d="M12 14 L12 18 M9 18 L15 18"/>
+    <path d="M6 9 L5 5 M9 8 L9 4 M15 8 L15 4 M18 9 L19 5"/>
+  </g>`,
+  // bb glow / drop
+  `<g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3 C9 8 6 11 6 15 a6 6 0 0 0 12 0 c0-4-3-7-6-12z"/>
+    <circle cx="10" cy="14" r="1" fill="currentColor"/>
+  </g>`,
+  // facial / sparkle face
+  `<g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+    <circle cx="12" cy="12" r="8"/>
+    <circle cx="9"  cy="10" r="1" fill="currentColor"/>
+    <circle cx="15" cy="10" r="1" fill="currentColor"/>
+    <path d="M9 14 Q12 17 15 14"/>
+    <path d="M4 4 L5 5 M19 4 L20 5"/>
+  </g>`,
 ];
 ---
 <section id="services" class="relative bg-[var(--color-cream)] py-20 sm:py-28">
-  <div class="container-px mx-auto max-w-7xl">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0">
+    <div class="absolute right-0 top-0 h-96 w-96 rounded-full bg-[var(--color-blush-100)] opacity-50 blur-3xl"></div>
+  </div>
+
+  <div class="container-px relative mx-auto max-w-7xl">
     <div class="reveal mx-auto max-w-2xl text-center">
-      <span class="eyebrow">{t(lang, 'services_preview.eyebrow')}</span>
+      <span class="eyebrow">{t(lang, "services_preview.eyebrow")}</span>
       <h2 class="h-display mt-5 text-[clamp(2rem,4.5vw,3.25rem)]">
-        {t(lang, 'services_preview.title')}
+        {t(lang, "services_preview.title")}
       </h2>
-      <p class="mt-5 text-base text-[var(--color-gray-soft)] sm:text-lg">
-        {t(lang, 'services_preview.subtitle')}
-      </p>
+      <p class="mt-5 text-base text-[var(--color-gray-soft)] sm:text-lg">{t(lang, "services_preview.subtitle")}</p>
     </div>
 
     <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      {items.map((it, i) => (
-        <article class="card reveal flex flex-col">
-          <div class="grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-[var(--color-rose-500)] to-[var(--color-rose-400)] text-white shadow-md">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icons[i]}></svg>
-          </div>
-          <h3 class="mt-5 font-display text-xl font-bold">{it.title}</h3>
-          <p class="mt-2 text-sm leading-relaxed text-[var(--color-gray-soft)]">{it.desc}</p>
-        </article>
-      ))}
-    </div>
-
-    <div class="reveal mt-12 text-center">
-      <a href="#contact" class="btn btn-outline">{t(lang, 'services_preview.cta_all')}</a>
+      {items.map((it, i) => {
+        const p = palettes[i % palettes.length];
+        return (
+          <a href={`${base}/servicios/${it.slug}`} class="card reveal group flex flex-col">
+            <div class="relative">
+              <div
+                class="grid h-16 w-16 place-items-center rounded-2xl text-white shadow-lg transition group-hover:scale-110"
+                style={`background: linear-gradient(135deg, ${p.from}, ${p.to});`}
+              >
+                <svg width="30" height="30" viewBox="0 0 24 24" aria-hidden="true" style={`color: ${p.accent === '#d4a85a' ? '#4a3210' : '#ffffff'}`} set:html={icons[i]}></svg>
+              </div>
+              <span class="absolute -top-1 -right-1 grid h-6 w-6 place-items-center rounded-full bg-[var(--color-gold-400)] text-[10px] font-bold text-white shadow">★</span>
+            </div>
+            <h3 class="mt-5 font-display text-xl font-bold">{it.title}</h3>
+            <p class="mt-2 flex-1 text-sm leading-relaxed text-[var(--color-gray-soft)]">{it.desc}</p>
+            <span class="mt-5 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-[var(--color-pink-600)] transition group-hover:gap-3">
+              {lang === "es" ? "Ver más" : "Learn more"}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
+            </span>
+          </a>
+        );
+      })}
     </div>
   </div>
 </section>

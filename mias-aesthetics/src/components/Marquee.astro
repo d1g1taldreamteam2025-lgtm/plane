@@ -1,15 +1,15 @@
 ---
-import { getDict, type Lang } from '../i18n';
+import { getDict, type Lang } from "../i18n";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const items = getDict(lang).marquee;
 const loop = [...items, ...items, ...items, ...items];
 ---
-<section aria-hidden="true" class="border-y border-[var(--color-line)] bg-[var(--color-ink)] py-5 overflow-hidden">
+<section aria-hidden="true" class="border-y border-[var(--color-line)] bg-[var(--color-plum-900)] py-5 overflow-hidden">
   <div class="marquee-track flex w-[400%] gap-12 whitespace-nowrap font-display text-lg font-semibold tracking-widest text-white sm:text-xl">
-    {loop.map((txt) => (
+    {loop.map((txt, i) => (
       <span class="flex items-center gap-12">
-        <span class="text-[var(--color-rose-400)]">✦</span>
+        <span class={i % 2 === 0 ? "text-[var(--color-gold-400)]" : "text-[var(--color-blush-300)]"}>✦</span>
         <span class="uppercase">{txt}</span>
       </span>
     ))}

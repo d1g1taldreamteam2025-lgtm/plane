@@ -1,30 +1,42 @@
 ---
-import { t, type Lang } from '../i18n';
-import { waLink } from '../lib/site.ts';
+import { t, type Lang } from "../i18n";
+import { SITE, waLink } from "../lib/site.ts";
 
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
-const waHref = waLink(lang === 'es'
-  ? `Hola Mia's Aesthetics, quisiera reservar una cita.`
-  : `Hi Mia's Aesthetics, I'd like to book an appointment.`);
+const waHref = waLink(
+  lang === "es"
+    ? "Hola Mia's Aesthetics, quisiera reservar una cita."
+    : "Hi Mia's Aesthetics, I'd like to book an appointment."
+);
 ---
-<section id="contact" class="relative overflow-hidden bg-[var(--color-ink)] py-20 sm:py-28">
+<section id="contact" class="relative overflow-hidden bg-gradient-to-br from-[var(--color-plum-700)] via-[var(--color-plum-900)] to-[var(--color-pink-700)] py-20 sm:py-28">
   <div aria-hidden="true" class="pointer-events-none absolute inset-0">
-    <div class="absolute -top-20 -left-20 h-96 w-96 rounded-full bg-[var(--color-rose-500)] opacity-20 blur-3xl"></div>
-    <div class="absolute -bottom-20 -right-20 h-[28rem] w-[28rem] rounded-full bg-[var(--color-rose-400)] opacity-15 blur-3xl"></div>
+    <div class="absolute -top-20 -left-20 h-96 w-96 rounded-full bg-[var(--color-pink-500)] opacity-25 blur-3xl"></div>
+    <div class="absolute -bottom-20 -right-20 h-[28rem] w-[28rem] rounded-full bg-[var(--color-gold-400)] opacity-20 blur-3xl"></div>
+    <div class="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white twinkle"></div>
   </div>
+
   <div class="container-px relative mx-auto max-w-4xl text-center">
-    <h2 class="reveal h-display text-[clamp(2.25rem,5vw,3.75rem)] text-white">
-      {t(lang, 'cta_final.title')}
+    <span class="reveal eyebrow eyebrow-gold !bg-white/10 !text-[var(--color-gold-300)]">{lang === "es" ? "Reservar" : "Booking"}</span>
+    <h2 class="reveal h-display mt-5 text-[clamp(2.25rem,5vw,3.75rem)] text-white">
+      {t(lang, "cta_final.title")}
     </h2>
-    <p class="reveal mx-auto mt-6 max-w-xl text-base text-white/70 sm:text-lg">
-      {t(lang, 'cta_final.subtitle')}
+    <p class="reveal mx-auto mt-6 max-w-xl text-base text-white/75 sm:text-lg">
+      {t(lang, "cta_final.subtitle")}
     </p>
-    <div class="reveal mt-10">
+    <div class="reveal mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
       <a href={waHref} target="_blank" rel="noopener" class="btn btn-whatsapp !px-8 !py-4 !text-sm">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.05 0C5.49 0 .2 5.3.2 11.86c0 2.09.55 4.13 1.6 5.93L0 24l6.36-1.67a11.84 11.84 0 0 0 5.69 1.45h.01c6.56 0 11.86-5.3 11.86-11.86 0-3.17-1.23-6.15-3.4-8.44Z"/></svg>
-        {t(lang, 'cta_final.cta')}
+        <img src={SITE.icons.whatsapp} alt="" width="20" height="20" class="h-5 w-5" loading="lazy"/>
+        {t(lang, "cta_final.cta")}
+      </a>
+      <a href={SITE.social.googleMaps} target="_blank" rel="noopener" class="btn !bg-white/10 !px-8 !py-4 !text-sm !text-white hover:!bg-white hover:!text-[var(--color-ink)]">
+        <img src={SITE.icons.googleMaps} alt="" width="18" height="18" class="h-[18px] w-[18px]" loading="lazy"/>
+        {lang === "es" ? "Cómo llegar" : "Get directions"}
       </a>
     </div>
+    <p class="reveal mt-8 text-xs uppercase tracking-widest text-white/55">
+      {SITE.address}
+    </p>
   </div>
 </section>

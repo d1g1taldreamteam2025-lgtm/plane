@@ -1,32 +1,51 @@
 ---
-import { t, getDict, type Lang } from '../i18n';
+import { t, getDict, type Lang } from "../i18n";
+import { SITE } from "../lib/site.ts";
+
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
-const items = getDict(lang).testimonials.items;
+const reviews = getDict(lang).reviews;
 ---
-<section id="testimonials" class="bg-[var(--color-nude-50)] py-20 sm:py-28">
+<section id="testimonials" class="bg-gradient-to-b from-white via-[var(--color-blush-50)] to-white py-20 sm:py-28">
   <div class="container-px mx-auto max-w-7xl">
     <div class="reveal mx-auto max-w-2xl text-center">
-      <span class="eyebrow">{t(lang, 'testimonials.eyebrow')}</span>
+      <span class="eyebrow eyebrow-gold">{t(lang, "testimonials.eyebrow")}</span>
       <h2 class="h-display mt-5 text-[clamp(2rem,4.5vw,3.25rem)]">
-        {t(lang, 'testimonials.title')}
+        {t(lang, "testimonials.title")}
       </h2>
+      <a
+        href={SITE.social.googleMaps}
+        target="_blank"
+        rel="noopener"
+        class="mt-6 inline-flex items-center gap-3 rounded-full border border-[var(--color-line)] bg-white px-5 py-2 shadow-sm transition hover:shadow-md"
+      >
+        <img src={SITE.icons.google} alt="Google" width="22" height="22" class="h-5 w-5" loading="lazy" />
+        <div class="flex gap-0.5 text-[#FBBC04]" aria-hidden="true">
+          {[1,2,3,4,5].map(() => (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"/></svg>
+          ))}
+        </div>
+        <span class="text-sm font-semibold text-[var(--color-graphite)]">5.0</span>
+      </a>
     </div>
 
-    <div class="mt-14 grid gap-6 md:grid-cols-3">
-      {items.map((it) => (
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {reviews.map((rev) => (
         <figure class="card reveal flex flex-col">
-          <div class="flex gap-1 text-[var(--color-rose-500)]" aria-label="5 stars">
-            {[1,2,3,4,5].map(() => (
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            ))}
+          <div class="flex items-center justify-between">
+            <div class="flex gap-0.5 text-[#FBBC04]" aria-label="5 stars">
+              {[1,2,3,4,5].map(() => (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"/></svg>
+              ))}
+            </div>
+            <img src={SITE.icons.google} alt="Google" width="18" height="18" class="h-[18px] w-[18px] opacity-90" loading="lazy" title={t(lang, "testimonials.google_label")} />
           </div>
-          <blockquote class="mt-5 flex-1 text-base leading-relaxed text-[var(--color-graphite)]">
-            “{it.text}”
+          <blockquote class="mt-4 flex-1 text-[15px] leading-relaxed text-[var(--color-graphite)]">
+            "{rev.text}"
           </blockquote>
-          <figcaption class="mt-6 border-t border-[var(--color-line)] pt-4">
-            <div class="font-display font-semibold">{it.name}</div>
-            <div class="text-xs uppercase tracking-widest text-[var(--color-rose-600)]">{it.service}</div>
+          <figcaption class="mt-5 border-t border-[var(--color-line)] pt-4">
+            <div class="font-display font-semibold">{rev.name}</div>
+            <div class="text-xs uppercase tracking-widest text-[var(--color-pink-600)]">{rev.service}</div>
           </figcaption>
         </figure>
       ))}

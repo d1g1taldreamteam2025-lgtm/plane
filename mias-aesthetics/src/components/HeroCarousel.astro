@@ -1,0 +1,182 @@
+---
+import { getDict, type Lang } from "../i18n";
+import { waLink } from "../lib/site.ts";
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const slides = getDict(lang).carousel;
+
+const waBookText = lang === "es"
+  ? "Hola Mia's Aesthetics, quisiera reservar"
+  : "Hi Mia's Aesthetics, I'd like to book";
+
+const palettes = [
+  // pink → gold (lashes)
+  { from: "#ffe6f1", via: "#ffc6dd", to: "#e8c878", accent: "#ec6f9c", svg: "lashes" },
+  // blush → plum (facial)
+  { from: "#fff5fa", via: "#ffd5e5", to: "#d4b0e0", accent: "#6b3a73", svg: "facial" },
+  // gold → blush (beauty)
+  { from: "#fff8e1", via: "#ffe6f1", to: "#ffa3c6", accent: "#d4a85a", svg: "beauty" },
+];
+
+function illustration(kind: string) {
+  if (kind === "lashes") {
+    return `
+      <g transform="translate(200 250)" stroke="#1a0f1f" stroke-width="6" stroke-linecap="round" fill="none">
+        <path d="M -110 0 Q 0 -80 110 0"/>
+        <path d="M -100 -10 Q -100 -55 -90 -65" />
+        <path d="M -75 -25 Q -75 -75 -65 -90" />
+        <path d="M -45 -38 Q -45 -90 -35 -110" />
+        <path d="M -15 -45 Q -15 -100 -5 -118" />
+        <path d="M  15 -45 Q  15 -100 5 -118" />
+        <path d="M  45 -38 Q  45 -90 35 -110" />
+        <path d="M  75 -25 Q  75 -75 65 -90" />
+        <path d="M 100 -10 Q 100 -55 90 -65" />
+      </g>
+      <ellipse cx="200" cy="250" rx="60" ry="22" fill="#ec6f9c"/>
+      <ellipse cx="200" cy="250" rx="48" ry="16" fill="#fff"/>
+      <circle cx="200" cy="250" r="14" fill="#1a0f1f"/>
+      <circle cx="195" cy="245" r="4" fill="#fff"/>
+    `;
+  }
+  if (kind === "facial") {
+    return `
+      <g transform="translate(200 250)" fill="none" stroke="#1a0f1f" stroke-width="5" stroke-linecap="round">
+        <path d="M -70 -50 C -70 30, 70 30, 70 -50 C 70 -110, -70 -110, -70 -50 Z" fill="#ffd5e5"/>
+        <circle cx="-25" cy="-35" r="5" fill="#1a0f1f" stroke="none"/>
+        <circle cx="25" cy="-35" r="5" fill="#1a0f1f" stroke="none"/>
+        <path d="M -25 10 Q 0 30 25 10"/>
+        <g stroke="#ec6f9c" stroke-width="3" opacity="0.8">
+          <circle cx="-50" cy="-70" r="3" fill="#ec6f9c"/>
+          <circle cx="50" cy="-70" r="3" fill="#ec6f9c"/>
+          <circle cx="-60" cy="-30" r="3" fill="#ec6f9c"/>
+        </g>
+      </g>
+      <g fill="#d4a85a" opacity="0.75">
+        <circle cx="80" cy="120" r="4"/>
+        <circle cx="320" cy="140" r="5"/>
+        <circle cx="100" cy="380" r="4"/>
+        <circle cx="310" cy="360" r="4"/>
+      </g>
+    `;
+  }
+  return `
+    <g transform="translate(200 250)">
+      <g stroke="#1a0f1f" stroke-width="4" fill="#ffd5e5">
+        <ellipse cx="0" cy="-70" rx="34" ry="60"/>
+        <ellipse cx="0" cy="-70" rx="34" ry="60" transform="rotate(72)"/>
+        <ellipse cx="0" cy="-70" rx="34" ry="60" transform="rotate(144)"/>
+        <ellipse cx="0" cy="-70" rx="34" ry="60" transform="rotate(216)"/>
+        <ellipse cx="0" cy="-70" rx="34" ry="60" transform="rotate(288)"/>
+      </g>
+      <circle r="22" fill="#d4a85a"/>
+      <circle r="10" fill="#1a0f1f"/>
+    </g>
+  `;
+}
+---
+<section class="relative overflow-hidden">
+  <div id="hero-carousel" class="relative h-[640px] sm:h-[680px] lg:h-[720px]">
+    {slides.map((slide, i) => {
+      const p = palettes[i % palettes.length];
+      const waHref = waLink(`${waBookText} (${slide.eyebrow})`);
+      return (
+        <div
+          class="hero-slide absolute inset-0"
+          data-index={i}
+          style={`background: linear-gradient(135deg, ${p.from} 0%, ${p.via} 45%, ${p.to} 100%);`}
+        >
+          <!-- Decorative blurred shapes -->
+          <div aria-hidden="true" class="pointer-events-none absolute inset-0">
+            <div class="absolute -top-20 -left-20 h-[440px] w-[440px] rounded-full bg-white opacity-40 blur-3xl float-y"></div>
+            <div class="absolute -bottom-32 -right-32 h-[480px] w-[480px] rounded-full opacity-30 blur-3xl float-y" style={`background:${p.accent}; animation-delay: 1.5s;`}></div>
+          </div>
+          <!-- Sparkles -->
+          <div aria-hidden="true" class="pointer-events-none absolute inset-0">
+            <span class="twinkle absolute top-[18%] left-[12%] h-2 w-2 rounded-full bg-white"></span>
+            <span class="twinkle absolute top-[28%] right-[18%] h-3 w-3 rounded-full bg-white" style="animation-delay: 0.6s"></span>
+            <span class="twinkle absolute bottom-[28%] left-[20%] h-2 w-2 rounded-full bg-white" style="animation-delay: 1.2s"></span>
+            <span class="twinkle absolute bottom-[16%] right-[26%] h-3 w-3 rounded-full bg-[var(--color-gold-400)]" style="animation-delay: 1.8s"></span>
+          </div>
+
+          <div class="container-px relative mx-auto grid h-full max-w-7xl items-center gap-10 lg:grid-cols-12">
+            <div class="lg:col-span-7">
+              <span class="eyebrow">{slide.eyebrow}</span>
+              <h1 class="h-display mt-5 text-[clamp(2.5rem,7vw,5.25rem)]">
+                {slide.title_1}<br/>
+                <span
+                  class="bg-clip-text italic text-transparent"
+                  style={`background-image: linear-gradient(135deg, ${p.accent}, #6b3a73);`}
+                >{slide.title_2}</span>
+              </h1>
+              <p class="mt-6 max-w-xl text-base text-[var(--color-graphite)] sm:text-lg">
+                {slide.subtitle}
+              </p>
+              <div class="mt-8 flex flex-wrap items-center gap-3">
+                <a href={waHref} target="_blank" rel="noopener" class="btn btn-whatsapp">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.05 0C5.49 0 .2 5.3.2 11.86c0 2.09.55 4.13 1.6 5.93L0 24l6.36-1.67a11.84 11.84 0 0 0 5.69 1.45h.01c6.56 0 11.86-5.3 11.86-11.86 0-3.17-1.23-6.15-3.4-8.44Z"/></svg>
+                  {slide.cta_book}
+                </a>
+                <a href="#services" class="btn btn-outline">{slide.cta_more}</a>
+              </div>
+            </div>
+
+            <div class="relative hidden lg:col-span-5 lg:block">
+              <div class="float-y relative mx-auto aspect-square w-full max-w-md">
+                <div class="absolute inset-4 rounded-full" style={`background: radial-gradient(circle, ${p.accent}33 0%, transparent 70%);`}></div>
+                <div class="absolute inset-10 rounded-full border-2 border-dashed border-[var(--color-gold-400)] opacity-50"></div>
+                <svg viewBox="0 0 400 500" class="absolute inset-0 h-full w-full" xmlns="http://www.w3.org/2000/svg" role="img" aria-label={slide.eyebrow}>
+                  <Fragment set:html={illustration(p.svg)} />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    })}
+
+    <!-- Controls -->
+    <div class="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2">
+      {slides.map((_, i) => (
+        <button
+          type="button"
+          class="hero-dot h-2 w-8 rounded-full bg-[var(--color-plum-900)]/30 transition hover:bg-[var(--color-plum-900)]/50"
+          data-target={i}
+          aria-label={`Slide ${i + 1}`}
+        ></button>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-slide { opacity: 0; transition: opacity 0.7s ease-in-out; pointer-events: none; }
+  .hero-slide.active { opacity: 1; pointer-events: auto; }
+  .hero-dot.active { background: #1a0f1f; width: 28px; }
+</style>
+
+<script>
+  const carousel = document.getElementById("hero-carousel");
+  if (carousel) {
+    const slides = Array.from(carousel.querySelectorAll<HTMLElement>(".hero-slide"));
+    const dots   = Array.from(carousel.querySelectorAll<HTMLElement>(".hero-dot"));
+    let idx = 0;
+    const setIdx = (n: number) => {
+      idx = (n + slides.length) % slides.length;
+      slides.forEach((s, i) => s.classList.toggle("active", i === idx));
+      dots.forEach((d, i) => d.classList.toggle("active", i === idx));
+    };
+    setIdx(0);
+    let timer = window.setInterval(() => setIdx(idx + 1), 4500);
+    dots.forEach((d, i) => d.addEventListener("click", () => {
+      window.clearInterval(timer);
+      setIdx(i);
+      timer = window.setInterval(() => setIdx(idx + 1), 4500);
+    }));
+    // Pause on hover
+    carousel.addEventListener("mouseenter", () => window.clearInterval(timer));
+    carousel.addEventListener("mouseleave", () => {
+      timer = window.setInterval(() => setIdx(idx + 1), 4500);
+    });
+  }
+</script>

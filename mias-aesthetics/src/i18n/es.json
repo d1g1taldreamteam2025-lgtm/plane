@@ -1,57 +1,102 @@
 {
   "meta": {
-    "title": "Mia's Aesthetics — Centro Estético en USA",
-    "description": "Tratamientos faciales, corporales y de belleza personalizados. Realza tu belleza natural con Mia's Aesthetics."
+    "title": "Mia's Aesthetics — Centro Estético en Anaheim, CA",
+    "description": "Pestañas, faciales y belleza personalizada con Erlym Monasterios en Anaheim, CA. Reservá por WhatsApp."
   },
   "nav": {
     "home": "Inicio",
     "services": "Servicios",
     "about": "Nosotras",
     "gallery": "Galería",
-    "testimonials": "Testimonios",
+    "testimonials": "Reseñas",
     "contact": "Contacto",
     "book": "Reservar"
   },
-  "hero": {
-    "eyebrow": "Mia's Aesthetics",
-    "title_1": "Tu belleza,",
-    "title_2": "elevada.",
-    "subtitle": "Tratamientos estéticos personalizados que realzan tu belleza natural en un espacio diseñado para que te sientas como en casa.",
-    "cta_book": "Reservar por WhatsApp",
-    "cta_services": "Ver servicios",
-    "trust_1": "100% Personalizado",
-    "trust_2": "Productos premium",
-    "trust_3": "Atención experta"
+  "announcement": [
+    "✨ Reservá tu cita por WhatsApp — Respuesta inmediata",
+    "💖 Nuevas clientas: 15% OFF en tu primer tratamiento",
+    "📍 Anaheim, CA — 160 S Old Springs Rd"
+  ],
+  "modal": {
+    "eyebrow": "Solo para vos",
+    "title": "15% OFF tu primer tratamiento",
+    "subtitle": "Reservá hoy por WhatsApp y recibí 15% de descuento en tu primera visita.",
+    "cta": "Quiero mi descuento",
+    "dismiss": "No, gracias",
+    "fine_print": "Aplicable solo a nuevas clientas. No acumulable con otras promos."
   },
+  "carousel": [
+    {
+      "eyebrow": "Pestañas que enamoran",
+      "title_1": "Tu mirada,",
+      "title_2": "irresistible.",
+      "subtitle": "Extensiones de pestañas hechas con técnica y dedicación. Naturales, voluminosas o híbridas — vos elegís.",
+      "cta_book": "Reservar pestañas",
+      "cta_more": "Ver técnicas"
+    },
+    {
+      "eyebrow": "Faciales premium",
+      "title_1": "Tu piel,",
+      "title_2": "luminosa.",
+      "subtitle": "Limpiezas profundas, BB Glow, peelings y rejuvenecimiento con productos de alta gama.",
+      "cta_book": "Reservar facial",
+      "cta_more": "Ver tratamientos"
+    },
+    {
+      "eyebrow": "Belleza personalizada",
+      "title_1": "Tu estilo,",
+      "title_2": "elevado.",
+      "subtitle": "Cejas, lifting, dermaplaning y más. Cada servicio diseñado a tu medida por Erlym.",
+      "cta_book": "Reservar cita",
+      "cta_more": "Ver todo"
+    }
+  ],
   "marquee": [
-    "Faciales premium",
-    "Tratamientos corporales",
-    "Skincare profesional",
-    "Bienestar integral",
-    "Belleza personalizada"
+    "Pestañas premium",
+    "Faciales personalizados",
+    "BB Glow",
+    "Lifting de pestañas",
+    "Dermaplaning",
+    "Diseño de cejas"
+  ],
+  "trust_badges": [
+    { "title": "Técnica certificada", "desc": "Años de experiencia y formación constante." },
+    { "title": "5.0 ★ en Google", "desc": "Clientas felices que vuelven una y otra vez." },
+    { "title": "Productos premium", "desc": "Solo marcas profesionales y dermatológicas." },
+    { "title": "Trato personal", "desc": "Te asesoramos antes de cada tratamiento." }
   ],
   "intro": {
     "eyebrow": "Bienvenida",
     "title": "Un espacio creado para vos",
-    "p1": "En Mia's Aesthetics creemos que cada piel cuenta una historia única. Por eso diseñamos cada tratamiento a tu medida, combinando técnica, productos premium y un trato cercano que hace toda la diferencia.",
-    "p2": "Más que un centro estético, somos tu rincón para reconectar con vos misma."
+    "p1": "En Mia's Aesthetics, Erlym diseña cada tratamiento a tu medida. Combinamos técnica, productos premium y un trato cercano que hace toda la diferencia.",
+    "p2": "Más que un centro estético — tu rincón en Anaheim para reconectar con vos misma."
   },
   "services_preview": {
     "eyebrow": "Servicios",
     "title": "Tratamientos que te enamoran",
-    "subtitle": "Una selección de nuestros servicios más solicitados. Cada uno diseñado para resultados visibles y duraderos.",
+    "subtitle": "Nuestros servicios estrella. Cada uno diseñado para resultados visibles y duraderos.",
     "cta_all": "Ver todos los servicios",
     "items": [
       {
-        "title": "Faciales premium",
-        "desc": "Limpieza profunda, hidratación y rejuvenecimiento con productos de alta gama."
+        "slug": "extensiones-pestanas",
+        "title": "Extensiones de pestañas",
+        "desc": "Clásicas, híbridas y volumen. Te asesoramos según tu mirada y rutina."
       },
       {
-        "title": "Tratamientos corporales",
-        "desc": "Reductivos, drenaje y reafirmantes para verte y sentirte increíble."
+        "slug": "lifting-pestanas",
+        "title": "Lifting de pestañas",
+        "desc": "Realzá tus pestañas naturales con un efecto curvado de hasta 8 semanas."
       },
-      { "title": "Skincare a medida", "desc": "Rutinas personalizadas según el análisis de tu tipo de piel." },
-      { "title": "Belleza & detalles", "desc": "Pestañas, cejas y detalles que realzan tu mirada natural." }
+      {
+        "slug": "bb-glow",
+        "title": "BB Glow",
+        "desc": "Piel uniforme, luminosa y con efecto maquillaje natural."
+      },
+      {
+        "slug": "faciales",
+        "title": "Faciales premium",
+        "desc": "Limpiezas profundas, peelings y rejuvenecimiento con tecnología profesional."
+      }
     ]
   },
   "why": {
@@ -60,34 +105,40 @@
     "items": [
       {
         "title": "Atención personalizada",
-        "desc": "Cada cliente es único. Analizamos tu piel y necesidades antes de recomendarte algo."
+        "desc": "Cada clienta es única. Analizamos tu piel y necesidades antes de recomendarte algo."
       },
       { "title": "Productos premium", "desc": "Trabajamos solo con marcas profesionales con respaldo dermatológico." },
       { "title": "Espacio íntimo", "desc": "Un ambiente diseñado para que te relajes desde el momento en que entrás." },
-      { "title": "Resultados visibles", "desc": "Protocolos probados con seguimiento de tu progreso sesión a sesión." }
+      { "title": "Resultados visibles", "desc": "Protocolos probados con seguimiento sesión a sesión." }
     ]
   },
   "testimonials": {
-    "eyebrow": "Testimonios",
+    "eyebrow": "Reseñas reales",
     "title": "Lo que dicen nuestras clientas",
-    "items": [
-      {
-        "name": "Carolina M.",
-        "service": "Facial premium",
-        "text": "Salí con la piel renovada. El trato de Mia es impecable, te hace sentir como en casa."
-      },
-      {
-        "name": "Sofía R.",
-        "service": "Tratamiento corporal",
-        "text": "Vi resultados desde la segunda sesión. Recomendado al 100%."
-      },
-      {
-        "name": "Andrea L.",
-        "service": "Skincare personalizado",
-        "text": "Mi rutina por fin funciona. Mia analizó mi piel y me cambió la vida."
-      }
-    ]
+    "google_label": "Reseña verificada en Google"
   },
+  "reviews": [
+    {
+      "name": "Martha Razo",
+      "service": "Pestañas",
+      "text": "Tengo como 6 meses poniéndome las pestañas en Mia Lashes CA. Erlym hace un trabajo hermoso, las pestañas duran mucho. Es muy amable y profesional."
+    },
+    {
+      "name": "Maria Martin",
+      "service": "Pestañas",
+      "text": "Me encantaron, se ven muy naturales, nada de exagerado. Quedé muy contenta con tu trabajo, gracias."
+    },
+    {
+      "name": "Le Martin",
+      "service": "Pestañas",
+      "text": "Erlym es súper amable y presta mucha atención a los detalles. Recomiendo ampliamente Mia Lashes. Excelente calidad, precios y las pestañas duran mucho."
+    },
+    {
+      "name": "Bon Bon",
+      "service": "BB Glow & Pestañas",
+      "text": "Me encanta el trabajo de Erlym. Acudí por BB Glow y fue muy sincera conmigo. Volví para extensiones de pestañas y quedaron geniales."
+    }
+  ],
   "cta_final": {
     "title": "¿Lista para tu próxima cita?",
     "subtitle": "Reservá tu turno por WhatsApp. Te respondemos personalmente.",

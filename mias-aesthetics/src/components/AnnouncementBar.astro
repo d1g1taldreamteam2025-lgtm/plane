@@ -1,0 +1,36 @@
+---
+import { getDict, type Lang } from "../i18n";
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const items = getDict(lang).announcement;
+---
+<div
+  id="announcement-bar"
+  class="relative w-full overflow-hidden bg-gradient-to-r from-[var(--color-plum-700)] via-[var(--color-pink-700)] to-[var(--color-plum-700)] text-white"
+  aria-label="Announcements"
+>
+  <div class="container-px mx-auto flex h-9 max-w-7xl items-center justify-center">
+    <div class="relative h-5 w-full overflow-hidden text-center">
+      {items.map((txt, i) => (
+        <span
+          class="ann-item absolute inset-0 flex items-center justify-center text-[11px] font-medium tracking-wide sm:text-xs"
+          style={`animation-delay: ${i * 3.5}s`}
+        >{txt}</span>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style define:vars={{ count: String(items.length) }}>
+  .ann-item {
+    opacity: 0;
+    animation: annCycle calc(var(--count) * 3.5s) ease-in-out infinite;
+  }
+  @keyframes annCycle {
+    0%   { opacity: 0; transform: translateY(8px); }
+    4%   { opacity: 1; transform: translateY(0); }
+    25%  { opacity: 1; transform: translateY(0); }
+    29%  { opacity: 0; transform: translateY(-8px); }
+    100% { opacity: 0; }
+  }
+</style>
