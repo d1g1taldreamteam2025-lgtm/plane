@@ -1,0 +1,84 @@
+---
+import { t, type Lang } from "../i18n";
+import { SITE } from "../lib/site.ts";
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+
+// 6 placeholder slots — different gradients so the grid looks alive
+const slots = [
+  { from: "#ffe6f1", to: "#ec6f9c", icon: "lashes",  span: "row-span-2" },
+  { from: "#fff3d4", to: "#d4a85a", icon: "facial",  span: "" },
+  { from: "#e6d5ec", to: "#6b3a73", icon: "drop",    span: "" },
+  { from: "#cfe6ff", to: "#5da9ec", icon: "lips",    span: "" },
+  { from: "#ffc6dd", to: "#ff7eaf", icon: "sparkle", span: "row-span-2" },
+  { from: "#fff5fa", to: "#ffa3c6", icon: "star",    span: "" },
+];
+
+const iconSvg: Record<string, string> = {
+  lashes:  `<path d="M3 12 Q12 5 21 12" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M5 8 L4 4 M9 7 L8 3 M15 7 L16 3 M19 8 L20 4" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/>`,
+  facial:  `<circle cx="12" cy="12" r="8" fill="none" stroke-width="2"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/><path d="M9 14 Q12 17 15 14" fill="none" stroke-width="2" stroke-linecap="round"/>`,
+  drop:    `<path d="M12 3 C9 8 6 11 6 15 a6 6 0 0 0 12 0 c0-4-3-7-6-12z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`,
+  lips:    `<path d="M4 12 Q7 7 12 9 Q17 7 20 12 Q17 17 12 16 Q7 17 4 12 Z" fill="currentColor" opacity="0.85"/>`,
+  sparkle: `<path d="M12 2 L13 9 L20 10 L13 11 L12 18 L11 11 L4 10 L11 9z" fill="currentColor"/><path d="M19 16 L19.5 18.5 L22 19 L19.5 19.5 L19 22 L18.5 19.5 L16 19 L18.5 18.5z" fill="currentColor"/>`,
+  star:    `<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26" fill="currentColor"/>`,
+};
+---
+<section id="gallery" class="relative bg-white py-20 sm:py-28">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0">
+    <div class="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-[var(--color-blush-100)] opacity-50 blur-3xl"></div>
+  </div>
+
+  <div class="container-px relative mx-auto max-w-7xl">
+    <div class="reveal mx-auto max-w-2xl text-center">
+      <span class="eyebrow eyebrow-gold">{t(lang, "gallery.eyebrow")}</span>
+      <h2 class="h-display mt-5 text-[clamp(2rem,4.5vw,3.25rem)]">{t(lang, "gallery.title")}</h2>
+      <p class="mt-5 text-base text-[var(--color-gray-soft)] sm:text-lg">{t(lang, "gallery.subtitle")}</p>
+    </div>
+
+    <div class="mt-14 grid auto-rows-[180px] grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4 lg:auto-rows-[200px]">
+      {slots.map((slot) => (
+        <div
+          class={`reveal gallery-tile group relative overflow-hidden rounded-2xl border border-[var(--color-line)] shadow-md ${slot.span}`}
+          style={`background: linear-gradient(135deg, ${slot.from}, ${slot.to});`}
+        >
+          <div class="shimmer absolute inset-0"></div>
+          <div class="absolute inset-0 grid place-items-center text-white/85">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" set:html={iconSvg[slot.icon]}></svg>
+          </div>
+          <div class="absolute inset-x-0 bottom-0 flex items-center justify-between bg-gradient-to-t from-[var(--color-plum-900)]/65 to-transparent p-3 opacity-0 transition group-hover:opacity-100">
+            <span class="text-[10px] font-bold uppercase tracking-widest text-white">{t(lang, "gallery.soon")}</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="reveal mt-10 text-center">
+      <a href={SITE.social.instagram} target="_blank" rel="noopener" class="btn btn-outline">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+        </svg>
+        {t(lang, "gallery.view_ig")}
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes shimmer {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+  .shimmer {
+    background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.35) 50%, transparent 70%);
+    animation: shimmer 3.2s ease-in-out infinite;
+  }
+  .gallery-tile {
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+  }
+  .gallery-tile:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 18px 40px -12px rgba(236, 111, 156, 0.4);
+  }
+</style>

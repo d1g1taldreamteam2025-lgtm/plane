@@ -29,12 +29,16 @@ const waHref = waLink(
         <circle cx="200" cy="20" r="14" fill="#fff" opacity="0.6"/>
       </svg>
       <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-        <div class="grid h-16 w-16 place-items-center rounded-full bg-white shadow-lg">
+        <div class="grid h-16 w-16 place-items-center rounded-full bg-white shadow-lg pulse-ring">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ec6f9c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
           </svg>
         </div>
       </div>
+      <!-- Sparkles -->
+      <span class="twinkle absolute top-4 left-12 h-1.5 w-1.5 rounded-full bg-white"></span>
+      <span class="twinkle absolute top-10 right-16 h-2 w-2 rounded-full bg-white" style="animation-delay:0.6s"></span>
+      <span class="twinkle absolute bottom-3 right-32 h-1.5 w-1.5 rounded-full bg-[var(--color-gold-500)]" style="animation-delay:1.2s"></span>
     </div>
 
     <button
@@ -56,6 +60,30 @@ const waHref = waLink(
       <p class="mt-3 text-sm text-[var(--color-gray-soft)] sm:text-base">
         {t(lang, "modal.subtitle")}
       </p>
+
+      <!-- Countdown -->
+      <div class="mt-5">
+        <p class="text-[10px] font-bold uppercase tracking-widest text-[var(--color-pink-600)]">
+          {t(lang, "modal.countdown_label")}
+        </p>
+        <div id="countdown" class="mt-2 flex items-center justify-center gap-2">
+          <div class="flex min-w-[60px] flex-col items-center rounded-xl bg-[var(--color-plum-900)] px-3 py-2 text-white">
+            <span class="font-display text-2xl font-bold tabular-nums" data-cd="h">23</span>
+            <span class="text-[9px] uppercase tracking-widest opacity-75">{t(lang, "modal.countdown_h")}</span>
+          </div>
+          <span class="font-display text-2xl font-bold text-[var(--color-plum-900)]">:</span>
+          <div class="flex min-w-[60px] flex-col items-center rounded-xl bg-[var(--color-plum-900)] px-3 py-2 text-white">
+            <span class="font-display text-2xl font-bold tabular-nums" data-cd="m">59</span>
+            <span class="text-[9px] uppercase tracking-widest opacity-75">{t(lang, "modal.countdown_m")}</span>
+          </div>
+          <span class="font-display text-2xl font-bold text-[var(--color-plum-900)]">:</span>
+          <div class="flex min-w-[60px] flex-col items-center rounded-xl bg-gradient-to-br from-[var(--color-pink-500)] to-[var(--color-pink-600)] px-3 py-2 text-white">
+            <span class="font-display text-2xl font-bold tabular-nums" data-cd="s">59</span>
+            <span class="text-[9px] uppercase tracking-widest opacity-90">{t(lang, "modal.countdown_s")}</span>
+          </div>
+        </div>
+      </div>
+
       <div class="mt-6 flex flex-col gap-2 sm:flex-row sm:justify-center">
         <a href={waHref} target="_blank" rel="noopener" class="btn btn-primary">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.05 0C5.49 0 .2 5.3.2 11.86c0 2.09.55 4.13 1.6 5.93L0 24l6.36-1.67a11.84 11.84 0 0 0 5.69 1.45h.01c6.56 0 11.86-5.3 11.86-11.86 0-3.17-1.23-6.15-3.4-8.44Z"/></svg>
@@ -71,13 +99,17 @@ const waHref = waLink(
 </div>
 
 <script>
-  const STORAGE_KEY = "mia_welcome_modal_shown";
+  const STORAGE_KEY    = "mia_welcome_modal_shown";
+  const DEADLINE_KEY   = "mia_welcome_deadline";
+  const DURATION_MS    = 24 * 60 * 60 * 1000; // 24h
+
   const modal = document.getElementById("welcome-modal");
   if (modal) {
     const open = () => {
       modal.classList.remove("hidden");
       modal.classList.add("flex");
       document.body.style.overflow = "hidden";
+      startCountdown();
     };
     const close = () => {
       modal.classList.add("hidden");
@@ -89,6 +121,34 @@ const waHref = waLink(
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && !modal.classList.contains("hidden")) close();
     });
+
+    // Countdown logic — persists deadline across reloads
+    let timer: number | null = null;
+    function getDeadline(): number {
+      const stored = Number(localStorage.getItem(DEADLINE_KEY) || 0);
+      if (stored > Date.now()) return stored;
+      const fresh = Date.now() + DURATION_MS;
+      localStorage.setItem(DEADLINE_KEY, String(fresh));
+      return fresh;
+    }
+    function pad(n: number) { return n < 10 ? `0${n}` : String(n); }
+    function startCountdown() {
+      if (timer) return;
+      const deadline = getDeadline();
+      const tick = () => {
+        const ms = Math.max(0, deadline - Date.now());
+        const h  = Math.floor(ms / 3_600_000);
+        const m  = Math.floor((ms % 3_600_000) / 60_000);
+        const s  = Math.floor((ms % 60_000) / 1000);
+        document.querySelector("[data-cd='h']")!.textContent = pad(h);
+        document.querySelector("[data-cd='m']")!.textContent = pad(m);
+        document.querySelector("[data-cd='s']")!.textContent = pad(s);
+        if (ms <= 0 && timer) { clearInterval(timer); timer = null; }
+      };
+      tick();
+      timer = window.setInterval(tick, 1000);
+    }
+
     if (!sessionStorage.getItem(STORAGE_KEY)) {
       setTimeout(open, 5000);
     }

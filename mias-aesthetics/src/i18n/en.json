@@ -23,7 +23,11 @@
     "subtitle": "Book today on WhatsApp and get 15% off your first visit.",
     "cta": "Claim my discount",
     "dismiss": "No, thanks",
-    "fine_print": "New clients only. Cannot be combined with other promotions."
+    "fine_print": "New clients only. Cannot be combined with other promotions.",
+    "countdown_label": "Offer ends in",
+    "countdown_h": "hours",
+    "countdown_m": "min",
+    "countdown_s": "sec"
   },
   "carousel": [
     {
@@ -142,6 +146,24 @@
       "text": "I love Erlym's work. I came in for BB Glow and she was very honest with me. I came back for lash extensions and they turned out great."
     }
   ],
+  "gallery": {
+    "eyebrow": "Gallery",
+    "title": "Results that wow",
+    "subtitle": "Some of the work we did at the studio. More real treatment photos coming soon.",
+    "soon": "Coming soon",
+    "view_ig": "See more on Instagram"
+  },
+  "contact_section": {
+    "eyebrow": "Contact",
+    "title": "Come visit us",
+    "subtitle": "We're in Anaheim, CA. Book your appointment or message us directly on WhatsApp.",
+    "address_label": "Address",
+    "hours_label": "Hours",
+    "phone_label": "WhatsApp",
+    "email_label": "Email",
+    "directions": "Get directions",
+    "open_in_maps": "Open in Google Maps"
+  },
   "cta_final": {
     "title": "Ready for your next appointment?",
     "subtitle": "Book your slot on WhatsApp. We reply personally.",

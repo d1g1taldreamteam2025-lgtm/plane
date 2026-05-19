@@ -23,7 +23,11 @@
     "subtitle": "Reservá hoy por WhatsApp y recibí 15% de descuento en tu primera visita.",
     "cta": "Quiero mi descuento",
     "dismiss": "No, gracias",
-    "fine_print": "Aplicable solo a nuevas clientas. No acumulable con otras promos."
+    "fine_print": "Aplicable solo a nuevas clientas. No acumulable con otras promos.",
+    "countdown_label": "La promo termina en",
+    "countdown_h": "horas",
+    "countdown_m": "min",
+    "countdown_s": "seg"
   },
   "carousel": [
     {
@@ -142,6 +146,24 @@
       "text": "Me encanta el trabajo de Erlym. Acudí por BB Glow y fue muy sincera conmigo. Volví para extensiones de pestañas y quedaron geniales."
     }
   ],
+  "gallery": {
+    "eyebrow": "Galería",
+    "title": "Resultados que enamoran",
+    "subtitle": "Algunos de los trabajos que hicimos en el estudio. Pronto, más fotos reales de tratamientos.",
+    "soon": "Próximamente",
+    "view_ig": "Ver más en Instagram"
+  },
+  "contact_section": {
+    "eyebrow": "Contacto",
+    "title": "Vení a visitarnos",
+    "subtitle": "Estamos en Anaheim, CA. Reservá tu cita o escribinos directamente por WhatsApp.",
+    "address_label": "Dirección",
+    "hours_label": "Horarios",
+    "phone_label": "WhatsApp",
+    "email_label": "Email",
+    "directions": "Cómo llegar",
+    "open_in_maps": "Abrir en Google Maps"
+  },
   "cta_final": {
     "title": "¿Lista para tu próxima cita?",
     "subtitle": "Reservá tu turno por WhatsApp. Te respondemos personalmente.",
