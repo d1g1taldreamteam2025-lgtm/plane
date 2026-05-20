@@ -169,6 +169,28 @@
     "subtitle": "Book your slot on WhatsApp. We reply personally.",
     "cta": "Book on WhatsApp"
   },
+  "about_erlym": {
+    "eyebrow": "About Erlym",
+    "title": "Meet Erlym Monasterios",
+    "subtitle": "Founder and technician behind Mia's Aesthetics. Your beauty in expert hands.",
+    "p1": "Erlym is the heart of Mia's Aesthetics. With 8+ years of experience between Costa Rica and the United States, she specializes in lashes, advanced facials and premium aesthetic procedures.",
+    "p2": "Her philosophy is simple: every client is unique and every treatment is tailored. Before doing anything, she listens, evaluates and proposes — always aiming for the most natural and lasting result.",
+    "p3": "Ongoing training in Morpheus 8, Thermage, hair-by-hair lash technique, BB Glow and facial fillers with premium brands.",
+    "values_title": "Her principles",
+    "values": [
+      { "title": "Honesty", "desc": "If something isn't right for you, I'll tell you. I advise before I sell." },
+      { "title": "Natural results", "desc": "We enhance what you already have — never force a look." },
+      { "title": "Obsessive detail", "desc": "Every lash, every millimeter of filler, every drop of serum counts." }
+    ],
+    "stats": [
+      { "n": "8+", "label": "Years of experience" },
+      { "n": "500+", "label": "Happy clients" },
+      { "n": "5.0★", "label": "Average on Google" },
+      { "n": "6", "label": "Premium treatments" }
+    ],
+    "cta": "Talk to Erlym",
+    "photo_placeholder": "Erlym's photo coming soon"
+  },
   "footer": {
     "tagline": "Your beauty, elevated.",
     "explore": "Explore",

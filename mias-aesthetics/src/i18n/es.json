@@ -169,6 +169,31 @@
     "subtitle": "Reservá tu turno por WhatsApp. Te respondemos personalmente.",
     "cta": "Reservar por WhatsApp"
   },
+  "about_erlym": {
+    "eyebrow": "Sobre Erlym",
+    "title": "Conocé a Erlym Monasterios",
+    "subtitle": "Fundadora y técnica detrás de Mia's Aesthetics. Tu belleza en manos expertas.",
+    "p1": "Erlym es la corazón de Mia's Aesthetics. Con más de 8 años de experiencia entre Costa Rica y Estados Unidos, se especializa en pestañas, faciales avanzados y procedimientos estéticos premium.",
+    "p2": "Su filosofía es simple: cada clienta es única y cada tratamiento se diseña a medida. Por eso antes de tocar nada, escucha, evalúa y propone — siempre buscando el resultado más natural y duradero.",
+    "p3": "Formación continua en Morpheus 8, Thermage, técnicas de pestañas pelo a pelo, BB Glow y rellenos faciales con marcas premium.",
+    "values_title": "Sus principios",
+    "values": [
+      { "title": "Honestidad", "desc": "Si algo no te conviene, te lo digo. Antes que vender, asesoro." },
+      {
+        "title": "Resultados naturales",
+        "desc": "Trabajamos para realzar lo que ya tenés, nunca para forzar un look."
+      },
+      { "title": "Detalle obsesivo", "desc": "Cada pestaña, cada milímetro de relleno, cada gota de sérum cuenta." }
+    ],
+    "stats": [
+      { "n": "8+", "label": "Años de experiencia" },
+      { "n": "500+", "label": "Clientas felices" },
+      { "n": "5.0★", "label": "Promedio en Google" },
+      { "n": "6", "label": "Tratamientos premium" }
+    ],
+    "cta": "Hablá con Erlym",
+    "photo_placeholder": "Foto de Erlym próximamente"
+  },
   "footer": {
     "tagline": "Tu belleza, elevada.",
     "explore": "Explorá",
