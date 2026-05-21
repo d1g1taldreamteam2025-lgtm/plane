@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro";
 import { SITE } from "../lib/site.ts";
 import { SERVICES } from "../data/services.ts";
+import { COURSES } from "../data/courses.ts";
 
 export const GET: APIRoute = () => {
   const base = SITE.url.replace(/\/$/, "");
@@ -25,6 +26,26 @@ export const GET: APIRoute = () => {
       en: `${base}/en`,
     },
   ];
+
+  // Courses index
+  entries.push({
+    loc: `${base}/cursos`,
+    lastmod: today, changefreq: "weekly", priority: "0.9",
+    es: `${base}/cursos`, en: `${base}/en/courses`,
+  });
+  entries.push({
+    loc: `${base}/en/courses`,
+    lastmod: today, changefreq: "weekly", priority: "0.85",
+    es: `${base}/cursos`, en: `${base}/en/courses`,
+  });
+
+  // Individual course pages
+  for (const c of COURSES) {
+    const esUrl = `${base}/cursos/${c.slugs.es}`;
+    const enUrl = `${base}/en/courses/${c.slugs.en}`;
+    entries.push({ loc: esUrl, lastmod: today, changefreq: "monthly", priority: "0.8",  es: esUrl, en: enUrl });
+    entries.push({ loc: enUrl, lastmod: today, changefreq: "monthly", priority: "0.75", es: esUrl, en: enUrl });
+  }
 
   for (const svc of SERVICES) {
     const esUrl = `${base}/servicios/${svc.slugs.es}`;

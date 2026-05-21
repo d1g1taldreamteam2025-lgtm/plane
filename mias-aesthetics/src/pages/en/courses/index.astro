@@ -1,0 +1,98 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+import { COURSES } from "../../../data/courses.ts";
+import { SITE, waLink } from "../../../lib/site.ts";
+
+const lang = "en" as const;
+const waHref = waLink("Hi Mia's Aesthetics, I'd like info on your courses.");
+---
+<MainLayout
+  lang={lang}
+  path="/en/courses"
+  title="Mia Academy Courses — Learn beauty with Erlym Monasterios"
+  description="Professional lashes, facials and BB Glow courses in Anaheim, CA. Mia Academy program with official certificate and pro kit included."
+>
+  <section class="relative overflow-hidden bg-gradient-to-br from-[var(--color-plum-700)] via-[var(--color-plum-900)] to-[var(--color-pink-700)] py-20 sm:py-28">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0">
+      <div class="absolute -top-20 -left-20 h-96 w-96 rounded-full bg-[var(--color-pink-500)] opacity-25 blur-3xl"></div>
+      <div class="absolute -bottom-20 -right-20 h-[28rem] w-[28rem] rounded-full bg-[var(--color-gold-400)] opacity-20 blur-3xl"></div>
+    </div>
+    <div class="container-px relative mx-auto max-w-4xl text-center">
+      <span class="inline-block rounded-full bg-white/15 px-4 py-1.5 text-[11px] font-bold uppercase tracking-widest text-[var(--color-gold-300)] backdrop-blur">
+        Mia Academy
+      </span>
+      <h1 class="h-display mt-5 text-[clamp(2.5rem,6vw,4.5rem)] text-white">
+        Learn beauty<br/>
+        <span class="bg-gradient-to-r from-[var(--color-gold-300)] via-[var(--color-gold-400)] to-[var(--color-blush-300)] bg-clip-text italic text-transparent">
+          with Erlym.
+        </span>
+      </h1>
+      <p class="mx-auto mt-6 max-w-2xl text-base text-white/80 sm:text-lg">
+        In-person courses in Anaheim, CA. 20+ years of experience condensed
+        into intensive programs. Official certificate, pro starter kit and
+        mentorship included.
+      </p>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <a href={waHref} target="_blank" rel="noopener" class="btn btn-whatsapp">
+          <img src={SITE.icons.whatsapp} alt="" width="18" height="18" class="h-[18px] w-[18px]" loading="lazy"/>
+          Ask about dates
+        </a>
+        <a href="#courses" class="btn !bg-white/15 !text-white hover:!bg-white hover:!text-[var(--color-ink)]">See courses</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="courses" class="bg-[var(--color-cream)] py-20 sm:py-28">
+    <div class="container-px mx-auto max-w-7xl">
+      <div class="reveal mx-auto max-w-2xl text-center">
+        <span class="eyebrow eyebrow-gold">Programs</span>
+        <h2 class="h-display mt-5 text-[clamp(2rem,4.5vw,3.25rem)]">5 paths to go pro</h2>
+        <p class="mt-5 text-base text-[var(--color-gray-soft)] sm:text-lg">
+          Limited seats and kit included for every course. Book your spot on WhatsApp.
+        </p>
+      </div>
+
+      <div class="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {COURSES.map((c) => {
+          const p = c.palette;
+          return (
+            <article class="card reveal group flex flex-col">
+              <div
+                class="relative aspect-[4/3] overflow-hidden rounded-2xl"
+                style={`background: linear-gradient(135deg, ${p.from}, ${p.to});`}
+              >
+                {c.cover ? (
+                  <img src={c.cover} alt={c.title.en} class="absolute inset-0 h-full w-full object-cover" loading="lazy"/>
+                ) : (
+                  <div class="absolute inset-0 grid place-items-center">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style={`color: ${p.text}`} aria-hidden="true">
+                      <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                      <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                    </svg>
+                  </div>
+                )}
+                <span class="absolute left-3 top-3 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-[var(--color-pink-700)] shadow">
+                  {c.level.en}
+                </span>
+              </div>
+
+              <h3 class="mt-5 font-display text-xl font-bold">{c.title.en}</h3>
+              <p class="mt-2 flex-1 text-sm leading-relaxed text-[var(--color-gray-soft)]">{c.tagline.en}</p>
+
+              <ul class="mt-4 space-y-1.5 text-xs text-[var(--color-graphite)]">
+                <li class="flex items-center gap-2"><span class="text-[var(--color-pink-600)]">⏱</span> {c.duration.en}</li>
+                <li class="flex items-center gap-2"><span class="text-[var(--color-pink-600)]">📍</span> {c.modality.en}</li>
+                <li class="flex items-center gap-2"><span class="text-[var(--color-pink-600)]">💎</span> {c.priceFrom.en}</li>
+              </ul>
+
+              <a href={`/en/courses/${c.slugs.en}`} class="mt-5 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-[var(--color-pink-600)] transition group-hover:gap-3">
+                See details
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
+              </a>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+</MainLayout>

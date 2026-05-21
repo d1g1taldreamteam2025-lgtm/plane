@@ -8,10 +8,12 @@ const base = lang === "en" ? "/en" : "";
 const year = new Date().getFullYear();
 const hours = SITE.hours[lang];
 
+const coursesPath = lang === "es" ? "cursos" : "courses";
 const nav = [
   { key: "home",         href: `${base}/` },
   { key: "services",     href: `${base}/#services` },
-  { key: "about",        href: `${base}/#intro` },
+  { key: "courses",      href: `${base}/${coursesPath}` },
+  { key: "about",        href: `${base}/#about` },
   { key: "testimonials", href: `${base}/#testimonials` },
 ];
 

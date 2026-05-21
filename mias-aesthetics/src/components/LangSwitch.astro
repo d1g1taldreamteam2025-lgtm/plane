@@ -2,6 +2,7 @@
 import { t, type Lang } from '../i18n';
 import { SITE } from '../lib/site.ts';
 import { SERVICES } from '../data/services.ts';
+import { COURSES } from '../data/courses.ts';
 
 interface Props {
   lang: Lang;
@@ -12,17 +13,31 @@ const { lang, path } = Astro.props;
 // Resolver bien la URL del otro idioma: si estamos en una página de servicio,
 // mapeamos el slug. Si no, simplemente cambiamos el prefijo.
 function otherPath(currentPath: string, currentLang: Lang): string {
-  // Servicio en español → buscar equivalente en inglés
-  const mEs = currentPath.match(/^\/servicios\/(.+?)\/?$/);
-  if (mEs && currentLang === 'es') {
-    const svc = SERVICES.find((s) => s.slugs.es === mEs[1]);
-    return svc ? `/en/services/${svc.slugs.en}` : '/en';
+  // Servicio en español → equivalente en inglés
+  const svcEs = currentPath.match(/^\/servicios\/(.+?)\/?$/);
+  if (svcEs && currentLang === 'es') {
+    const s = SERVICES.find((x) => x.slugs.es === svcEs[1]);
+    return s ? `/en/services/${s.slugs.en}` : '/en';
   }
-  const mEn = currentPath.match(/^\/en\/services\/(.+?)\/?$/);
-  if (mEn && currentLang === 'en') {
-    const svc = SERVICES.find((s) => s.slugs.en === mEn[1]);
-    return svc ? `/servicios/${svc.slugs.es}` : '/';
+  const svcEn = currentPath.match(/^\/en\/services\/(.+?)\/?$/);
+  if (svcEn && currentLang === 'en') {
+    const s = SERVICES.find((x) => x.slugs.en === svcEn[1]);
+    return s ? `/servicios/${s.slugs.es}` : '/';
   }
+  // Curso en español → equivalente en inglés
+  const curEs = currentPath.match(/^\/cursos\/(.+?)\/?$/);
+  if (curEs && currentLang === 'es') {
+    const c = COURSES.find((x) => x.slugs.es === curEs[1]);
+    return c ? `/en/courses/${c.slugs.en}` : '/en/courses';
+  }
+  const curEn = currentPath.match(/^\/en\/courses\/(.+?)\/?$/);
+  if (curEn && currentLang === 'en') {
+    const c = COURSES.find((x) => x.slugs.en === curEn[1]);
+    return c ? `/cursos/${c.slugs.es}` : '/cursos';
+  }
+  // Cursos index (sin slug)
+  if (currentPath === '/cursos' && currentLang === 'es') return '/en/courses';
+  if (currentPath === '/en/courses' && currentLang === 'en') return '/cursos';
   // Default: home toggle
   if (currentLang === 'es') {
     return currentPath === '/' ? '/en' : `/en${currentPath}`;
