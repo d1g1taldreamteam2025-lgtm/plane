@@ -18,7 +18,7 @@
     "📍 Anaheim, CA — 160 S Old Springs Rd"
   ],
   "modal": {
-    "eyebrow": "Solo para vos",
+    "eyebrow": "Solo para ti",
     "title": "15% OFF tu primer tratamiento",
     "subtitle": "Reservá hoy por WhatsApp y recibí 15% de descuento en tu primera visita.",
     "cta": "Quiero mi descuento",
@@ -64,9 +64,9 @@
   ],
   "intro": {
     "eyebrow": "Bienvenida",
-    "title": "Un espacio creado para vos",
+    "title": "Un espacio creado para ti",
     "p1": "En Mia's Aesthetics, Erlym diseña cada tratamiento a tu medida. Combinamos técnica, productos premium y un trato cercano que hace toda la diferencia.",
-    "p2": "Más que un centro estético — tu rincón en Anaheim para reconectar con vos misma."
+    "p2": "Más que un centro estético — tu rincón en Anaheim para reconectar contigo misma."
   },
   "services_preview": {
     "eyebrow": "Servicios",
@@ -115,7 +115,7 @@
         "desc": "Cada clienta es única. Analizamos tu piel y necesidades antes de recomendarte algo."
       },
       { "title": "Productos premium", "desc": "Trabajamos solo con marcas profesionales con respaldo dermatológico." },
-      { "title": "Espacio íntimo", "desc": "Un ambiente diseñado para que te relajes desde el momento en que entrás." },
+      { "title": "Espacio íntimo", "desc": "Un ambiente diseñado para que te relajes desde el momento en que entras." },
       { "title": "Resultados visibles", "desc": "Protocolos probados con seguimiento sesión a sesión." }
     ]
   },
@@ -156,7 +156,7 @@
   "contact_section": {
     "eyebrow": "Contacto",
     "title": "Vení a visitarnos",
-    "subtitle": "Estamos en Anaheim, CA. Reservá tu cita o escribinos directamente por WhatsApp.",
+    "subtitle": "Estamos en Anaheim, CA. Reservá tu cita o escríbenos directamente por WhatsApp.",
     "address_label": "Dirección",
     "hours_label": "Horarios",
     "phone_label": "WhatsApp",
@@ -181,7 +181,7 @@
       { "title": "Honestidad", "desc": "Si algo no te conviene, te lo digo. Antes que vender, asesoro." },
       {
         "title": "Resultados naturales",
-        "desc": "Trabajamos para realzar lo que ya tenés, nunca para forzar un look."
+        "desc": "Trabajamos para realzar lo que ya tienes, nunca para forzar un look."
       },
       { "title": "Detalle obsesivo", "desc": "Cada pestaña, cada milímetro de relleno, cada gota de sérum cuenta." }
     ],

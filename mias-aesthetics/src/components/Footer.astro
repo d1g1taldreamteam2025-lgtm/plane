@@ -18,11 +18,11 @@ const nav = [
 const waHref = waLink(lang === "es" ? "Hola Mia's Aesthetics" : "Hi Mia's Aesthetics");
 
 const socials = [
-  { name: "Instagram",   href: SITE.social.instagram,   icon: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1778897809/Google_Maps_icon__2026.svg_waaes9.webp" },
+  { name: "Instagram",   href: SITE.social.instagram,   inline: "instagram" },
   { name: "Facebook",    href: SITE.social.facebook,    icon: SITE.icons.facebook },
   { name: "TikTok",      href: SITE.social.tiktok,      icon: SITE.icons.tiktok },
   { name: "Google Maps", href: SITE.social.googleMaps,  icon: SITE.icons.googleMaps },
-];
+] as { name: string; href: string; icon?: string; inline?: string }[];
 ---
 <footer class="relative overflow-hidden bg-[var(--color-plum-900)] text-white">
   <div aria-hidden="true" class="pointer-events-none absolute inset-0">
@@ -98,7 +98,13 @@ const socials = [
               aria-label={s.name}
               title={s.name}
             >
-              <img src={s.icon} alt="" width="22" height="22" class="h-5 w-5 transition group-hover:scale-110" loading="lazy"/>
+              {s.inline === "instagram" ? (
+                <span class="grid h-5 w-5 place-items-center rounded-md bg-gradient-to-br from-[#f09433] via-[#dc2743] to-[#bc1888] text-white">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                </span>
+              ) : (
+                <img src={s.icon} alt="" width="22" height="22" class="h-5 w-5 transition group-hover:scale-110" loading="lazy"/>
+              )}
               <span class="hidden text-xs font-medium text-white/80 sm:inline">{s.name}</span>
             </a>
           ))}
@@ -127,8 +133,8 @@ const socials = [
     <div class="mt-8 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-6 text-xs text-white/50 sm:flex-row sm:items-center">
       <p>© {year} {SITE.name}. {t(lang, "footer.rights")}</p>
       <div class="flex items-center gap-4">
-        <a href="#" class="transition hover:text-white">{t(lang, "footer.legal.privacy")}</a>
-        <a href="#" class="transition hover:text-white">{t(lang, "footer.legal.terms")}</a>
+        <a href={lang === "es" ? "/privacidad" : "/en/privacy"} class="transition hover:text-white">{t(lang, "footer.legal.privacy")}</a>
+        <a href={lang === "es" ? "/terminos" : "/en/terms"} class="transition hover:text-white">{t(lang, "footer.legal.terms")}</a>
       </div>
     </div>
   </div>

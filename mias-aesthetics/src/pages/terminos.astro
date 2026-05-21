@@ -1,0 +1,81 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import { SITE } from "../lib/site.ts";
+
+const lastUpdate = "21 de mayo de 2026";
+---
+<MainLayout
+  lang="es"
+  path="/terminos"
+  title="Términos y Condiciones — Mia's Aesthetics"
+  description="Términos y condiciones de Mia's Aesthetics. Política de citas, cancelaciones, consentimiento informado y limitación de responsabilidad."
+  showWelcomeModal={false}
+>
+  <article class="container-px mx-auto max-w-3xl py-20">
+    <a href="/" class="text-xs uppercase tracking-widest text-[var(--color-pink-600)] hover:text-[var(--color-pink-700)]">← Inicio</a>
+    <h1 class="h-display mt-6 text-[clamp(2rem,5vw,3.5rem)]">Términos y Condiciones</h1>
+    <p class="mt-2 text-sm text-[var(--color-gray-soft)]">Última actualización: {lastUpdate}</p>
+
+    <div class="mt-10 space-y-6 text-[var(--color-graphite)]">
+      <h2 class="font-display text-2xl font-bold">1. Aceptación de los términos</h2>
+      <p>Al usar este sitio web o reservar un servicio en Mia's Aesthetics, aceptas estos términos y condiciones. Si no estás de acuerdo, por favor no uses el sitio ni reserves citas.</p>
+
+      <h2 class="font-display text-2xl font-bold">2. Naturaleza del servicio</h2>
+      <p>Mia's Aesthetics ofrece servicios estéticos no quirúrgicos. La información del sitio es <strong>educativa</strong> y NO constituye asesoramiento médico. Para cualquier condición de salud, consulta a un profesional médico calificado.</p>
+
+      <h2 class="font-display text-2xl font-bold">3. Consentimiento informado</h2>
+      <p>Antes de cualquier tratamiento, vas a firmar un documento de consentimiento informado donde se detalla:</p>
+      <ul class="list-disc space-y-1 pl-5">
+        <li>El procedimiento, sus beneficios y posibles riesgos.</li>
+        <li>Las alternativas disponibles.</li>
+        <li>Los cuidados pre y post-tratamiento.</li>
+        <li>Que has divulgado todas tus condiciones médicas, alergias y medicaciones.</li>
+      </ul>
+      <p>Sin consentimiento firmado no realizamos el tratamiento.</p>
+
+      <h2 class="font-display text-2xl font-bold">4. Política de citas, depósitos y cancelaciones</h2>
+      <ul class="list-disc space-y-1 pl-5">
+        <li>Para reservar ciertos tratamientos (Botox, Morpheus 8, Thermage, rellenos) puede requerirse un <strong>depósito no reembolsable</strong>.</li>
+        <li>Las <strong>cancelaciones con menos de 24 horas</strong> de anticipación o no-shows pierden el depósito.</li>
+        <li>Reagendar con más de 24 horas de anticipación es gratis y el depósito se mantiene válido.</li>
+        <li>Llegar con más de 15 minutos de retraso puede implicar reagendar la cita.</li>
+      </ul>
+
+      <h2 class="font-display text-2xl font-bold">5. Resultados</h2>
+      <p>Los resultados de cualquier tratamiento estético <strong>varían según cada persona</strong> (genética, edad, estilo de vida, condición de la piel). Las imágenes y testimonios del sitio son ejemplos reales pero no garantizan un resultado idéntico para ti.</p>
+
+      <h2 class="font-display text-2xl font-bold">6. Contraindicaciones</h2>
+      <p>Algunas condiciones impiden o postergan ciertos tratamientos:</p>
+      <ul class="list-disc space-y-1 pl-5">
+        <li>Embarazo o lactancia.</li>
+        <li>Enfermedades autoinmunes activas, ciertos cánceres, marcapasos.</li>
+        <li>Alergias documentadas a algún componente.</li>
+        <li>Tratamientos con anticoagulantes (requiere evaluación).</li>
+      </ul>
+      <p>Es tu responsabilidad informarnos cualquier condición de salud antes del tratamiento.</p>
+
+      <h2 class="font-display text-2xl font-bold">7. Pago</h2>
+      <p>Aceptamos efectivo, Visa, Mastercard, American Express, Zelle y cualquier otra tarjeta de crédito. El pago se realiza al finalizar el servicio salvo que se haya pactado un depósito previo.</p>
+
+      <h2 class="font-display text-2xl font-bold">8. Reembolsos</h2>
+      <p>Los servicios prestados no son reembolsables. Si tienes una preocupación con tu tratamiento, contáctanos dentro de los 7 días posteriores para evaluar el caso y ofrecerte una solución (retoque, sesión adicional, etc.).</p>
+
+      <h2 class="font-display text-2xl font-bold">9. Propiedad intelectual</h2>
+      <p>Todo el contenido del sitio (textos, imágenes, videos, logo, diseño) es propiedad de Mia's Aesthetics o de sus licenciantes. Está prohibida la reproducción sin autorización.</p>
+
+      <h2 class="font-display text-2xl font-bold">10. Limitación de responsabilidad</h2>
+      <p>En la máxima medida permitida por la ley de California y federal de Estados Unidos, Mia's Aesthetics no será responsable por daños indirectos, incidentales o consecuentes derivados del uso del sitio o de tratamientos cuando el cliente haya ocultado información médica relevante o no haya seguido las indicaciones post-tratamiento.</p>
+
+      <h2 class="font-display text-2xl font-bold">11. Ley aplicable</h2>
+      <p>Estos términos se rigen por las leyes del Estado de California, Estados Unidos. Cualquier disputa se resolverá en los tribunales del Condado de Orange, California.</p>
+
+      <h2 class="font-display text-2xl font-bold">12. Contacto</h2>
+      <p>
+        <strong>{SITE.name}</strong><br/>
+        {SITE.address}<br/>
+        Email: <a href={`mailto:${SITE.email}`} class="text-[var(--color-pink-600)] underline">{SITE.email}</a><br/>
+        WhatsApp: {SITE.whatsappDisplay}
+      </p>
+    </div>
+  </article>
+</MainLayout>

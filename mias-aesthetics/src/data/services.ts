@@ -5,20 +5,17 @@ export type ServiceId = "iv" | "botox" | "morpheus" | "thermage" | "lips" | "las
 export interface ServiceDetail {
   id: ServiceId;
   slugs: Record<Lang, string>;
-  // Single string fields
   title: Record<Lang, string>;
   tagline: Record<Lang, string>;
   shortDesc: Record<Lang, string>;
   duration: Record<Lang, string>;
   priceFrom: Record<Lang, string>;
   priceNote: Record<Lang, string>;
-  // Multi-paragraph
   longDesc: Record<Lang, string[]>;
   includes: Record<Lang, string[]>;
   preCare: Record<Lang, string[]>;
   postCare: Record<Lang, string[]>;
   faqs: Record<Lang, { q: string; a: string }[]>;
-  // Visual palette per service (matches ServicesPreview)
   palette: { from: string; to: string; accent: string; text: string };
 }
 
@@ -38,7 +35,7 @@ export const SERVICES: ServiceDetail[] = [
     duration: { es: "45 – 60 min", en: "45 – 60 min" },
     priceFrom: { es: "Desde $129", en: "From $129" },
     priceNote: {
-      es: "Precio según el cóctel elegido. Consultá opciones por WhatsApp.",
+      es: "Precio según el cóctel elegido. Consulta opciones por WhatsApp.",
       en: "Price varies by cocktail. Ask via WhatsApp for options.",
     },
     longDesc: {
@@ -69,9 +66,9 @@ export const SERVICES: ServiceDetail[] = [
     },
     preCare: {
       es: [
-        "Llegá hidratada y habiendo comido algo ligero (no es necesario ayuno)",
-        "Avisanos si tomás medicación habitual o tenés alergias",
-        "Usá ropa cómoda con manga ancha",
+        "Llega hidratada y habiendo comido algo ligero (no es necesario ayuno)",
+        "Avísanos si tomas medicación habitual o tienes alergias",
+        "Usa ropa cómoda con manga ancha",
       ],
       en: [
         "Arrive hydrated and after a light meal (no fasting needed)",
@@ -81,9 +78,9 @@ export const SERVICES: ServiceDetail[] = [
     },
     postCare: {
       es: [
-        "Mantené hidratación durante el resto del día",
-        "Evitá alcohol las primeras 24 horas",
-        "Podés volver a tus actividades normales de inmediato",
+        "Mantén hidratación durante el resto del día",
+        "Evita alcohol las primeras 24 horas",
+        "Puedes volver a tus actividades normales de inmediato",
       ],
       en: [
         "Keep hydrated for the rest of the day",
@@ -93,22 +90,34 @@ export const SERVICES: ServiceDetail[] = [
     },
     faqs: {
       es: [
-        { q: "¿Cuánto dura el efecto?", a: "Entre 5 y 10 días según el estilo de vida y el cóctel elegido." },
-        { q: "¿Es seguro?", a: "Sí. Trabajamos con personal entrenado y soluciones de grado médico." },
+        { q: "¿Cuánto dura el efecto?", a: "Entre 5 y 10 días según el estilo de vida y el cóctel elegido. Las personas suelen sentir el cambio de energía durante el resto de la semana." },
+        { q: "¿Es seguro?", a: "Sí. Trabajamos con personal entrenado y soluciones de grado médico. Antes de cada aplicación hacemos un breve cuestionario de salud." },
+        { q: "¿Duele la pinchada?", a: "Solo el pinchazo inicial. Usamos catéteres pediátricos para reducir la molestia. Una vez puesto el catéter, la sesión es relajante." },
+        { q: "¿Cada cuánto puedo hacerme una IV?", a: "Para mantenimiento general, una vez al mes. Para protocolos específicos (anti-edad, glow, deportivo) hasta una vez por semana durante 4 a 8 semanas." },
+        { q: "¿Qué cócteles ofrecen?", a: "Glutatión (glow + detox), Vitamina C alta dosis (defensas), Complejo B (energía), Myers Cocktail (multivitamínico clásico), NAD+ (anti-aging), Hidratación + minerales (post-fiesta o jet lag)." },
+        { q: "¿Puedo combinarlo con otros tratamientos estéticos?", a: "Sí. La IV con glutatión potencia los resultados de Morpheus 8, Thermage y láser, y acelera la recuperación post-procedimiento." },
+        { q: "¿Sirve si estoy resfriada o me siento bajoneada?", a: "Sí. El cóctel de Vitamina C + complejo B + zinc + glutatión es el más pedido para fortalecer defensas y recuperar energía rápido." },
+        { q: "¿Lo puede hacer cualquier persona?", a: "Adultos sanos sin contraindicaciones específicas. Personas con condiciones renales, cardíacas o embarazo deben consultar con su médico primero." },
       ],
       en: [
-        { q: "How long does it last?", a: "Between 5 and 10 days depending on lifestyle and chosen cocktail." },
-        { q: "Is it safe?", a: "Yes. Performed by trained staff using medical-grade solutions." },
+        { q: "How long does it last?", a: "Between 5 and 10 days depending on lifestyle and chosen cocktail. Most people feel the energy boost for the rest of the week." },
+        { q: "Is it safe?", a: "Yes. Performed by trained staff with medical-grade solutions. We run a quick health screening before every session." },
+        { q: "Does the IV hurt?", a: "Only the initial poke. We use pediatric catheters to minimize discomfort. Once placed, the session is relaxing." },
+        { q: "How often can I get an IV?", a: "Monthly for general maintenance. For specific protocols (anti-aging, glow, athletic) up to once a week for 4 to 8 weeks." },
+        { q: "Which cocktails do you offer?", a: "Glutathione (glow + detox), high-dose Vitamin C (immunity), B-complex (energy), Myers Cocktail (classic multi-vitamin), NAD+ (anti-aging), Hydration + minerals (hangover or jet lag)." },
+        { q: "Can I combine it with other aesthetic treatments?", a: "Yes. Glutathione IV boosts results of Morpheus 8, Thermage and laser, and speeds up post-procedure recovery." },
+        { q: "Does it help if I'm sick or run down?", a: "Yes. The Vitamin C + B-complex + zinc + glutathione cocktail is the most requested for immunity and rapid energy recovery." },
+        { q: "Can anyone get an IV?", a: "Healthy adults with no specific contraindications. People with kidney, heart conditions or pregnancy should consult their doctor first." },
       ],
     },
-    palette: { from: "#cfe6ff", to: "#5da9ec", accent: "#3680c8", text: "#fff" },
+    palette: { from: "#ffe6f1", to: "#d4a85a", accent: "#b88a36", text: "#4a3210" },
   },
   {
     id: "botox",
     slugs: { es: "botox", en: "botox" },
     title: { es: "Botox", en: "Botox" },
     tagline: {
-      es: "Suavizá tus arrugas dinámicas sin perder expresión.",
+      es: "Suaviza tus arrugas dinámicas sin perder expresión.",
       en: "Smooth dynamic wrinkles without losing expression.",
     },
     shortDesc: {
@@ -149,9 +158,9 @@ export const SERVICES: ServiceDetail[] = [
     },
     preCare: {
       es: [
-        "Evitá alcohol 24 horas antes",
-        "Suspendé aspirina, ibuprofeno y vitamina E una semana antes (reducen hematomas)",
-        "Llegá sin maquillaje en la zona a tratar",
+        "Evita alcohol 24 horas antes",
+        "Suspende aspirina, ibuprofeno y vitamina E una semana antes (reducen hematomas)",
+        "Llega sin maquillaje en la zona a tratar",
       ],
       en: [
         "No alcohol 24 hours before",
@@ -162,9 +171,9 @@ export const SERVICES: ServiceDetail[] = [
     postCare: {
       es: [
         "No te acuestes ni te inclines hacia adelante por 4 horas",
-        "Evitá ejercicio intenso por 24 horas",
+        "Evita ejercicio intenso por 24 horas",
         "No te masajees ni te toques la zona por 24 horas",
-        "Evitá saunas, piscinas y exposición solar directa por 48 horas",
+        "Evita saunas, piscinas y exposición solar directa por 48 horas",
       ],
       en: [
         "Don't lie down or bend forward for 4 hours",
@@ -175,15 +184,24 @@ export const SERVICES: ServiceDetail[] = [
     },
     faqs: {
       es: [
-        {
-          q: "¿Cuándo se ven los resultados?",
-          a: "Entre los 3 y 14 días. El efecto final se aprecia a las 2 semanas.",
-        },
-        { q: "¿Va a paralizar mi cara?", a: "No. Aplicamos dosis personalizadas para mantener tu expresión natural." },
+        { q: "¿Cuándo se ven los resultados?", a: "Los primeros cambios entre los 3 y 7 días. El efecto final se aprecia a las 2 semanas." },
+        { q: "¿Va a paralizar mi cara?", a: "No. Aplicamos dosis personalizadas para mantener tu expresión natural. La idea es suavizar, no congelar." },
+        { q: "¿Cuánto dura?", a: "Entre 3 y 4 meses la primera vez. Con aplicaciones regulares la duración aumenta porque el músculo se entrena." },
+        { q: "¿Cuántas unidades necesito?", a: "Depende de la zona. Entrecejo: 18-25 unidades. Frente: 8-15. Patas de gallo: 8-12 por lado. En la consulta te decimos exacto." },
+        { q: "¿Duele?", a: "Muy poco. Usamos agujas ultrafinas y, si quieres, anestesia tópica. La mayoría lo describe como un pellizco." },
+        { q: "¿A partir de qué edad se puede hacer?", a: "El Botox preventivo se recomienda a partir de los 25-28 años. El correctivo a partir de los 35-40 años, según el caso." },
+        { q: "¿Puedo hacerme Botox si estoy embarazada o lactando?", a: "No. Hay que esperar hasta finalizar la lactancia para aplicar Botox." },
+        { q: "¿Qué marca usan?", a: "Trabajamos con marcas FDA-approved como Botox Allergan, Dysport y Xeomin. Te explicamos en consulta la diferencia entre cada una." },
       ],
       en: [
-        { q: "When do I see results?", a: "Between 3 and 14 days. Full effect at 2 weeks." },
-        { q: "Will my face look frozen?", a: "No. We use personalized doses so your expressions stay natural." },
+        { q: "When do I see results?", a: "First changes between days 3 and 7. Full effect at 2 weeks." },
+        { q: "Will my face look frozen?", a: "No. We use personalized doses so your expressions stay natural. The goal is to soften, not freeze." },
+        { q: "How long does it last?", a: "3 to 4 months the first time. With regular sessions duration extends because the muscle is trained." },
+        { q: "How many units do I need?", a: "Depends on the area. Frown lines: 18-25 units. Forehead: 8-15. Crow's feet: 8-12 per side. We confirm in the consultation." },
+        { q: "Does it hurt?", a: "Very little. We use ultra-fine needles and topical anesthesia if you want. Most clients describe it as a pinch." },
+        { q: "From what age can I get Botox?", a: "Preventive Botox is recommended from age 25-28. Corrective from 35-40, depending on the case." },
+        { q: "Can I get Botox if pregnant or breastfeeding?", a: "No. You should wait until you finish breastfeeding to get Botox." },
+        { q: "Which brand do you use?", a: "We work with FDA-approved brands like Botox Allergan, Dysport and Xeomin. We explain the difference in consultation." },
       ],
     },
     palette: { from: "#ffe6f1", to: "#ec6f9c", accent: "#d04b7e", text: "#fff" },
@@ -234,9 +252,9 @@ export const SERVICES: ServiceDetail[] = [
     },
     preCare: {
       es: [
-        "Evitá exposición solar 2 semanas antes",
+        "Evita exposición solar 2 semanas antes",
         "No uses retinol, ácidos exfoliantes ni vitamina C 5 días antes",
-        "Llegá sin maquillaje ni cremas",
+        "Llega sin maquillaje ni cremas",
       ],
       en: [
         "Avoid sun exposure 2 weeks before",
@@ -248,8 +266,8 @@ export const SERVICES: ServiceDetail[] = [
       es: [
         "SPF 50 todos los días durante un mes",
         "No piscinas, saunas ni ejercicio intenso por 48 horas",
-        "Evitá maquillaje las primeras 24 horas",
-        "Usá la rutina post indicada (hidratante calmante + reparador)",
+        "Evita maquillaje las primeras 24 horas",
+        "Usa la rutina post indicada (hidratante calmante + reparador)",
       ],
       en: [
         "Daily SPF 50 for one month",
@@ -260,15 +278,24 @@ export const SERVICES: ServiceDetail[] = [
     },
     faqs: {
       es: [
-        {
-          q: "¿Cuándo se ven los resultados?",
-          a: "A partir de la semana 4. El resultado final se ve a los 3 meses tras completar las sesiones.",
-        },
-        { q: "¿Duele?", a: "Aplicamos anestesia tópica para que sea cómodo. Sentís calor más que dolor." },
+        { q: "¿Cuándo se ven los resultados?", a: "A partir de la semana 4. El resultado final se ve a los 3 meses tras completar las sesiones." },
+        { q: "¿Duele?", a: "Aplicamos anestesia tópica para que sea cómodo. Sientes calor más que dolor." },
+        { q: "¿Cuántas sesiones necesito?", a: "Generalmente 3 sesiones separadas por 30 días. Casos avanzados pueden necesitar 4 a 5." },
+        { q: "¿Sirve para cicatrices de acné?", a: "Sí. Morpheus 8 es uno de los tratamientos más efectivos para cicatrices atróficas (esos pocitos del acné) por la profundidad que alcanza." },
+        { q: "¿Cuánto downtime tengo?", a: "24 a 48 horas con rojez similar a una quemadura solar leve. Algunas personas vuelven al trabajo al día siguiente con makeup mineral." },
+        { q: "¿Lo puedo combinar con Botox?", a: "Sí, pero recomendamos aplicar el Botox 2 semanas antes o después de Morpheus 8, no el mismo día." },
+        { q: "¿Sirve para flacidez del cuello?", a: "Sí, es uno de los pocos tratamientos no invasivos que de verdad mejora la zona del cuello y mandíbula (jawline)." },
+        { q: "¿Es seguro en piel oscura?", a: "Sí. A diferencia de algunos láseres, Morpheus 8 es seguro en todos los fototipos de piel (I a VI)." },
       ],
       en: [
         { q: "When do I see results?", a: "From week 4. Final results around 3 months after the full course." },
         { q: "Does it hurt?", a: "We use topical anesthesia for comfort. You feel warmth more than pain." },
+        { q: "How many sessions do I need?", a: "Usually 3 sessions, 30 days apart. Advanced cases may need 4 to 5." },
+        { q: "Does it work on acne scars?", a: "Yes. Morpheus 8 is one of the most effective treatments for atrophic acne scars due to its depth." },
+        { q: "How much downtime?", a: "24 to 48 hours with redness similar to mild sunburn. Some people return to work the next day with mineral makeup." },
+        { q: "Can I combine it with Botox?", a: "Yes, but we recommend doing Botox 2 weeks before or after Morpheus 8, not the same day." },
+        { q: "Does it help neck sagging?", a: "Yes — one of the few non-invasive treatments that genuinely improves neck and jawline area." },
+        { q: "Is it safe on dark skin?", a: "Yes. Unlike some lasers, Morpheus 8 is safe on all skin phototypes (I to VI)." },
       ],
     },
     palette: { from: "#fff3d4", to: "#d4a85a", accent: "#b88a36", text: "#4a3210" },
@@ -318,7 +345,11 @@ export const SERVICES: ServiceDetail[] = [
       ],
     },
     preCare: {
-      es: ["Llegá sin maquillaje ni cremas", "Evitá alcohol 24 horas antes", "Comé algo previo para evitar mareos"],
+      es: [
+        "Llega sin maquillaje ni cremas",
+        "Evita alcohol 24 horas antes",
+        "Come algo previo para evitar mareos",
+      ],
       en: [
         "Arrive with no makeup or creams",
         "Avoid alcohol 24 hours before",
@@ -328,8 +359,8 @@ export const SERVICES: ServiceDetail[] = [
     postCare: {
       es: [
         "Hidratación abundante y SPF 50 diario",
-        "Evitá saunas y baños calientes por 48 horas",
-        "Podés retomar maquillaje y actividades el mismo día",
+        "Evita saunas y baños calientes por 48 horas",
+        "Puedes retomar maquillaje y actividades el mismo día",
       ],
       en: [
         "Plenty of hydration and daily SPF 50",
@@ -339,18 +370,24 @@ export const SERVICES: ServiceDetail[] = [
     },
     faqs: {
       es: [
-        {
-          q: "¿Cuántas sesiones necesito?",
-          a: "Generalmente una sola. Algunos casos avanzados se benefician de un refuerzo a los 12 meses.",
-        },
-        { q: "¿Cuándo veo el resultado?", a: "Algo inmediato y la mejora total entre 2 y 6 meses." },
+        { q: "¿Cuántas sesiones necesito?", a: "Generalmente una sola. Algunos casos avanzados se benefician de un refuerzo a los 12 meses." },
+        { q: "¿Cuándo veo el resultado?", a: "Algo inmediato y la mejora total entre 2 y 6 meses, conforme se genera nuevo colágeno." },
+        { q: "¿Duele?", a: "Vas a sentir calor profundo en pulsos breves. La última generación de Thermage incluye sistema de vibración que reduce la sensación." },
+        { q: "¿Es igual al Morpheus 8?", a: "No. Thermage es radiofrecuencia monopolar SIN agujas (no invasivo, sin downtime). Morpheus 8 es radiofrecuencia CON microagujas (invasivo, 24-48h de downtime). Cada uno tiene su indicación." },
+        { q: "¿Qué zonas se pueden tratar?", a: "Rostro completo, cuello, contorno mandibular (jawline), párpados (lifting de mirada), abdomen, brazos, muslos y glúteos." },
+        { q: "¿Cuánto duran los resultados?", a: "Hasta 2 años en piel madura, manteniendo cuidado básico (SPF + buena hidratación)." },
+        { q: "¿Es seguro?", a: "Sí. Thermage tiene aprobación FDA desde 2002 y más de 20 años de uso clínico en todo el mundo." },
+        { q: "¿Puedo combinarlo con Botox o relleno?", a: "Sí. Lo ideal es hacer Thermage primero, esperar 2 semanas, y luego aplicar Botox o ácido hialurónico." },
       ],
       en: [
-        {
-          q: "How many sessions do I need?",
-          a: "Usually just one. Advanced cases may benefit from a touch-up at 12 months.",
-        },
-        { q: "When do I see results?", a: "Some immediate effect, with full results between 2 and 6 months." },
+        { q: "How many sessions do I need?", a: "Usually just one. Advanced cases may benefit from a touch-up at 12 months." },
+        { q: "When do I see results?", a: "Some immediate effect, with full results between 2 and 6 months as new collagen forms." },
+        { q: "Does it hurt?", a: "You'll feel deep heat in brief pulses. The latest Thermage generation includes vibration that reduces the sensation." },
+        { q: "Is it the same as Morpheus 8?", a: "No. Thermage is monopolar radiofrequency WITHOUT needles (non-invasive, no downtime). Morpheus 8 uses microneedles (invasive, 24-48h downtime). Each has its indication." },
+        { q: "Which areas can be treated?", a: "Full face, neck, jawline, eyelids, abdomen, arms, thighs and glutes." },
+        { q: "How long do results last?", a: "Up to 2 years on mature skin with basic care (SPF + good hydration)." },
+        { q: "Is it safe?", a: "Yes. Thermage has been FDA-approved since 2002 with 20+ years of clinical use worldwide." },
+        { q: "Can I combine it with Botox or filler?", a: "Yes. Best practice is Thermage first, wait 2 weeks, then Botox or hyaluronic acid." },
       ],
     },
     palette: { from: "#e6d5ec", to: "#6b3a73", accent: "#3d1f48", text: "#fff" },
@@ -401,9 +438,9 @@ export const SERVICES: ServiceDetail[] = [
     },
     preCare: {
       es: [
-        "Evitá alcohol y antiinflamatorios 48 horas antes",
+        "Evita alcohol y antiinflamatorios 48 horas antes",
         "No tomes aspirina ni vitamina E una semana antes",
-        "Llegá hidratada y sin maquillaje en los labios",
+        "Llega hidratada y sin maquillaje en los labios",
       ],
       en: [
         "Avoid alcohol and anti-inflammatories 48 hours before",
@@ -414,9 +451,9 @@ export const SERVICES: ServiceDetail[] = [
     postCare: {
       es: [
         "Frío local por intervalos las primeras 24 horas",
-        "Evitá ejercicio intenso por 48 horas",
+        "Evita ejercicio intenso por 48 horas",
         "No piscinas, saunas ni vuelos por 1 semana",
-        "Evitá besos profundos por 2 días",
+        "Evita besos profundos por 2 días",
       ],
       en: [
         "Local cold in intervals during the first 24 hours",
@@ -427,18 +464,24 @@ export const SERVICES: ServiceDetail[] = [
     },
     faqs: {
       es: [
-        {
-          q: "¿Se ven hinchados al principio?",
-          a: "Sí, es normal por 3 a 5 días. Después se asientan al resultado real.",
-        },
-        { q: "¿Es reversible?", a: "Sí. Si por alguna razón no te gustan, podemos disolver el producto." },
+        { q: "¿Se ven hinchados al principio?", a: "Sí, es normal por 3 a 5 días. Después se asientan al resultado real." },
+        { q: "¿Es reversible?", a: "Sí. Si por alguna razón no te gustan, podemos disolver el producto con hialuronidasa." },
+        { q: "¿Cuántas jeringas necesito?", a: "Para la primera vez, generalmente 1 jeringa de 1 ml. Si querés volumen más marcado, 2 jeringas en 2 sesiones (separadas 2-3 semanas)." },
+        { q: "¿Duele?", a: "Muy poco. Usamos anestesia tópica + el producto ya viene con lidocaína. Es muy llevadero." },
+        { q: "¿Cuánto duran?", a: "Entre 6 y 12 meses. Personas con metabolismo rápido pueden necesitar refuerzo a los 6 meses." },
+        { q: "¿Se ven 'patos' como en redes sociales?", a: "No, si trabajas con un profesional con experiencia. Nuestro diseño busca proporciones naturales según tu rostro." },
+        { q: "¿Qué marca usan?", a: "Juvederm Allergan o Restylane Galderma, ambas premium y FDA-approved." },
+        { q: "¿Puedo hacérmelos si tengo herpes labial?", a: "Sí, pero hay que premedicar con antiviral 1 día antes y 3 días después. Avísanos en consulta." },
       ],
       en: [
-        {
-          q: "Will they look swollen at first?",
-          a: "Yes, that's normal for 3 to 5 days. Then they settle into the real result.",
-        },
-        { q: "Is it reversible?", a: "Yes. If for any reason you're not happy, we can dissolve the filler." },
+        { q: "Will they look swollen at first?", a: "Yes, that's normal for 3 to 5 days. Then they settle into the real result." },
+        { q: "Is it reversible?", a: "Yes. If for any reason you're not happy, we can dissolve the filler with hyaluronidase." },
+        { q: "How many syringes do I need?", a: "First time, usually 1 syringe of 1 ml. For more dramatic volume, 2 syringes over 2 sessions (2-3 weeks apart)." },
+        { q: "Does it hurt?", a: "Very little. We use topical anesthesia and the product already contains lidocaine. Very tolerable." },
+        { q: "How long do they last?", a: "Between 6 and 12 months. Faster metabolism may need a touch-up at 6 months." },
+        { q: "Will they look 'duck-lips' like on social media?", a: "No, when done by an experienced professional. Our design targets natural proportions for your face." },
+        { q: "Which brand do you use?", a: "Juvederm Allergan or Restylane Galderma, both premium and FDA-approved." },
+        { q: "Can I get it if I have cold sores?", a: "Yes, but you'll pre-medicate with antiviral 1 day before and 3 days after. Tell us in consultation." },
       ],
     },
     palette: { from: "#ffc6dd", to: "#ff7eaf", accent: "#d04b7e", text: "#fff" },
@@ -455,10 +498,7 @@ export const SERVICES: ServiceDetail[] = [
       es: "Mirada elegante con look 100% natural.",
       en: "An elegant gaze that looks 100% natural.",
     },
-    duration: {
-      es: "Set completo: 90 – 120 min · Retoque: 60 – 90 min",
-      en: "Full set: 90 – 120 min · Refill: 60 – 90 min",
-    },
+    duration: { es: "Set completo: 90 – 120 min · Retoque: 60 – 90 min", en: "Full set: 90 – 120 min · Refill: 60 – 90 min" },
     priceFrom: { es: "Set desde $140 · Retoque desde $75", en: "Set from $140 · Refill from $75" },
     priceNote: {
       es: "Retoques sugeridos cada 3 a 4 semanas para mantener la densidad.",
@@ -492,8 +532,8 @@ export const SERVICES: ServiceDetail[] = [
     },
     preCare: {
       es: [
-        "Llegá sin maquillaje en los ojos",
-        "Evitá lentes de contacto el día de la cita si es posible",
+        "Llega sin maquillaje en los ojos",
+        "Evita lentes de contacto el día de la cita si es posible",
         "No usar rímel waterproof 24 horas antes",
       ],
       en: [
@@ -506,7 +546,7 @@ export const SERVICES: ServiceDetail[] = [
       es: [
         "No mojar las pestañas durante las primeras 24 horas",
         "No frotar los ojos ni dormir boca abajo",
-        "Limpiá con shampoo específico cada 2-3 días",
+        "Limpia con shampoo específico cada 2-3 días",
         "Nunca uses rímel ni desmaquillantes oleosos",
       ],
       en: [
@@ -518,18 +558,24 @@ export const SERVICES: ServiceDetail[] = [
     },
     faqs: {
       es: [
-        {
-          q: "¿Dañan mis pestañas naturales?",
-          a: "No, si se aplican y mantienen bien. Trabajamos respetando cada ciclo natural.",
-        },
+        { q: "¿Dañan mis pestañas naturales?", a: "No, si se aplican y mantienen bien. Trabajamos respetando cada ciclo natural y usando peso adecuado." },
         { q: "¿Cada cuánto tengo que retocar?", a: "Entre 3 y 4 semanas para mantener la densidad pareja." },
+        { q: "¿Cuánto duran?", a: "Cada extensión dura el ciclo de la pestaña natural (~6-8 semanas). Con retoques cada 3-4 semanas mantienes el look siempre." },
+        { q: "¿Puedo nadar y entrenar?", a: "Sí, después de las primeras 24 horas. Solo evita saunas a temperaturas muy altas." },
+        { q: "¿Puedo usar maquillaje?", a: "Sí, pero solo sombras y delineador que NO sea oleoso. NUNCA uses rímel (lo arruina y daña las pestañas)." },
+        { q: "¿Qué pasa si tengo pestañas naturales finas?", a: "Trabajamos con extensiones muy livianas (0.05 - 0.07 mm) para no dañarlas. La consulta inicial determina qué tipo y grosor usar." },
+        { q: "¿Es doloroso?", a: "No, para nada. La mayoría de clientas se duerme durante la sesión." },
+        { q: "¿Qué hago si se me cae una extensión?", a: "Es normal perder 1 a 3 por día (caen con la pestaña natural). Si caen más, vuelve al retoque o pasa por una revisión gratis dentro de la primera semana." },
       ],
       en: [
-        {
-          q: "Do they damage my natural lashes?",
-          a: "No, when applied and maintained properly. We respect every natural growth cycle.",
-        },
+        { q: "Do they damage my natural lashes?", a: "No, when applied and maintained properly. We respect every natural growth cycle and use proper weight." },
         { q: "How often do I need a refill?", a: "Every 3 to 4 weeks to keep density even." },
+        { q: "How long do they last?", a: "Each extension lasts the natural lash cycle (~6-8 weeks). With refills every 3-4 weeks you keep the look always." },
+        { q: "Can I swim and work out?", a: "Yes, after the first 24 hours. Just avoid saunas at very high temperatures." },
+        { q: "Can I wear makeup?", a: "Yes, but only shadows and eyeliner that are NOT oil-based. NEVER use mascara (ruins them and damages your lashes)." },
+        { q: "What if my natural lashes are thin?", a: "We use very light extensions (0.05 - 0.07 mm) to avoid damage. The intake consult determines the right type and thickness." },
+        { q: "Is it painful?", a: "Not at all. Most clients fall asleep during the session." },
+        { q: "What if an extension falls off?", a: "Losing 1-3 per day is normal (they fall with the natural lash). If more, come for a refill or a free check-up within the first week." },
       ],
     },
     palette: { from: "#3d1f48", to: "#1a0f1f", accent: "#d4a85a", text: "#fff" },

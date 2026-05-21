@@ -1,0 +1,82 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import { SITE } from "../../lib/site.ts";
+
+const lastUpdate = "May 21, 2026";
+---
+<MainLayout
+  lang="en"
+  path="/en/privacy"
+  title="Privacy Policy — Mia's Aesthetics"
+  description="Mia's Aesthetics privacy policy. CCPA / CPRA compliant."
+  showWelcomeModal={false}
+>
+  <article class="container-px mx-auto max-w-3xl py-20">
+    <a href="/en/" class="text-xs uppercase tracking-widest text-[var(--color-pink-600)] hover:text-[var(--color-pink-700)]">← Home</a>
+    <h1 class="h-display mt-6 text-[clamp(2rem,5vw,3.5rem)]">Privacy Policy</h1>
+    <p class="mt-2 text-sm text-[var(--color-gray-soft)]">Last updated: {lastUpdate}</p>
+
+    <div class="mt-10 space-y-6 text-[var(--color-graphite)]">
+      <h2 class="font-display text-2xl font-bold">1. Who we are</h2>
+      <p><strong>Mia's Aesthetics</strong> ("we", "us", "the studio") is an aesthetic studio located at <strong>{SITE.address}</strong>, operated by Erlym Monasterios. The business owner is the data controller.</p>
+
+      <h2 class="font-display text-2xl font-bold">2. Data we collect</h2>
+      <ul class="list-disc space-y-1 pl-5">
+        <li><strong>Contact data</strong>: name, phone / WhatsApp, email.</li>
+        <li><strong>Service data</strong>: treatment of interest, consultation or message you leave.</li>
+        <li><strong>Technical data</strong>: IP address, user-agent, referrer, date and time of visit.</li>
+        <li><strong>Strictly necessary cookies</strong> (session, language, modal dismissed). We do not use advertising tracking cookies.</li>
+      </ul>
+
+      <h2 class="font-display text-2xl font-bold">3. How we use it</h2>
+      <ul class="list-disc space-y-1 pl-5">
+        <li>Reply to your inquiry and schedule your appointment.</li>
+        <li>Send treatment information (only if you opt in).</li>
+        <li>Improve the website.</li>
+        <li>Comply with legal and health obligations (treatment records, informed consent).</li>
+      </ul>
+
+      <h2 class="font-display text-2xl font-bold">4. Who we share it with</h2>
+      <p>We DO NOT sell or transfer your data to third parties for commercial purposes. We only share with:</p>
+      <ul class="list-disc space-y-1 pl-5">
+        <li><strong>Tech providers</strong> (hosting, database, messaging automation) under contract and confidentiality.</li>
+        <li><strong>Authorities</strong> when required by law.</li>
+      </ul>
+
+      <h2 class="font-display text-2xl font-bold">5. Your CCPA / CPRA rights (California residents)</h2>
+      <p>As a California resident, you have the right to:</p>
+      <ul class="list-disc space-y-1 pl-5">
+        <li><strong>Know</strong> what personal information we collect about you.</li>
+        <li><strong>Access</strong> your personal information.</li>
+        <li><strong>Correct</strong> inaccurate information.</li>
+        <li><strong>Delete</strong> your personal information (subject to legal exceptions).</li>
+        <li><strong>Opt out of sale or sharing</strong> (we don't sell data).</li>
+        <li><strong>Not be discriminated against</strong> for exercising these rights.</li>
+      </ul>
+      <p>To exercise any of these rights, email us at <a href={`mailto:${SITE.email}`} class="text-[var(--color-pink-600)] underline">{SITE.email}</a> with subject "CCPA Request". We respond within 45 days.</p>
+
+      <h2 class="font-display text-2xl font-bold">6. Health data (HIPAA)</h2>
+      <p>Mia's Aesthetics provides non-medical aesthetic services. Still, we treat any health data (allergies, contraindications, medications) with maximum confidentiality. This data is stored separately and only authorized staff has access.</p>
+
+      <h2 class="font-display text-2xl font-bold">7. Minors</h2>
+      <p>The site is not directed to under 18. We do not knowingly collect personal information from minors. Treatments on minors require written authorization from a parent or legal guardian.</p>
+
+      <h2 class="font-display text-2xl font-bold">8. Data retention</h2>
+      <p>We keep your data only as long as necessary for described purposes or as required by law. Inquiry data (without completed appointment) is deleted after 12 months of inactivity.</p>
+
+      <h2 class="font-display text-2xl font-bold">9. Security</h2>
+      <p>We use HTTPS on every page, encryption at rest and in transit, and certified providers (Vercel, Supabase). No internet transmission is 100% secure — we do our best.</p>
+
+      <h2 class="font-display text-2xl font-bold">10. Changes to this policy</h2>
+      <p>We may update this policy to reflect legal or operational changes. The "last updated" date above always shows the current version.</p>
+
+      <h2 class="font-display text-2xl font-bold">11. Contact</h2>
+      <p>
+        <strong>{SITE.name}</strong><br/>
+        {SITE.address}<br/>
+        Email: <a href={`mailto:${SITE.email}`} class="text-[var(--color-pink-600)] underline">{SITE.email}</a><br/>
+        WhatsApp: {SITE.whatsappDisplay}
+      </p>
+    </div>
+  </article>
+</MainLayout>

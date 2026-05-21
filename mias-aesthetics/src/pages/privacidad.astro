@@ -1,0 +1,82 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import { SITE } from "../lib/site.ts";
+
+const lastUpdate = "21 de mayo de 2026";
+---
+<MainLayout
+  lang="es"
+  path="/privacidad"
+  title="Política de Privacidad — Mia's Aesthetics"
+  description="Política de privacidad de Mia's Aesthetics, en cumplimiento con CCPA / CPRA y leyes federales de Estados Unidos."
+  showWelcomeModal={false}
+>
+  <article class="container-px mx-auto max-w-3xl py-20 prose-pink">
+    <a href="/" class="text-xs uppercase tracking-widest text-[var(--color-pink-600)] hover:text-[var(--color-pink-700)]">← Inicio</a>
+    <h1 class="h-display mt-6 text-[clamp(2rem,5vw,3.5rem)]">Política de Privacidad</h1>
+    <p class="mt-2 text-sm text-[var(--color-gray-soft)]">Última actualización: {lastUpdate}</p>
+
+    <div class="prose mt-10 space-y-6 text-[var(--color-graphite)]">
+      <h2 class="font-display text-2xl font-bold">1. Quiénes somos</h2>
+      <p><strong>Mia's Aesthetics</strong> ("nosotras", "el estudio") es un centro estético ubicado en <strong>{SITE.address}</strong>, operado por Erlym Monasterios. El responsable del tratamiento de tus datos es la titular del negocio.</p>
+
+      <h2 class="font-display text-2xl font-bold">2. Qué datos recopilamos</h2>
+      <ul class="list-disc space-y-1 pl-5">
+        <li><strong>Datos de contacto</strong>: nombre, teléfono / WhatsApp, email.</li>
+        <li><strong>Datos de servicio</strong>: tratamiento de interés, consulta o mensaje que nos dejas.</li>
+        <li><strong>Datos técnicos</strong>: dirección IP, user-agent, página de referencia, fecha y hora de la visita.</li>
+        <li><strong>Cookies</strong> estrictamente necesarias para que el sitio funcione (sesión, idioma, modal cerrado). No usamos cookies de tracking publicitario.</li>
+      </ul>
+
+      <h2 class="font-display text-2xl font-bold">3. Para qué los usamos</h2>
+      <ul class="list-disc space-y-1 pl-5">
+        <li>Responder tu consulta y agendar tu cita.</li>
+        <li>Enviarte información del tratamiento (solo si lo autorizas).</li>
+        <li>Mejorar el funcionamiento del sitio.</li>
+        <li>Cumplir obligaciones legales y de salud (registros de tratamientos, consentimientos informados).</li>
+      </ul>
+
+      <h2 class="font-display text-2xl font-bold">4. Con quién los compartimos</h2>
+      <p>Tus datos NO se venden ni se ceden a terceros con fines comerciales. Solo compartimos con:</p>
+      <ul class="list-disc space-y-1 pl-5">
+        <li><strong>Proveedores tecnológicos</strong> (hosting, base de datos, automatización de mensajes) bajo contrato y con compromiso de confidencialidad.</li>
+        <li><strong>Autoridades</strong> cuando la ley lo exija.</li>
+      </ul>
+
+      <h2 class="font-display text-2xl font-bold">5. Tus derechos bajo CCPA / CPRA (residentes de California)</h2>
+      <p>Como residente de California, tienes derecho a:</p>
+      <ul class="list-disc space-y-1 pl-5">
+        <li><strong>Saber</strong> qué información personal recopilamos sobre ti.</li>
+        <li><strong>Acceder</strong> a tu información personal.</li>
+        <li><strong>Corregir</strong> información incorrecta.</li>
+        <li><strong>Borrar</strong> tu información personal (sujeto a excepciones legales).</li>
+        <li><strong>Optar por no vender ni compartir</strong> tu información (nosotros no vendemos datos).</li>
+        <li><strong>No ser discriminada</strong> por ejercer estos derechos.</li>
+      </ul>
+      <p>Para ejercer cualquiera de estos derechos, escríbenos a <a href={`mailto:${SITE.email}`} class="text-[var(--color-pink-600)] underline">{SITE.email}</a> con asunto "Solicitud CCPA". Respondemos dentro de los 45 días.</p>
+
+      <h2 class="font-display text-2xl font-bold">6. Datos de salud (HIPAA)</h2>
+      <p>Mia's Aesthetics ofrece servicios estéticos no médicos. Aun así, tratamos cualquier dato de salud (alergias, contraindicaciones, medicaciones) con la máxima confidencialidad. Estos datos se guardan separados del resto y solo el personal autorizado tiene acceso.</p>
+
+      <h2 class="font-display text-2xl font-bold">7. Menores de edad</h2>
+      <p>El sitio no está dirigido a menores de 18 años. No recopilamos a sabiendas información personal de menores. Los tratamientos en menores requieren autorización por escrito de padre, madre o tutor legal.</p>
+
+      <h2 class="font-display text-2xl font-bold">8. Retención de datos</h2>
+      <p>Mantenemos tus datos solo el tiempo necesario para los fines descritos o lo que exija la ley. Los datos de consulta (sin completar cita) se eliminan después de 12 meses de inactividad.</p>
+
+      <h2 class="font-display text-2xl font-bold">9. Seguridad</h2>
+      <p>Usamos HTTPS en todas las páginas, cifrado en reposo y en tránsito, y proveedores certificados (Vercel, Supabase). Aun así, ninguna transmisión por internet es 100% segura — hacemos nuestro mejor esfuerzo.</p>
+
+      <h2 class="font-display text-2xl font-bold">10. Cambios a esta política</h2>
+      <p>Podemos actualizar esta política para reflejar cambios en la ley o en nuestras prácticas. La fecha de "última actualización" arriba siempre refleja la versión vigente.</p>
+
+      <h2 class="font-display text-2xl font-bold">11. Contacto</h2>
+      <p>
+        <strong>{SITE.name}</strong><br/>
+        {SITE.address}<br/>
+        Email: <a href={`mailto:${SITE.email}`} class="text-[var(--color-pink-600)] underline">{SITE.email}</a><br/>
+        WhatsApp: {SITE.whatsappDisplay}
+      </p>
+    </div>
+  </article>
+</MainLayout>

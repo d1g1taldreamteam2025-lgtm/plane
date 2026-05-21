@@ -7,6 +7,7 @@ import WhatsAppFloat from "../components/WhatsAppFloat.astro";
 import StickyMobileCTA from "../components/StickyMobileCTA.astro";
 import WelcomeModal from "../components/WelcomeModal.astro";
 import ActivityPopup from "../components/ActivityPopup.astro";
+import CookieBanner from "../components/CookieBanner.astro";
 import { t, type Lang } from "../i18n";
 import { SITE } from "../lib/site.ts";
 
@@ -132,7 +133,8 @@ const allJsonLd = [businessJsonLd, websiteJsonLd, ...extraJsonLd];
   <WhatsAppFloat lang={lang} />
   <StickyMobileCTA lang={lang} />
   <ActivityPopup lang={lang} />
-  {showWelcomeModal && <WelcomeModal lang={lang} />}
+  <WelcomeModal lang={lang} />
+  <CookieBanner lang={lang} />
 
   <script>
     const els = document.querySelectorAll<HTMLElement>(".reveal");

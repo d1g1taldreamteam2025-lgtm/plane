@@ -1,6 +1,7 @@
 ---
 import { t, type Lang } from '../i18n';
 import { SITE } from '../lib/site.ts';
+import { SERVICES } from '../data/services.ts';
 
 interface Props {
   lang: Lang;
@@ -8,9 +9,29 @@ interface Props {
 }
 const { lang, path } = Astro.props;
 
-const cleanPath = path.replace(/^\/en/, '') || '/';
-const esHref = cleanPath;
-const enHref = cleanPath === '/' ? '/en' : `/en${cleanPath}`;
+// Resolver bien la URL del otro idioma: si estamos en una página de servicio,
+// mapeamos el slug. Si no, simplemente cambiamos el prefijo.
+function otherPath(currentPath: string, currentLang: Lang): string {
+  // Servicio en español → buscar equivalente en inglés
+  const mEs = currentPath.match(/^\/servicios\/(.+?)\/?$/);
+  if (mEs && currentLang === 'es') {
+    const svc = SERVICES.find((s) => s.slugs.es === mEs[1]);
+    return svc ? `/en/services/${svc.slugs.en}` : '/en';
+  }
+  const mEn = currentPath.match(/^\/en\/services\/(.+?)\/?$/);
+  if (mEn && currentLang === 'en') {
+    const svc = SERVICES.find((s) => s.slugs.en === mEn[1]);
+    return svc ? `/servicios/${svc.slugs.es}` : '/';
+  }
+  // Default: home toggle
+  if (currentLang === 'es') {
+    return currentPath === '/' ? '/en' : `/en${currentPath}`;
+  }
+  return currentPath.replace(/^\/en/, '') || '/';
+}
+
+const esHref = lang === 'es' ? path : otherPath(path, lang);
+const enHref = lang === 'en' ? path : otherPath(path, lang);
 ---
 <div class="inline-flex items-center gap-1 rounded-full border border-[var(--color-line)] bg-white/80 p-1 backdrop-blur" role="group" aria-label={t(lang, 'lang_switch_aria')}>
   <a

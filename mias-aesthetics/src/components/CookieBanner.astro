@@ -1,0 +1,60 @@
+---
+import { type Lang } from "../i18n";
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+
+const t = {
+  es: {
+    title: "🍪 Cookies estrictamente necesarias",
+    body: "Usamos solo cookies imprescindibles para que el sitio funcione (idioma, sesión). No usamos cookies de marketing ni de tracking.",
+    privacy: "Leé nuestra política de privacidad",
+    accept: "Entendido",
+  },
+  en: {
+    title: "🍪 Strictly necessary cookies",
+    body: "We only use essential cookies to make the site work (language, session). No marketing or tracking cookies.",
+    privacy: "Read our privacy policy",
+    accept: "Got it",
+  },
+}[lang];
+
+const privacyHref = lang === "es" ? "/privacidad" : "/en/privacy";
+---
+<div
+  id="cookie-banner"
+  class="fixed bottom-3 left-3 right-3 z-[60] hidden sm:bottom-4 sm:left-4 sm:right-auto sm:max-w-md"
+  role="region"
+  aria-label="Cookies"
+>
+  <div class="flex items-start gap-3 rounded-2xl border border-[var(--color-line)] bg-white p-4 shadow-[0_18px_50px_-12px_rgba(107,58,115,0.35)]">
+    <div class="flex-1">
+      <p class="font-display text-sm font-bold">{t.title}</p>
+      <p class="mt-1 text-xs leading-relaxed text-[var(--color-gray-soft)]">
+        {t.body} <a href={privacyHref} class="text-[var(--color-pink-600)] underline">{t.privacy}</a>.
+      </p>
+    </div>
+    <button
+      type="button"
+      id="cookie-accept"
+      class="flex-shrink-0 rounded-full bg-gradient-to-br from-[var(--color-pink-500)] to-[var(--color-blush-400)] px-4 py-2 text-xs font-bold uppercase tracking-widest text-white shadow transition hover:scale-105"
+    >
+      {t.accept}
+    </button>
+  </div>
+</div>
+
+<script>
+  const KEY = "mia_cookies_accepted_v1";
+  const el = document.getElementById("cookie-banner");
+  const btn = document.getElementById("cookie-accept");
+  if (el && btn) {
+    if (!localStorage.getItem(KEY)) {
+      setTimeout(() => el.classList.remove("hidden"), 1500);
+    }
+    btn.addEventListener("click", () => {
+      localStorage.setItem(KEY, "1");
+      el.classList.add("hidden");
+    });
+  }
+</script>

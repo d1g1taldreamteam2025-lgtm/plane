@@ -1,0 +1,67 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import { SITE } from "../../lib/site.ts";
+
+const lastUpdate = "May 21, 2026";
+---
+<MainLayout
+  lang="en"
+  path="/en/terms"
+  title="Terms and Conditions — Mia's Aesthetics"
+  description="Mia's Aesthetics terms and conditions. Appointment, cancellation, informed consent and liability policies."
+  showWelcomeModal={false}
+>
+  <article class="container-px mx-auto max-w-3xl py-20">
+    <a href="/en/" class="text-xs uppercase tracking-widest text-[var(--color-pink-600)] hover:text-[var(--color-pink-700)]">← Home</a>
+    <h1 class="h-display mt-6 text-[clamp(2rem,5vw,3.5rem)]">Terms and Conditions</h1>
+    <p class="mt-2 text-sm text-[var(--color-gray-soft)]">Last updated: {lastUpdate}</p>
+
+    <div class="mt-10 space-y-6 text-[var(--color-graphite)]">
+      <h2 class="font-display text-2xl font-bold">1. Acceptance</h2>
+      <p>By using this website or booking a service at Mia's Aesthetics, you accept these terms and conditions.</p>
+
+      <h2 class="font-display text-2xl font-bold">2. Nature of services</h2>
+      <p>Mia's Aesthetics provides non-surgical aesthetic services. Website information is <strong>educational</strong> and does NOT constitute medical advice. For any health condition consult a qualified medical professional.</p>
+
+      <h2 class="font-display text-2xl font-bold">3. Informed consent</h2>
+      <p>Before any treatment you will sign an informed consent document covering: the procedure, benefits and risks, available alternatives, pre and post-care, and disclosure of all your medical conditions, allergies and medications. No treatment without signed consent.</p>
+
+      <h2 class="font-display text-2xl font-bold">4. Appointment, deposit and cancellation policy</h2>
+      <ul class="list-disc space-y-1 pl-5">
+        <li>Certain treatments (Botox, Morpheus 8, Thermage, fillers) may require a <strong>non-refundable deposit</strong>.</li>
+        <li><strong>Cancellations with less than 24 hours notice</strong> or no-shows forfeit the deposit.</li>
+        <li>Rescheduling more than 24 hours in advance is free and keeps the deposit valid.</li>
+        <li>Arriving more than 15 minutes late may require rescheduling.</li>
+      </ul>
+
+      <h2 class="font-display text-2xl font-bold">5. Results</h2>
+      <p>Results vary by individual (genetics, age, lifestyle, skin condition). Images and testimonials are real examples but do not guarantee identical results for you.</p>
+
+      <h2 class="font-display text-2xl font-bold">6. Contraindications</h2>
+      <p>Certain conditions prevent or postpone specific treatments: pregnancy or breastfeeding, active autoimmune disease, certain cancers, pacemakers, documented allergies, anticoagulant treatments. It is your responsibility to disclose all health conditions before treatment.</p>
+
+      <h2 class="font-display text-2xl font-bold">7. Payment</h2>
+      <p>We accept cash, Visa, Mastercard, American Express, Zelle and any other credit card. Payment is due at the end of service unless a deposit was previously agreed.</p>
+
+      <h2 class="font-display text-2xl font-bold">8. Refunds</h2>
+      <p>Performed services are non-refundable. If you have a concern about your treatment, contact us within 7 days for assessment and a solution (touch-up, additional session, etc.).</p>
+
+      <h2 class="font-display text-2xl font-bold">9. Intellectual property</h2>
+      <p>All website content (texts, images, videos, logo, design) belongs to Mia's Aesthetics or its licensors. Unauthorized reproduction is prohibited.</p>
+
+      <h2 class="font-display text-2xl font-bold">10. Limitation of liability</h2>
+      <p>To the maximum extent permitted by California and US federal law, Mia's Aesthetics will not be liable for indirect, incidental or consequential damages arising from website use or treatments when the client has concealed relevant medical information or has not followed post-treatment instructions.</p>
+
+      <h2 class="font-display text-2xl font-bold">11. Governing law</h2>
+      <p>These terms are governed by the laws of the State of California, USA. Any dispute will be resolved in the courts of Orange County, California.</p>
+
+      <h2 class="font-display text-2xl font-bold">12. Contact</h2>
+      <p>
+        <strong>{SITE.name}</strong><br/>
+        {SITE.address}<br/>
+        Email: <a href={`mailto:${SITE.email}`} class="text-[var(--color-pink-600)] underline">{SITE.email}</a><br/>
+        WhatsApp: {SITE.whatsappDisplay}
+      </p>
+    </div>
+  </article>
+</MainLayout>
