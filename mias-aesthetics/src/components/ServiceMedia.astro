@@ -1,19 +1,27 @@
 ---
 import { type Lang } from "../i18n";
-import { reelsByService, IV_VISUALS, type ServiceTag } from "../data/reels.ts";
+import {
+  reelsByService,
+  IV_VISUALS_VERTICAL,
+  IV_VISUALS_SQUARE,
+  type ServiceTag,
+} from "../data/reels.ts";
 
 interface Props {
   lang: Lang;
   service: ServiceTag;
-  /** Si true, también muestra las imágenes 1:1/9:16 (solo IV por ahora). */
+  /** Si true, intercala las imágenes 9:16 con los videos y agrega las 1:1 abajo. */
   withVisuals?: boolean;
 }
 const { lang, service, withVisuals = false } = Astro.props;
 
 const videos = reelsByService(service);
-const visuals = withVisuals ? IV_VISUALS : [];
+const verticalVisuals = withVisuals ? IV_VISUALS_VERTICAL : [];
+const squareVisuals   = withVisuals ? IV_VISUALS_SQUARE : [];
 
-if (videos.length === 0 && visuals.length === 0) return null;
+if (videos.length === 0 && verticalVisuals.length === 0 && squareVisuals.length === 0) {
+  return null;
+}
 
 const t = {
   es: {
@@ -21,19 +29,19 @@ const t = {
     title: "Mira el tratamiento",
     subtitle: "Videos reales del estudio. Toca para reproducir con sonido.",
     visuals_title: "Material informativo",
-    play: "Reproducir",
+    erlym: "Erlym en cámara",
   },
   en: {
     eyebrow: "In action",
     title: "See the treatment",
     subtitle: "Real videos from the studio. Tap to play with sound.",
     visuals_title: "Info material",
-    play: "Play",
+    erlym: "Erlym on camera",
   },
 }[lang];
 
 const featured = videos[0];
-const rest = videos.slice(1);
+const restVideos = videos.slice(1);
 ---
 <section class="bg-gradient-to-b from-white via-[var(--color-blush-50)] to-white py-16 sm:py-20">
   <div class="container-px mx-auto max-w-6xl">
@@ -46,7 +54,7 @@ const rest = videos.slice(1);
     {featured && (
       <div class="mt-10 grid gap-6 lg:grid-cols-3">
         <!-- Featured large video -->
-        <article class="service-video group relative col-span-1 aspect-[9/16] cursor-pointer overflow-hidden rounded-3xl border border-[var(--color-line)] bg-[var(--color-plum-900)] shadow-[0_18px_50px_-12px_rgba(107,58,115,0.4)] lg:col-span-1 lg:max-h-[640px]">
+        <article class="service-video group relative col-span-1 aspect-[9/16] cursor-pointer overflow-hidden rounded-3xl border border-[var(--color-line)] bg-[var(--color-plum-900)] shadow-[0_18px_50px_-12px_rgba(107,58,115,0.4)] lg:max-h-[640px]">
           <video
             class="service-video-media absolute inset-0 h-full w-full object-cover"
             src={featured.src}
@@ -58,7 +66,7 @@ const rest = videos.slice(1);
           {featured.erlym && (
             <span class="absolute left-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-[var(--color-pink-700)] shadow">
               <span class="h-1.5 w-1.5 rounded-full bg-[var(--color-pink-500)]"></span>
-              {lang === "es" ? "Erlym en cámara" : "Erlym on camera"}
+              {t.erlym}
             </span>
           )}
           <div class="service-video-overlay absolute inset-0 z-10 grid place-items-center transition group-hover:bg-black/15">
@@ -72,9 +80,9 @@ const rest = videos.slice(1);
           </div>
         </article>
 
-        {rest.length > 0 && (
+        {(restVideos.length > 0 || verticalVisuals.length > 0) && (
           <div class="grid grid-cols-2 gap-4 lg:col-span-2 lg:grid-cols-3">
-            {rest.map((v) => (
+            {restVideos.map((v) => (
               <article class="service-video group relative aspect-[9/16] cursor-pointer overflow-hidden rounded-2xl border border-[var(--color-line)] bg-[var(--color-plum-900)] shadow-[0_14px_40px_-12px_rgba(107,58,115,0.4)]">
                 <video
                   class="service-video-media absolute inset-0 h-full w-full object-cover"
@@ -100,16 +108,29 @@ const rest = videos.slice(1);
                 </div>
               </article>
             ))}
+
+            {/* Imágenes 9:16 — mismo formato que los videos */}
+            {verticalVisuals.map((src) => (
+              <article class="relative aspect-[9/16] overflow-hidden rounded-2xl border border-[var(--color-line)] bg-[var(--color-blush-50)] shadow-md">
+                <img
+                  src={src}
+                  alt={t.visuals_title}
+                  class="absolute inset-0 h-full w-full object-cover"
+                  loading="lazy"
+                />
+              </article>
+            ))}
           </div>
         )}
       </div>
     )}
 
-    {visuals.length > 0 && (
+    {/* Grid cuadrado para imágenes 1:1 — separado para que no se vea raro */}
+    {squareVisuals.length > 0 && (
       <div class="mt-12">
         <h3 class="text-center font-display text-xl font-bold sm:text-2xl">{t.visuals_title}</h3>
-        <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {visuals.map((src) => (
+        <div class="mt-6 grid gap-4 sm:grid-cols-2">
+          {squareVisuals.map((src) => (
             <article class="relative aspect-square overflow-hidden rounded-2xl border border-[var(--color-line)] bg-[var(--color-blush-50)] shadow-md transition hover:-translate-y-1 hover:shadow-lg">
               <img
                 src={src}
@@ -133,7 +154,6 @@ const rest = videos.slice(1);
     const toggle = async (e: Event) => {
       e.preventDefault();
       if (video.paused) {
-        // Pause other videos in any section
         document.querySelectorAll<HTMLVideoElement>(
           ".service-video-media, .reel-media"
         ).forEach((v) => { if (v !== video) { v.pause(); v.muted = true; } });

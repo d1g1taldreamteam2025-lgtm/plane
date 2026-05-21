@@ -119,16 +119,23 @@ export const REELS: Reel[] = [
   }),
 ];
 
-// Imágenes verticales / cuadradas — viven dentro de las páginas de servicio
-// específicas (IV Therapy las usa, por ejemplo), no en el showcase del home.
-export const IV_VISUALS = [
+// Imágenes verticales 9:16 (1920x1080) — van en el mismo grid que los videos
+// porque comparten formato. Las imágenes 1:1 (1080x1080) van aparte en un
+// grid cuadrado.
+export const IV_VISUALS_VERTICAL = [
   "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779355854/2_02_hijc8p.png",
   "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779355854/2_01_aukdck.png",
-  "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779357211/post_1_yzxnmu.png",
-  "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779357210/Posr_copia_krbtwe.png",
   "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779357210/8_01_ufrke9.png",
   "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779357210/8_02_ea0lco.png",
 ];
+
+export const IV_VISUALS_SQUARE = [
+  "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779357211/post_1_yzxnmu.png",
+  "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779357210/Posr_copia_krbtwe.png",
+];
+
+// Compat: algunos componentes viejos siguen importando IV_VISUALS.
+export const IV_VISUALS = [...IV_VISUALS_VERTICAL, ...IV_VISUALS_SQUARE];
 
 /** Devuelve los videos para un servicio dado */
 export function reelsByService(tag: ServiceTag): Reel[] {
