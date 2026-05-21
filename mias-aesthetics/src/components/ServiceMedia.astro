@@ -72,7 +72,7 @@ const rest = videos.slice(1);
           </div>
         </article>
 
-        {(rest.length > 0 || visuals.length > 0) && (
+        {rest.length > 0 && (
           <div class="grid grid-cols-2 gap-4 lg:col-span-2 lg:grid-cols-3">
             {rest.map((v) => (
               <article class="service-video group relative aspect-[9/16] cursor-pointer overflow-hidden rounded-2xl border border-[var(--color-line)] bg-[var(--color-plum-900)] shadow-[0_14px_40px_-12px_rgba(107,58,115,0.4)]">
@@ -100,19 +100,26 @@ const rest = videos.slice(1);
                 </div>
               </article>
             ))}
-
-            {visuals.map((src) => (
-              <article class="relative aspect-[9/16] overflow-hidden rounded-2xl border border-[var(--color-line)] bg-[var(--color-blush-50)] shadow-md">
-                <img
-                  src={src}
-                  alt={t.visuals_title}
-                  class="absolute inset-0 h-full w-full object-cover"
-                  loading="lazy"
-                />
-              </article>
-            ))}
           </div>
         )}
+      </div>
+    )}
+
+    {visuals.length > 0 && (
+      <div class="mt-12">
+        <h3 class="text-center font-display text-xl font-bold sm:text-2xl">{t.visuals_title}</h3>
+        <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {visuals.map((src) => (
+            <article class="relative aspect-square overflow-hidden rounded-2xl border border-[var(--color-line)] bg-[var(--color-blush-50)] shadow-md transition hover:-translate-y-1 hover:shadow-lg">
+              <img
+                src={src}
+                alt={t.visuals_title}
+                class="absolute inset-0 h-full w-full object-cover"
+                loading="lazy"
+              />
+            </article>
+          ))}
+        </div>
       </div>
     )}
   </div>
