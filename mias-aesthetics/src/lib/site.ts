@@ -28,12 +28,18 @@ export const SITE = {
   icons: {
     instagram: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1778897809/Google_Maps_icon__2026.svg_waaes9.webp",
     facebook: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1778897809/Facebook_Logo__2019.png_plnryr.webp",
-    tiktok:
-      "https://res.cloudinary.com/drbc4wbvw/image/upload/v1778897809/png-clipart-tik-tok-icon-circle-tech-companies-thumbnail_h6oztk.png",
+    tiktok: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779353668/TikTok_logo_sr7slv.svg",
     googleMaps: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1778897809/Google_Maps_icon__2026.svg_waaes9.webp",
     google: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1778898217/Google_Favicon_2025.svg_gjvcm8.webp",
-    gmail: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1778898407/images_p5ftf4.png",
+    gmail: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779353635/Gmail_icon__2020.svg_f7gjpe.png",
     whatsapp: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1778898491/WhatsApp_icon_ym0yfu.png",
+    logoFull: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779354210/CON_LETRAS_y3yjxt.png",
+    logoMark: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779354322/Icono_4_jwnaxj.png",
+    erlymPhoto:
+      "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779353797/Captura_de_pantalla_2026-05-21_035619_rzdzga.png",
+    flagEs:
+      "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779353875/Bandera_Nacional_de_Espa%C3%B1a_sin_escudo_dizj1a.png",
+    flagEn: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779353895/Flag_of_the_United_States_dlf8pb.png",
   },
   payments: [
     { name: "Visa", icon: "/payments/visa.svg" },

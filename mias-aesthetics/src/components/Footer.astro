@@ -33,11 +33,8 @@ const socials = [
   <div class="container-px relative mx-auto max-w-7xl py-16">
     <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
       <div>
-        <a href={base + "/"} class="flex items-center gap-2 font-display text-lg font-bold tracking-tight">
-          <span class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-[var(--color-pink-500)] to-[var(--color-blush-400)]">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2C9 6 7 9 7 13a5 5 0 0 0 10 0c0-4-2-7-5-11Z"/></svg>
-          </span>
-          Mia's <span class="text-[var(--color-blush-300)]">Aesthetics</span>
+        <a href={base + "/"} class="block" aria-label={SITE.name}>
+          <img src={SITE.icons.logoFull} alt={SITE.name} width="180" height="120" class="h-24 w-auto object-contain drop-shadow-[0_4px_18px_rgba(212,168,90,0.35)]" loading="lazy"/>
         </a>
         <p class="mt-4 max-w-xs text-sm text-white/65">{t(lang, "footer.tagline")}</p>
         <p class="mt-2 text-xs text-white/45">by {SITE.owner}</p>
