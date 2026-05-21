@@ -109,7 +109,8 @@ export const REELS: Reel[] = [
     src: "https://res.cloudinary.com/dehvpdo4z/video/upload/v1779355940/Peptido_2_obha8k.mov",
     title: { es: "Péptidos", en: "Peptides" },
     subtitle: { es: "Bioestimulación celular", en: "Cell biostimulation" },
-    service: "iv",
+    // sin service tag: aparece en el showcase general del home pero no
+    // se cuela en /servicios/sueroterapia (péptidos != IV)
   }),
   r({
     src: "https://res.cloudinary.com/dehvpdo4z/video/upload/v1779355988/glutation_f3jmuu.mov",
