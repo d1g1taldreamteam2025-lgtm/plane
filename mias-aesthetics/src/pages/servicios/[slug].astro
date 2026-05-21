@@ -1,8 +1,10 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
+import ServiceMedia from "../../components/ServiceMedia.astro";
 import { t, getDict } from "../../i18n";
 import { waLink, SITE } from "../../lib/site.ts";
 import { SERVICES, findServiceBySlug } from "../../data/services.ts";
+import type { ServiceTag } from "../../data/reels.ts";
 
 export function getStaticPaths() {
   return SERVICES.map((s) => ({ params: { slug: s.slugs.es }, props: { id: s.id } }));
@@ -187,6 +189,8 @@ const extraJsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd].filter(Boolean)
       </aside>
     </div>
   </section>
+
+  <ServiceMedia lang={lang} service={svc.id as ServiceTag} withVisuals={svc.id === "iv"} />
 
   <!-- PRE / POST CARE -->
   <section class="bg-[var(--color-cream)] py-20">

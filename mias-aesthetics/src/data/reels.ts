@@ -10,7 +10,9 @@
 
 import type { Lang } from "../i18n";
 
-export type ServiceTag = "iv" | "botox" | "morpheus" | "thermage" | "lips" | "lashes" | "depilation" | "acne" | "facial" | "peptides" | "salmon";
+export type ServiceTag =
+  | "iv" | "botox" | "morpheus" | "thermage" | "lips" | "lashes"
+  | "facial" | "depilation" | "dpl" | "salmon" | "dermapen";
 
 export interface Reel {
   /** Video corto vertical (mp4 / mov) */
@@ -82,7 +84,7 @@ export const REELS: Reel[] = [
     src: "https://res.cloudinary.com/dehvpdo4z/video/upload/v1779355919/DPL_vmcxrn.mov",
     title: { es: "Cicatrices de acné", en: "Acne scars" },
     subtitle: { es: "Tratamiento DPL", en: "DPL treatment" },
-    service: "acne",
+    service: "dpl",
   }),
   r({
     src: "https://res.cloudinary.com/dehvpdo4z/video/upload/v1779356004/Dermepen_1_etfdjv.mp4",
@@ -107,7 +109,7 @@ export const REELS: Reel[] = [
     src: "https://res.cloudinary.com/dehvpdo4z/video/upload/v1779355940/Peptido_2_obha8k.mov",
     title: { es: "Péptidos", en: "Peptides" },
     subtitle: { es: "Bioestimulación celular", en: "Cell biostimulation" },
-    service: "peptides",
+    service: "iv",
   }),
   r({
     src: "https://res.cloudinary.com/dehvpdo4z/video/upload/v1779355988/glutation_f3jmuu.mov",
