@@ -20,7 +20,8 @@ function isEmail(s: string) {
 }
 
 export const POST: APIRoute = async ({ request }) => {
-  const webhook = import.meta.env.LEAD_WEBHOOK_URL;
+  // Webhook de n8n. Podés sobreescribirlo con LEAD_WEBHOOK_URL en Vercel.
+  const webhook = import.meta.env.LEAD_WEBHOOK_URL ?? "https://n8n-ucallnow.ucallnow.fun/webhook/mia-lead";
   let body: LeadPayload;
 
   try {
