@@ -91,11 +91,9 @@ const allJsonLd = [businessJsonLd, websiteJsonLd, ...extraJsonLd];
   <link rel="alternate" hreflang="en" href={altEn} />
   <link rel="alternate" hreflang="x-default" href={altEs} />
 
-  <!-- Favicon SVG local (la silueta dorada con corona de Mia's). Local para
-       evitar bloqueos de Cloudinary del cliente. Sirve nítido en cualquier
-       tamaño de pestaña. -->
-  <link rel="icon" type="image/svg+xml" href={`/favicon.svg?v=${Date.now()}`} />
-  <link rel="apple-touch-icon" href="/favicon.svg" />
+  <!-- Favicon: logo oficial Mia's Aesthetics (PNG real subido al repo) -->
+  <link rel="icon" type="image/png" href={`/logo-mark.png?v=${Date.now()}`} />
+  <link rel="apple-touch-icon" href="/logo-mark.png" />
   <link rel="preconnect" href="https://res.cloudinary.com" />
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 
