@@ -1,30 +1,61 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#e8c878"/>
-      <stop offset="50%" stop-color="#d4a85a"/>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#f3d271"/>
+      <stop offset="40%"  stop-color="#e8c878"/>
+      <stop offset="70%"  stop-color="#d4a85a"/>
       <stop offset="100%" stop-color="#b88a36"/>
     </linearGradient>
-    <linearGradient id="r" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#ffc6dd"/>
-      <stop offset="100%" stop-color="#ec6f9c"/>
+    <linearGradient id="hair-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#f3d271"/>
+      <stop offset="100%" stop-color="#b88a36"/>
     </linearGradient>
   </defs>
+
   <!-- Rounded background -->
-  <rect width="64" height="64" rx="16" fill="#1a0f1f"/>
-  <!-- Crown -->
-  <g transform="translate(32 14)" fill="url(#g)">
-    <path d="M -12 0 L -8 -10 L -4 -2 L 0 -12 L 4 -2 L 8 -10 L 12 0 Z"/>
-    <rect x="-12" y="0" width="24" height="3" rx="1"/>
-    <circle cx="-8" cy="-10" r="1.6"/>
-    <circle cx="0"  cy="-12" r="2"/>
-    <circle cx="8"  cy="-10" r="1.6"/>
+  <rect width="128" height="128" rx="28" fill="#fff5fa"/>
+
+  <!-- Hair flowing (back) -->
+  <path d="M 38 90 C 26 70, 26 48, 40 32 C 48 22, 60 18, 70 22 C 64 26, 60 32, 58 38 C 64 36, 70 36, 74 38 C 68 42, 64 48, 60 56 C 62 60, 64 64, 64 70 C 60 76, 54 82, 50 90 C 56 96, 60 102, 60 110 C 50 108, 42 102, 38 90 Z"
+        fill="url(#hair-grad)" opacity="0.95"/>
+
+  <!-- Hair detail strands -->
+  <path d="M 50 100 C 46 88, 46 78, 52 70" stroke="#d4a85a" stroke-width="1.2" fill="none" opacity="0.7"/>
+  <path d="M 56 102 C 54 92, 54 84, 58 78" stroke="#b88a36" stroke-width="1.2" fill="none" opacity="0.6"/>
+
+  <!-- Face silhouette (profile, looking right) -->
+  <path d="M 62 50
+           C 64 44, 68 42, 72 42
+           C 76 42, 80 44, 82 50
+           L 84 58
+           C 84 60, 83 61, 82 61
+           C 82 63, 83 65, 82 66
+           C 81 67, 80 67, 79 67
+           C 79 70, 78 72, 76 74
+           L 78 78
+           C 78 80, 77 81, 75 82
+           L 74 86
+           C 72 88, 70 90, 68 92
+           L 68 100
+           C 66 100, 64 98, 64 96
+           L 64 88
+           C 62 86, 60 82, 60 78
+           L 60 60
+           Z"
+        fill="url(#gold)"/>
+
+  <!-- Eyelash mark -->
+  <path d="M 72 56 C 74 55, 76 55, 78 56" stroke="#1a0f1f" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+
+  <!-- Crown on top -->
+  <g transform="translate(64 22)">
+    <path d="M -14 6 L -10 -2 L -6 4 L 0 -6 L 6 4 L 10 -2 L 14 6 Z" fill="url(#gold)" stroke="#9a6e54" stroke-width="0.8" stroke-linejoin="round"/>
+    <rect x="-14" y="6" width="28" height="3.5" rx="1.2" fill="url(#gold)" stroke="#9a6e54" stroke-width="0.6"/>
+    <circle cx="-10" cy="-2" r="1.8" fill="#fff" stroke="#9a6e54" stroke-width="0.6"/>
+    <circle cx="0"   cy="-6" r="2.4" fill="#fff" stroke="#9a6e54" stroke-width="0.6"/>
+    <circle cx="10"  cy="-2" r="1.8" fill="#fff" stroke="#9a6e54" stroke-width="0.6"/>
   </g>
-  <!-- M Mia -->
-  <text x="32" y="50" text-anchor="middle"
-        font-family="Georgia, 'Times New Roman', serif"
-        font-size="28" font-weight="700" font-style="italic"
-        fill="url(#g)">M</text>
-  <!-- Pink dot accent -->
-  <circle cx="48" cy="50" r="2.5" fill="url(#r)"/>
+
+  <!-- Small pink dot accent (signature) -->
+  <circle cx="100" cy="98" r="3" fill="#ec6f9c"/>
 </svg>
