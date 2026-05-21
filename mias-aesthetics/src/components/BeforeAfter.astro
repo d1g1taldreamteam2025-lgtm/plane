@@ -1,0 +1,154 @@
+---
+import { t, type Lang } from "../i18n";
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+
+// Por ahora: 3 ejemplos placeholder. Cuando se suban las fotos reales
+// (.jpg / .webp) basta con reemplazar src.
+const items = [
+  {
+    title: { es: "Pestañas pelo a pelo", en: "Classic lashes" },
+    before: { from: "#ffe6f1", to: "#ffc6dd", icon: "eye-closed" },
+    after:  { from: "#1f0f26", to: "#3d1f48", icon: "lashes-full" },
+  },
+  {
+    title: { es: "Aumento de labios", en: "Lip filler" },
+    before: { from: "#fff5fa", to: "#ffd5e5", icon: "lips-thin" },
+    after:  { from: "#ffa3c6", to: "#d04b7e", icon: "lips-full" },
+  },
+  {
+    title: { es: "Morpheus 8", en: "Morpheus 8" },
+    before: { from: "#f0e3d5", to: "#d4b18e", icon: "skin-marks" },
+    after:  { from: "#fff3d4", to: "#e8c878", icon: "skin-clear" },
+  },
+];
+
+const sectionEyebrow = lang === "es" ? "Antes y después" : "Before and after";
+const sectionTitle   = lang === "es" ? "Resultados que hablan por sí solos" : "Results that speak for themselves";
+const sectionSub     = lang === "es"
+  ? "Arrastrá el deslizador para comparar. Próximamente: fotos reales de tratamientos hechos por Erlym."
+  : "Drag the slider to compare. Coming soon: real photos of treatments by Erlym.";
+const labelBefore = lang === "es" ? "Antes" : "Before";
+const labelAfter  = lang === "es" ? "Después" : "After";
+
+function svg(icon: string, color: string) {
+  switch (icon) {
+    case "eye-closed":
+      return `<g fill="none" stroke="${color}" stroke-width="3" stroke-linecap="round"><path d="M100 200 Q200 175 300 200"/></g>`;
+    case "lashes-full":
+      return `<g fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round"><path d="M100 200 Q200 130 300 200"/><path d="M110 175 L100 145 M140 160 L130 130 M180 152 L175 118 M220 152 L225 118 M260 160 L270 130 M290 175 L300 145"/></g><ellipse cx="200" cy="200" rx="55" ry="20" fill="#d4a85a"/><ellipse cx="200" cy="200" rx="42" ry="13" fill="#1a0f1f"/><circle cx="195" cy="195" r="5" fill="#fff"/>`;
+    case "lips-thin":
+      return `<path d="M120 200 Q200 195 280 200 Q200 210 120 200 Z" fill="${color}" opacity="0.85"/>`;
+    case "lips-full":
+      return `<path d="M110 190 Q200 175 290 190 Q200 235 110 190 Z" fill="#d04b7e" opacity="0.92"/><path d="M120 195 Q200 210 280 195" stroke="#1a0f1f" stroke-width="1.5" fill="none"/>`;
+    case "skin-marks":
+      return `<rect x="100" y="120" width="200" height="160" rx="20" fill="#fff" opacity="0.5"/><circle cx="160" cy="170" r="4" fill="#8b6b4a"/><circle cx="220" cy="190" r="6" fill="#8b6b4a"/><circle cx="180" cy="220" r="3" fill="#8b6b4a"/><circle cx="240" cy="230" r="5" fill="#8b6b4a"/><circle cx="200" cy="160" r="3" fill="#8b6b4a"/>`;
+    case "skin-clear":
+      return `<rect x="100" y="120" width="200" height="160" rx="20" fill="#fff" opacity="0.65"/><g fill="${color}" opacity="0.7"><circle cx="140" cy="150" r="3"/><circle cx="260" cy="170" r="4"/><circle cx="170" cy="240" r="3"/></g><path d="M170 200 Q200 215 230 200" fill="none" stroke="#d4a85a" stroke-width="2.5" stroke-linecap="round"/>`;
+  }
+  return "";
+}
+---
+<section id="results" class="relative overflow-hidden bg-gradient-to-b from-white via-[var(--color-cream)] to-white py-20 sm:py-28">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0">
+    <div class="absolute left-0 top-1/3 h-72 w-72 rounded-full bg-[var(--color-blush-100)] opacity-50 blur-3xl"></div>
+    <div class="absolute right-0 bottom-0 h-72 w-72 rounded-full bg-[var(--color-gold-300)] opacity-25 blur-3xl"></div>
+  </div>
+
+  <div class="container-px relative mx-auto max-w-7xl">
+    <div class="reveal mx-auto max-w-2xl text-center">
+      <span class="eyebrow eyebrow-gold">{sectionEyebrow}</span>
+      <h2 class="h-display mt-5 text-[clamp(2rem,4.5vw,3.25rem)]">{sectionTitle}</h2>
+      <p class="mt-5 text-base text-[var(--color-gray-soft)] sm:text-lg">{sectionSub}</p>
+    </div>
+
+    <div class="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {items.map((it) => (
+        <article class="reveal overflow-hidden rounded-3xl border border-[var(--color-line)] bg-white shadow-md">
+          <div class="ba-slider relative h-72 select-none">
+            <!-- AFTER (full image, background) -->
+            <div
+              class="absolute inset-0"
+              style={`background: linear-gradient(135deg, ${it.after.from}, ${it.after.to});`}
+            >
+              <svg viewBox="0 0 400 400" class="absolute inset-0 h-full w-full">
+                <Fragment set:html={svg(it.after.icon, "#fff")} />
+              </svg>
+              <span class="absolute right-3 top-3 rounded-full bg-white/95 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-[var(--color-pink-700)] shadow">{labelAfter}</span>
+            </div>
+            <!-- BEFORE (clipped from left) -->
+            <div
+              class="ba-before absolute inset-0 overflow-hidden"
+              style="clip-path: inset(0 50% 0 0);"
+            >
+              <div
+                class="absolute inset-0"
+                style={`background: linear-gradient(135deg, ${it.before.from}, ${it.before.to});`}
+              >
+                <svg viewBox="0 0 400 400" class="absolute inset-0 h-full w-full">
+                  <Fragment set:html={svg(it.before.icon, "#1a0f1f")} />
+                </svg>
+                <span class="absolute left-3 top-3 rounded-full bg-[var(--color-plum-900)]/85 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white shadow">{labelBefore}</span>
+              </div>
+            </div>
+            <!-- Divider handle -->
+            <div
+              class="ba-handle absolute inset-y-0 z-10 flex w-1 -translate-x-1/2 items-center justify-center bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.08)]"
+              style="left: 50%;"
+            >
+              <span class="grid h-10 w-10 place-items-center rounded-full bg-white shadow-lg ring-2 ring-[var(--color-pink-500)]">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" class="text-[var(--color-pink-600)]" aria-hidden="true">
+                  <polyline points="15 6 9 12 15 18"/><polyline points="9 6 15 12 9 18" transform="translate(-6 0)"/>
+                </svg>
+              </span>
+            </div>
+            <!-- Drag overlay -->
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value="50"
+              class="ba-input absolute inset-0 z-20 h-full w-full cursor-ew-resize appearance-none bg-transparent opacity-0"
+              aria-label={lang === "es" ? "Deslizar comparador" : "Drag comparator"}
+            />
+          </div>
+          <div class="p-5">
+            <h3 class="font-display text-lg font-bold">{it.title[lang]}</h3>
+            <p class="mt-1 text-xs uppercase tracking-widest text-[var(--color-pink-600)]">
+              {lang === "es" ? "Resultado real próximamente" : "Real result coming soon"}
+            </p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .ba-input::-webkit-slider-thumb { appearance: none; width: 40px; height: 100%; }
+  .ba-input::-moz-range-thumb { width: 40px; height: 100%; border: 0; background: transparent; }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".ba-slider").forEach((slider) => {
+    const before = slider.querySelector<HTMLElement>(".ba-before");
+    const handle = slider.querySelector<HTMLElement>(".ba-handle");
+    const input  = slider.querySelector<HTMLInputElement>(".ba-input");
+    if (!before || !handle || !input) return;
+
+    const apply = (pct: number) => {
+      const v = Math.max(0, Math.min(100, pct));
+      before.style.clipPath = `inset(0 ${100 - v}% 0 0)`;
+      handle.style.left = `${v}%`;
+    };
+    input.addEventListener("input", () => apply(Number(input.value)));
+    // Touch drag inside the card
+    slider.addEventListener("pointerdown", (e) => {
+      const rect = slider.getBoundingClientRect();
+      const pct = ((e.clientX - rect.left) / rect.width) * 100;
+      input.value = String(pct);
+      apply(pct);
+    });
+  });
+</script>

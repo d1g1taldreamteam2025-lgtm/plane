@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff5fa"/>
+      <stop offset="50%" stop-color="#ffe6f1"/>
+      <stop offset="100%" stop-color="#ffc6dd"/>
+    </linearGradient>
+    <linearGradient id="ink" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d04b7e"/>
+      <stop offset="100%" stop-color="#6b3a73"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e8c878"/>
+      <stop offset="100%" stop-color="#b88a36"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="120" cy="120" r="160" fill="#fff" opacity="0.45"/>
+  <circle cx="1080" cy="540" r="220" fill="#fff" opacity="0.35"/>
+  <circle cx="980" cy="80" r="60" fill="#ffa3c6" opacity="0.55"/>
+
+  <!-- Flower mark (right) -->
+  <g transform="translate(910 320)" opacity="0.95">
+    <g>
+      <ellipse cx="0" cy="-90" rx="48" ry="100" fill="url(#ink)" opacity="0.85"/>
+      <ellipse cx="0" cy="-90" rx="48" ry="100" fill="url(#ink)" opacity="0.85" transform="rotate(60)"/>
+      <ellipse cx="0" cy="-90" rx="48" ry="100" fill="url(#ink)" opacity="0.85" transform="rotate(120)"/>
+      <ellipse cx="0" cy="-90" rx="48" ry="100" fill="url(#ink)" opacity="0.85" transform="rotate(180)"/>
+      <ellipse cx="0" cy="-90" rx="48" ry="100" fill="url(#ink)" opacity="0.85" transform="rotate(240)"/>
+      <ellipse cx="0" cy="-90" rx="48" ry="100" fill="url(#ink)" opacity="0.85" transform="rotate(300)"/>
+    </g>
+    <circle r="30" fill="url(#gold)"/>
+    <circle r="14" fill="#1a0f1f"/>
+  </g>
+
+  <!-- Sparkles -->
+  <g fill="#d4a85a">
+    <circle cx="120" cy="380" r="6"/>
+    <circle cx="200" cy="260" r="4"/>
+    <circle cx="380" cy="500" r="5"/>
+    <circle cx="730" cy="540" r="5"/>
+    <circle cx="60" cy="500" r="4"/>
+  </g>
+
+  <!-- Text block (left) -->
+  <g transform="translate(80 200)">
+    <rect rx="40" width="180" height="36" fill="#fff" opacity="0.9"/>
+    <text x="90" y="24" text-anchor="middle" font-family="'Poppins', sans-serif" font-size="14" font-weight="800" fill="#d04b7e" letter-spacing="2">MIA'S AESTHETICS</text>
+
+    <text x="0" y="120" font-family="'Poppins', sans-serif" font-size="76" font-weight="800" fill="#1a0f1f">Tu belleza,</text>
+    <text x="0" y="200" font-family="'Poppins', sans-serif" font-size="78" font-weight="800" fill="url(#ink)" font-style="italic">elevada.</text>
+
+    <text x="0" y="270" font-family="'Inter', sans-serif" font-size="22" fill="#6b5a76">Pestañas · Faciales · Botox · Morpheus 8</text>
+    <text x="0" y="302" font-family="'Inter', sans-serif" font-size="22" fill="#6b5a76">Anaheim, CA · Reservá por WhatsApp</text>
+
+    <!-- WhatsApp pill -->
+    <g transform="translate(0 340)">
+      <rect rx="999" width="280" height="56" fill="#25D366"/>
+      <text x="140" y="36" text-anchor="middle" font-family="'Poppins', sans-serif" font-size="18" font-weight="700" fill="#fff" letter-spacing="1.5">RESERVAR POR WHATSAPP</text>
+    </g>
+  </g>
+</svg>

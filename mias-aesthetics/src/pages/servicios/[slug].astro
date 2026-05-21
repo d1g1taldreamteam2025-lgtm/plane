@@ -17,6 +17,48 @@ const waHref = waLink(`Hola Mia's Aesthetics, quisiera info sobre ${svc.title.es
 
 const others = SERVICES.filter((s) => s.id !== svc.id).slice(0, 3);
 const previewItems = getDict(lang).services_preview.items;
+
+const pageUrl = `${SITE.url}/servicios/${slug}`;
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  serviceType: svc.title.es,
+  name: svc.title.es,
+  description: svc.shortDesc.es + " " + svc.longDesc.es[0],
+  provider: { "@id": `${SITE.url}/#business` },
+  areaServed: { "@type": "City", name: "Anaheim" },
+  url: pageUrl,
+  offers: {
+    "@type": "Offer",
+    priceCurrency: "USD",
+    price: svc.priceFrom.es.match(/\$?[\d,]+/)?.[0]?.replace(/[^\d.]/g, "") ?? undefined,
+    priceSpecification: { "@type": "PriceSpecification", priceCurrency: "USD", price: svc.priceFrom.es },
+    availability: "https://schema.org/InStock",
+    url: pageUrl,
+  },
+};
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio",     item: SITE.url },
+    { "@type": "ListItem", position: 2, name: "Servicios",  item: `${SITE.url}/#services` },
+    { "@type": "ListItem", position: 3, name: svc.title.es, item: pageUrl },
+  ],
+};
+const faqJsonLd = svc.faqs.es.length
+  ? {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: svc.faqs.es.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    }
+  : null;
+const extraJsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd].filter(Boolean) as object[];
 ---
 <MainLayout
   lang={lang}
@@ -24,6 +66,7 @@ const previewItems = getDict(lang).services_preview.items;
   title={`${svc.title.es} en Anaheim, CA — Mia's Aesthetics`}
   description={svc.shortDesc.es}
   showWelcomeModal={false}
+  extraJsonLd={extraJsonLd}
 >
   <!-- HERO -->
   <section

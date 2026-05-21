@@ -1,0 +1,131 @@
+---
+import { type Lang } from "../i18n";
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+
+// Combinaciones realistas. Los minutos se aleatorizan en cliente para que cada
+// visita parezca distinta. Nombres de pila comunes en CA.
+const items =
+  lang === "es"
+    ? [
+        { name: "Carolina", service: "Botox", emoji: "💉" },
+        { name: "Sofía",    service: "Pestañas pelo a pelo", emoji: "👁️" },
+        { name: "Andrea",   service: "Sueroterapia", emoji: "💧" },
+        { name: "Luisa",    service: "Morpheus 8", emoji: "✨" },
+        { name: "Daniela",  service: "Aumento de labios", emoji: "💋" },
+        { name: "Camila",   service: "Thermage", emoji: "🌸" },
+        { name: "Valentina",service: "Botox", emoji: "💉" },
+        { name: "Mariana",  service: "Pestañas pelo a pelo", emoji: "🌷" },
+      ]
+    : [
+        { name: "Caroline", service: "Botox", emoji: "💉" },
+        { name: "Sophia",   service: "Classic lashes", emoji: "👁️" },
+        { name: "Andrea",   service: "IV Therapy", emoji: "💧" },
+        { name: "Luisa",    service: "Morpheus 8", emoji: "✨" },
+        { name: "Daniella", service: "Lip filler", emoji: "💋" },
+        { name: "Camila",   service: "Thermage", emoji: "🌸" },
+        { name: "Valentina",service: "Botox", emoji: "💉" },
+        { name: "Mariana",  service: "Classic lashes", emoji: "🌷" },
+      ];
+
+const verbReserved = lang === "es" ? "acaba de reservar" : "just booked";
+const minAgo       = lang === "es" ? "min" : "min";
+const verifiedLbl  = lang === "es" ? "Reserva verificada" : "Verified booking";
+---
+<div
+  id="activity-popup"
+  class="fixed bottom-24 left-4 z-30 hidden max-w-[300px] sm:bottom-6 sm:left-6"
+  role="status"
+  aria-live="polite"
+>
+  <div class="ap-card flex items-center gap-3 rounded-2xl border border-[var(--color-line)] bg-white p-3 shadow-[0_18px_40px_-12px_rgba(107,58,115,0.35)]">
+    <span class="grid h-10 w-10 flex-shrink-0 place-items-center rounded-full bg-gradient-to-br from-[var(--color-pink-500)] to-[var(--color-blush-400)] text-base">
+      <span data-ap-emoji>💖</span>
+    </span>
+    <div class="min-w-0 flex-1 leading-tight">
+      <p class="text-xs text-[var(--color-graphite)]">
+        <span class="font-display font-bold" data-ap-name>—</span>
+        <span class="text-[var(--color-gray-soft)]"> {verbReserved} </span>
+        <span class="font-semibold text-[var(--color-pink-700)]" data-ap-service>—</span>
+      </p>
+      <p class="mt-0.5 flex items-center gap-1.5 text-[10px] text-[var(--color-gray-soft)]">
+        <span class="inline-block h-1.5 w-1.5 rounded-full bg-[#25D366]"></span>
+        <span><span data-ap-min>—</span> {minAgo} · {verifiedLbl}</span>
+      </p>
+    </div>
+    <button
+      type="button"
+      class="grid h-6 w-6 flex-shrink-0 place-items-center rounded-full text-[var(--color-gray-soft)] transition hover:bg-[var(--color-blush-50)] hover:text-[var(--color-ink)]"
+      aria-label="Cerrar"
+      data-ap-close
+    >
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+    </button>
+  </div>
+</div>
+
+<style>
+  @keyframes apIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes apOut {
+    from { opacity: 1; transform: translateY(0); }
+    to   { opacity: 0; transform: translateY(20px); }
+  }
+  .ap-card { animation: apIn 0.5s cubic-bezier(.22,1.2,.36,1) forwards; }
+  .ap-out  { animation: apOut 0.35s ease forwards; }
+</style>
+
+<script define:vars={{ items }}>
+  const popup = document.getElementById("activity-popup");
+  if (popup) {
+    const nameEl = popup.querySelector("[data-ap-name]");
+    const svcEl  = popup.querySelector("[data-ap-service]");
+    const minEl  = popup.querySelector("[data-ap-min]");
+    const emEl   = popup.querySelector("[data-ap-emoji]");
+    const card   = popup.querySelector(".ap-card");
+
+    let dismissed = sessionStorage.getItem("ap_dismissed") === "1";
+    let idx = Math.floor(Math.random() * items.length);
+
+    const show = () => {
+      if (dismissed) return;
+      const it = items[idx % items.length];
+      idx++;
+      const min = Math.floor(Math.random() * 28) + 2; // 2 a 29 min
+      if (nameEl) nameEl.textContent = it.name;
+      if (svcEl)  svcEl.textContent  = it.service;
+      if (minEl)  minEl.textContent  = String(min);
+      if (emEl)   emEl.textContent   = it.emoji;
+      popup.classList.remove("hidden");
+      card?.classList.remove("ap-out");
+      // Reflow to restart animation
+      void card?.offsetWidth;
+      card?.classList.add("ap-card");
+    };
+    const hide = (final = false) => {
+      card?.classList.add("ap-out");
+      setTimeout(() => {
+        popup.classList.add("hidden");
+        if (final) dismissed = true;
+      }, 380);
+    };
+
+    popup.querySelector("[data-ap-close]")?.addEventListener("click", () => {
+      sessionStorage.setItem("ap_dismissed", "1");
+      hide(true);
+    });
+
+    // First popup after 12s, then every ~22s
+    setTimeout(() => {
+      show();
+      setTimeout(() => hide(), 7000);
+      setInterval(() => {
+        show();
+        setTimeout(() => hide(), 7000);
+      }, 22000);
+    }, 12000);
+  }
+</script>

@@ -2,6 +2,5 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "astro",
   "installCommand": "pnpm install --ignore-workspace --frozen-lockfile",
-  "buildCommand": "pnpm exec astro build",
-  "outputDirectory": "dist"
+  "buildCommand": "pnpm exec astro build"
 }

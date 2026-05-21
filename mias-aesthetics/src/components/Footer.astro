@@ -73,7 +73,16 @@ const socials = [
               <span class="text-xs">{SITE.address}</span>
             </a>
           </li>
-          <li class="pt-3 text-xs uppercase tracking-widest text-white/40">{lang === "es" ? "Horarios" : "Hours"}</li>
+          <li class="flex items-center justify-between gap-3 pt-3">
+            <span class="text-xs uppercase tracking-widest text-white/40">{lang === "es" ? "Horarios" : "Hours"}</span>
+            <span
+              id="open-now-pill"
+              class="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest"
+            >
+              <span id="open-now-dot" class="inline-block h-1.5 w-1.5 rounded-full bg-white/40"></span>
+              <span id="open-now-text">—</span>
+            </span>
+          </li>
           {hours.map((h) => (
             <li class="flex justify-between gap-3 text-xs text-white/60"><span>{h.day}</span><span>{h.time}</span></li>
           ))}
@@ -127,3 +136,48 @@ const socials = [
     </div>
   </div>
 </footer>
+
+<script define:vars={{ hoursStruct: SITE.hoursStruct, lang }}>
+  // Calcula si el local está abierto AHORA en horario de Anaheim (America/Los_Angeles).
+  function nowInLA() {
+    const now = new Date();
+    const fmt = new Intl.DateTimeFormat("en-US", {
+      timeZone: "America/Los_Angeles",
+      hour12: false,
+      weekday: "short",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    const parts = fmt.formatToParts(now);
+    const weekday = parts.find((p) => p.type === "weekday")?.value ?? "Mon";
+    const hour    = Number(parts.find((p) => p.type === "hour")?.value ?? "0");
+    const minute  = Number(parts.find((p) => p.type === "minute")?.value ?? "0");
+    const weekdayMap = { Sun:0, Mon:1, Tue:2, Wed:3, Thu:4, Fri:5, Sat:6 };
+    return { day: weekdayMap[weekday], minutes: hour * 60 + minute };
+  }
+  function toMinutes(hhmm) {
+    const [h, m] = hhmm.split(":").map(Number);
+    return h * 60 + m;
+  }
+  function isOpen() {
+    const { day, minutes } = nowInLA();
+    const today = hoursStruct.find((h) => h.day === day);
+    if (!today) return { open: false, next: null };
+    return { open: minutes >= toMinutes(today.open) && minutes < toMinutes(today.close), today };
+  }
+  const pill = document.getElementById("open-now-pill");
+  const dot  = document.getElementById("open-now-dot");
+  const txt  = document.getElementById("open-now-text");
+  if (pill && dot && txt) {
+    const s = isOpen();
+    if (s.open) {
+      dot.className = "inline-block h-1.5 w-1.5 rounded-full bg-[#25D366] pulse-ring";
+      txt.textContent = lang === "es" ? "Abierto ahora" : "Open now";
+      pill.classList.add("text-white");
+    } else {
+      dot.className = "inline-block h-1.5 w-1.5 rounded-full bg-[#c75d5d]";
+      txt.textContent = lang === "es" ? "Cerrado" : "Closed";
+      pill.classList.add("text-white/70");
+    }
+  }
+</script>

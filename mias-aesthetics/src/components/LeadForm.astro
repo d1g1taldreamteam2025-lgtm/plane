@@ -1,0 +1,180 @@
+---
+import { type Lang, getDict } from "../i18n";
+import { SERVICES } from "../data/services.ts";
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+
+const services = SERVICES.map((s) => ({ id: s.id, title: s.title[lang] }));
+
+const t = {
+  es: {
+    eyebrow: "Dejá tus datos",
+    title: "Te llamamos nosotras",
+    sub: "Completá el formulario y Erlym te contacta personalmente. Tus datos están protegidos.",
+    name: "Nombre",
+    phone: "Teléfono / WhatsApp",
+    email: "Email",
+    service: "¿Qué tratamiento te interesa?",
+    service_any: "Aún no estoy segura",
+    message: "Contanos algo más (opcional)",
+    consent: "Acepto que Mia's Aesthetics me contacte sobre mi consulta.",
+    submit: "Enviar consulta",
+    sending: "Enviando…",
+    ok_title: "¡Listo! Recibimos tu consulta.",
+    ok_sub: "Erlym te contacta por WhatsApp en las próximas horas hábiles.",
+    err: "No pudimos enviar. Probá de nuevo o escribinos por WhatsApp.",
+    required: "Requerido",
+  },
+  en: {
+    eyebrow: "Leave your info",
+    title: "We'll call you",
+    sub: "Fill the form and Erlym contacts you personally. Your data is protected.",
+    name: "Name",
+    phone: "Phone / WhatsApp",
+    email: "Email",
+    service: "Which treatment interests you?",
+    service_any: "Not sure yet",
+    message: "Tell us a bit more (optional)",
+    consent: "I agree to be contacted by Mia's Aesthetics about my inquiry.",
+    submit: "Send inquiry",
+    sending: "Sending…",
+    ok_title: "Got it! We received your inquiry.",
+    ok_sub: "Erlym will contact you on WhatsApp during business hours.",
+    err: "Couldn't send. Try again or message us on WhatsApp.",
+    required: "Required",
+  },
+}[lang];
+---
+<section id="lead-form" class="relative bg-gradient-to-br from-[var(--color-blush-50)] via-white to-[var(--color-blush-100)] py-20 sm:py-28">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0">
+    <div class="absolute -top-20 left-1/4 h-72 w-72 rounded-full bg-[var(--color-gold-300)] opacity-25 blur-3xl"></div>
+    <div class="absolute -bottom-20 right-1/4 h-72 w-72 rounded-full bg-[var(--color-blush-200)] opacity-40 blur-3xl"></div>
+  </div>
+
+  <div class="container-px relative mx-auto max-w-3xl">
+    <div class="reveal text-center">
+      <span class="eyebrow">{t.eyebrow}</span>
+      <h2 class="h-display mt-5 text-[clamp(2rem,4.5vw,3.25rem)]">{t.title}</h2>
+      <p class="mt-5 text-base text-[var(--color-gray-soft)] sm:text-lg">{t.sub}</p>
+    </div>
+
+    <form
+      id="lead-form-el"
+      class="reveal mt-12 grid gap-5 rounded-3xl border border-[var(--color-line)] bg-white p-6 shadow-[0_18px_50px_-16px_rgba(107,58,115,0.25)] sm:p-8"
+      novalidate
+    >
+      <!-- Honeypot: invisible to humans, bots fill it -->
+      <input type="text" name="website" tabindex="-1" autocomplete="off" class="absolute -left-[9999px]" aria-hidden="true" />
+
+      <div class="grid gap-5 sm:grid-cols-2">
+        <label class="flex flex-col gap-2 text-sm">
+          <span class="font-display font-semibold">{t.name} <span class="text-[var(--color-pink-600)]">*</span></span>
+          <input
+            type="text"
+            name="name"
+            required
+            minlength="2"
+            class="rounded-xl border border-[var(--color-line)] bg-[var(--color-blush-50)] px-4 py-3 text-sm transition focus:border-[var(--color-pink-500)] focus:outline-none focus:ring-2 focus:ring-[var(--color-pink-500)]/30"
+          />
+        </label>
+        <label class="flex flex-col gap-2 text-sm">
+          <span class="font-display font-semibold">{t.phone} <span class="text-[var(--color-pink-600)]">*</span></span>
+          <input
+            type="tel"
+            name="phone"
+            required
+            inputmode="tel"
+            placeholder="+1 (657) 348-2465"
+            class="rounded-xl border border-[var(--color-line)] bg-[var(--color-blush-50)] px-4 py-3 text-sm transition focus:border-[var(--color-pink-500)] focus:outline-none focus:ring-2 focus:ring-[var(--color-pink-500)]/30"
+          />
+        </label>
+      </div>
+
+      <label class="flex flex-col gap-2 text-sm">
+        <span class="font-display font-semibold">{t.email}</span>
+        <input
+          type="email"
+          name="email"
+          class="rounded-xl border border-[var(--color-line)] bg-[var(--color-blush-50)] px-4 py-3 text-sm transition focus:border-[var(--color-pink-500)] focus:outline-none focus:ring-2 focus:ring-[var(--color-pink-500)]/30"
+        />
+      </label>
+
+      <label class="flex flex-col gap-2 text-sm">
+        <span class="font-display font-semibold">{t.service}</span>
+        <select
+          name="service"
+          class="rounded-xl border border-[var(--color-line)] bg-[var(--color-blush-50)] px-4 py-3 text-sm transition focus:border-[var(--color-pink-500)] focus:outline-none focus:ring-2 focus:ring-[var(--color-pink-500)]/30"
+        >
+          <option value="">{t.service_any}</option>
+          {services.map((s) => <option value={s.title}>{s.title}</option>)}
+        </select>
+      </label>
+
+      <label class="flex flex-col gap-2 text-sm">
+        <span class="font-display font-semibold">{t.message}</span>
+        <textarea
+          name="message"
+          rows="3"
+          class="resize-none rounded-xl border border-[var(--color-line)] bg-[var(--color-blush-50)] px-4 py-3 text-sm transition focus:border-[var(--color-pink-500)] focus:outline-none focus:ring-2 focus:ring-[var(--color-pink-500)]/30"
+        ></textarea>
+      </label>
+
+      <label class="flex items-start gap-3 text-xs text-[var(--color-gray-soft)]">
+        <input type="checkbox" name="consent" required class="mt-0.5 h-4 w-4 accent-[var(--color-pink-500)]" />
+        <span>{t.consent}</span>
+      </label>
+
+      <button
+        type="submit"
+        class="btn btn-primary mt-2"
+        data-default-text={t.submit}
+        data-sending-text={t.sending}
+      >
+        {t.submit}
+      </button>
+
+      <div id="lead-form-status" class="hidden rounded-2xl p-4 text-sm" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+</section>
+
+<script define:vars={{ lang, t }}>
+  const form = document.getElementById("lead-form-el");
+  const status = document.getElementById("lead-form-status");
+  if (form && status) {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const btn = form.querySelector("button[type='submit']");
+      const original = btn?.getAttribute("data-default-text") ?? "";
+      const sending = btn?.getAttribute("data-sending-text") ?? "...";
+      btn.disabled = true;
+      btn.textContent = sending;
+
+      const data = Object.fromEntries(new FormData(form).entries());
+      data.consent = data.consent === "on";
+      data.lang = lang;
+      data.source = location.pathname;
+
+      try {
+        const r = await fetch("/api/lead", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        if (!r.ok) throw new Error("bad_status");
+        form.reset();
+        status.className = "rounded-2xl bg-[#e8f5e9] p-4 text-sm text-[#1b5e20]";
+        status.innerHTML = `<strong>${t.ok_title}</strong><br/>${t.ok_sub}`;
+        status.classList.remove("hidden");
+      } catch (err) {
+        status.className = "rounded-2xl bg-[#fdecea] p-4 text-sm text-[#a13427]";
+        status.textContent = t.err;
+        status.classList.remove("hidden");
+      } finally {
+        btn.disabled = false;
+        btn.textContent = original;
+      }
+    });
+  }
+</script>
