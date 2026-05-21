@@ -1,6 +1,8 @@
 import type { Lang } from "../i18n";
 
-export type ServiceId = "iv" | "botox" | "morpheus" | "thermage" | "lips" | "lashes";
+export type ServiceId =
+  | "iv" | "botox" | "morpheus" | "thermage" | "lips" | "lashes"
+  | "facial" | "depilation" | "dpl" | "salmon" | "dermapen";
 
 export interface ServiceDetail {
   id: ServiceId;
@@ -579,6 +581,476 @@ export const SERVICES: ServiceDetail[] = [
       ],
     },
     palette: { from: "#3d1f48", to: "#1a0f1f", accent: "#d4a85a", text: "#fff" },
+  },
+  {
+    id: "facial",
+    slugs: { es: "limpieza-facial", en: "facial-cleansing" },
+    title: { es: "Limpieza facial premium", en: "Premium facial cleansing" },
+    tagline: {
+      es: "Piel limpia, hidratada y luminosa en una sola sesión.",
+      en: "Clean, hydrated, glowing skin in one session.",
+    },
+    shortDesc: {
+      es: "Tu glow natural, restaurado.",
+      en: "Your natural glow, restored.",
+    },
+    duration: { es: "60 – 75 min", en: "60 – 75 min" },
+    priceFrom: { es: "Desde $120", en: "From $120" },
+    priceNote: {
+      es: "Incluye análisis de piel, extracción y mascarilla personalizada.",
+      en: "Includes skin analysis, extraction and custom mask.",
+    },
+    longDesc: {
+      es: [
+        "Nuestra limpieza facial premium es una rutina completa de 60 a 75 minutos que limpia, exfolia, extrae impurezas, hidrata y nutre la piel a profundidad.",
+        "Comenzamos con un análisis de tu piel para elegir los productos exactos: distintos protocolos para piel grasa, mixta, seca, sensible o con acné.",
+        "Sales del estudio con la piel renovada, sin imperfecciones visibles y con un brillo natural que dura semanas.",
+      ],
+      en: [
+        "Our premium facial is a complete 60-75 minute routine that cleanses, exfoliates, extracts impurities, hydrates and deeply nourishes the skin.",
+        "We begin with a skin analysis to pick the exact products: different protocols for oily, combination, dry, sensitive or acne-prone skin.",
+        "You leave with renewed skin, no visible blemishes and a natural glow that lasts for weeks.",
+      ],
+    },
+    includes: {
+      es: [
+        "Análisis personalizado de piel",
+        "Doble limpieza + exfoliación enzimática",
+        "Extracción manual de impurezas",
+        "Mascarilla a medida + masaje facial relajante",
+      ],
+      en: [
+        "Personalized skin analysis",
+        "Double cleanse + enzymatic exfoliation",
+        "Manual extraction of impurities",
+        "Custom mask + relaxing facial massage",
+      ],
+    },
+    preCare: {
+      es: [
+        "Evita exfoliantes fuertes 48 horas antes",
+        "No uses retinol ni ácidos 3 días antes",
+        "Llega con piel limpia, sin maquillaje",
+      ],
+      en: [
+        "Avoid strong exfoliants 48 hours before",
+        "No retinol or acids 3 days before",
+        "Arrive with clean skin, no makeup",
+      ],
+    },
+    postCare: {
+      es: [
+        "Hidrata abundantemente y usa SPF 30+ todos los días",
+        "Evita exposición solar directa por 48 horas",
+        "Evita maquillaje las primeras 6 horas si tuviste extracciones",
+        "No te toques la cara para evitar contaminar la piel limpia",
+      ],
+      en: [
+        "Hydrate abundantly and use SPF 30+ daily",
+        "Avoid direct sun exposure for 48 hours",
+        "No makeup for the first 6 hours if you had extractions",
+        "Don't touch your face to avoid contaminating clean skin",
+      ],
+    },
+    faqs: {
+      es: [
+        { q: "¿Con qué frecuencia debo hacerme una limpieza facial?", a: "Idealmente una vez al mes. Personas con piel grasa o tendencia al acné pueden necesitarla cada 3 semanas." },
+        { q: "¿Duele la extracción?", a: "Es una sensación incómoda pero corta. Aplicamos vapor previo para abrir los poros y minimizar la molestia." },
+        { q: "¿Puedo maquillarme después?", a: "Te recomendamos esperar al menos 6 horas. La piel necesita respirar y absorber los principios activos aplicados." },
+        { q: "¿Sirve para acné?", a: "Sí. Tenemos un protocolo específico anti-acné con productos calmantes, exfoliación enzimática suave y mascarilla con ingredientes seborreguladores." },
+        { q: "¿Voy a salir con rojez?", a: "Una rojez leve es normal y dura 1 a 4 horas. Si tuviste extracciones intensas puede durar hasta 24 horas en zonas específicas." },
+        { q: "¿Lo puedo combinar con Morpheus 8 o Thermage?", a: "Sí, pero ese mismo día solo limpieza. Los tratamientos avanzados los programamos en sesiones separadas." },
+        { q: "¿Qué tipo de productos usan?", a: "Marcas profesionales con respaldo dermatológico: Skinceuticals, Image Skincare, ZO Skin Health, entre otras." },
+        { q: "¿Cuánto duran los efectos visibles?", a: "El glow se nota desde el día 1 y dura entre 2 y 4 semanas, dependiendo de tu rutina diaria de skincare." },
+      ],
+      en: [
+        { q: "How often should I get a facial?", a: "Ideally once a month. Oily or acne-prone skin may need it every 3 weeks." },
+        { q: "Does the extraction hurt?", a: "Mildly uncomfortable but short. We apply steam beforehand to open pores and minimize discomfort." },
+        { q: "Can I wear makeup after?", a: "We recommend waiting at least 6 hours. Skin needs to breathe and absorb the active ingredients." },
+        { q: "Does it help with acne?", a: "Yes. We have an anti-acne protocol with calming products, gentle enzymatic exfoliation and sebum-regulating masks." },
+        { q: "Will I leave with redness?", a: "Mild redness is normal for 1 to 4 hours. Intense extractions can extend redness up to 24 hours in spots." },
+        { q: "Can I combine it with Morpheus 8 or Thermage?", a: "Yes, but not the same day. We schedule advanced treatments in separate sessions." },
+        { q: "Which products do you use?", a: "Professional dermatology-backed brands: Skinceuticals, Image Skincare, ZO Skin Health and others." },
+        { q: "How long does the glow last?", a: "Visible from day 1, lasting 2 to 4 weeks depending on your daily skincare routine." },
+      ],
+    },
+    palette: { from: "#ffe6f1", to: "#ffa3c6", accent: "#d04b7e", text: "#fff" },
+  },
+  {
+    id: "depilation",
+    slugs: { es: "depilacion-laser", en: "laser-hair-removal" },
+    title: { es: "Depilación láser", en: "Laser hair removal" },
+    tagline: {
+      es: "Adiós a la cuchilla. Piel suave, definitivamente.",
+      en: "Goodbye razor. Smooth skin, for good.",
+    },
+    shortDesc: {
+      es: "Resultados duraderos con tecnología profesional.",
+      en: "Long-lasting results with pro technology.",
+    },
+    duration: { es: "15 – 60 min según zona", en: "15 – 60 min depending on area" },
+    priceFrom: { es: "Desde $80 / zona", en: "From $80 / area" },
+    priceNote: {
+      es: "Axilas $80 · Bikini $120 · Piernas completas $250 · Full body desde $400. Pack 6 sesiones con 20% OFF.",
+      en: "Underarms $80 · Bikini $120 · Full legs $250 · Full body from $400. 6-session pack with 20% OFF.",
+    },
+    longDesc: {
+      es: [
+        "Trabajamos con láser de diodo de última generación: seguro en todos los tonos de piel y efectivo en distintos tipos de vello. La emisión del láser destruye el folículo piloso sin dañar la piel circundante.",
+        "Una sesión por zona dura entre 15 minutos (axilas) y 60 minutos (full body). Se recomienda un mínimo de 6 sesiones separadas por 4 a 8 semanas, dependiendo de la zona.",
+        "Despues del tratamiento completo, la mayoría de personas mantiene reducción permanente del 80 al 95% del vello, con sesiones de mantenimiento cada 12 a 18 meses.",
+      ],
+      en: [
+        "We use latest-generation diode laser: safe on all skin tones and effective on different hair types. The laser destroys the hair follicle without damaging surrounding skin.",
+        "A session lasts 15 minutes (underarms) to 60 minutes (full body). A minimum of 6 sessions, 4 to 8 weeks apart, is recommended depending on the area.",
+        "After the full course, most people maintain 80-95% permanent hair reduction, with maintenance sessions every 12 to 18 months.",
+      ],
+    },
+    includes: {
+      es: [
+        "Patch test inicial para verificar tolerancia",
+        "Marcado de la zona y gel conductor refrescante",
+        "Aplicación con láser diodo profesional",
+        "Loción calmante post-sesión",
+      ],
+      en: [
+        "Initial patch test to verify tolerance",
+        "Area marking and refreshing conductor gel",
+        "Application with professional diode laser",
+        "Soothing post-session lotion",
+      ],
+    },
+    preCare: {
+      es: [
+        "Rasura la zona 24 horas antes (no depiles con cera ni pinza)",
+        "Evita exposición solar 2 semanas antes",
+        "No uses cremas, perfumes ni desodorantes en la zona el día de la cita",
+      ],
+      en: [
+        "Shave the area 24 hours before (no waxing or tweezing)",
+        "Avoid sun exposure 2 weeks before",
+        "No creams, perfumes or deodorants on the area the day of",
+      ],
+    },
+    postCare: {
+      es: [
+        "SPF 50 diario sobre la zona durante 1 mes",
+        "Evita exposición solar directa por 2 semanas",
+        "No saunas, piscinas ni gimnasio intenso por 48 horas",
+        "Hidrata la zona con loción calmante 2 veces al día por 1 semana",
+      ],
+      en: [
+        "Daily SPF 50 on the area for 1 month",
+        "Avoid direct sun for 2 weeks",
+        "No saunas, pools or intense gym for 48 hours",
+        "Hydrate with soothing lotion twice daily for 1 week",
+      ],
+    },
+    faqs: {
+      es: [
+        { q: "¿Funciona en todos los tipos de piel?", a: "Sí. Nuestro láser diodo es seguro en fototipos I a VI (piel muy clara hasta piel muy oscura)." },
+        { q: "¿Cuántas sesiones necesito?", a: "Mínimo 6 sesiones. Algunas personas necesitan 8 a 10 según genética, zona y tipo de vello." },
+        { q: "¿Es definitiva?", a: "La FDA permite hablar de 'reducción permanente del vello'. La mayoría mantiene un 80-95% de reducción a largo plazo con mantenimiento anual." },
+        { q: "¿Duele?", a: "Sentirás una sensación de 'gomita' o calor breve. Nuestro láser tiene punta fría que reduce mucho la molestia." },
+        { q: "¿Cada cuánto tengo que ir?", a: "Cada 4 semanas para axilas y bikini, cada 6-8 semanas para piernas, espalda y full body." },
+        { q: "¿Puedo depilarme con cera entre sesiones?", a: "NO. Necesitas mantener el folículo intacto. Solo puedes rasurarte con cuchilla entre sesiones." },
+        { q: "¿Funciona en vello rubio o blanco?", a: "Es menos efectivo. El láser necesita melanina (pigmento) para identificar el folículo. Vello rubio claro o blanco puede no responder." },
+        { q: "¿Es seguro en embarazo?", a: "No. La depilación láser se posterga hasta finalizar el embarazo y la lactancia." },
+      ],
+      en: [
+        { q: "Does it work on all skin types?", a: "Yes. Our diode laser is safe on Fitzpatrick I to VI (very light to very dark skin)." },
+        { q: "How many sessions do I need?", a: "Minimum 6. Some people need 8 to 10 depending on genetics, area and hair type." },
+        { q: "Is it permanent?", a: "The FDA allows 'permanent hair reduction'. Most maintain 80-95% reduction long term with yearly maintenance." },
+        { q: "Does it hurt?", a: "You'll feel a brief 'rubber band' or warmth sensation. Our laser has a chilled tip that greatly reduces discomfort." },
+        { q: "How often do I come back?", a: "Every 4 weeks for underarms and bikini, every 6-8 weeks for legs, back and full body." },
+        { q: "Can I wax between sessions?", a: "NO. You need the follicle intact. Only razor shaving is allowed between sessions." },
+        { q: "Does it work on blonde or white hair?", a: "Less effective. The laser needs melanin (pigment) to target the follicle. Light blonde or white hair may not respond." },
+        { q: "Is it safe during pregnancy?", a: "No. Laser is postponed until after pregnancy and breastfeeding." },
+      ],
+    },
+    palette: { from: "#e6d5ec", to: "#6b3a73", accent: "#3d1f48", text: "#fff" },
+  },
+  {
+    id: "dpl",
+    slugs: { es: "dpl-cicatrices-acne", en: "dpl-acne-scars" },
+    title: { es: "DPL para cicatrices de acné", en: "DPL for acne scars" },
+    tagline: {
+      es: "Luz pulsada dinámica para suavizar cicatrices y manchas.",
+      en: "Dynamic pulsed light to smooth scars and dark spots.",
+    },
+    shortDesc: {
+      es: "Tu piel, sin recuerdos del pasado.",
+      en: "Your skin, with no memory of the past.",
+    },
+    duration: { es: "45 – 60 min", en: "45 – 60 min" },
+    priceFrom: { es: "Desde $280 / sesión", en: "From $280 / session" },
+    priceNote: {
+      es: "Se recomiendan 4 a 6 sesiones separadas por 4 semanas. Pack 5 sesiones con 15% OFF.",
+      en: "4 to 6 sessions, 4 weeks apart. 5-session pack with 15% OFF.",
+    },
+    longDesc: {
+      es: [
+        "El DPL (Dynamic Pulsed Light) es una evolución del IPL clásico. Emite pulsos de luz que apuntan a las cicatrices, manchas y enrojecimientos sin afectar la piel sana de alrededor.",
+        "Es ideal para cicatrices atróficas leves a moderadas del acné, manchas post-inflamatorias (PIH), poros dilatados, telangiectasias (venitas) y rojeces persistentes.",
+        "Después de cada sesión vas a notar mejora progresiva en textura y tono. El resultado completo se aprecia entre 2 y 4 meses tras finalizar el ciclo.",
+      ],
+      en: [
+        "DPL (Dynamic Pulsed Light) is an evolution of classic IPL. It emits light pulses that target scars, dark spots and redness without affecting surrounding healthy skin.",
+        "Ideal for mild to moderate atrophic acne scars, post-inflammatory hyperpigmentation (PIH), enlarged pores, telangiectasias (small veins) and persistent redness.",
+        "After each session you'll notice progressive improvement in texture and tone. Full result is visible 2 to 4 months after finishing the course.",
+      ],
+    },
+    includes: {
+      es: [
+        "Análisis de piel y planificación del protocolo",
+        "Limpieza profunda previa",
+        "Aplicación de DPL con parámetros personalizados",
+        "Sérum calmante y reparador post-sesión",
+      ],
+      en: [
+        "Skin analysis and protocol planning",
+        "Pre-session deep cleansing",
+        "DPL application with personalized parameters",
+        "Soothing and repair serum after the session",
+      ],
+    },
+    preCare: {
+      es: [
+        "Evita exposición solar 4 semanas antes",
+        "Suspende retinol y ácidos 5 días antes",
+        "Llega sin maquillaje ni cremas",
+      ],
+      en: [
+        "Avoid sun exposure 4 weeks before",
+        "Stop retinol and acids 5 days before",
+        "Arrive with no makeup or creams",
+      ],
+    },
+    postCare: {
+      es: [
+        "SPF 50 diario por 4 semanas",
+        "Evita sol directo, saunas y ejercicio intenso por 48 horas",
+        "No uses retinol ni ácidos por 1 semana",
+        "Las costritas oscuras que pueden formarse caen solas en 5-10 días — no las arranques",
+      ],
+      en: [
+        "Daily SPF 50 for 4 weeks",
+        "Avoid direct sun, saunas and intense exercise for 48 hours",
+        "No retinol or acids for 1 week",
+        "Dark micro-crusts may form and fall off naturally in 5-10 days — don't pick them",
+      ],
+    },
+    faqs: {
+      es: [
+        { q: "¿En qué se diferencia del IPL común?", a: "DPL usa filtros más selectivos y pulsos dinámicos. Es más preciso, con menos riesgo de quemaduras y mejor rendimiento en pieles de tono medio." },
+        { q: "¿Cuántas sesiones necesito?", a: "4 a 6 sesiones para cicatrices leves. Cicatrices más profundas requieren combinar con Morpheus 8 o Dermapen." },
+        { q: "¿Sirve para todo tipo de cicatriz?", a: "Funciona muy bien con cicatrices atróficas (hundidas) leves y manchas. Cicatrices hipertróficas (relieve) requieren otros tratamientos." },
+        { q: "¿Duele?", a: "Sensación de chispazo breve, comparable a una gomita. Usamos gel frío para mayor comodidad." },
+        { q: "¿Hay downtime?", a: "Apenas. Rojez de 4 a 24 horas. Las micro-costritas (si se forman) son discretas y se pueden cubrir con base mineral después de 24h." },
+        { q: "¿Sirve para rosácea?", a: "Sí. El DPL es uno de los mejores tratamientos para reducir el enrojecimiento difuso y las venitas asociadas a rosácea leve a moderada." },
+        { q: "¿Es seguro en piel oscura?", a: "Requiere parámetros conservadores y mayor cantidad de sesiones, pero sí es seguro. Hacemos patch test previo en piel oscura." },
+        { q: "¿Puedo combinarlo con limpieza facial?", a: "Sí. Lo ideal es limpieza 1 semana antes del DPL para optimizar el resultado." },
+      ],
+      en: [
+        { q: "How is it different from regular IPL?", a: "DPL uses more selective filters and dynamic pulses. More precise, lower burn risk and better performance on medium-toned skin." },
+        { q: "How many sessions do I need?", a: "4 to 6 sessions for mild scarring. Deeper scars require combining with Morpheus 8 or Dermapen." },
+        { q: "Does it work on every scar type?", a: "Works very well on mild atrophic (sunken) scars and dark spots. Hypertrophic (raised) scars need other treatments." },
+        { q: "Does it hurt?", a: "Brief snap sensation, similar to a rubber band. We use cooling gel for comfort." },
+        { q: "Is there downtime?", a: "Almost none. Redness for 4-24 hours. Any micro-crusts are subtle and can be covered with mineral foundation after 24h." },
+        { q: "Does it help rosacea?", a: "Yes. DPL is one of the best treatments for diffuse redness and small vessels in mild to moderate rosacea." },
+        { q: "Is it safe on dark skin?", a: "Requires conservative parameters and more sessions, but it is safe. We do a patch test first on darker skin." },
+        { q: "Can I combine it with a facial?", a: "Yes. Ideally a facial 1 week before DPL to optimize results." },
+      ],
+    },
+    palette: { from: "#fff3d4", to: "#d4a85a", accent: "#b88a36", text: "#4a3210" },
+  },
+  {
+    id: "salmon",
+    slugs: { es: "esperma-de-salmon", en: "salmon-dna" },
+    title: { es: "Esperma de salmón (PDRN)", en: "Salmon DNA (PDRN)" },
+    tagline: {
+      es: "Bioestimulación anti-edad con ADN de salmón.",
+      en: "Anti-aging biostimulation with salmon DNA.",
+    },
+    shortDesc: {
+      es: "Regeneración celular profunda.",
+      en: "Deep cellular regeneration.",
+    },
+    duration: { es: "45 – 60 min", en: "45 – 60 min" },
+    priceFrom: { es: "Desde $450 / sesión", en: "From $450 / session" },
+    priceNote: {
+      es: "Se recomiendan 3 sesiones separadas por 21 días. Pack 3 sesiones desde $1,200.",
+      en: "Course of 3 sessions, 21 days apart. 3-session pack from $1,200.",
+    },
+    longDesc: {
+      es: [
+        "El tratamiento de PDRN (polydeoxyribonucleotide) usa fragmentos de ADN extraído del esperma de salmón, biocompatible con el ADN humano. Estimula la regeneración celular, la producción de colágeno y elastina, y mejora la cicatrización.",
+        "Ideal para piel cansada, opaca, con arrugas finas, manchas, flacidez leve o post-procedimientos para acelerar recuperación. Es uno de los tratamientos anti-edad más populares en Corea y Europa.",
+        "Los resultados son progresivos: textura más uniforme, tono parejo, luminosidad natural y firmeza. Visible desde la primera sesión, óptimo a las 8-12 semanas.",
+      ],
+      en: [
+        "PDRN (polydeoxyribonucleotide) treatment uses DNA fragments extracted from salmon sperm, biocompatible with human DNA. Stimulates cellular regeneration, collagen and elastin production, and improves healing.",
+        "Ideal for tired, dull skin, fine wrinkles, dark spots, mild sagging or post-procedure recovery. One of the most popular anti-aging treatments in Korea and Europe.",
+        "Progressive results: more even texture, uniform tone, natural radiance and firmness. Visible from the first session, optimal at 8-12 weeks.",
+      ],
+    },
+    includes: {
+      es: [
+        "Evaluación facial completa",
+        "Anestesia tópica para comodidad",
+        "Aplicación con micro-inyecciones o mesoterapia",
+        "Suero post calmante y reparador",
+      ],
+      en: [
+        "Full facial evaluation",
+        "Topical anesthesia for comfort",
+        "Application via micro-injections or mesotherapy",
+        "Calming and repairing post serum",
+      ],
+    },
+    preCare: {
+      es: [
+        "Evita alcohol 48 horas antes",
+        "Suspende aspirina y antiinflamatorios 1 semana antes",
+        "Llega sin maquillaje",
+      ],
+      en: [
+        "Avoid alcohol 48 hours before",
+        "Stop aspirin and anti-inflammatories 1 week before",
+        "Arrive with no makeup",
+      ],
+    },
+    postCare: {
+      es: [
+        "No te toques ni te masajees la cara por 24 horas",
+        "Evita maquillaje las primeras 12 horas",
+        "SPF 30+ diario por 1 semana",
+        "Evita saunas, piscinas y ejercicio intenso por 48 horas",
+      ],
+      en: [
+        "Don't touch or massage your face for 24 hours",
+        "No makeup for the first 12 hours",
+        "Daily SPF 30+ for 1 week",
+        "Avoid saunas, pools and intense exercise for 48 hours",
+      ],
+    },
+    faqs: {
+      es: [
+        { q: "¿Es vegano o de origen animal?", a: "Es de origen animal: ADN purificado de esperma de salmón. No es compatible con dieta vegana estricta." },
+        { q: "¿Es seguro?", a: "Sí. El PDRN tiene más de 20 años de uso clínico en Corea, Italia y Japón con perfil de seguridad excelente. Es altamente biocompatible." },
+        { q: "¿Cuándo veo resultados?", a: "Mejoría en luminosidad e hidratación desde el día 3. Cambios en textura y firmeza desde la semana 4. Resultado óptimo a las 12 semanas." },
+        { q: "¿Cuántas sesiones necesito?", a: "Protocolo estándar: 3 sesiones cada 21 días. Mantenimiento opcional cada 6 a 12 meses." },
+        { q: "¿Duele?", a: "Aplicamos anestesia tópica y las micro-agujas son muy finas. Es muy tolerable." },
+        { q: "¿Lo puedo combinar con Botox o relleno?", a: "Sí, en sesiones separadas. PDRN potencia el colágeno y mejora la calidad de piel donde luego se aplica Botox/relleno." },
+        { q: "¿Es alérgico para personas con alergia a pescado?", a: "Hay un riesgo teórico bajísimo. Personas con alergia severa a pescado deben consultar antes y hacer test." },
+        { q: "¿Cuánto duran los resultados?", a: "Entre 6 y 12 meses según edad y cuidado de piel. Con mantenimiento, los resultados se sostienen indefinidamente." },
+      ],
+      en: [
+        { q: "Is it vegan or animal-derived?", a: "Animal-derived: purified salmon sperm DNA. Not compatible with strict vegan diet." },
+        { q: "Is it safe?", a: "Yes. PDRN has 20+ years of clinical use in Korea, Italy and Japan with excellent safety profile. Highly biocompatible." },
+        { q: "When do I see results?", a: "Improvement in radiance and hydration from day 3. Texture and firmness changes from week 4. Optimal at 12 weeks." },
+        { q: "How many sessions do I need?", a: "Standard protocol: 3 sessions every 21 days. Optional maintenance every 6 to 12 months." },
+        { q: "Does it hurt?", a: "We use topical anesthesia and ultra-fine needles. Very tolerable." },
+        { q: "Can I combine it with Botox or filler?", a: "Yes, in separate sessions. PDRN boosts collagen and improves skin quality where Botox/filler is later applied." },
+        { q: "Is it allergenic for fish allergies?", a: "Theoretical risk is minimal. People with severe fish allergy should consult and test first." },
+        { q: "How long do results last?", a: "6 to 12 months depending on age and skincare. With maintenance, results are sustained indefinitely." },
+      ],
+    },
+    palette: { from: "#ffe6f1", to: "#ec6f9c", accent: "#d04b7e", text: "#fff" },
+  },
+  {
+    id: "dermapen",
+    slugs: { es: "dermapen", en: "dermapen" },
+    title: { es: "Dermapen", en: "Dermapen" },
+    tagline: {
+      es: "Microneedling premium para textura y colágeno.",
+      en: "Premium microneedling for texture and collagen.",
+    },
+    shortDesc: {
+      es: "Tu piel renovada, sin downtime largo.",
+      en: "Your skin renewed, without long downtime.",
+    },
+    duration: { es: "45 – 60 min", en: "45 – 60 min" },
+    priceFrom: { es: "Desde $220 / sesión", en: "From $220 / session" },
+    priceNote: {
+      es: "Se recomiendan 3 a 4 sesiones separadas por 30 días. Pack 3 sesiones desde $600.",
+      en: "3 to 4 sessions, 30 days apart. 3-session pack from $600.",
+    },
+    longDesc: {
+      es: [
+        "Dermapen es un dispositivo motorizado con micro-agujas estériles desechables que crea micro-canales controlados en la piel. Estos micro-canales activan la cicatrización natural, estimulando colágeno y elastina nuevos.",
+        "Es perfecto para cicatrices de acné suaves a moderadas, líneas finas, poros dilatados, estrías, alopecia y para potenciar la absorción de principios activos (factor de crecimiento, ácido hialurónico, péptidos).",
+        "A diferencia del Morpheus 8, no usa radiofrecuencia, por lo que el downtime es menor (24 horas) y el precio más accesible. Ideal como tratamiento de mantenimiento o paso intermedio.",
+      ],
+      en: [
+        "Dermapen is a motorized device with sterile disposable micro-needles that creates controlled micro-channels in the skin. These channels activate natural healing, stimulating new collagen and elastin.",
+        "Perfect for mild to moderate acne scars, fine lines, enlarged pores, stretch marks, hair loss, and to boost absorption of active ingredients (growth factor, hyaluronic acid, peptides).",
+        "Unlike Morpheus 8, it doesn't use radiofrequency, so downtime is shorter (24 hours) and price more accessible. Ideal as a maintenance or intermediate treatment.",
+      ],
+    },
+    includes: {
+      es: [
+        "Anestesia tópica 30 min antes",
+        "Sesión con aguja estéril desechable de un solo uso",
+        "Aplicación de sérum bioestimulante personalizado",
+        "Mascarilla calmante post-tratamiento",
+      ],
+      en: [
+        "Topical anesthesia 30 min before",
+        "Session with single-use sterile disposable needle",
+        "Application of personalized biostimulating serum",
+        "Soothing post-treatment mask",
+      ],
+    },
+    preCare: {
+      es: [
+        "Evita sol y autobronceadores 1 semana antes",
+        "No uses retinol ni ácidos 3 días antes",
+        "Llega con cara limpia, sin maquillaje",
+      ],
+      en: [
+        "Avoid sun and self-tanners 1 week before",
+        "No retinol or acids 3 days before",
+        "Arrive with clean face, no makeup",
+      ],
+    },
+    postCare: {
+      es: [
+        "SPF 50 diario por 2 semanas",
+        "No maquillaje por 24 horas",
+        "Hidrata con productos calmantes (sin alcohol ni perfume)",
+        "Evita saunas, piscinas y ejercicio intenso por 48 horas",
+      ],
+      en: [
+        "Daily SPF 50 for 2 weeks",
+        "No makeup for 24 hours",
+        "Hydrate with soothing products (no alcohol or fragrance)",
+        "Avoid saunas, pools and intense exercise for 48 hours",
+      ],
+    },
+    faqs: {
+      es: [
+        { q: "¿Cuál es la diferencia con Morpheus 8?", a: "Dermapen usa solo micro-agujas (sin radiofrecuencia), va menos profundo y tiene downtime más corto. Morpheus 8 combina agujas + radiofrecuencia, llega más profundo y suele dar resultados más marcados en flacidez." },
+        { q: "¿Cuántas sesiones necesito?", a: "Para cicatrices o líneas finas: 3 a 4. Para alopecia o estrías: 4 a 6." },
+        { q: "¿Duele?", a: "Aplicamos anestesia tópica 30 minutos antes. Es muy tolerable, la mayoría dice que se siente como una vibración." },
+        { q: "¿Hay rojez?", a: "Sí, rojez tipo quemadura solar leve por 24 a 48 horas. Algunas personas también tienen descamación leve al 3er día." },
+        { q: "¿Sirve para estrías?", a: "Sí, especialmente las rojas o frescas. Las blancas requieren más sesiones (6+) y se combinan con DPL para mejor resultado." },
+        { q: "¿Sirve para alopecia?", a: "Sí. Combinado con PRP o péptidos capilares, mejora notablemente la densidad y grosor del cabello en personas con caída leve a moderada." },
+        { q: "¿Es seguro en piel oscura?", a: "Sí. A diferencia del láser, el microneedling es seguro en todos los fototipos sin riesgo de despigmentación." },
+        { q: "¿Lo puedo hacer en zonas del cuerpo?", a: "Sí. Hacemos Dermapen en cara, cuello, escote, manos, abdomen (para estrías) y cuero cabelludo (para alopecia)." },
+      ],
+      en: [
+        { q: "What's the difference from Morpheus 8?", a: "Dermapen uses only micro-needles (no radiofrequency), goes shallower and has shorter downtime. Morpheus 8 combines needles + radiofrequency, goes deeper and tends to give more dramatic results on sagging." },
+        { q: "How many sessions do I need?", a: "For scars or fine lines: 3 to 4. For alopecia or stretch marks: 4 to 6." },
+        { q: "Does it hurt?", a: "We apply topical anesthesia 30 minutes before. Very tolerable, most people say it feels like a vibration." },
+        { q: "Is there redness?", a: "Yes, mild sunburn-like redness for 24 to 48 hours. Some experience light peeling on day 3." },
+        { q: "Does it work on stretch marks?", a: "Yes, especially fresh red ones. White stretch marks require more sessions (6+) and combination with DPL for best result." },
+        { q: "Does it help with hair loss?", a: "Yes. Combined with PRP or hair peptides, notably improves density and thickness in mild to moderate hair loss." },
+        { q: "Is it safe on dark skin?", a: "Yes. Unlike laser, microneedling is safe on all phototypes with no depigmentation risk." },
+        { q: "Can I do it on body areas?", a: "Yes. We perform Dermapen on face, neck, décolleté, hands, abdomen (for stretch marks) and scalp (for alopecia)." },
+      ],
+    },
+    palette: { from: "#fff3d4", to: "#e8c878", accent: "#b88a36", text: "#4a3210" },
   },
 ];
 
