@@ -1,75 +1,41 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 320">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs>
     <linearGradient id="gold" x1="50%" y1="0%" x2="50%" y2="100%">
       <stop offset="0%"   stop-color="#f4d572"/>
-      <stop offset="35%"  stop-color="#e8c878"/>
-      <stop offset="65%"  stop-color="#d4a85a"/>
+      <stop offset="40%"  stop-color="#e8c878"/>
+      <stop offset="70%"  stop-color="#d4a85a"/>
       <stop offset="100%" stop-color="#a07628"/>
+    </linearGradient>
+    <linearGradient id="pink" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#ec6f9c"/>
+      <stop offset="100%" stop-color="#a83861"/>
     </linearGradient>
   </defs>
 
-  <!-- CROWN (top) -->
-  <g transform="translate(100 20)" stroke="url(#gold)" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round" fill="none">
-    <!-- Three peaks, two valleys -->
-    <path d="M -28 24 L -22 -2 L -10 14 L 0 -12 L 10 14 L 22 -2 L 28 24"/>
-    <!-- Base bar -->
-    <path d="M -28 24 L 28 24" stroke-width="5"/>
-    <!-- Pearls -->
-    <circle cx="-22" cy="-2" r="3.5" fill="url(#gold)" stroke-width="2"/>
-    <circle cx="0"   cy="-12" r="4.5" fill="url(#gold)" stroke-width="2"/>
-    <circle cx="22"  cy="-2" r="3.5" fill="url(#gold)" stroke-width="2"/>
+  <!-- Round dark background — high contrast on light AND dark browser tabs -->
+  <rect width="64" height="64" rx="14" fill="#1a0f1f"/>
+
+  <!-- Big bold crown on top -->
+  <g transform="translate(32 14)" fill="url(#gold)" stroke="#1a0f1f" stroke-width="0.6">
+    <path d="M -19 9 L -13 -4 L -7 6 L 0 -9 L 7 6 L 13 -4 L 19 9 Z" stroke-linejoin="round"/>
+    <rect x="-19" y="9" width="38" height="5" rx="1.5"/>
+    <circle cx="-13" cy="-4" r="3"/>
+    <circle cx="0"   cy="-9" r="4"/>
+    <circle cx="13"  cy="-4" r="3"/>
   </g>
 
-  <!-- HAIR — flowing locks on the left -->
-  <g fill="none" stroke="url(#gold)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-    <!-- Top hair canopy -->
-    <path d="M 80 60 C 60 70, 50 92, 50 112"/>
-    <path d="M 95 56 C 78 66, 64 90, 56 122"/>
-    <path d="M 105 58 C 88 72, 70 102, 60 138"/>
-    <!-- Middle locks -->
-    <path d="M 70 130 C 50 150, 40 178, 50 210"/>
-    <path d="M 60 160 C 36 184, 30 218, 50 240"/>
-    <path d="M 60 190 C 30 220, 32 256, 60 270"/>
-    <!-- Bottom curl -->
-    <path d="M 70 230 C 48 260, 60 290, 90 280 C 110 274, 110 256, 96 252"/>
-    <!-- Inner strands flowing through face area -->
-    <path d="M 110 75 C 105 95, 110 120, 120 140"/>
-    <path d="M 120 100 C 118 130, 125 160, 130 185"/>
-  </g>
+  <!-- Bold italic M (Mia) in gold below the crown -->
+  <text x="32" y="50"
+        text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="30"
+        font-weight="900"
+        font-style="italic"
+        fill="url(#gold)"
+        stroke="#1a0f1f"
+        stroke-width="0.8"
+        paint-order="stroke">M</text>
 
-  <!-- FACE silhouette (profile, looking right) -->
-  <g fill="none" stroke="url(#gold)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
-    <!-- Forehead → nose → lips → chin -->
-    <path d="M 100 75
-             C 115 78, 130 90, 138 108
-             L 142 130
-             C 144 138, 142 144, 138 146
-             L 144 158                   /* nose tip */
-             C 146 162, 144 166, 138 168
-             L 140 174                   /* nostril */
-             C 142 180, 138 182, 132 180
-             L 134 188                   /* upper lip */
-             C 138 190, 138 194, 132 194
-             L 134 200                   /* lower lip */
-             C 138 202, 138 208, 132 210
-             L 128 220                   /* chin notch */
-             C 126 226, 118 232, 110 234"/>
-    <!-- Cheek / jawline -->
-    <path d="M 110 234 C 100 240, 92 244, 84 246"/>
-  </g>
-
-  <!-- EYE -->
-  <g fill="url(#gold)">
-    <!-- Eye shape -->
-    <path d="M 122 132 C 130 130, 138 132, 142 138 C 137 142, 130 142, 124 140 Z"/>
-    <!-- Eyelash strokes -->
-  </g>
-  <g stroke="url(#gold)" stroke-width="2" stroke-linecap="round" fill="none">
-    <path d="M 122 132 L 119 128"/>
-    <path d="M 128 130 L 127 124"/>
-    <path d="M 135 130 L 137 124"/>
-  </g>
-
-  <!-- EYEBROW -->
-  <path d="M 122 122 C 130 119, 138 121, 142 124" stroke="url(#gold)" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <!-- Pink accent dot -->
+  <circle cx="50" cy="50" r="3" fill="url(#pink)"/>
 </svg>
