@@ -1,7 +1,8 @@
 ---
 import LangSwitch from "./LangSwitch.astro";
-import { t, getDict, type Lang } from "../i18n";
+import { t, type Lang } from "../i18n";
 import { SITE, waLink } from "../lib/site.ts";
+import { SERVICES } from "../data/services.ts";
 
 interface Props {
   lang: Lang;
@@ -10,7 +11,14 @@ interface Props {
 const { lang, path } = Astro.props;
 const base = lang === "en" ? "/en" : "";
 
-const services = getDict(lang).services_preview.items;
+// Lista completa de los 11 servicios desde el catálogo, no del i18n
+// (i18n solo tiene 6 para el preview del home).
+const servicesPath = lang === "es" ? "servicios" : "services";
+const services = SERVICES.map((s) => ({
+  slug: s.slugs[lang],
+  title: s.title[lang],
+  desc: s.shortDesc[lang],
+}));
 
 const navItems = [
   { key: "home",         href: `${base}/` },
@@ -48,7 +56,7 @@ const waHref = waLink(
               {services.map((s) => (
                 <li>
                   <a
-                    href={`${base}/servicios/${s.slug}`}
+                    href={`${base}/${servicesPath}/${s.slug}`}
                     class="group/item flex items-start gap-3 rounded-xl p-3 transition hover:bg-[var(--color-blush-50)]"
                   >
                     <span class="grid h-9 w-9 flex-shrink-0 place-items-center rounded-full bg-gradient-to-br from-[var(--color-blush-200)] to-[var(--color-pink-500)] text-white">
@@ -94,7 +102,7 @@ const waHref = waLink(
           </summary>
           <div class="ml-3 mt-1 flex flex-col border-l border-[var(--color-line)] pl-3">
             {services.map((s) => (
-              <a href={`${base}/servicios/${s.slug}`} class="rounded-lg px-3 py-2 text-sm text-[var(--color-graphite)] hover:text-[var(--color-pink-700)]">{s.title}</a>
+              <a href={`${base}/${servicesPath}/${s.slug}`} class="rounded-lg px-3 py-2 text-sm text-[var(--color-graphite)] hover:text-[var(--color-pink-700)]">{s.title}</a>
             ))}
           </div>
         </details>

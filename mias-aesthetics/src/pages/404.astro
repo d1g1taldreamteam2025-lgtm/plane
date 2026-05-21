@@ -1,0 +1,65 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import { SERVICES } from "../data/services.ts";
+import { SITE, waLink } from "../lib/site.ts";
+
+// 404 bilingüe que detecta idioma desde el path actual (server-side no posible
+// para static, así que mostramos ambos idiomas y dejamos navegar a cada uno).
+const waHref = waLink("Hola Mia's Aesthetics, llegué a una página que no existe — ¿pueden ayudarme?");
+---
+<MainLayout
+  lang="es"
+  path="/404"
+  title="Página no encontrada — Mia's Aesthetics"
+  description="La página que buscas no existe. Explora nuestros tratamientos disponibles."
+  showWelcomeModal={false}
+>
+  <section class="relative overflow-hidden bg-gradient-to-br from-[var(--color-blush-50)] via-white to-[var(--color-blush-100)] py-20 sm:py-28">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0">
+      <div class="absolute -top-20 -left-20 h-96 w-96 rounded-full bg-[var(--color-blush-100)] opacity-60 blur-3xl"></div>
+      <div class="absolute -bottom-20 -right-20 h-[28rem] w-[28rem] rounded-full bg-[var(--color-gold-300)] opacity-25 blur-3xl"></div>
+    </div>
+
+    <div class="container-px relative mx-auto max-w-4xl text-center">
+      <span class="eyebrow eyebrow-gold">Error 404</span>
+      <h1 class="h-display mt-5 text-[clamp(2.5rem,6vw,4.5rem)]">
+        Esta página se perdió<br/>
+        <span class="bg-gradient-to-r from-[var(--color-pink-500)] to-[var(--color-pink-700)] bg-clip-text italic text-transparent">por el camino.</span>
+      </h1>
+      <p class="mx-auto mt-6 max-w-xl text-base text-[var(--color-gray-soft)] sm:text-lg">
+        La URL que buscas no existe o cambió de lugar. Probá con uno de estos tratamientos
+        o vuelve al inicio. <span class="block">/ The page you're looking for doesn't exist.</span>
+      </p>
+
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <a href="/" class="btn btn-primary">← Volver al inicio</a>
+        <a href="/en/" class="btn btn-outline">← Back to home (EN)</a>
+        <a href={waHref} target="_blank" rel="noopener" class="btn btn-whatsapp">WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white py-16">
+    <div class="container-px mx-auto max-w-6xl">
+      <h2 class="h-display text-center text-2xl sm:text-3xl">Nuestros tratamientos</h2>
+      <p class="mt-2 text-center text-sm text-[var(--color-gray-soft)]">Our treatments</p>
+
+      <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {SERVICES.map((s) => (
+          <div class="rounded-2xl border border-[var(--color-line)] bg-white p-5 transition hover:shadow-md">
+            <div
+              class="mb-3 h-1.5 w-12 rounded-full"
+              style={`background: linear-gradient(90deg, ${s.palette.from}, ${s.palette.to});`}
+            ></div>
+            <h3 class="font-display text-base font-bold">{s.title.es}</h3>
+            <p class="mt-1 text-xs text-[var(--color-gray-soft)]">{s.shortDesc.es}</p>
+            <div class="mt-3 flex gap-2">
+              <a href={`/servicios/${s.slugs.es}`} class="inline-flex items-center gap-1 rounded-full bg-[var(--color-blush-50)] px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-[var(--color-pink-700)] hover:bg-[var(--color-blush-100)]">ES →</a>
+              <a href={`/en/services/${s.slugs.en}`} class="inline-flex items-center gap-1 rounded-full bg-[var(--color-blush-50)] px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-[var(--color-pink-700)] hover:bg-[var(--color-blush-100)]">EN →</a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</MainLayout>

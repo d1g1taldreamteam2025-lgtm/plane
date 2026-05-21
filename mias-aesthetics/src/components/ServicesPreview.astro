@@ -5,6 +5,7 @@ interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const items = getDict(lang).services_preview.items;
 const base = lang === "en" ? "/en" : "";
+const servicesPath = lang === "es" ? "servicios" : "services";
 
 const palettes = [
   // IV Therapy — blush + gold
@@ -88,7 +89,7 @@ const icons = [
       {items.map((it, i) => {
         const p = palettes[i % palettes.length];
         return (
-          <a href={`${base}/servicios/${it.slug}`} class="card reveal group flex flex-col">
+          <a href={`${base}/${servicesPath}/${it.slug}`} class="card reveal group flex flex-col">
             <div class="relative">
               <div
                 class="grid h-16 w-16 place-items-center rounded-2xl shadow-lg transition group-hover:scale-110 group-hover:rotate-3"
