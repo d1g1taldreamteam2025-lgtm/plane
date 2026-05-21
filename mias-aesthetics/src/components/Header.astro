@@ -37,11 +37,11 @@ const waHref = waLink(
       </a>
 
       <nav class="hidden items-center gap-1 lg:flex" aria-label="Primary">
-        <a href={`${base}/`} class="px-4 py-2 text-sm font-medium text-[var(--color-graphite)] transition hover:text-[var(--color-pink-600)]">{t(lang, "nav.home")}</a>
+        <a href={`${base}/`} class="nav-link">{t(lang, "nav.home")}</a>
 
         <!-- Services dropdown -->
         <div class="relative" data-dropdown>
-          <button type="button" class="flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-[var(--color-graphite)] transition hover:text-[var(--color-pink-600)]" aria-haspopup="true" aria-expanded="false">
+          <button type="button" class="nav-link flex items-center gap-1.5" aria-haspopup="true" aria-expanded="false">
             {t(lang, "nav.services")}
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition group-data-[open]:rotate-180"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
@@ -71,7 +71,7 @@ const waHref = waLink(
         </div>
 
         {navItems.slice(1).map((it) => (
-          <a href={it.href} class="px-4 py-2 text-sm font-medium text-[var(--color-graphite)] transition hover:text-[var(--color-pink-600)]">{t(lang, `nav.${it.key}`)}</a>
+          <a href={it.href} class="nav-link">{t(lang, `nav.${it.key}`)}</a>
         ))}
       </nav>
 
@@ -144,10 +144,65 @@ const waHref = waLink(
   const onScroll = () => header?.classList.toggle("is-scrolled", window.scrollY > 12);
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
+
+  // Mark active nav link based on current path / hash
+  function markActive() {
+    const here = location.pathname.replace(/\/$/, "") || "/";
+    document.querySelectorAll<HTMLAnchorElement>(".nav-link[href]").forEach((a) => {
+      const href = a.getAttribute("href") ?? "";
+      const target = href.replace(/#.*$/, "").replace(/\/$/, "") || "/";
+      const hash = href.includes("#") ? href.slice(href.indexOf("#")) : "";
+      const matchesPath = target === here;
+      const matchesHash = hash && hash === location.hash;
+      a.classList.toggle("active", matchesPath && (!hash || matchesHash));
+    });
+  }
+  markActive();
+  window.addEventListener("hashchange", markActive);
 </script>
 
 <style>
   #site-header.is-scrolled > div > div {
     box-shadow: 0 12px 32px -16px rgba(107,58,115,.22);
+  }
+  /* Nav link with animated underline */
+  .nav-link {
+    position: relative;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-graphite);
+    transition: color 0.25s ease;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+  }
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    bottom: 0.35rem;
+    height: 2px;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--color-pink-500), var(--color-pink-700), var(--color-gold-400));
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.35s cubic-bezier(.22,1.2,.36,1), opacity 0.25s ease;
+    opacity: 0;
+  }
+  .nav-link:hover {
+    color: var(--color-pink-700);
+  }
+  .nav-link:hover::after {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  .nav-link.active {
+    color: var(--color-pink-700);
+  }
+  .nav-link.active::after {
+    transform: scaleX(1);
+    opacity: 1;
   }
 </style>

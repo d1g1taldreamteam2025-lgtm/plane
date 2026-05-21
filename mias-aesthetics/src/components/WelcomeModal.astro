@@ -98,17 +98,74 @@ const waHref = waLink(
   </div>
 </div>
 
+<!-- Floating sticker / FAB para invocar el descuento -->
+<button
+  id="discount-fab"
+  type="button"
+  class="fixed bottom-44 left-4 z-30 hidden lg:bottom-32 lg:left-6"
+  aria-label={t(lang, "modal.title")}
+>
+  <span class="discount-fab-pulse"></span>
+  <span class="relative grid h-20 w-20 place-items-center rounded-full text-center text-white shadow-[0_18px_40px_-10px_rgba(208,75,126,0.55)] transition hover:scale-110"
+        style="background: radial-gradient(circle at 30% 30%, #ff9bbf 0%, #ec6f9c 55%, #a83861 100%);">
+    <span class="leading-tight">
+      <span class="block font-display text-xl font-extrabold">15%</span>
+      <span class="block text-[10px] font-bold uppercase tracking-widest">OFF</span>
+    </span>
+  </span>
+  <!-- bow on top -->
+  <svg class="absolute -top-2 left-1/2 -translate-x-1/2 rotate-[-10deg]" width="32" height="20" viewBox="0 0 36 24" aria-hidden="true">
+    <defs>
+      <linearGradient id="fab-bow" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffc6dd"/>
+        <stop offset="100%" stop-color="#d04b7e"/>
+      </linearGradient>
+    </defs>
+    <path d="M18 12 L4 4 Q1 6 1 12 Q1 18 4 20 L18 12Z" fill="url(#fab-bow)" stroke="#fff" stroke-width="1"/>
+    <path d="M18 12 L32 4 Q35 6 35 12 Q35 18 32 20 L18 12Z" fill="url(#fab-bow)" stroke="#fff" stroke-width="1"/>
+    <circle cx="18" cy="12" r="3.5" fill="#a83861" stroke="#fff" stroke-width="1"/>
+  </svg>
+</button>
+
+<style>
+  .discount-fab-pulse {
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: rgba(236, 111, 156, 0.55);
+    animation: fabPulse 2s cubic-bezier(.22,1.2,.36,1) infinite;
+    z-index: 0;
+  }
+  @keyframes fabPulse {
+    0%   { transform: scale(1);   opacity: 0.6; }
+    70%  { transform: scale(1.4); opacity: 0; }
+    100% { transform: scale(1.4); opacity: 0; }
+  }
+  @keyframes fabIn {
+    from { opacity: 0; transform: scale(0.4) translateY(20px); }
+    to   { opacity: 1; transform: scale(1)   translateY(0); }
+  }
+  #discount-fab.show {
+    display: block;
+    animation: fabIn 0.5s cubic-bezier(.22,1.2,.36,1) forwards;
+  }
+</style>
+
 <script>
   const STORAGE_KEY    = "mia_welcome_modal_shown";
   const DEADLINE_KEY   = "mia_welcome_deadline";
   const DURATION_MS    = 24 * 60 * 60 * 1000; // 24h
 
   const modal = document.getElementById("welcome-modal");
+  const fab   = document.getElementById("discount-fab");
   if (modal) {
+    const showFab = () => fab?.classList.add("show");
+    const hideFab = () => fab?.classList.remove("show");
     const open = () => {
       modal.classList.remove("hidden");
       modal.classList.add("flex");
       document.body.style.overflow = "hidden";
+      hideFab();
       startCountdown();
     };
     const close = () => {
@@ -116,11 +173,14 @@ const waHref = waLink(
       modal.classList.remove("flex");
       document.body.style.overflow = "";
       sessionStorage.setItem(STORAGE_KEY, "1");
+      // Después de cerrar mostramos el FAB para que pueda re-abrirlo cuando quiera
+      setTimeout(showFab, 600);
     };
     modal.querySelectorAll("[data-close]").forEach((el) => el.addEventListener("click", close));
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && !modal.classList.contains("hidden")) close();
     });
+    fab?.addEventListener("click", open);
 
     // Countdown logic — persists deadline across reloads
     let timer: number | null = null;
@@ -151,6 +211,9 @@ const waHref = waLink(
 
     if (!sessionStorage.getItem(STORAGE_KEY)) {
       setTimeout(open, 5000);
+    } else {
+      // Si ya cerró el modal en esta sesión, mostramos directo el FAB
+      setTimeout(showFab, 1500);
     }
   }
 </script>

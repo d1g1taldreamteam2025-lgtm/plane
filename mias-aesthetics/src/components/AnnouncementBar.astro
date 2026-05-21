@@ -3,34 +3,76 @@ import { getDict, type Lang } from "../i18n";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const items = getDict(lang).announcement;
+const total = items.length;
+const cycle = total * 4.5; // segundos
 ---
 <div
   id="announcement-bar"
-  class="relative w-full overflow-hidden bg-gradient-to-r from-[var(--color-plum-700)] via-[var(--color-pink-700)] to-[var(--color-plum-700)] text-white"
+  class="relative w-full overflow-hidden text-white"
   aria-label="Announcements"
 >
-  <div class="container-px mx-auto flex h-9 max-w-7xl items-center justify-center">
-    <div class="relative h-5 w-full overflow-hidden text-center">
+  <!-- gradient base con shift animado -->
+  <div class="ann-bg absolute inset-0"></div>
+  <!-- sparkles -->
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
+    <span class="ann-sparkle absolute left-[6%] top-1/2 h-1 w-1 -translate-y-1/2 rounded-full bg-white"></span>
+    <span class="ann-sparkle absolute left-[28%] top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-[var(--color-gold-300)]" style="animation-delay:1.3s"></span>
+    <span class="ann-sparkle absolute right-[24%] top-1/2 h-1 w-1 -translate-y-1/2 rounded-full bg-white" style="animation-delay:2.1s"></span>
+    <span class="ann-sparkle absolute right-[8%] top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-[var(--color-blush-200)]" style="animation-delay:0.7s"></span>
+  </div>
+
+  <div class="container-px relative mx-auto flex h-12 max-w-7xl items-center justify-center sm:h-14">
+    <div class="relative h-6 w-full overflow-hidden text-center">
       {items.map((txt, i) => (
         <span
-          class="ann-item absolute inset-0 flex items-center justify-center text-[11px] font-medium tracking-wide sm:text-xs"
-          style={`animation-delay: ${i * 3.5}s`}
-        >{txt}</span>
+          class="ann-item absolute inset-0 flex items-center justify-center gap-2 font-display text-sm font-semibold tracking-wide sm:text-base"
+          style={`animation-delay: ${i * 4.5}s; animation-duration: ${cycle}s;`}
+        >
+          <span>{txt}</span>
+        </span>
       ))}
     </div>
   </div>
 </div>
 
-<style define:vars={{ count: String(items.length) }}>
+<style>
+  .ann-bg {
+    background: linear-gradient(110deg,
+      var(--color-plum-900) 0%,
+      var(--color-pink-700) 28%,
+      var(--color-plum-500) 50%,
+      var(--color-pink-700) 72%,
+      var(--color-plum-900) 100%);
+    background-size: 280% 100%;
+    animation: annShift 14s linear infinite;
+  }
+  @keyframes annShift {
+    0%   { background-position:   0% 50%; }
+    100% { background-position: 280% 50%; }
+  }
+
+  /* Items slide from right, settle, slide out to left */
   .ann-item {
     opacity: 0;
-    animation: annCycle calc(var(--count) * 3.5s) ease-in-out infinite;
+    transform: translateX(40px);
+    animation-name: annCycle;
+    animation-timing-function: cubic-bezier(.22,1.2,.36,1);
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
   }
   @keyframes annCycle {
-    0%   { opacity: 0; transform: translateY(8px); }
-    4%   { opacity: 1; transform: translateY(0); }
-    25%  { opacity: 1; transform: translateY(0); }
-    29%  { opacity: 0; transform: translateY(-8px); }
-    100% { opacity: 0; }
+    0%   { opacity: 0; transform: translateX(40px); }
+    5%   { opacity: 1; transform: translateX(0); }
+    25%  { opacity: 1; transform: translateX(0); }
+    30%  { opacity: 0; transform: translateX(-40px); }
+    100% { opacity: 0; transform: translateX(-40px); }
+  }
+
+  .ann-sparkle {
+    animation: annTwinkle 2.6s ease-in-out infinite;
+  }
+  @keyframes annTwinkle {
+    0%, 100% { opacity: 0.25; transform: translateY(-50%) scale(0.8); }
+    50%      { opacity: 1;    transform: translateY(-50%) scale(1.25); }
   }
 </style>
