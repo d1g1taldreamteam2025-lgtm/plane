@@ -19,6 +19,8 @@ export interface ServiceDetail {
   postCare: Record<Lang, string[]>;
   faqs: Record<Lang, { q: string; a: string }[]>;
   palette: { from: string; to: string; accent: string; text: string };
+  /** PNG icono custom de la marca (opcional). Si está, reemplaza el SVG genérico. */
+  iconUrl?: string;
 }
 
 export const SERVICES: ServiceDetail[] = [
@@ -113,6 +115,7 @@ export const SERVICES: ServiceDetail[] = [
       ],
     },
     palette: { from: "#ffe6f1", to: "#d4a85a", accent: "#b88a36", text: "#4a3210" },
+    iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412111/Mesa_de_trabajo_1_gwfbln.png",
   },
   {
     id: "botox",
@@ -207,6 +210,7 @@ export const SERVICES: ServiceDetail[] = [
       ],
     },
     palette: { from: "#ffe6f1", to: "#ec6f9c", accent: "#d04b7e", text: "#fff" },
+    iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412112/Mesa_de_trabajo_1_copia_w6pjj9.png",
   },
   {
     id: "morpheus",
@@ -301,6 +305,7 @@ export const SERVICES: ServiceDetail[] = [
       ],
     },
     palette: { from: "#fff3d4", to: "#d4a85a", accent: "#b88a36", text: "#4a3210" },
+    iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412110/Mesa_de_trabajo_1_copia_3_upt8ip.png",
   },
   {
     id: "thermage",
@@ -487,6 +492,7 @@ export const SERVICES: ServiceDetail[] = [
       ],
     },
     palette: { from: "#ffc6dd", to: "#ff7eaf", accent: "#d04b7e", text: "#fff" },
+    iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412111/Mesa_de_trabajo_1_copia_4_c06ctj.png",
   },
   {
     id: "lashes",
@@ -581,6 +587,7 @@ export const SERVICES: ServiceDetail[] = [
       ],
     },
     palette: { from: "#3d1f48", to: "#1a0f1f", accent: "#d4a85a", text: "#fff" },
+    iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412110/Mesa_de_trabajo_1_copia_5_yogrkw.png",
   },
   {
     id: "facial",
@@ -863,6 +870,7 @@ export const SERVICES: ServiceDetail[] = [
       ],
     },
     palette: { from: "#fff3d4", to: "#d4a85a", accent: "#b88a36", text: "#4a3210" },
+    iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412110/Mesa_de_trabajo_1_copia_2_w7qnsc.png",
   },
   {
     id: "salmon",

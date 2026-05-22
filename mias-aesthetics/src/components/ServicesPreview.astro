@@ -1,11 +1,19 @@
 ---
 import { t, getDict, type Lang } from "../i18n";
+import { SERVICES } from "../data/services.ts";
 
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const items = getDict(lang).services_preview.items;
 const base = lang === "en" ? "/en" : "";
 const servicesPath = lang === "es" ? "servicios" : "services";
+
+// Mapea cada item del preview con su Service (por slug del idioma actual)
+// para poder usar el ícono PNG custom de la marca cuando exista.
+const itemsWithIcon = items.map((it) => ({
+  ...it,
+  iconUrl: SERVICES.find((s) => s.slugs[lang] === it.slug)?.iconUrl,
+}));
 
 const palettes = [
   // IV Therapy — blush + gold
@@ -86,7 +94,7 @@ const icons = [
     </div>
 
     <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {items.map((it, i) => {
+      {itemsWithIcon.map((it, i) => {
         const p = palettes[i % palettes.length];
         return (
           <a href={`${base}/${servicesPath}/${it.slug}`} class="card reveal group flex flex-col">
@@ -95,7 +103,18 @@ const icons = [
                 class="grid h-16 w-16 place-items-center rounded-2xl shadow-lg transition group-hover:scale-110 group-hover:rotate-3"
                 style={`background: linear-gradient(135deg, ${p.from}, ${p.to}); color: ${p.text};`}
               >
-                <svg width="32" height="32" viewBox="0 0 24 24" aria-hidden="true" set:html={icons[i]}></svg>
+                {it.iconUrl ? (
+                  <img
+                    src={it.iconUrl}
+                    alt=""
+                    width="44"
+                    height="44"
+                    class="h-11 w-11 object-contain drop-shadow"
+                    loading="lazy"
+                  />
+                ) : (
+                  <svg width="32" height="32" viewBox="0 0 24 24" aria-hidden="true" set:html={icons[i]}></svg>
+                )}
               </div>
               <span class="absolute -top-1 -right-1 grid h-6 w-6 place-items-center rounded-full bg-[var(--color-gold-400)] text-[10px] font-bold text-white shadow">★</span>
             </div>

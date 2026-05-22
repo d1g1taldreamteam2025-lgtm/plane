@@ -18,6 +18,7 @@ const services = SERVICES.map((s) => ({
   slug: s.slugs[lang],
   title: s.title[lang],
   desc: s.shortDesc[lang],
+  iconUrl: s.iconUrl,
 }));
 
 const coursesPath = lang === "es" ? "cursos" : "courses";
@@ -63,7 +64,11 @@ const waHref = waLink(
                     class="group/item flex items-start gap-3 rounded-xl p-2.5 transition hover:bg-[var(--color-blush-50)]"
                   >
                     <span class="grid h-9 w-9 flex-shrink-0 place-items-center rounded-full bg-gradient-to-br from-[var(--color-blush-200)] to-[var(--color-pink-500)] text-white">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                      {s.iconUrl ? (
+                        <img src={s.iconUrl} alt="" width="22" height="22" class="h-[22px] w-[22px] object-contain drop-shadow" loading="lazy"/>
+                      ) : (
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                      )}
                     </span>
                     <span class="min-w-0 flex-1">
                       <span class="block font-display text-sm font-semibold text-[var(--color-ink)] group-hover/item:text-[var(--color-pink-700)]">{s.title}</span>
