@@ -163,15 +163,18 @@
     position: relative;
     display: grid;
     place-items: center;
-    width: 88px;
-    height: 88px;
+    width: 108px;
+    height: 108px;
     border-radius: 9999px;
     background: radial-gradient(circle at 30% 30%, #ffd5e5 0%, #ffa3c6 60%, #ec6f9c 100%);
     box-shadow:
-      0 0 0 4px #ffffff,
-      0 0 0 6px var(--color-gold-300),
-      0 14px 32px -10px rgba(236, 111, 156, 0.55),
-      0 0 28px rgba(107, 58, 115, 0.18) inset;
+      0 0 0 5px #ffffff,
+      0 0 0 7px var(--color-gold-300),
+      0 18px 38px -12px rgba(236, 111, 156, 0.55),
+      0 0 32px rgba(107, 58, 115, 0.18) inset;
+  }
+  @media (min-width: 640px) {
+    .icon-halo { width: 128px; height: 128px; }
   }
   .icon-halo::after {
     content: "";
