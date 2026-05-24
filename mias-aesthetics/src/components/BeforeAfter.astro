@@ -4,18 +4,21 @@ import { t, type Lang } from "../i18n";
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 
-// Por ahora: 3 ejemplos placeholder. Cuando se suban las fotos reales
-// (.jpg / .webp) basta con reemplazar src.
-const items = [
+// Fotos reales del cliente (cejas + labios). Morpheus 8 queda con
+// placeholder hasta que Erlym mande sus fotos.
+type Slot = { from: string; to: string; icon: string } | { image: string };
+const items: { title: { es: string; en: string }; real?: boolean; before: Slot; after: Slot }[] = [
   {
-    title: { es: "Pestañas pelo a pelo", en: "Classic lashes" },
-    before: { from: "#ffe6f1", to: "#ffc6dd", icon: "eye-closed" },
-    after:  { from: "#1f0f26", to: "#3d1f48", icon: "lashes-full" },
+    title: { es: "Diseño de cejas", en: "Eyebrow design" },
+    real: true,
+    before: { image: "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779650046/Mesa_de_trabajo_17_copia_4_swntgj.png" },
+    after:  { image: "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779650044/Mesa_de_trabajo_17_copia_5_hzpyfd.png" },
   },
   {
     title: { es: "Aumento de labios", en: "Lip filler" },
-    before: { from: "#fff5fa", to: "#ffd5e5", icon: "lips-thin" },
-    after:  { from: "#ffa3c6", to: "#d04b7e", icon: "lips-full" },
+    real: true,
+    before: { image: "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779649969/Mesa_de_trabajo_17_copia_2_r9tbse.png" },
+    after:  { image: "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779649994/Mesa_de_trabajo_17_copia_3_df2002.png" },
   },
   {
     title: { es: "Morpheus 8", en: "Morpheus 8" },
@@ -27,8 +30,8 @@ const items = [
 const sectionEyebrow = lang === "es" ? "Antes y después" : "Before and after";
 const sectionTitle   = lang === "es" ? "Resultados que hablan por sí solos" : "Results that speak for themselves";
 const sectionSub     = lang === "es"
-  ? "Arrastrá el deslizador para comparar. Próximamente: fotos reales de tratamientos hechos por Erlym."
-  : "Drag the slider to compare. Coming soon: real photos of treatments by Erlym.";
+  ? "Desliza para comparar. Fotos reales de tratamientos hechos por Erlym."
+  : "Drag to compare. Real photos of treatments by Erlym.";
 const labelBefore = lang === "es" ? "Antes" : "Before";
 const labelAfter  = lang === "es" ? "Después" : "After";
 
@@ -66,15 +69,18 @@ function svg(icon: string, color: string) {
     <div class="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {items.map((it) => (
         <article class="reveal overflow-hidden rounded-3xl border border-[var(--color-line)] bg-white shadow-md">
-          <div class="ba-slider relative h-72 select-none">
+          <div class="ba-slider relative h-80 select-none">
             <!-- AFTER (full image, background) -->
-            <div
-              class="absolute inset-0"
-              style={`background: linear-gradient(135deg, ${it.after.from}, ${it.after.to});`}
-            >
-              <svg viewBox="0 0 400 400" class="absolute inset-0 h-full w-full">
-                <Fragment set:html={svg(it.after.icon, "#fff")} />
-              </svg>
+            <div class="absolute inset-0">
+              {"image" in it.after ? (
+                <img src={it.after.image} alt={`${it.title[lang]} — ${labelAfter}`} class="absolute inset-0 h-full w-full object-cover object-center" loading="lazy" decoding="async"/>
+              ) : (
+                <div class="absolute inset-0" style={`background: linear-gradient(135deg, ${it.after.from}, ${it.after.to});`}>
+                  <svg viewBox="0 0 400 400" class="absolute inset-0 h-full w-full">
+                    <Fragment set:html={svg(it.after.icon, "#fff")} />
+                  </svg>
+                </div>
+              )}
               <span class="absolute right-3 top-3 rounded-full bg-white/95 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-[var(--color-pink-700)] shadow">{labelAfter}</span>
             </div>
             <!-- BEFORE (clipped from left) -->
@@ -82,15 +88,16 @@ function svg(icon: string, color: string) {
               class="ba-before absolute inset-0 overflow-hidden"
               style="clip-path: inset(0 50% 0 0);"
             >
-              <div
-                class="absolute inset-0"
-                style={`background: linear-gradient(135deg, ${it.before.from}, ${it.before.to});`}
-              >
-                <svg viewBox="0 0 400 400" class="absolute inset-0 h-full w-full">
-                  <Fragment set:html={svg(it.before.icon, "#1a0f1f")} />
-                </svg>
-                <span class="absolute left-3 top-3 rounded-full bg-[var(--color-plum-900)]/85 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white shadow">{labelBefore}</span>
-              </div>
+              {"image" in it.before ? (
+                <img src={it.before.image} alt={`${it.title[lang]} — ${labelBefore}`} class="absolute inset-0 h-full w-full object-cover object-center" loading="lazy" decoding="async"/>
+              ) : (
+                <div class="absolute inset-0" style={`background: linear-gradient(135deg, ${it.before.from}, ${it.before.to});`}>
+                  <svg viewBox="0 0 400 400" class="absolute inset-0 h-full w-full">
+                    <Fragment set:html={svg(it.before.icon, "#1a0f1f")} />
+                  </svg>
+                </div>
+              )}
+              <span class="absolute left-3 top-3 rounded-full bg-[var(--color-plum-900)]/85 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white shadow">{labelBefore}</span>
             </div>
             <!-- Divider handle -->
             <div
@@ -116,7 +123,9 @@ function svg(icon: string, color: string) {
           <div class="p-5">
             <h3 class="font-display text-lg font-bold">{it.title[lang]}</h3>
             <p class="mt-1 text-xs uppercase tracking-widest text-[var(--color-pink-600)]">
-              {lang === "es" ? "Resultado real próximamente" : "Real result coming soon"}
+              {it.real
+                ? (lang === "es" ? "Resultado real • Mia's Aesthetics" : "Real result • Mia's Aesthetics")
+                : (lang === "es" ? "Resultado real próximamente" : "Real result coming soon")}
             </p>
           </div>
         </article>
