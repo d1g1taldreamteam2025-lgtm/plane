@@ -10,6 +10,22 @@ const waBookText = lang === "es"
   ? "Hola Mia's Aesthetics, quisiera reservar"
   : "Hi Mia's Aesthetics, I'd like to book";
 
+// Imágenes del cliente (ES). EN se queda con el carrusel ilustrado hasta que
+// nos pase sus posts en inglés.
+const ES_POSTS = [
+  "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779649897/Post_2_wgui2e.png",
+  "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779649895/Post_1_axv6vn.png",
+];
+const useImages = lang === "es";
+const imageSlides = useImages
+  ? ES_POSTS.map((src, i) => ({
+      src,
+      eyebrow: slides[i % slides.length]?.eyebrow ?? "",
+      // texto plano del CTA para WhatsApp
+      waText: slides[i % slides.length]?.eyebrow ?? "Mia's Aesthetics",
+    }))
+  : [];
+
 const palettes = [
   // pink → gold (lashes)
   { from: "#ffe6f1", via: "#ffc6dd", to: "#e8c878", accent: "#ec6f9c", svg: "lashes" },
@@ -77,7 +93,32 @@ function illustration(kind: string) {
 ---
 <section class="relative overflow-hidden">
   <div id="hero-carousel" class="relative h-[640px] sm:h-[680px] lg:h-[720px]">
-    {slides.map((slide, i) => {
+    {useImages ? imageSlides.map((slide, i) => {
+      const waHref = waLink(`${waBookText} (${slide.waText})`);
+      return (
+        <div
+          class="hero-slide absolute inset-0"
+          data-index={i}
+          style={`background: #fff;`}
+        >
+          <img
+            src={slide.src}
+            alt={slide.eyebrow}
+            class="absolute inset-0 h-full w-full object-cover object-center"
+            loading={i === 0 ? "eager" : "lazy"}
+            decoding="async"
+          />
+          <!-- CTA flotante reservar -->
+          <div class="absolute bottom-20 left-1/2 z-10 flex -translate-x-1/2 items-center gap-3 sm:bottom-24">
+            <a href={waHref} target="_blank" rel="noopener" class="btn btn-whatsapp shadow-[0_10px_30px_-8px_rgba(37,211,102,0.6)]">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.05 0C5.49 0 .2 5.3.2 11.86c0 2.09.55 4.13 1.6 5.93L0 24l6.36-1.67a11.84 11.84 0 0 0 5.69 1.45h.01c6.56 0 11.86-5.3 11.86-11.86 0-3.17-1.23-6.15-3.4-8.44Z"/></svg>
+              Reservar por WhatsApp
+            </a>
+            <a href="#services" class="btn btn-outline bg-white/90 backdrop-blur">Ver servicios</a>
+          </div>
+        </div>
+      );
+    }) : slides.map((slide, i) => {
       const p = palettes[i % palettes.length];
       const waHref = waLink(`${waBookText} (${slide.eyebrow})`);
       return (
@@ -137,7 +178,7 @@ function illustration(kind: string) {
 
     <!-- Controls -->
     <div class="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2">
-      {slides.map((_, i) => (
+      {(useImages ? imageSlides : slides).map((_, i) => (
         <button
           type="button"
           class="hero-dot h-2 w-8 rounded-full bg-[var(--color-plum-900)]/30 transition hover:bg-[var(--color-plum-900)]/50"
