@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Mia's Aesthetics — Centro Estético en Anaheim, CA",
-    "description": "Pestañas, faciales y belleza personalizada con Erlym Monasterios en Anaheim, CA. Reservá por WhatsApp."
+    "description": "Pestañas, faciales y belleza personalizada con Erlym Monasterios en Anaheim, CA. Reserva por WhatsApp."
   },
   "nav": {
     "home": "Inicio",
@@ -14,14 +14,14 @@
     "book": "Reservar"
   },
   "announcement": [
-    "✨ Reservá tu cita por WhatsApp — Respuesta inmediata",
+    "✨ Reserva tu cita por WhatsApp — Respuesta inmediata",
     "💖 Nuevas clientas: 15% OFF en tu primer tratamiento",
     "📍 Anaheim, CA — 160 S Old Springs Rd"
   ],
   "modal": {
     "eyebrow": "Solo para ti",
     "title": "15% OFF tu primer tratamiento",
-    "subtitle": "Reservá hoy por WhatsApp y recibí 15% de descuento en tu primera visita.",
+    "subtitle": "Reserva hoy por WhatsApp y recibe 15% de descuento en tu primera visita.",
     "cta": "Quiero mi descuento",
     "dismiss": "No, gracias",
     "fine_print": "Aplicable solo a nuevas clientas. No acumulable con otras promos.",
@@ -156,8 +156,8 @@
   },
   "contact_section": {
     "eyebrow": "Contacto",
-    "title": "Vení a visitarnos",
-    "subtitle": "Estamos en Anaheim, CA. Reservá tu cita o escríbenos directamente por WhatsApp.",
+    "title": "Ven a visitarnos",
+    "subtitle": "Estamos en Anaheim, CA. Reserva tu cita o escríbenos directamente por WhatsApp.",
     "address_label": "Dirección",
     "hours_label": "Horarios",
     "phone_label": "WhatsApp",
@@ -167,7 +167,7 @@
   },
   "cta_final": {
     "title": "¿Lista para tu próxima cita?",
-    "subtitle": "Reservá tu turno por WhatsApp. Te respondemos personalmente.",
+    "subtitle": "Reserva tu turno por WhatsApp. Te respondemos personalmente.",
     "cta": "Reservar por WhatsApp"
   },
   "about_erlym": {
