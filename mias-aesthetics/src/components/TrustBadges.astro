@@ -5,12 +5,15 @@ const { lang } = Astro.props;
 const items = getDict(lang).trust_badges;
 
 // Iconos PNG personalizados de la marca (Cloudinary del cliente).
+// Aplicamos `e_trim` para que Cloudinary recorte automáticamente el
+// padding transparente y el ícono visible llene bien el halo.
 // Orden alineado con i18n.trust_badges: técnica, google, productos, trato.
+const trim = (url: string) => url.replace("/image/upload/", "/image/upload/e_trim/");
 const icons = [
-  "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412111/Mesa_de_trabajo_1_copia_6_lgvqzq.png",
-  "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412110/Mesa_de_trabajo_1_copia_7_wi2qpk.png",
-  "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412111/Mesa_de_trabajo_1_copia_8_qujqb2.png",
-  "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412110/Mesa_de_trabajo_1_copia_9_mv1l8c.png",
+  trim("https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412111/Mesa_de_trabajo_1_copia_6_lgvqzq.png"),
+  trim("https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412110/Mesa_de_trabajo_1_copia_7_wi2qpk.png"),
+  trim("https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412111/Mesa_de_trabajo_1_copia_8_qujqb2.png"),
+  trim("https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412110/Mesa_de_trabajo_1_copia_9_mv1l8c.png"),
 ];
 ---
 <section class="relative -mt-12 z-10 px-5 sm:-mt-16">
@@ -22,9 +25,9 @@ const icons = [
             <img
               src={icons[i]}
               alt={it.title}
-              width="180"
-              height="180"
-              class="h-[160px] w-[160px] max-w-none object-contain drop-shadow sm:h-[190px] sm:w-[190px]"
+              width="96"
+              height="96"
+              class="h-[68%] w-[68%] object-contain drop-shadow"
               loading="lazy"
             />
           </div>

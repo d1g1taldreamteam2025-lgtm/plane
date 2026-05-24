@@ -163,7 +163,6 @@
     position: relative;
     display: grid;
     place-items: center;
-    overflow: hidden;
     width: 108px;
     height: 108px;
     border-radius: 9999px;
