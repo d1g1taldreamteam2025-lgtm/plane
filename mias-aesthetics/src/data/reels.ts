@@ -54,7 +54,7 @@ export const REELS: Reel[] = [
     src: "https://res.cloudinary.com/dehvpdo4z/video/upload/v1779355872/Aumento_de_labio_1_kqa5ml.mp4",
     title: { es: "Aumento de labios", en: "Lip filler" },
     subtitle: { es: "Resultados naturales", en: "Natural results" },
-    service: "lips",
+    // Sin service tag: la página /servicios/aumento-labios usa LIPS_MEDIA.
   }),
   r({
     src: "https://res.cloudinary.com/dehvpdo4z/video/upload/v1779356007/Morpheus_1_wgnizc.mp4",
@@ -158,6 +158,21 @@ export const FACIAL_MEDIA = {
   images: [
     "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779764369/SaveClip.App_684620899_18100067354319616_9215194501862653536_n_qeiytg.jpg",
     "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779764370/SaveClip.App_687870839_18100067363319616_7705718227054544239_n_nrn45p.jpg",
+  ],
+};
+
+// Aumento de labios: 1 video 9:16 + 4 imágenes. Mezcla de antes/después
+// compuestos y tomas de cliente mostrando los labios.
+export const LIPS_MEDIA = {
+  video:
+    "https://res.cloudinary.com/drbc4wbvw/video/upload/v1779809317/SaveClip.App_AQN6qLg59IeI4yLRlX8aNf5v1N4G0wyIKLl_i8nruROcUXIXCtYjZ-v3yj9Jxjr4U8NsJcbTtNJz0lZgmDdYJDDdmLPFlOm4IPwlxsI_ntmtqs.mp4",
+  poster:
+    "https://res.cloudinary.com/drbc4wbvw/video/upload/so_0,f_jpg,q_auto/v1779809317/SaveClip.App_AQN6qLg59IeI4yLRlX8aNf5v1N4G0wyIKLl_i8nruROcUXIXCtYjZ-v3yj9Jxjr4U8NsJcbTtNJz0lZgmDdYJDDdmLPFlOm4IPwlxsI_ntmtqs.jpg",
+  images: [
+    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779809317/SaveClip.App_684145299_18315256438257331_3719632616539177969_n_yllyuc.jpg",
+    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779809317/SaveClip.App_705229114_18103691726102230_2785700437246520319_n_fkiscg.jpg",
+    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779809316/SaveClip.App_704636931_18103691699102230_5601088055226191573_n_ktxukd.jpg",
+    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779809316/SaveClip.App_704731828_18103691708102230_1520745183553020035_n_w6k0fy.jpg",
   ],
 };
 
