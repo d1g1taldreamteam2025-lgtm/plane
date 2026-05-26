@@ -85,7 +85,7 @@ export const REELS: Reel[] = [
     src: "https://res.cloudinary.com/dehvpdo4z/video/upload/v1779355919/DPL_vmcxrn.mov",
     title: { es: "Cicatrices de acné", en: "Acne scars" },
     subtitle: { es: "Tratamiento DPL", en: "DPL treatment" },
-    service: "dpl",
+    // Sin service tag: la página /servicios/dpl-cicatrices-acne usa DPL_MEDIA.
   }),
   r({
     src: "https://res.cloudinary.com/dehvpdo4z/video/upload/v1779356004/Dermepen_1_etfdjv.mp4",
@@ -159,6 +159,18 @@ export const FACIAL_MEDIA = {
     "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779764369/SaveClip.App_684620899_18100067354319616_9215194501862653536_n_qeiytg.jpg",
     "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779764370/SaveClip.App_687870839_18100067363319616_7705718227054544239_n_nrn45p.jpg",
   ],
+};
+
+// DPL cicatrices de acné: 1 video 9:16 (nuevo) + 1 imagen 1:1.
+// El video del reel viejo `DPL_vmcxrn` ya NO se muestra aquí (sigue en
+// el showcase del home).
+export const DPL_MEDIA = {
+  video:
+    "https://res.cloudinary.com/drbc4wbvw/video/upload/v1779807091/SaveClip.App_AQOBdwOwdeQ62wEpAGkl09FpnNI6--r8wLGrPq1JEVk40ATs-qpIXdyV8OAYls0vNGzkfiLaqrfw3f2uHUNDDQTR0WutYRStWfl7jlg_ztbpcg.mp4",
+  poster:
+    "https://res.cloudinary.com/drbc4wbvw/video/upload/so_0,f_jpg,q_auto/v1779807091/SaveClip.App_AQOBdwOwdeQ62wEpAGkl09FpnNI6--r8wLGrPq1JEVk40ATs-qpIXdyV8OAYls0vNGzkfiLaqrfw3f2uHUNDDQTR0WutYRStWfl7jlg_ztbpcg.jpg",
+  image:
+    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779808243/SaveClip.App_705326927_18268748017294421_4604449087039333561_n_f2yokz.jpg",
 };
 
 // Morpheus 8: 2 videos 9:16 + 1 imagen "antes y después" compuesta.
