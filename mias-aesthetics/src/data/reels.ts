@@ -67,7 +67,7 @@ export const REELS: Reel[] = [
     src: "https://res.cloudinary.com/dehvpdo4z/video/upload/v1779354804/depoilacion_1_gopx81.mov",
     title: { es: "Depilación láser", en: "Laser hair removal" },
     subtitle: { es: "Adiós a la cuchilla", en: "Goodbye razor" },
-    service: "depilation",
+    // Sin service tag: la página /servicios/depilacion-laser usa DEPILATION_MEDIA.
   }),
   r({
     src: "https://res.cloudinary.com/dehvpdo4z/video/upload/v1779355864/p1_jmtrma.mp4",
@@ -159,6 +159,16 @@ export const FACIAL_MEDIA = {
     "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779764369/SaveClip.App_684620899_18100067354319616_9215194501862653536_n_qeiytg.jpg",
     "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779764370/SaveClip.App_687870839_18100067363319616_7705718227054544239_n_nrn45p.jpg",
   ],
+};
+
+// Depilación láser: 1 video 9:16 + 1 imagen.
+export const DEPILATION_MEDIA = {
+  video:
+    "https://res.cloudinary.com/drbc4wbvw/video/upload/v1779809134/SaveClip.App_AQMyPjs_J0I_81l3EYCufZ701MKeguzHvrM6jB4zFRSg7NXn26VD_Q0OOYT3kA7-dMyUiH-3WIQjwK2tTlKSJy3okiNwUa0Wvb0vVOA_yhmftx.mp4",
+  poster:
+    "https://res.cloudinary.com/drbc4wbvw/video/upload/so_0,f_jpg,q_auto/v1779809134/SaveClip.App_AQMyPjs_J0I_81l3EYCufZ701MKeguzHvrM6jB4zFRSg7NXn26VD_Q0OOYT3kA7-dMyUiH-3WIQjwK2tTlKSJy3okiNwUa0Wvb0vVOA_yhmftx.jpg",
+  image:
+    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779809134/SaveClip.App_688964391_18354503521242182_56855528722126690_n_cj180f.jpg",
 };
 
 // Dermapen: 1 video 9:16 + 1 imagen antes/después compuesta.

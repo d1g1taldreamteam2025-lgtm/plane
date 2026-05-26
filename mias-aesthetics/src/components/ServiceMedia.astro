@@ -11,6 +11,7 @@ import {
   FACIAL_MEDIA,
   DPL_MEDIA,
   DERMAPEN_MEDIA,
+  DEPILATION_MEDIA,
   type ServiceTag,
 } from "../data/reels.ts";
 
@@ -29,7 +30,8 @@ const isMorpheus = service === "morpheus";
 const isFacial = service === "facial";
 const isDpl = service === "dpl";
 const isDermapen = service === "dermapen";
-const useCustom = isThermage || isSalmon || isLashes || isMorpheus || isFacial || isDpl || isDermapen;
+const isDepilation = service === "depilation";
+const useCustom = isThermage || isSalmon || isLashes || isMorpheus || isFacial || isDpl || isDermapen || isDepilation;
 const videos = useCustom ? [] : reelsByService(service);
 const verticalVisuals = withVisuals ? IV_VISUALS_VERTICAL : [];
 const squareVisuals   = withVisuals ? IV_VISUALS_SQUARE : [];
@@ -57,6 +59,7 @@ const t = {
     facial_results_title: "Tu cara bonita en detalle",
     dpl_image_title: "Tratamiento DPL en detalle",
     dermapen_image_title: "Antes y después · Dermapen",
+    depilation_image_title: "Depilación láser · Resultado",
   },
   en: {
     eyebrow: "In action",
@@ -71,6 +74,7 @@ const t = {
     facial_results_title: "Your fresh face in detail",
     dpl_image_title: "DPL treatment in detail",
     dermapen_image_title: "Before & after · Dermapen",
+    depilation_image_title: "Laser hair removal · Result",
   },
 }[lang];
 
@@ -120,6 +124,37 @@ const restVideos = videos.slice(1);
             ))}
           </div>
         </div>
+      </div>
+    )}
+
+    {isDepilation && (
+      <div class="mt-10 grid gap-6 md:grid-cols-2">
+        {/* Video 9:16 */}
+        <article class="service-video group relative mx-auto aspect-[9/16] w-full max-w-sm cursor-pointer overflow-hidden rounded-3xl border border-[var(--color-line)] bg-[var(--color-plum-900)] shadow-[0_18px_50px_-12px_rgba(107,58,115,0.4)]">
+          <video
+            class="service-video-media absolute inset-0 h-full w-full object-cover"
+            src={DEPILATION_MEDIA.video}
+            poster={DEPILATION_MEDIA.poster}
+            preload="metadata"
+            playsinline
+            loop
+          ></video>
+          <div class="service-video-overlay absolute inset-0 z-10 grid place-items-center transition group-hover:bg-black/15">
+            <span class="grid h-20 w-20 place-items-center rounded-full bg-white/95 text-[var(--color-pink-700)] shadow-xl transition group-hover:scale-110">
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            </span>
+          </div>
+        </article>
+
+        {/* Imagen */}
+        <article class="relative mx-auto aspect-square w-full max-w-sm overflow-hidden rounded-3xl border border-[var(--color-line)] bg-[var(--color-blush-50)] shadow-[0_18px_50px_-12px_rgba(107,58,115,0.25)] transition hover:-translate-y-1 hover:shadow-xl">
+          <img
+            src={DEPILATION_MEDIA.image}
+            alt={t.depilation_image_title}
+            class="absolute inset-0 h-full w-full object-cover"
+            loading="lazy"
+          />
+        </article>
       </div>
     )}
 
