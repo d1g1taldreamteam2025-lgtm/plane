@@ -26,10 +26,10 @@ export const SITE = {
     googleMaps: "https://maps.app.goo.gl/ZWDJmPyHTrUUqbH5A",
   },
   icons: {
-    instagram: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779356500/Instagram_2022_logo_naqgrf.svg",
-    facebook: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1778897809/Facebook_Logo__2019.png_plnryr.webp",
+    instagram: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779761706/Mesa_de_trabajo_1_copia_18_cnf3lc.png",
+    facebook: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779761706/Mesa_de_trabajo_1_copia_19_rxdrsx.png",
     tiktok:
-      "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779353668/TikTok_logo_sr7slv.svg",
+      "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779761706/Mesa_de_trabajo_1_copia_21_neulwq.png",
     googleMaps: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1778897809/Google_Maps_icon__2026.svg_waaes9.webp",
     google: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1778898217/Google_Favicon_2025.svg_gjvcm8.webp",
     gmail: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779353635/Gmail_icon__2020.svg_f7gjpe.png",
