@@ -682,6 +682,7 @@ export const SERVICES: ServiceDetail[] = [
       ],
     },
     palette: { from: "#ffe6f1", to: "#ffa3c6", accent: "#d04b7e", text: "#fff" },
+    iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779761844/Mesa_de_trabajo_1_copia_16_vqnh4k.png",
   },
   {
     id: "depilation",
@@ -776,6 +777,7 @@ export const SERVICES: ServiceDetail[] = [
       ],
     },
     palette: { from: "#e6d5ec", to: "#6b3a73", accent: "#3d1f48", text: "#fff" },
+    iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779761844/Mesa_de_trabajo_1_copia_22_fzdwol.png",
   },
   {
     id: "dpl",
@@ -965,6 +967,7 @@ export const SERVICES: ServiceDetail[] = [
       ],
     },
     palette: { from: "#ffe6f1", to: "#ec6f9c", accent: "#d04b7e", text: "#fff" },
+    iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779761844/Mesa_de_trabajo_1_copia_23_yhelrz.png",
   },
   {
     id: "dermapen",
@@ -1059,6 +1062,7 @@ export const SERVICES: ServiceDetail[] = [
       ],
     },
     palette: { from: "#fff3d4", to: "#e8c878", accent: "#b88a36", text: "#4a3210" },
+    iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779761844/Mesa_de_trabajo_1_copia_17_qscnon.png",
   },
 ];
 
