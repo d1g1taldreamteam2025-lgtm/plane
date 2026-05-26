@@ -48,7 +48,7 @@ export const REELS: Reel[] = [
     title: { es: "Botox por Erlym", en: "Botox by Erlym" },
     subtitle: { es: "Erlym te explica el procedimiento", en: "Erlym walks you through it" },
     erlym: true,
-    service: "botox",
+    // Sin service tag: la página /servicios/botox usa BOTOX_MEDIA.
   }),
   r({
     src: "https://res.cloudinary.com/dehvpdo4z/video/upload/v1779355872/Aumento_de_labio_1_kqa5ml.mp4",
@@ -158,6 +158,25 @@ export const FACIAL_MEDIA = {
   images: [
     "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779764369/SaveClip.App_684620899_18100067354319616_9215194501862653536_n_qeiytg.jpg",
     "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779764370/SaveClip.App_687870839_18100067363319616_7705718227054544239_n_nrn45p.jpg",
+  ],
+};
+
+// Botox: 2 videos 9:16. El primero es Erlym explicando el procedimiento.
+// El segundo es nuevo (cliente). Layout side-by-side igual que Morpheus.
+export const BOTOX_MEDIA = {
+  videos: [
+    {
+      src: "https://res.cloudinary.com/dehvpdo4z/video/upload/v1779355862/0828_scvesj.mp4",
+      poster:
+        "https://res.cloudinary.com/dehvpdo4z/video/upload/so_0,f_jpg,q_auto/v1779355862/0828_scvesj.jpg",
+      erlym: true,
+    },
+    {
+      src: "https://res.cloudinary.com/drbc4wbvw/video/upload/v1779809193/SaveClip.App_AQOwIeiO2v8kP9oeQ_-zI-avlRCjw19K3GvtFcSWS3qhCKZ9OJ-LNC7ZSl-9YC4P0fHvnL-idF27ewdaUilLw4luVW1Lo1wosrpnPlo_fnnipt.mp4",
+      poster:
+        "https://res.cloudinary.com/drbc4wbvw/video/upload/so_0,f_jpg,q_auto/v1779809193/SaveClip.App_AQOwIeiO2v8kP9oeQ_-zI-avlRCjw19K3GvtFcSWS3qhCKZ9OJ-LNC7ZSl-9YC4P0fHvnL-idF27ewdaUilLw4luVW1Lo1wosrpnPlo_fnnipt.jpg",
+      erlym: false,
+    },
   ],
 };
 
