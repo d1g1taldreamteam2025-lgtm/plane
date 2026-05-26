@@ -15,6 +15,8 @@ const waBookText = lang === "es"
 const ES_POSTS = [
   "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779649897/Post_2_wgui2e.png",
   "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779649895/Post_1_axv6vn.png",
+  "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779809828/Post_3_f4kegd.png",
+  "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779809831/Post_4_qmrqdb.png",
 ];
 const useImages = lang === "es";
 const imageSlides = useImages
@@ -208,16 +210,16 @@ function illustration(kind: string) {
       dots.forEach((d, i) => d.classList.toggle("active", i === idx));
     };
     setIdx(0);
-    let timer = window.setInterval(() => setIdx(idx + 1), 4500);
+    let timer = window.setInterval(() => setIdx(idx + 1), 3000);
     dots.forEach((d, i) => d.addEventListener("click", () => {
       window.clearInterval(timer);
       setIdx(i);
-      timer = window.setInterval(() => setIdx(idx + 1), 4500);
+      timer = window.setInterval(() => setIdx(idx + 1), 3000);
     }));
     // Pause on hover
     carousel.addEventListener("mouseenter", () => window.clearInterval(timer));
     carousel.addEventListener("mouseleave", () => {
-      timer = window.setInterval(() => setIdx(idx + 1), 4500);
+      timer = window.setInterval(() => setIdx(idx + 1), 3000);
     });
   }
 </script>
