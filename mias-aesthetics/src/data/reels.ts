@@ -135,6 +135,18 @@ export const IV_VISUALS_SQUARE = [
   "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779357210/Posr_copia_krbtwe.png",
 ];
 
+// Thermage: tiene su propio set porque su video es landscape 16:9 (no 9:16
+// como el resto). 1 video + 2 imágenes cuadradas. Único set, no se espera más.
+export const THERMAGE_MEDIA = {
+  video: "https://res.cloudinary.com/drbc4wbvw/video/upload/v1779762194/SaveClip.App_AQPKuQ1f0-I2TDxEM4iLWXLmezWEbOTEfvRbhdeVm9lTEwLEoYxAhl-J7tI2LbBr2lARWNq0iXi8I6kibXg49ygf2XkunocU6g2bKSg_vnrvsv.mp4",
+  poster:
+    "https://res.cloudinary.com/drbc4wbvw/video/upload/so_0,f_jpg,q_auto/v1779762194/SaveClip.App_AQPKuQ1f0-I2TDxEM4iLWXLmezWEbOTEfvRbhdeVm9lTEwLEoYxAhl-J7tI2LbBr2lARWNq0iXi8I6kibXg49ygf2XkunocU6g2bKSg_vnrvsv.jpg",
+  squares: [
+    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779762207/SaveClip.App_702223984_18535974715072216_9158287249791732785_n_nzqew0.jpg",
+    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779762205/SaveClip.App_702946371_18535974706072216_3928399222044985701_n_xhmius.jpg",
+  ],
+};
+
 // Compat: algunos componentes viejos siguen importando IV_VISUALS.
 export const IV_VISUALS = [...IV_VISUALS_VERTICAL, ...IV_VISUALS_SQUARE];
 
