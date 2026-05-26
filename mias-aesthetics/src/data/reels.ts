@@ -161,6 +161,16 @@ export const FACIAL_MEDIA = {
   ],
 };
 
+// Dermapen: 1 video 9:16 + 1 imagen antes/después compuesta.
+export const DERMAPEN_MEDIA = {
+  video:
+    "https://res.cloudinary.com/drbc4wbvw/video/upload/v1779808755/SaveClip.App_AQN4HOlpB50e06cOQEYG-3a0G95jiez-Hm_uiT6cLdU-ZiRX315Jzzl9Ny_EhlyLG04bLJxo-jAGeCapRVmlNHXgsop6hj8nFvo5ZhU_ov1fyi.mp4",
+  poster:
+    "https://res.cloudinary.com/drbc4wbvw/video/upload/so_0,f_jpg,q_auto/v1779808755/SaveClip.App_AQN4HOlpB50e06cOQEYG-3a0G95jiez-Hm_uiT6cLdU-ZiRX315Jzzl9Ny_EhlyLG04bLJxo-jAGeCapRVmlNHXgsop6hj8nFvo5ZhU_ov1fyi.jpg",
+  image:
+    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779808757/SaveClip.App_495051886_17922346569073154_516711458015911548_n_dvxksj.jpg",
+};
+
 // DPL cicatrices de acné: 1 video 9:16 (nuevo) + 1 imagen 1:1.
 // El video del reel viejo `DPL_vmcxrn` ya NO se muestra aquí (sigue en
 // el showcase del home).
