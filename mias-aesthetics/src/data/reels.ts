@@ -147,6 +147,20 @@ export const SALMON_MEDIA = {
     "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779762559/SaveClip.App_522385632_18364606645150544_274130291725021475_n_iydifk.jpg",
 };
 
+// Pestañas pelo a pelo: 1 video 9:16 + 3 imágenes "antes y después juntas".
+// Las imágenes ya traen el antes/después compuesto, no se necesita slider.
+export const LASHES_MEDIA = {
+  video:
+    "https://res.cloudinary.com/drbc4wbvw/video/upload/v1779762725/SaveClip.App_AQOV24WJYMECJls_6Srk6MfJiEnwZTbqr9-uMYXJ29B6h__pkxoJXqYjwDoP9WRZYMK-zsvw8Xd5WxOZxvmiSw0gS7MagbkWT8AAoO8_yu0lyy.mp4",
+  poster:
+    "https://res.cloudinary.com/drbc4wbvw/video/upload/so_0,f_jpg,q_auto/v1779762725/SaveClip.App_AQOV24WJYMECJls_6Srk6MfJiEnwZTbqr9-uMYXJ29B6h__pkxoJXqYjwDoP9WRZYMK-zsvw8Xd5WxOZxvmiSw0gS7MagbkWT8AAoO8_yu0lyy.jpg",
+  beforeAfter: [
+    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779762617/SaveClip.App_608264652_18276728188303114_4023936625881933481_n_s1udgr.jpg",
+    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779762616/SaveClip.App_607430952_18276728206303114_4974195390126426643_n_fky2hu.jpg",
+    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779762615/SaveClip.App_607259020_18276728197303114_4521815148200121655_n_tcvzk4.jpg",
+  ],
+};
+
 // Thermage: tiene su propio set porque su video es landscape 16:9 (no 9:16
 // como el resto). 1 video + 2 imágenes cuadradas. Único set, no se espera más.
 export const THERMAGE_MEDIA = {
