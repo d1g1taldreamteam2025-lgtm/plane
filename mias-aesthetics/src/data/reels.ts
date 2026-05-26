@@ -41,7 +41,7 @@ export const REELS: Reel[] = [
     src: "https://res.cloudinary.com/dehvpdo4z/video/upload/v1779355874/0102_tsous6.mp4",
     title: { es: "Limpieza facial", en: "Facial cleansing" },
     subtitle: { es: "Antes y después", en: "Before & after" },
-    service: "facial",
+    // Sin service tag: la página /servicios/limpieza-facial usa FACIAL_MEDIA.
   }),
   r({
     src: "https://res.cloudinary.com/dehvpdo4z/video/upload/v1779355862/0828_scvesj.mp4",
@@ -91,7 +91,7 @@ export const REELS: Reel[] = [
     src: "https://res.cloudinary.com/dehvpdo4z/video/upload/v1779356004/Dermepen_1_etfdjv.mp4",
     title: { es: "Dermapen", en: "Dermapen" },
     subtitle: { es: "Estimulación de colágeno", en: "Collagen stimulation" },
-    service: "facial",
+    // Sin service tag: solo en showcase del home.
   }),
   r({
     src: "https://res.cloudinary.com/dehvpdo4z/video/upload/v1779355880/06_1_1_1_j8zrq4.mp4",
@@ -105,7 +105,7 @@ export const REELS: Reel[] = [
     src: "https://res.cloudinary.com/dehvpdo4z/video/upload/v1779354815/PRP_PLASMA_ambw42.mov",
     title: { es: "PRP Plasma", en: "PRP Plasma" },
     subtitle: { es: "Bioestimulación con tu propio plasma", en: "Biostimulation with your own plasma" },
-    service: "facial",
+    // Sin service tag: solo en showcase del home.
   }),
   r({
     src: "https://res.cloudinary.com/dehvpdo4z/video/upload/v1779355940/Peptido_2_obha8k.mov",
@@ -146,6 +146,19 @@ export const SALMON_MEDIA = {
     "https://res.cloudinary.com/drbc4wbvw/video/upload/so_0,f_jpg,q_auto/v1779762531/SaveClip.App_AQPvhd5cShVK-Pixsc96W2Qtmo8k_F3HF4qGCN5y7_opegTNzE8NvSQqc2VcsdWU0Yhn35aOijR3Nb25VXuMt9zs_mkcdpy.jpg",
   image:
     "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779762559/SaveClip.App_522385632_18364606645150544_274130291725021475_n_iydifk.jpg",
+};
+
+// Limpieza facial premium ("Cara bonita facial"): 1 video 9:16 + 2 imágenes
+// del mismo tratamiento (tomas distintas de la misma clienta).
+export const FACIAL_MEDIA = {
+  video:
+    "https://res.cloudinary.com/drbc4wbvw/video/upload/v1779764370/SaveClip.App_AQOo1SIvO4VxbibY8HK3dECs1l3HVatIu4WgCIV6VUVJRiI_u1DnIYJwvMiD1wGxaWUh9szPvXwL_xc2jj3Viyl9JQYbhXclZEPvC1s_hm8xcv.mp4",
+  poster:
+    "https://res.cloudinary.com/drbc4wbvw/video/upload/so_0,f_jpg,q_auto/v1779764370/SaveClip.App_AQOo1SIvO4VxbibY8HK3dECs1l3HVatIu4WgCIV6VUVJRiI_u1DnIYJwvMiD1wGxaWUh9szPvXwL_xc2jj3Viyl9JQYbhXclZEPvC1s_hm8xcv.jpg",
+  images: [
+    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779764369/SaveClip.App_684620899_18100067354319616_9215194501862653536_n_qeiytg.jpg",
+    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779764370/SaveClip.App_687870839_18100067363319616_7705718227054544239_n_nrn45p.jpg",
+  ],
 };
 
 // Morpheus 8: 2 videos 9:16 + 1 imagen "antes y después" compuesta.
