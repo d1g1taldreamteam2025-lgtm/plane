@@ -97,7 +97,8 @@ export const REELS: Reel[] = [
     title: { es: "Esperma de salmón", en: "Salmon DNA" },
     subtitle: { es: "Tendencia anti-edad. Por Erlym.", en: "Anti-aging trend. By Erlym." },
     erlym: true,
-    service: "salmon",
+    // Sin service tag: aparece en el showcase del home pero la página
+    // /servicios/esperma-de-salmon usa su propio set (SALMON_MEDIA).
   }),
   r({
     src: "https://res.cloudinary.com/dehvpdo4z/video/upload/v1779354815/PRP_PLASMA_ambw42.mov",
@@ -134,6 +135,17 @@ export const IV_VISUALS_SQUARE = [
   "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779357211/post_1_yzxnmu.png",
   "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779357210/Posr_copia_krbtwe.png",
 ];
+
+// Esperma de salmón (PDRN): contenido cerrado del cliente. 1 video 9:16 (reel)
+// + 1 imagen. No se espera más material para este servicio.
+export const SALMON_MEDIA = {
+  video:
+    "https://res.cloudinary.com/drbc4wbvw/video/upload/v1779762531/SaveClip.App_AQPvhd5cShVK-Pixsc96W2Qtmo8k_F3HF4qGCN5y7_opegTNzE8NvSQqc2VcsdWU0Yhn35aOijR3Nb25VXuMt9zs_mkcdpy.mp4",
+  poster:
+    "https://res.cloudinary.com/drbc4wbvw/video/upload/so_0,f_jpg,q_auto/v1779762531/SaveClip.App_AQPvhd5cShVK-Pixsc96W2Qtmo8k_F3HF4qGCN5y7_opegTNzE8NvSQqc2VcsdWU0Yhn35aOijR3Nb25VXuMt9zs_mkcdpy.jpg",
+  image:
+    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779762559/SaveClip.App_522385632_18364606645150544_274130291725021475_n_iydifk.jpg",
+};
 
 // Thermage: tiene su propio set porque su video es landscape 16:9 (no 9:16
 // como el resto). 1 video + 2 imágenes cuadradas. Único set, no se espera más.
