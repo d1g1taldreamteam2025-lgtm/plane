@@ -60,7 +60,8 @@ export const REELS: Reel[] = [
     src: "https://res.cloudinary.com/dehvpdo4z/video/upload/v1779356007/Morpheus_1_wgnizc.mp4",
     title: { es: "Morpheus 8", en: "Morpheus 8" },
     subtitle: { es: "Microagujas + radiofrecuencia", en: "Microneedling + radiofrequency" },
-    service: "morpheus",
+    // Sin service tag: aparece en el showcase del home, la página
+    // /servicios/morpheus-8 usa su propio set (MORPHEUS_MEDIA).
   }),
   r({
     src: "https://res.cloudinary.com/dehvpdo4z/video/upload/v1779354804/depoilacion_1_gopx81.mov",
@@ -145,6 +146,24 @@ export const SALMON_MEDIA = {
     "https://res.cloudinary.com/drbc4wbvw/video/upload/so_0,f_jpg,q_auto/v1779762531/SaveClip.App_AQPvhd5cShVK-Pixsc96W2Qtmo8k_F3HF4qGCN5y7_opegTNzE8NvSQqc2VcsdWU0Yhn35aOijR3Nb25VXuMt9zs_mkcdpy.jpg",
   image:
     "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779762559/SaveClip.App_522385632_18364606645150544_274130291725021475_n_iydifk.jpg",
+};
+
+// Morpheus 8: 2 videos 9:16 + 1 imagen "antes y después" compuesta.
+export const MORPHEUS_MEDIA = {
+  videos: [
+    {
+      src: "https://res.cloudinary.com/drbc4wbvw/video/upload/v1779762776/SaveClip.App_AQOSVUpeNTRjR-9F_CWqgwabyUAkAwr5JrVDTrCUmC4f65IxLd_09hlii2HRCSd5eQfrdPZ4O5b6bIKmJ4xbChs5wEGRtw3wkUFYsnI_dkop2x.mp4",
+      poster:
+        "https://res.cloudinary.com/drbc4wbvw/video/upload/so_0,f_jpg,q_auto/v1779762776/SaveClip.App_AQOSVUpeNTRjR-9F_CWqgwabyUAkAwr5JrVDTrCUmC4f65IxLd_09hlii2HRCSd5eQfrdPZ4O5b6bIKmJ4xbChs5wEGRtw3wkUFYsnI_dkop2x.jpg",
+    },
+    {
+      src: "https://res.cloudinary.com/drbc4wbvw/video/upload/v1779762780/SaveClip.App_AQNNj_ll5X9PQFQX7VYrcIrpVTI7LyTf8jEeoXrcfdQvl1DoTipo0gAegGiPKEmPRZtClNXHI3P4Ooy2_vK0-AsjZWm4E8KMKO8yJPY_wct2ef.mp4",
+      poster:
+        "https://res.cloudinary.com/drbc4wbvw/video/upload/so_0,f_jpg,q_auto/v1779762780/SaveClip.App_AQNNj_ll5X9PQFQX7VYrcIrpVTI7LyTf8jEeoXrcfdQvl1DoTipo0gAegGiPKEmPRZtClNXHI3P4Ooy2_vK0-AsjZWm4E8KMKO8yJPY_wct2ef.jpg",
+    },
+  ],
+  beforeAfter:
+    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779762782/SaveClip.App_583712300_18493124635077862_3224149055901972673_n_lgjs4l.jpg",
 };
 
 // Pestañas pelo a pelo: 1 video 9:16 + 3 imágenes "antes y después juntas".
