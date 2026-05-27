@@ -43,6 +43,9 @@
     font-family: var(--font-body);
     color: var(--color-ink);
     background: #ffffff;
+    /* Evita scroll horizontal accidental en móvil (ej. blobs decorativos
+       que se salen del viewport con blur-3xl + posiciones negativas). */
+    overflow-x: hidden;
   }
   h1,
   h2,

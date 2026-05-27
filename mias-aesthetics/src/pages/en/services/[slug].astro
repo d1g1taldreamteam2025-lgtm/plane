@@ -94,10 +94,10 @@ const extraJsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd].filter(Boolean)
           <span class="inline-block rounded-full bg-white/20 px-4 py-1.5 text-[11px] font-bold uppercase tracking-widest backdrop-blur">
             {t(lang, "services_preview.eyebrow")}
           </span>
-          <h1 class="h-display mt-5 text-[clamp(2.5rem,6vw,4.5rem)]" style={`color: ${p.text};`}>
+          <h1 class="h-display mt-5 text-[clamp(2rem,7vw,4.5rem)]" style={`color: ${p.text};`}>
             {svc.title.en}
           </h1>
-          <p class="mt-5 max-w-2xl text-lg opacity-90 sm:text-xl">{svc.tagline.en}</p>
+          <p class="mt-5 max-w-2xl text-base opacity-90 sm:text-lg lg:text-xl">{svc.tagline.en}</p>
 
           <div class="mt-8 flex flex-wrap items-center gap-4 text-sm font-semibold">
             <span class="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 backdrop-blur">

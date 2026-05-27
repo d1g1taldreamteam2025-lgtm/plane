@@ -70,7 +70,7 @@ function svg(icon: string, color: string) {
     <div class="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {items.map((it) => (
         <article class="reveal overflow-hidden rounded-3xl border border-[var(--color-line)] bg-white shadow-md">
-          <div class="ba-slider relative h-80 select-none">
+          <div class="ba-slider relative h-64 select-none sm:h-72 md:h-80">
             <!-- AFTER (full image, background) -->
             <div class="absolute inset-0">
               {"image" in it.after ? (

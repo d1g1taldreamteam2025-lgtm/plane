@@ -12,16 +12,31 @@ const waBookText = lang === "es"
 
 // Imágenes del cliente (ES). EN se queda con el carrusel ilustrado hasta que
 // nos pase sus posts en inglés.
+// Cada slide tiene una versión landscape para desktop y una portrait (9:16)
+// para móvil — el <picture> elige automáticamente según el viewport.
 const ES_POSTS = [
-  "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779649897/Post_2_wgui2e.png",
-  "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779649895/Post_1_axv6vn.png",
-  "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779809828/Post_3_f4kegd.png",
-  "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779809831/Post_4_qmrqdb.png",
+  {
+    desktop: "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779649897/Post_2_wgui2e.png",
+    mobile:  "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779856991/Post_5_IN_w5msqu.png",
+  },
+  {
+    desktop: "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779649895/Post_1_axv6vn.png",
+    mobile:  "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779856990/Post_6_IN_xbd7zx.png",
+  },
+  {
+    desktop: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779809828/Post_3_f4kegd.png",
+    mobile:  "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779856992/Post_7_IN_jvole8.png",
+  },
+  {
+    desktop: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779809831/Post_4_qmrqdb.png",
+    mobile:  "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779856991/Post_8_IN_copia_nwywyo.png",
+  },
 ];
 const useImages = lang === "es";
 const imageSlides = useImages
-  ? ES_POSTS.map((src, i) => ({
-      src,
+  ? ES_POSTS.map((p, i) => ({
+      desktop: p.desktop,
+      mobile: p.mobile,
       eyebrow: slides[i % slides.length]?.eyebrow ?? "",
       // texto plano del CTA para WhatsApp
       waText: slides[i % slides.length]?.eyebrow ?? "Mia's Aesthetics",
@@ -103,15 +118,18 @@ function illustration(kind: string) {
           data-index={i}
           style={`background: #fff;`}
         >
-          <img
-            src={slide.src}
-            alt={slide.eyebrow}
-            class="absolute inset-0 h-full w-full object-cover object-center"
-            loading={i === 0 ? "eager" : "lazy"}
-            decoding="async"
-          />
+          <picture>
+            <source media="(max-width: 767px)" srcset={slide.mobile} />
+            <img
+              src={slide.desktop}
+              alt={slide.eyebrow}
+              class="absolute inset-0 h-full w-full object-cover object-center"
+              loading={i === 0 ? "eager" : "lazy"}
+              decoding="async"
+            />
+          </picture>
           <!-- CTA flotante reservar -->
-          <div class="absolute bottom-20 left-1/2 z-10 flex -translate-x-1/2 items-center gap-3 sm:bottom-24">
+          <div class="absolute bottom-16 left-1/2 z-10 flex w-[calc(100%-1.5rem)] -translate-x-1/2 flex-wrap items-center justify-center gap-2 sm:bottom-24 sm:w-auto sm:gap-3">
             <a href={waHref} target="_blank" rel="noopener" class="btn btn-whatsapp shadow-[0_10px_30px_-8px_rgba(37,211,102,0.6)]">
               <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.05 0C5.49 0 .2 5.3.2 11.86c0 2.09.55 4.13 1.6 5.93L0 24l6.36-1.67a11.84 11.84 0 0 0 5.69 1.45h.01c6.56 0 11.86-5.3 11.86-11.86 0-3.17-1.23-6.15-3.4-8.44Z"/></svg>
               Reservar por WhatsApp
