@@ -10,10 +10,11 @@ const waBookText = lang === "es"
   ? "Hola Mia's Aesthetics, quisiera reservar"
   : "Hi Mia's Aesthetics, I'd like to book";
 
-// Imágenes del cliente (ES). EN se queda con el carrusel ilustrado hasta que
-// nos pase sus posts en inglés.
-// Cada slide tiene una versión landscape para desktop y una portrait (9:16)
+// Imágenes del cliente. Cada idioma tiene su set de posts.
+// Cada slide trae una versión landscape para desktop y una portrait (9:16)
 // para móvil — el <picture> elige automáticamente según el viewport.
+// (EN aún no tiene posts mobile; mientras tanto cae al mismo desktop —
+//  el cliente nos pasará las verticales EN después.)
 const ES_POSTS = [
   {
     desktop: "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779649897/Post_2_wgui2e.png",
@@ -32,16 +33,39 @@ const ES_POSTS = [
     mobile:  "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779856991/Post_8_IN_copia_nwywyo.png",
   },
 ];
-const useImages = lang === "es";
-const imageSlides = useImages
-  ? ES_POSTS.map((p, i) => ({
-      desktop: p.desktop,
-      mobile: p.mobile,
-      eyebrow: slides[i % slides.length]?.eyebrow ?? "",
-      // texto plano del CTA para WhatsApp
-      waText: slides[i % slides.length]?.eyebrow ?? "Mia's Aesthetics",
-    }))
-  : [];
+
+// EN: el cliente todavía no nos pasó las verticales móviles, así que cada
+// slot reusa la versión desktop como mobile. Cuando lleguen, sustituir.
+// NOTA: posiciones 3 y 4 vinieron con la MISMA URL del cliente — falta
+// la 4ª real (se sustituye cuando la pase).
+const EN_POSTS = [
+  {
+    desktop: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779877873/Post_2_hl6rpm.png",
+    mobile:  "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779877873/Post_2_hl6rpm.png",
+  },
+  {
+    desktop: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779877873/Post_1_iyianh.png",
+    mobile:  "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779877873/Post_1_iyianh.png",
+  },
+  {
+    desktop: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779877874/Post_3_1_xvfmcp.png",
+    mobile:  "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779877874/Post_3_1_xvfmcp.png",
+  },
+  {
+    desktop: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779877874/Post_3_1_xvfmcp.png",
+    mobile:  "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779877874/Post_3_1_xvfmcp.png",
+  },
+];
+
+const POSTS = lang === "es" ? ES_POSTS : EN_POSTS;
+const useImages = true;
+const imageSlides = POSTS.map((p, i) => ({
+  desktop: p.desktop,
+  mobile: p.mobile,
+  eyebrow: slides[i % slides.length]?.eyebrow ?? "",
+  // texto plano del CTA para WhatsApp
+  waText: slides[i % slides.length]?.eyebrow ?? "Mia's Aesthetics",
+}));
 
 const palettes = [
   // pink → gold (lashes)
