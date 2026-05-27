@@ -13,47 +13,59 @@ const waBookText = lang === "es"
 // Imágenes del cliente. Cada idioma tiene su set de posts.
 // Cada slide trae una versión landscape para desktop y una portrait (9:16)
 // para móvil — el <picture> elige automáticamente según el viewport.
-// (EN aún no tiene posts mobile; mientras tanto cae al mismo desktop —
-//  el cliente nos pasará las verticales EN después.)
+
+/**
+ * Optimiza una URL de Cloudinary para web:
+ * - f_auto: sirve WebP/AVIF si el navegador lo soporta (≈ 50-70% menos peso)
+ * - q_auto: calidad inteligente según contenido
+ * - c_limit + w_*: limita el ancho máximo para no enviar PNG gigantes
+ */
+const cld = (url: string, maxW: number) =>
+  url.replace(
+    "/image/upload/",
+    `/image/upload/f_auto,q_auto,c_limit,w_${maxW}/`,
+  );
+const desk = (u: string) => cld(u, 1920);
+const mob  = (u: string) => cld(u, 900);
+
 const ES_POSTS = [
   {
-    desktop: "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779649897/Post_2_wgui2e.png",
-    mobile:  "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779856991/Post_5_IN_w5msqu.png",
+    desktop: desk("https://res.cloudinary.com/dehvpdo4z/image/upload/v1779649897/Post_2_wgui2e.png"),
+    mobile:  mob("https://res.cloudinary.com/drbc4wbvw/image/upload/v1779856991/Post_5_IN_w5msqu.png"),
   },
   {
-    desktop: "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779649895/Post_1_axv6vn.png",
-    mobile:  "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779856990/Post_6_IN_xbd7zx.png",
+    desktop: desk("https://res.cloudinary.com/dehvpdo4z/image/upload/v1779649895/Post_1_axv6vn.png"),
+    mobile:  mob("https://res.cloudinary.com/drbc4wbvw/image/upload/v1779856990/Post_6_IN_xbd7zx.png"),
   },
   {
-    desktop: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779809828/Post_3_f4kegd.png",
-    mobile:  "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779856992/Post_7_IN_jvole8.png",
+    desktop: desk("https://res.cloudinary.com/drbc4wbvw/image/upload/v1779809828/Post_3_f4kegd.png"),
+    mobile:  mob("https://res.cloudinary.com/drbc4wbvw/image/upload/v1779856992/Post_7_IN_jvole8.png"),
   },
   {
-    desktop: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779809831/Post_4_qmrqdb.png",
-    mobile:  "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779856991/Post_8_IN_copia_nwywyo.png",
+    desktop: desk("https://res.cloudinary.com/drbc4wbvw/image/upload/v1779809831/Post_4_qmrqdb.png"),
+    mobile:  mob("https://res.cloudinary.com/drbc4wbvw/image/upload/v1779856991/Post_8_IN_copia_nwywyo.png"),
   },
 ];
 
-// EN: el cliente todavía no nos pasó las verticales móviles, así que cada
-// slot reusa la versión desktop como mobile. Cuando lleguen, sustituir.
-// NOTA: posiciones 3 y 4 vinieron con la MISMA URL del cliente — falta
-// la 4ª real (se sustituye cuando la pase).
+// EN: ahora con las 4 verticales móviles también.
+// NOTA: posiciones 3 y 4 vinieron con la MISMA URL desktop del cliente —
+// falta la 4ª real (se sustituye cuando la pase).
 const EN_POSTS = [
   {
-    desktop: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779877873/Post_2_hl6rpm.png",
-    mobile:  "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779877873/Post_2_hl6rpm.png",
+    desktop: desk("https://res.cloudinary.com/drbc4wbvw/image/upload/v1779877873/Post_2_hl6rpm.png"),
+    mobile:  mob("https://res.cloudinary.com/drbc4wbvw/image/upload/v1779893798/Post_5_IN_1_mbqtks.png"),
   },
   {
-    desktop: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779877873/Post_1_iyianh.png",
-    mobile:  "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779877873/Post_1_iyianh.png",
+    desktop: desk("https://res.cloudinary.com/drbc4wbvw/image/upload/v1779877873/Post_1_iyianh.png"),
+    mobile:  mob("https://res.cloudinary.com/drbc4wbvw/image/upload/v1779893798/Post_6_IN_1_zgio6e.png"),
   },
   {
-    desktop: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779877874/Post_3_1_xvfmcp.png",
-    mobile:  "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779877874/Post_3_1_xvfmcp.png",
+    desktop: desk("https://res.cloudinary.com/drbc4wbvw/image/upload/v1779877874/Post_3_1_xvfmcp.png"),
+    mobile:  mob("https://res.cloudinary.com/drbc4wbvw/image/upload/v1779893798/Post_7_IN_1_fotres.png"),
   },
   {
-    desktop: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779877874/Post_3_1_xvfmcp.png",
-    mobile:  "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779877874/Post_3_1_xvfmcp.png",
+    desktop: desk("https://res.cloudinary.com/drbc4wbvw/image/upload/v1779877874/Post_3_1_xvfmcp.png"),
+    mobile:  mob("https://res.cloudinary.com/drbc4wbvw/image/upload/v1779893798/Post_8_IN_kgmz1y.png"),
   },
 ];
 
@@ -149,7 +161,8 @@ function illustration(kind: string) {
               alt={slide.eyebrow}
               class="absolute inset-0 h-full w-full object-cover object-center"
               loading={i === 0 ? "eager" : "lazy"}
-              decoding="async"
+              fetchpriority={i === 0 ? "high" : "auto"}
+              decoding={i === 0 ? "sync" : "async"}
             />
           </picture>
           <!-- CTA flotante reservar -->
