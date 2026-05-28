@@ -145,7 +145,7 @@ function illustration(kind: string) {
 }
 ---
 <section class="relative overflow-hidden">
-  <div id="hero-carousel" class="relative h-[640px] sm:h-[680px] lg:h-[720px]">
+  <div id="hero-carousel" class="relative aspect-[1080/800] sm:aspect-auto sm:h-[680px] lg:h-[720px]">
     {useImages ? imageSlides.map((slide, i) => {
       const waHref = waLink(`${waBookText} (${slide.waText})`);
       return (
