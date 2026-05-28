@@ -34,7 +34,7 @@ export const SITE = {
     google: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1778898217/Google_Favicon_2025.svg_gjvcm8.webp",
     gmail: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779353635/Gmail_icon__2020.svg_f7gjpe.png",
     whatsapp: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1778898491/WhatsApp_icon_ym0yfu.png",
-    logoFull: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779354210/CON_LETRAS_y3yjxt.png",
+    logoFull: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780008364/logo_pwdbju.png",
     logoMark: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779354322/Icono_4_jwnaxj.png",
     erlymPhoto: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779353797/Captura_de_pantalla_2026-05-21_035619_rzdzga.png",
     flagEs: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779353875/Bandera_Nacional_de_Espa%C3%B1a_sin_escudo_dizj1a.png",
