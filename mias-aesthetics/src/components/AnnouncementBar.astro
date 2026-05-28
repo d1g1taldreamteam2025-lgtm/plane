@@ -21,11 +21,11 @@ const cycle = total * 4.5; // segundos
     <span class="ann-sparkle absolute right-[8%] top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-[var(--color-blush-200)]" style="animation-delay:0.7s"></span>
   </div>
 
-  <div class="container-px relative mx-auto flex h-12 max-w-7xl items-center justify-center sm:h-14">
-    <div class="relative h-6 w-full overflow-hidden text-center">
+  <div class="container-px relative mx-auto flex h-11 max-w-7xl items-center justify-center sm:h-14">
+    <div class="relative h-5 w-full overflow-hidden text-center sm:h-6">
       {items.map((txt, i) => (
         <span
-          class="ann-item absolute inset-0 flex items-center justify-center gap-2 font-display text-sm font-semibold tracking-wide sm:text-base"
+          class="ann-item absolute inset-0 flex items-center justify-center gap-2 whitespace-nowrap font-display text-[11px] font-semibold tracking-wide sm:text-sm md:text-base"
           style={`animation-delay: ${i * 4.5}s; animation-duration: ${cycle}s;`}
         >
           <span>{txt}</span>
