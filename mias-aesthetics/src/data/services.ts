@@ -119,6 +119,7 @@ export const SERVICES: ServiceDetail[] = [
     },
     palette: { from: "#ffe6f1", to: "#d4a85a", accent: "#b88a36", text: "#4a3210" },
     iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412111/Mesa_de_trabajo_1_gwfbln.png",
+    heroImage: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780008665/iv_therapy_hvsera.png",
   },
   {
     id: "botox",
@@ -309,6 +310,7 @@ export const SERVICES: ServiceDetail[] = [
     },
     palette: { from: "#fff3d4", to: "#d4a85a", accent: "#b88a36", text: "#4a3210" },
     iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412110/Mesa_de_trabajo_1_copia_3_upt8ip.png",
+    heroImage: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780008517/Morpheus_8_uwiagf.png",
   },
   {
     id: "thermage",
@@ -496,8 +498,9 @@ export const SERVICES: ServiceDetail[] = [
         { q: "Can I get it if I have cold sores?", a: "Yes, but you'll pre-medicate with antiviral 1 day before and 3 days after. Tell us in consultation." },
       ],
     },
-    palette: { from: "#ffc6dd", to: "#ff7eaf", accent: "#d04b7e", text: "#fff" },
+    palette: { from: "#ffc6dd", to: "#ff7eaf", accent: "#d04b7e", text: "#3d1f48" },
     iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412111/Mesa_de_trabajo_1_copia_4_c06ctj.png",
+    heroImage: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780008654/Labios_umts7s.png",
   },
   {
     id: "lashes",
@@ -593,6 +596,7 @@ export const SERVICES: ServiceDetail[] = [
     },
     palette: { from: "#3d1f48", to: "#1a0f1f", accent: "#d4a85a", text: "#fff" },
     iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412110/Mesa_de_trabajo_1_copia_5_yogrkw.png",
+    heroImage: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780008442/Pesta%C3%B1a_pelo_a_pelo_lkuyiq.png",
   },
   {
     id: "facial",
@@ -686,8 +690,9 @@ export const SERVICES: ServiceDetail[] = [
         { q: "How long does the glow last?", a: "Visible from day 1, lasting 2 to 4 weeks depending on your daily skincare routine." },
       ],
     },
-    palette: { from: "#ffe6f1", to: "#ffa3c6", accent: "#d04b7e", text: "#fff" },
+    palette: { from: "#ffe6f1", to: "#ffa3c6", accent: "#d04b7e", text: "#3d1f48" },
     iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779761844/Mesa_de_trabajo_1_copia_16_vqnh4k.png",
+    heroImage: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780008533/Limpieza_facial_jgcj7b.png",
   },
   {
     id: "depilation",
@@ -783,6 +788,7 @@ export const SERVICES: ServiceDetail[] = [
     },
     palette: { from: "#e6d5ec", to: "#6b3a73", accent: "#3d1f48", text: "#fff" },
     iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779761844/Mesa_de_trabajo_1_copia_22_fzdwol.png",
+    heroImage: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780008706/Depilacion_laser_ki1e8k.png",
   },
   {
     id: "dpl",
@@ -878,6 +884,7 @@ export const SERVICES: ServiceDetail[] = [
     },
     palette: { from: "#fff3d4", to: "#d4a85a", accent: "#b88a36", text: "#4a3210" },
     iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412110/Mesa_de_trabajo_1_copia_2_w7qnsc.png",
+    heroImage: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780008677/esperma_de_salmon_x9hhzi.png",
   },
   {
     id: "salmon",
@@ -1068,6 +1075,7 @@ export const SERVICES: ServiceDetail[] = [
     },
     palette: { from: "#fff3d4", to: "#e8c878", accent: "#b88a36", text: "#4a3210" },
     iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779761844/Mesa_de_trabajo_1_copia_17_qscnon.png",
+    heroImage: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780008704/Dermaphen_o0gwaj.png",
   },
 ];
 
