@@ -398,6 +398,7 @@ export const SERVICES: ServiceDetail[] = [
       ],
     },
     palette: { from: "#e6d5ec", to: "#6b3a73", accent: "#3d1f48", text: "#fff" },
+    iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780006780/Thermage_f2jds5.png",
   },
   {
     id: "lips",
