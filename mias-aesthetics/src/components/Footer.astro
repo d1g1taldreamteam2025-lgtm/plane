@@ -23,7 +23,9 @@ const socials = [
   { name: "Instagram",   href: SITE.social.instagram,   icon: SITE.icons.instagram },
   { name: "Facebook",    href: SITE.social.facebook,    icon: SITE.icons.facebook },
   { name: "TikTok",      href: SITE.social.tiktok,      icon: SITE.icons.tiktok },
-  { name: "Google Maps", href: SITE.social.googleMaps,  icon: SITE.icons.googleMaps },
+  // Ícono custom de la marca solo para esta lista. El ícono de Google Maps
+  // estándar se sigue usando en la sección de Contacto / mapa.
+  { name: "Google Maps", href: SITE.social.googleMaps,  icon: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780006444/Ubicaci%C3%B3n_n72z1f.png" },
 ] as { name: string; href: string; icon: string }[];
 ---
 <footer class="relative overflow-hidden bg-[var(--color-plum-900)] text-white">
