@@ -118,6 +118,7 @@ export const COURSES: CourseDetail[] = [
       en: "Official certificate signed by Erlym Monasterios with studio stamp.",
     },
     palette: { from: "#3d1f48", to: "#1a0f1f", accent: "#d4a85a", text: "#fff" },
+    cover: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780009492/Curso_de_pesta%C3%B1as_pelo_a_pelo_cqybst.png",
   },
   {
     id: "lashes-volume",
