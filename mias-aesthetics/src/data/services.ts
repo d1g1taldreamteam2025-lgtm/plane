@@ -21,6 +21,9 @@ export interface ServiceDetail {
   palette: { from: string; to: string; accent: string; text: string };
   /** PNG icono custom de la marca (opcional). Si está, reemplaza el SVG genérico. */
   iconUrl?: string;
+  /** Foto real del tratamiento para el hero de la página de servicio. Si está,
+   *  reemplaza el placeholder "Foto próximamente". */
+  heroImage?: string;
 }
 
 export const SERVICES: ServiceDetail[] = [
@@ -399,6 +402,7 @@ export const SERVICES: ServiceDetail[] = [
     },
     palette: { from: "#e6d5ec", to: "#6b3a73", accent: "#3d1f48", text: "#fff" },
     iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780006780/Thermage_f2jds5.png",
+    heroImage: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780007374/thermage_1_1_dbhnwi.png",
   },
   {
     id: "lips",
