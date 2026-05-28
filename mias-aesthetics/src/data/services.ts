@@ -884,7 +884,7 @@ export const SERVICES: ServiceDetail[] = [
     },
     palette: { from: "#fff3d4", to: "#d4a85a", accent: "#b88a36", text: "#4a3210" },
     iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412110/Mesa_de_trabajo_1_copia_2_w7qnsc.png",
-    heroImage: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780008677/esperma_de_salmon_x9hhzi.png",
+    heroImage: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780008689/DPL_gfs3wb.png",
   },
   {
     id: "salmon",
@@ -980,6 +980,7 @@ export const SERVICES: ServiceDetail[] = [
     },
     palette: { from: "#ffe6f1", to: "#ec6f9c", accent: "#d04b7e", text: "#fff" },
     iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779761844/Mesa_de_trabajo_1_copia_23_yhelrz.png",
+    heroImage: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780008677/esperma_de_salmon_x9hhzi.png",
   },
   {
     id: "dermapen",

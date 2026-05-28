@@ -21,21 +21,16 @@ const waHref = waLink(
   <div class="overlay-in absolute inset-0 bg-[var(--color-plum-900)]/70 backdrop-blur-sm" data-close></div>
 
   <div class="modal-in relative w-full max-w-md overflow-hidden rounded-3xl border border-[var(--color-line)] bg-white shadow-2xl">
-    <!-- Decorative top -->
-    <div class="relative h-28 overflow-hidden bg-gradient-to-br from-[var(--color-blush-200)] via-[var(--color-blush-100)] to-[var(--color-gold-300)]">
-      <svg class="absolute inset-0 h-full w-full" viewBox="0 0 400 120" preserveAspectRatio="none" aria-hidden="true">
-        <circle cx="60" cy="40" r="40" fill="#fff" opacity="0.4"/>
-        <circle cx="340" cy="80" r="60" fill="#fff" opacity="0.3"/>
-        <circle cx="200" cy="20" r="14" fill="#fff" opacity="0.6"/>
-      </svg>
-      <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-        <div class="grid h-16 w-16 place-items-center rounded-full bg-white shadow-lg pulse-ring">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ec6f9c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-          </svg>
-        </div>
-      </div>
-      <!-- Sparkles -->
+    <!-- Banner con la imagen de la oferta -->
+    <div class="relative h-44 overflow-hidden bg-gradient-to-br from-[var(--color-blush-200)] via-[var(--color-blush-100)] to-[var(--color-gold-300)] sm:h-52">
+      <img
+        src="https://res.cloudinary.com/drbc4wbvw/image/upload/v1780009037/pesta%C3%B1a_de_oferta_uiqovk.png"
+        alt=""
+        class="absolute inset-0 h-full w-full object-cover object-center"
+        loading="lazy"
+        decoding="async"
+      />
+      <!-- Sparkles encima de la imagen para mantener el toque animado -->
       <span class="twinkle absolute top-4 left-12 h-1.5 w-1.5 rounded-full bg-white"></span>
       <span class="twinkle absolute top-10 right-16 h-2 w-2 rounded-full bg-white" style="animation-delay:0.6s"></span>
       <span class="twinkle absolute bottom-3 right-32 h-1.5 w-1.5 rounded-full bg-[var(--color-gold-500)]" style="animation-delay:1.2s"></span>
