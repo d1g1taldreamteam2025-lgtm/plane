@@ -32,15 +32,15 @@ const waHref = waLink(
       </svg>
     </button>
 
-    <div class="grid sm:grid-cols-5">
-      <!-- IZQUIERDA: imagen de la oferta (object-contain para que se vea
-           el diseño completo de la modelo sin cortes, con el degradado
-           rosa-dorado como fondo si sobra espacio) -->
-      <div class="relative aspect-[5/4] overflow-hidden bg-gradient-to-br from-[var(--color-blush-200)] via-[var(--color-blush-100)] to-[var(--color-gold-300)] sm:col-span-2 sm:aspect-auto">
+    <div class="grid sm:grid-cols-2">
+      <!-- IZQUIERDA: imagen full-bleed (object-cover top para preservar
+           el texto del header y la modelo; recorta sólo el gradiente
+           decorativo del fondo) -->
+      <div class="relative aspect-[5/4] overflow-hidden bg-gradient-to-br from-[var(--color-blush-200)] via-[var(--color-blush-100)] to-[var(--color-gold-300)] sm:aspect-auto">
         <img
           src="https://res.cloudinary.com/drbc4wbvw/image/upload/f_auto,q_auto,c_limit,w_900/v1780009037/pesta%C3%B1a_de_oferta_uiqovk.png"
           alt=""
-          class="absolute inset-0 h-full w-full object-contain object-center"
+          class="absolute inset-0 h-full w-full object-cover object-top"
           loading="lazy"
           decoding="async"
         />
@@ -51,7 +51,7 @@ const waHref = waLink(
       </div>
 
       <!-- DERECHA: contenido -->
-      <div class="px-5 pb-6 pt-5 text-center sm:col-span-3 sm:flex sm:flex-col sm:justify-center sm:px-8 sm:py-8 sm:text-left">
+      <div class="px-5 pb-6 pt-5 text-center sm:flex sm:flex-col sm:justify-center sm:px-7 sm:py-7 sm:text-left">
         <span class="eyebrow eyebrow-gold sm:self-start">{t(lang, "modal.eyebrow")}</span>
         <h2 id="welcome-modal-title" class="h-display mt-4 text-2xl sm:text-3xl">
           {t(lang, "modal.title")}
