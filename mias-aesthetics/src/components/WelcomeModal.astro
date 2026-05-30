@@ -21,12 +21,13 @@ const waHref = waLink(
   <div class="overlay-in absolute inset-0 bg-[var(--color-plum-900)]/70 backdrop-blur-sm" data-close></div>
 
   <div class="modal-in relative w-full max-w-md overflow-hidden rounded-3xl border border-[var(--color-line)] bg-white shadow-2xl">
-    <!-- Banner con la imagen de la oferta -->
-    <div class="relative h-44 overflow-hidden bg-gradient-to-br from-[var(--color-blush-200)] via-[var(--color-blush-100)] to-[var(--color-gold-300)] sm:h-52">
+    <!-- Banner con la imagen de la oferta (aspect-ratio + object-contain
+         para que se vea completa en cualquier dispositivo, nunca cortada) -->
+    <div class="relative aspect-[5/4] overflow-hidden bg-gradient-to-br from-[var(--color-blush-200)] via-[var(--color-blush-100)] to-[var(--color-gold-300)]">
       <img
-        src="https://res.cloudinary.com/drbc4wbvw/image/upload/v1780009037/pesta%C3%B1a_de_oferta_uiqovk.png"
+        src="https://res.cloudinary.com/drbc4wbvw/image/upload/f_auto,q_auto,c_limit,w_900/v1780009037/pesta%C3%B1a_de_oferta_uiqovk.png"
         alt=""
-        class="absolute inset-0 h-full w-full object-cover object-center"
+        class="absolute inset-0 h-full w-full object-contain object-center"
         loading="lazy"
         decoding="async"
       />
