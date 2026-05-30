@@ -20,26 +20,10 @@ const waHref = waLink(
 >
   <div class="overlay-in absolute inset-0 bg-[var(--color-plum-900)]/70 backdrop-blur-sm" data-close></div>
 
-  <div class="modal-in relative w-full max-w-md overflow-hidden rounded-3xl border border-[var(--color-line)] bg-white shadow-2xl">
-    <!-- Banner con la imagen de la oferta (aspect-ratio + object-contain
-         para que se vea completa en cualquier dispositivo, nunca cortada) -->
-    <div class="relative aspect-[5/4] overflow-hidden bg-gradient-to-br from-[var(--color-blush-200)] via-[var(--color-blush-100)] to-[var(--color-gold-300)]">
-      <img
-        src="https://res.cloudinary.com/drbc4wbvw/image/upload/f_auto,q_auto,c_limit,w_900/v1780009037/pesta%C3%B1a_de_oferta_uiqovk.png"
-        alt=""
-        class="absolute inset-0 h-full w-full object-contain object-center"
-        loading="lazy"
-        decoding="async"
-      />
-      <!-- Sparkles encima de la imagen para mantener el toque animado -->
-      <span class="twinkle absolute top-4 left-12 h-1.5 w-1.5 rounded-full bg-white"></span>
-      <span class="twinkle absolute top-10 right-16 h-2 w-2 rounded-full bg-white" style="animation-delay:0.6s"></span>
-      <span class="twinkle absolute bottom-3 right-32 h-1.5 w-1.5 rounded-full bg-[var(--color-gold-500)]" style="animation-delay:1.2s"></span>
-    </div>
-
+  <div class="modal-in relative w-full max-w-md overflow-hidden rounded-3xl border border-[var(--color-line)] bg-white shadow-2xl sm:max-w-2xl">
     <button
       type="button"
-      class="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-white/90 text-[var(--color-graphite)] shadow transition hover:bg-white"
+      class="absolute right-3 top-3 z-20 grid h-9 w-9 place-items-center rounded-full bg-white/90 text-[var(--color-graphite)] shadow transition hover:bg-white"
       aria-label="Close"
       data-close
     >
@@ -48,48 +32,66 @@ const waHref = waLink(
       </svg>
     </button>
 
-    <div class="px-5 pb-6 pt-5 text-center sm:px-8 sm:pb-8">
-      <span class="eyebrow eyebrow-gold">{t(lang, "modal.eyebrow")}</span>
-      <h2 id="welcome-modal-title" class="h-display mt-4 text-2xl sm:text-3xl">
-        {t(lang, "modal.title")}
-      </h2>
-      <p class="mt-3 text-sm text-[var(--color-gray-soft)] sm:text-base">
-        {t(lang, "modal.subtitle")}
-      </p>
+    <div class="grid sm:grid-cols-5">
+      <!-- IZQUIERDA: imagen de la oferta (full height en desktop, banner arriba en móvil) -->
+      <div class="relative aspect-[5/4] overflow-hidden bg-gradient-to-br from-[var(--color-blush-200)] via-[var(--color-blush-100)] to-[var(--color-gold-300)] sm:col-span-2 sm:aspect-auto sm:min-h-[480px]">
+        <img
+          src="https://res.cloudinary.com/drbc4wbvw/image/upload/f_auto,q_auto,c_limit,w_900/v1780009037/pesta%C3%B1a_de_oferta_uiqovk.png"
+          alt=""
+          class="absolute inset-0 h-full w-full object-cover object-center"
+          loading="lazy"
+          decoding="async"
+        />
+        <!-- Sparkles encima de la imagen -->
+        <span class="twinkle absolute top-4 left-6 h-1.5 w-1.5 rounded-full bg-white"></span>
+        <span class="twinkle absolute top-10 right-8 h-2 w-2 rounded-full bg-white" style="animation-delay:0.6s"></span>
+        <span class="twinkle absolute bottom-4 left-10 h-1.5 w-1.5 rounded-full bg-[var(--color-gold-500)]" style="animation-delay:1.2s"></span>
+      </div>
 
-      <!-- Countdown -->
-      <div class="mt-5">
-        <p class="text-[10px] font-bold uppercase tracking-widest text-[var(--color-pink-600)]">
-          {t(lang, "modal.countdown_label")}
+      <!-- DERECHA: contenido -->
+      <div class="px-5 pb-6 pt-5 text-center sm:col-span-3 sm:flex sm:flex-col sm:justify-center sm:px-8 sm:py-8 sm:text-left">
+        <span class="eyebrow eyebrow-gold sm:self-start">{t(lang, "modal.eyebrow")}</span>
+        <h2 id="welcome-modal-title" class="h-display mt-4 text-2xl sm:text-3xl">
+          {t(lang, "modal.title")}
+        </h2>
+        <p class="mt-3 text-sm text-[var(--color-gray-soft)] sm:text-base">
+          {t(lang, "modal.subtitle")}
         </p>
-        <div id="countdown" class="mt-2 flex items-center justify-center gap-2">
-          <div class="flex min-w-[60px] flex-col items-center rounded-xl bg-[var(--color-plum-900)] px-3 py-2 text-white">
-            <span class="font-display text-2xl font-bold tabular-nums" data-cd="h">23</span>
-            <span class="text-[9px] uppercase tracking-widest opacity-75">{t(lang, "modal.countdown_h")}</span>
-          </div>
-          <span class="font-display text-2xl font-bold text-[var(--color-plum-900)]">:</span>
-          <div class="flex min-w-[60px] flex-col items-center rounded-xl bg-[var(--color-plum-900)] px-3 py-2 text-white">
-            <span class="font-display text-2xl font-bold tabular-nums" data-cd="m">59</span>
-            <span class="text-[9px] uppercase tracking-widest opacity-75">{t(lang, "modal.countdown_m")}</span>
-          </div>
-          <span class="font-display text-2xl font-bold text-[var(--color-plum-900)]">:</span>
-          <div class="flex min-w-[60px] flex-col items-center rounded-xl bg-gradient-to-br from-[var(--color-pink-500)] to-[var(--color-pink-600)] px-3 py-2 text-white">
-            <span class="font-display text-2xl font-bold tabular-nums" data-cd="s">59</span>
-            <span class="text-[9px] uppercase tracking-widest opacity-90">{t(lang, "modal.countdown_s")}</span>
+
+        <!-- Countdown -->
+        <div class="mt-5">
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[var(--color-pink-600)]">
+            {t(lang, "modal.countdown_label")}
+          </p>
+          <div id="countdown" class="mt-2 flex items-center justify-center gap-2 sm:justify-start">
+            <div class="flex min-w-[56px] flex-col items-center rounded-xl bg-[var(--color-plum-900)] px-3 py-2 text-white">
+              <span class="font-display text-2xl font-bold tabular-nums" data-cd="h">23</span>
+              <span class="text-[9px] uppercase tracking-widest opacity-75">{t(lang, "modal.countdown_h")}</span>
+            </div>
+            <span class="font-display text-2xl font-bold text-[var(--color-plum-900)]">:</span>
+            <div class="flex min-w-[56px] flex-col items-center rounded-xl bg-[var(--color-plum-900)] px-3 py-2 text-white">
+              <span class="font-display text-2xl font-bold tabular-nums" data-cd="m">59</span>
+              <span class="text-[9px] uppercase tracking-widest opacity-75">{t(lang, "modal.countdown_m")}</span>
+            </div>
+            <span class="font-display text-2xl font-bold text-[var(--color-plum-900)]">:</span>
+            <div class="flex min-w-[56px] flex-col items-center rounded-xl bg-gradient-to-br from-[var(--color-pink-500)] to-[var(--color-pink-600)] px-3 py-2 text-white">
+              <span class="font-display text-2xl font-bold tabular-nums" data-cd="s">59</span>
+              <span class="text-[9px] uppercase tracking-widest opacity-90">{t(lang, "modal.countdown_s")}</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="mt-6 flex flex-col gap-2 sm:flex-row sm:justify-center">
-        <a href={waHref} target="_blank" rel="noopener" class="btn btn-primary">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.05 0C5.49 0 .2 5.3.2 11.86c0 2.09.55 4.13 1.6 5.93L0 24l6.36-1.67a11.84 11.84 0 0 0 5.69 1.45h.01c6.56 0 11.86-5.3 11.86-11.86 0-3.17-1.23-6.15-3.4-8.44Z"/></svg>
-          {t(lang, "modal.cta")}
-        </a>
-        <button type="button" class="btn btn-outline" data-close>{t(lang, "modal.dismiss")}</button>
+        <div class="mt-6 flex flex-col gap-2 sm:flex-row">
+          <a href={waHref} target="_blank" rel="noopener" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.05 0C5.49 0 .2 5.3.2 11.86c0 2.09.55 4.13 1.6 5.93L0 24l6.36-1.67a11.84 11.84 0 0 0 5.69 1.45h.01c6.56 0 11.86-5.3 11.86-11.86 0-3.17-1.23-6.15-3.4-8.44Z"/></svg>
+            {t(lang, "modal.cta")}
+          </a>
+          <button type="button" class="btn btn-outline" data-close>{t(lang, "modal.dismiss")}</button>
+        </div>
+        <p class="mt-5 text-[10px] uppercase tracking-widest text-[var(--color-gray-soft)]">
+          {t(lang, "modal.fine_print")}
+        </p>
       </div>
-      <p class="mt-5 text-[10px] uppercase tracking-widest text-[var(--color-gray-soft)]">
-        {t(lang, "modal.fine_print")}
-      </p>
     </div>
   </div>
 </div>
