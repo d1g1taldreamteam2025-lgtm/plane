@@ -27,30 +27,30 @@ type TAuthHeader = {
 const Titles = {
   [EAuthModes.SIGN_IN]: {
     [EAuthSteps.EMAIL]: {
-      header: "Work in all dimensions.",
-      subHeader: "Welcome back to Plane.",
+      header: "Trabaja en todas las dimensiones.",
+      subHeader: "Bienvenido de nuevo a Digital Dream.",
     },
     [EAuthSteps.PASSWORD]: {
-      header: "Work in all dimensions.",
-      subHeader: "Welcome back to Plane.",
+      header: "Trabaja en todas las dimensiones.",
+      subHeader: "Bienvenido de nuevo a Digital Dream.",
     },
     [EAuthSteps.UNIQUE_CODE]: {
-      header: "Work in all dimensions.",
-      subHeader: "Welcome back to Plane.",
+      header: "Trabaja en todas las dimensiones.",
+      subHeader: "Bienvenido de nuevo a Digital Dream.",
     },
   },
   [EAuthModes.SIGN_UP]: {
     [EAuthSteps.EMAIL]: {
-      header: "Work in all dimensions.",
-      subHeader: "Create your Plane account.",
+      header: "Trabaja en todas las dimensiones.",
+      subHeader: "Crea tu cuenta de Digital Dream.",
     },
     [EAuthSteps.PASSWORD]: {
-      header: "Work in all dimensions.",
-      subHeader: "Create your Plane account.",
+      header: "Trabaja en todas las dimensiones.",
+      subHeader: "Crea tu cuenta de Digital Dream.",
     },
     [EAuthSteps.UNIQUE_CODE]: {
-      header: "Work in all dimensions.",
-      subHeader: "Create your Plane account.",
+      header: "Trabaja en todas las dimensiones.",
+      subHeader: "Crea tu cuenta de Digital Dream.",
     },
   },
 };

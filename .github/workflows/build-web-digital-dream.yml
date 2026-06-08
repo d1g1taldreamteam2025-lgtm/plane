@@ -1,0 +1,42 @@
+name: Build Digital Dream web image
+
+# Construye la imagen web personalizada (branding Digital Dream) y la publica
+# en GitHub Container Registry (ghcr.io). Así el servidor solo la DESCARGA y un
+# redeploy nunca se rompe por una imagen borrada localmente.
+
+on:
+  push:
+    branches:
+      - cryo-custom
+      - claude/peaceful-heisenberg-G3RGB
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push web image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: apps/web/Dockerfile.web
+          push: true
+          tags: ghcr.io/d1g1taldreamteam2025-lgtm/plane-web-cryo:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
