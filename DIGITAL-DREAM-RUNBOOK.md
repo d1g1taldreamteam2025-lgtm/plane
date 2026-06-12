@@ -68,6 +68,36 @@ Reconstrucción manual (plan B): `cd /root/custom-plane/plane && docker build -f
 
 ---
 
+## 🔒 Durabilidad frente a easypanel (¿el botón "Deploy" revierte mis cambios?)
+
+Dos personalizaciones viven **solo** en `docker-compose.yml` (no en el store de easypanel):
+1. `web` usa `image: ghcr.io/d1g1taldreamteam2025-lgtm/plane-web-cryo:latest` + `pull_policy: always` (branding).
+2. `proxy` tiene el bind-mount `…/code/Caddyfile:/etc/caddy/Caddyfile:ro` (arregla los uploads 405).
+
+**Verificado en el código de easypanel (`/app/backend.js`, jun-2026):**
+
+- ✅ **El botón "Deploy" NO regenera `docker-compose.yml`.** Para un servicio Compose *inline* corre
+  `docker compose -f docker-compose.yml -f docker-compose.override.yml -p … up --build -d` sobre el archivo
+  **en disco**. Solo regenera `docker-compose.override.yml` (alias de red) y, opcionalmente, `.env`.
+  → Nuestros cambios **persisten** ante cualquier Deploy normal.
+- ⚠️ **Único vector de reversión:** abrir el **editor de Compose en la UI de easypanel y pulsar "Guardar"**
+  (mutación `updateSourceInline`). Ese flujo hace `rm -rf` del directorio `code/` y reescribe `docker-compose.yml`
+  desde el store interno (versión vieja) — además **borra el `Caddyfile`**. No hagas eso sin actualizar antes
+  el store. (No editar `data/data.mdb` a mano: es LMDB binario y se corrompería.)
+
+**Red de seguridad (recuperación en 1 comando):**
+- Copias "golden" fuera del dir gestionado: `/root/plane-rescue/golden/{docker-compose.yml,Caddyfile}` (+ `CHECKSUMS.txt`).
+- Script: **`/root/scripts/reapply-plane-customizations.sh`** → restaura ambos archivos y redespliega.
+  Úsalo si alguien revierte desde la UI:
+  ```bash
+  /root/scripts/reapply-plane-customizations.sh
+  ```
+- Para hacerlo durable **también** ante un "Guardar" en la UI: pega el contenido de
+  `/root/plane-rescue/golden/docker-compose.yml` en el editor de Compose de easypanel y guarda
+  (eso actualiza el store), y vuelve a colocar el `Caddyfile` con el script de arriba.
+
+---
+
 ## ✅ Estado blindado
 - **Datos** → volúmenes persistentes + backups en `~/plane-rescue/`.
 - **Branding/código** → en GitHub (`cryo-custom`).
