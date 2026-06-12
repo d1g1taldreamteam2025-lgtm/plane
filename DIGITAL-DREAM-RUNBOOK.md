@@ -98,6 +98,35 @@ Dos personalizaciones viven **solo** en `docker-compose.yml` (no en el store de 
 
 ---
 
+## 💾 Backups automáticos
+
+Backup **diario automático** de la base de datos y los archivos subidos.
+
+- **Script:** `/root/scripts/plane-backup.sh`
+  1. `pg_dump` comprimido de Postgres (contenedor `ucallnow_interno_plane-plane-db-1`, db `plane`) → `plane-db-<fecha>.sql.gz`.
+  2. `tar.gz` del volumen `ucallnow_interno_plane_uploads` **montado solo-lectura** (`:ro`) → `plane-uploads-<fecha>.tar.gz`.
+  3. Valida integridad (`gzip -t`), **rota conservando los últimos 7 días** y loguea tamaños.
+- **Destino:** `/root/plane-rescue/auto/` (log en `backup.log`, salida de cron en `cron.log`).
+- **Cron:** diario a las **3:30am** (hora del server):
+  ```cron
+  30 3 * * * /root/scripts/plane-backup.sh >> /root/plane-rescue/auto/cron.log 2>&1
+  ```
+- **Ejecutar a mano:** `/root/scripts/plane-backup.sh`
+- **Restaurar:**
+  ```bash
+  # Base de datos
+  gunzip -c /root/plane-rescue/auto/plane-db-<fecha>.sql.gz \
+    | docker exec -i -e PGPASSWORD=plane ucallnow_interno_plane-plane-db-1 psql -U plane -d plane
+  # Uploads (CUIDADO: sobrescribe el volumen)
+  docker run --rm -v ucallnow_interno_plane_uploads:/data \
+    -v /root/plane-rescue/auto:/backup alpine \
+    sh -c 'tar xzf /backup/plane-uploads-<fecha>.tar.gz -C /data'
+  ```
+
+> Tamaños de referencia (primera ejecución): db ≈ 4.3 MB, uploads ≈ 504 MB.
+
+---
+
 ## ✅ Estado blindado
 - **Datos** → volúmenes persistentes + backups en `~/plane-rescue/`.
 - **Branding/código** → en GitHub (`cryo-custom`).
