@@ -4,7 +4,7 @@
  * See the LICENSE file for details.
  */
 
-import { useState } from "react";
+import { useState, type MouseEvent } from "react";
 import { observer } from "mobx-react";
 import Link from "next/link";
 import { AlertCircle } from "lucide-react";
@@ -13,6 +13,7 @@ import { CloseIcon } from "@plane/propel/icons";
 import { Tooltip } from "@plane/propel/tooltip";
 import {
   convertBytesToSize,
+  getAttachmentPreviewType,
   getFileExtension,
   getFileName,
   getFileURL,
@@ -24,6 +25,7 @@ import {
 import { getFileIcon } from "@/components/icons";
 // components
 import { IssueAttachmentDeleteModal } from "@/components/issues/attachment/delete-attachment-modal";
+import { IssueAttachmentPreviewModal } from "@/components/issues/attachment/attachment-preview-modal";
 // helpers
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
@@ -50,16 +52,27 @@ export const IssueAttachmentsDetail = observer(function IssueAttachmentsDetail(p
   } = useIssueDetail();
   // state
   const [isDeleteIssueAttachmentModalOpen, setIsDeleteIssueAttachmentModalOpen] = useState(false);
+  const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
   // derived values
   const attachment = attachmentId ? getAttachmentById(attachmentId) : undefined;
   const fileName = getFileName(attachment?.attributes.name ?? "");
   const fileExtension = getFileExtension(attachment?.asset_url ?? "");
   const fileIcon = getFileIcon(fileExtension, 28);
   const fileURL = getFileURL(attachment?.asset_url ?? "");
+  const previewType = getAttachmentPreviewType(attachment?.attributes.name ?? attachment?.asset_url ?? "");
   // hooks
   const { isMobile } = usePlatformOS();
 
   if (!attachment) return <></>;
+
+  // For previewable files open an in-app viewer instead of triggering the download redirect.
+  const canPreview = !!previewType && !!fileURL;
+  const handleOpen = (e: MouseEvent) => {
+    if (!canPreview) return; // fall back to the default <Link> download behavior
+    e.preventDefault();
+    e.stopPropagation();
+    setIsPreviewModalOpen(true);
+  };
 
   return (
     <>
@@ -71,8 +84,17 @@ export const IssueAttachmentsDetail = observer(function IssueAttachmentsDetail(p
           attachmentId={attachmentId}
         />
       )}
+      {canPreview && previewType && (
+        <IssueAttachmentPreviewModal
+          isOpen={isPreviewModalOpen}
+          onClose={() => setIsPreviewModalOpen(false)}
+          fileURL={fileURL ?? ""}
+          fileName={`${fileName}.${fileExtension}`}
+          previewType={previewType}
+        />
+      )}
       <div className="flex h-[60px] items-center justify-between gap-1 rounded-md border-[2px] border-subtle bg-surface-1 px-4 py-2 text-13">
-        <Link href={fileURL ?? ""} target="_blank" rel="noopener noreferrer">
+        <Link href={fileURL ?? ""} target="_blank" rel="noopener noreferrer" onClick={handleOpen}>
           <div className="flex items-center gap-3">
             <div className="h-7 w-7">{fileIcon}</div>
             <div className="flex flex-col gap-1">

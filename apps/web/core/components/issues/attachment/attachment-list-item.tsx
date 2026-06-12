@@ -5,6 +5,7 @@
  */
 
 import { observer } from "mobx-react";
+import { useState } from "react";
 
 import { useTranslation } from "@plane/i18n";
 import { TrashIcon } from "@plane/propel/icons";
@@ -13,11 +14,19 @@ import type { TIssueServiceType } from "@plane/types";
 import { EIssueServiceType } from "@plane/types";
 // ui
 import { CustomMenu } from "@plane/ui";
-import { convertBytesToSize, getFileExtension, getFileName, getFileURL, renderFormattedDate } from "@plane/utils";
+import {
+  convertBytesToSize,
+  getAttachmentPreviewType,
+  getFileExtension,
+  getFileName,
+  getFileURL,
+  renderFormattedDate,
+} from "@plane/utils";
 // components
 //
 import { ButtonAvatars } from "@/components/dropdowns/member/avatar";
 import { getFileIcon } from "@/components/icons";
+import { IssueAttachmentPreviewModal } from "@/components/issues/attachment/attachment-preview-modal";
 // helpers
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
@@ -40,12 +49,16 @@ export const IssueAttachmentsListItem = observer(function IssueAttachmentsListIt
     attachment: { getAttachmentById },
     toggleDeleteAttachmentModal,
   } = useIssueDetail(issueServiceType);
+  // state
+  const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
   // derived values
   const attachment = attachmentId ? getAttachmentById(attachmentId) : undefined;
   const fileName = getFileName(attachment?.attributes.name ?? "");
   const fileExtension = getFileExtension(attachment?.attributes.name ?? "");
   const fileIcon = getFileIcon(fileExtension, 18);
   const fileURL = getFileURL(attachment?.asset_url ?? "");
+  const previewType = getAttachmentPreviewType(attachment?.attributes.name ?? "");
+  const canPreview = !!previewType && !!fileURL;
   // hooks
   const { isMobile } = usePlatformOS();
 
@@ -53,11 +66,24 @@ export const IssueAttachmentsListItem = observer(function IssueAttachmentsListIt
 
   return (
     <>
+      {canPreview && previewType && (
+        <IssueAttachmentPreviewModal
+          isOpen={isPreviewModalOpen}
+          onClose={() => setIsPreviewModalOpen(false)}
+          fileURL={fileURL ?? ""}
+          fileName={`${fileName}.${fileExtension}`}
+          previewType={previewType}
+        />
+      )}
       <button
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
-          window.open(fileURL, "_blank");
+          if (canPreview) {
+            setIsPreviewModalOpen(true);
+          } else {
+            window.open(fileURL, "_blank");
+          }
         }}
       >
         <div className="group flex h-11 items-center justify-between gap-3 pr-2 pl-9 hover:bg-surface-2">
