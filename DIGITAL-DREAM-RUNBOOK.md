@@ -98,32 +98,84 @@ Dos personalizaciones viven **solo** en `docker-compose.yml` (no en el store de 
 
 ---
 
-## 💾 Backups automáticos
+## 💾 Backups automáticos (local + Google Drive offsite)
 
-Backup **diario automático** de la base de datos y los archivos subidos.
+Backup **diario automático** de la base de datos y los archivos subidos, con copia
+**local** (red de seguridad) **y offsite en Google Drive** (fuera del servidor).
 
-- **Script:** `/root/scripts/plane-backup.sh`
+- **Script:** `/root/scripts/plane-backup.sh` (un solo script hace local + Drive)
   1. `pg_dump` comprimido de Postgres (contenedor `ucallnow_interno_plane-plane-db-1`, db `plane`) → `plane-db-<fecha>.sql.gz`.
   2. `tar.gz` del volumen `ucallnow_interno_plane_uploads` **montado solo-lectura** (`:ro`) → `plane-uploads-<fecha>.tar.gz`.
-  3. Valida integridad (`gzip -t`), **rota conservando los últimos 7 días** y loguea tamaños.
-- **Destino:** `/root/plane-rescue/auto/` (log en `backup.log`, salida de cron en `cron.log`).
+  3. Valida integridad (`gzip -t`), **rota local conservando los últimos 7 días**.
+  4. **Offsite a Drive:** sube el dump de BD a `…/db/` (**rota a los últimos 14**) y hace
+     `rclone sync` **incremental** del volumen de uploads a `…/uploads/`.
+- **Destino local:** `/root/plane-rescue/auto/` (log en `backup.log`, salida de cron en `cron.log`).
+- **Destino offsite:** remote rclone **`gdrive`** → carpeta **`DIGITAL DREAM/Plane-Backups/`**
+  (`db/` = dumps rotados 14; `uploads/` = espejo incremental del bucket).
 - **Cron:** diario a las **3:30am** (hora del server):
   ```cron
   30 3 * * * /root/scripts/plane-backup.sh >> /root/plane-rescue/auto/cron.log 2>&1
   ```
 - **Ejecutar a mano:** `/root/scripts/plane-backup.sh`
-- **Restaurar:**
+
+### Sobre el `rclone sync` de uploads
+- Es un **espejo incremental**: solo transfiere lo que cambió; **refleja borrados**
+  (si borras un asset en Plane, desaparece de Drive en el siguiente sync).
+  El historial punto-en-el-tiempo lo dan los **dumps de BD (14 días)** y los **tar locales (7 días)**.
+- Se **excluye `.minio.sys/**`** (metadata interna volátil de MinIO que cambia
+  constantemente y rompía el sync). Los objetos del bucket `uploads/` son inmutables y sí sincronizan bien.
+
+### Autorización de rclone / Google Drive (server headless)
+El remote `gdrive` ya está autorizado en `/root/.config/rclone/rclone.conf` (`type = drive`).
+Si hubiera que **re-autorizar** (token revocado), como el server no tiene navegador:
+1. En el server: `rclone config reconnect gdrive:` → al pedir "Use web browser to automatically
+   authenticate?" responde **No**. Te dará un comando `rclone authorize "drive"`.
+2. En **tu PC** (con navegador y rclone instalado) ejecuta ese comando, inicia sesión en Google,
+   y copia el bloque JSON (`token`) que imprime.
+3. Pega ese token en el server cuando lo pida. Verifica con `rclone about gdrive:`.
+
+### Restaurar
   ```bash
-  # Base de datos
+  # --- Base de datos (desde local o tras bajar de Drive) ---
   gunzip -c /root/plane-rescue/auto/plane-db-<fecha>.sql.gz \
     | docker exec -i -e PGPASSWORD=plane ucallnow_interno_plane-plane-db-1 psql -U plane -d plane
-  # Uploads (CUIDADO: sobrescribe el volumen)
+  # Bajar un dump desde Drive:
+  rclone copy "gdrive:DIGITAL DREAM/Plane-Backups/db/plane-db-<fecha>.sql.gz" /root/plane-rescue/restore/
+
+  # --- Uploads desde el tar local (CUIDADO: sobrescribe el volumen) ---
   docker run --rm -v ucallnow_interno_plane_uploads:/data \
     -v /root/plane-rescue/auto:/backup alpine \
     sh -c 'tar xzf /backup/plane-uploads-<fecha>.tar.gz -C /data'
+  # --- Uploads desde Drive (espejo) hacia el volumen ---
+  rclone copy "gdrive:DIGITAL DREAM/Plane-Backups/uploads" \
+    /var/lib/docker/volumes/ucallnow_interno_plane_uploads/_data/uploads
   ```
 
-> Tamaños de referencia (primera ejecución): db ≈ 4.3 MB, uploads ≈ 504 MB.
+> Tamaños de referencia: db ≈ 4.3 MB, uploads ≈ 507 MB (85 objetos).
+> **Espacio en Drive:** la cuenta tiene ~15 GB (≈4.7 GB libres al configurar). Vigílalo:
+> `rclone about gdrive:`. Si los uploads crecen mucho, considerar una cuenta/Shared Drive dedicado.
+
+---
+
+## 🔁 Auto-arranque tras reinicio del servidor
+
+Todos los servicios long-running tienen restart policy **`unless-stopped`** → Plane
+**arranca solo** cuando el servidor (o Docker) se reinicia, sin intervención manual.
+
+- En el **compose** se usa `restart: unless-stopped` por servicio (se quitó el viejo
+  `deploy.restart_policy: on-failure`, que `docker compose` mapeaba a `on-failure` y **no**
+  garantiza el arranque tras un reboot del host).
+- **`migrator` queda a propósito en `on-failure`**: es un contenedor de un solo uso (corre
+  migraciones y termina); con `unless-stopped`/`always` entraría en bucle infinito.
+- Aplicar/verificar en caliente (sin recrear) si hiciera falta:
+  ```bash
+  for c in $(docker ps -a --format '{{.Names}}' | grep -i plane | grep -v migrator); do
+    docker update --restart unless-stopped "$c" >/dev/null
+  done
+  docker ps -a --format '{{.Names}}' | grep -i plane | while read c; do
+    printf '%-45s %s\n' "$c" "$(docker inspect -f '{{.HostConfig.RestartPolicy.Name}}' "$c")"; done
+  ```
+  Esperado: todos `unless-stopped` (salvo `migrator`, que no suele estar corriendo).
 
 ---
 
@@ -132,3 +184,14 @@ Backup **diario automático** de la base de datos y los archivos subidos.
 - **Branding/código** → en GitHub (`cryo-custom`).
 - **Imagen** → en ghcr.io, reconstruida sola por CI (GitHub Actions).
 - Un redeploy **ya no puede romperse** por una imagen borrada localmente.
+
+---
+
+## 🧪 Verificación post-apagón — 2026-06-15
+Tras un corte de luz y reinicio del servidor se confirmó (sin tocar volúmenes de datos):
+- **Auto-arranque OK:** los 12 servicios long-running volvieron solos (`restart: unless-stopped`
+  presente en runtime **y** en `docker-compose.yml`, por lo que sobrevive redeploys de easypanel).
+  `migrator` queda en `on-failure` a propósito. Plane responde **HTTP 200** en https://plane.ucallnow.fun/.
+- **Backups a Drive OK:** prueba manual end-to-end exitosa (exit 0), offsite incluido.
+  Drive `…/Plane-Backups/db/` contiene los dumps diarios (rotación 14) y `…/uploads/` el espejo
+  incremental (85 objetos ≈ 506 MiB, igual al volumen local). Cron diario activo a las 3:30am.
