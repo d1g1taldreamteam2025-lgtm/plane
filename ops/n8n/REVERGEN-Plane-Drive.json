@@ -1,0 +1,2444 @@
+{
+  "updatedAt": "2026-06-01T13:49:11.156Z",
+  "createdAt": "2026-04-21T03:21:25.272Z",
+  "name": "REVERGEN Plane → Drive",
+  "description": null,
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "DELETE FROM revergen_drive_sync;\n   DELETE FROM revergen_drive_files;",
+        "options": {}
+      },
+      "id": "b503f4ed-f95b-421f-96ff-d982ada929b1",
+      "name": "Marcar sincronizado1",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -17376,
+        4000
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "uvp4tn6iPMBcAuTz",
+          "name": "B 2026"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://www.googleapis.com/drive/v3/files",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"name\": \"{{ $json.quincena_name }}\",\n  \"mimeType\": \"application/vnd.google-apps.folder\",\n  \"parents\": [\"{{ $json.month_id }}\"]\n}",
+        "options": {}
+      },
+      "id": "5d27714d-a606-4ee4-b519-6640e5fc57b8",
+      "name": "Crear quincena",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -14912,
+        4224
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "FbTkr8vfX301LSMU",
+          "name": "cuenta1fulanomartin@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "c2",
+              "leftValue": "={{ $json.needs_create_q }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "looseTypeValidation": true
+        }
+      },
+      "id": "8f931e41-76ca-4384-aa79-7aba952fa8ac",
+      "name": "Quincena necesita crearse?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -15136,
+        4224
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const apiResponse = $json;\nconst plan = $('Preparar quincenas').item.json;\nconst files = apiResponse.files || [];\n\nreturn {\n  json: {\n    ...plan,\n    needs_create_q: files.length === 0\n  }\n};"
+      },
+      "id": "5a727db0-b438-4e04-9558-0c6bc38c4d6d",
+      "name": "Resolver quincena",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -15360,
+        4224
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/drive/v3/files",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "=name='{{ $json.quincena_name }}' and '{{ $json.month_id }}' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false"
+            },
+            {
+              "name": "fields",
+              "value": "files(id,name)"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1a99400e-b879-4ef3-a597-9be0b055b4e7",
+      "name": "Buscar quincena",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -15584,
+        4224
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "FbTkr8vfX301LSMU",
+          "name": "cuenta1fulanomartin@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst results = [];\n\nfor (const item of items) {\n  const plan = item.json;\n  results.push({\n    json: {\n      ...plan,\n      quincena_name: '1-15'\n    }\n  });\n  results.push({\n    json: {\n      ...plan,\n      quincena_name: `16-${plan.last_day}`\n    }\n  });\n}\n\nreturn results;"
+      },
+      "id": "eb408958-eaa6-4670-986f-1dc9e602b5d0",
+      "name": "Preparar quincenas",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -15808,
+        4224
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const apiResponse = $json;\nconst plan = $('Resolver mes').item.json;\n\nreturn {\n  json: {\n    ...plan,\n    month_id: apiResponse.id\n  }\n};"
+      },
+      "id": "30a57c79-a9ac-435e-a752-a423ea292b08",
+      "name": "Capturar id mes",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -16032,
+        4304
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://www.googleapis.com/drive/v3/files",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"name\": \"{{ $json.month_name }}\",\n  \"mimeType\": \"application/vnd.google-apps.folder\",\n  \"parents\": [\"{{ $json.parent_id }}\"]\n}",
+        "options": {}
+      },
+      "id": "cba14375-5803-4b84-9ece-3951b79d18dc",
+      "name": "Crear mes",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -16256,
+        4304
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "FbTkr8vfX301LSMU",
+          "name": "cuenta1fulanomartin@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.needs_create }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "looseTypeValidation": true
+        }
+      },
+      "id": "5786d2c7-0851-4565-9fe3-3d4928ce2087",
+      "name": "Mes necesita crearse?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -16480,
+        4224
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const apiResponse = $json;\nconst plan = $('Plan de meses').item.json;\nconst files = apiResponse.files || [];\n\nreturn {\n  json: {\n    ...plan,\n    month_id: files.length > 0 ? files[0].id : null,\n    needs_create: files.length === 0\n  }\n};"
+      },
+      "id": "81ca5756-c113-4170-80dd-acda010d9c0d",
+      "name": "Resolver mes",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -16704,
+        4224
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/drive/v3/files",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "=name='{{ $json.month_name }}' and '{{ $json.parent_id }}' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false"
+            },
+            {
+              "name": "fields",
+              "value": "files(id,name)"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fca76a56-acf8-4a10-8c46-73ea1b0e4760",
+      "name": "Buscar mes",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -16928,
+        4224
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "FbTkr8vfX301LSMU",
+          "name": "cuenta1fulanomartin@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const MONTH_NAMES = [\n  '01 ENERO','02 FEBRERO','03 MARZO','04 ABRIL',\n  '05 MAYO','06 JUNIO','07 JULIO','08 AGOSTO',\n  '09 SEPTIEMBRE','10 OCTUBRE','11 NOVIEMBRE','12 DICIEMBRE'\n];\n\nconst PARENTS = [\n  { id: '1INHs2pfqiMpnGkp-qrw9GqGBSaFqseKK', label: 'REVERGEN 2026' }\n];\n\nconst YEAR = 2026;\nconst START_MONTH_IDX = 4;\nconst END_MONTH_IDX = 11;\n\nconst items = [];\nfor (const parent of PARENTS) {\n  for (let m = START_MONTH_IDX; m <= END_MONTH_IDX; m++) {\n    const lastDay = new Date(YEAR, m + 1, 0).getDate();\n    items.push({\n      json: {\n        parent_id: parent.id,\n        parent_label: parent.label,\n        month_name: MONTH_NAMES[m],\n        last_day: lastDay,\n        year: YEAR\n      }\n    });\n  }\n}\nreturn items;"
+      },
+      "id": "326e5781-314a-404e-9f2e-c9133622dfb7",
+      "name": "Plan de meses",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -17152,
+        4224
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "4821323f-293c-451d-aff3-8e588ed4122f",
+      "name": "Ejecutar manualmente",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -17376,
+        4224
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "1dce8fa3-73f4-4cd8-8780-b6067675c3f9",
+      "name": "Nada que revisar1",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -16480,
+        4816
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.skip }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "looseTypeValidation": true
+        }
+      },
+      "id": "ceca4e23-6744-42be-9344-f20837d65a19",
+      "name": "Tiene registros?1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -16704,
+        4720
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nif (!items.length || !items[0].json.id) {\n  return [{json:{skip:true}}];\n}\nreturn items;"
+      },
+      "id": "180b7631-bb87-4028-9e40-12d39ac7385f",
+      "name": "Hay archivos?1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -16928,
+        4720
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT id, issue_id, attachment_id, drive_file_id, drive_file_name FROM revergen_drive_files ORDER BY synced_at DESC LIMIT 200",
+        "options": {}
+      },
+      "id": "d213715e-50ab-4530-bb73-5945885696cb",
+      "name": "Obtener archivos trackeados1",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -17152,
+        4720
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "uvp4tn6iPMBcAuTz",
+          "name": "B 2026"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 50
+            }
+          ]
+        }
+      },
+      "id": "9c30b576-9c2e-4d1b-8a83-ea9bdf8e2d79",
+      "name": "Cada 30 minutos1",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -17376,
+        4720
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "9c6366e0-e789-43f6-9411-76b465507a4e",
+      "name": "Sigue existiendo",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -15808,
+        4720
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "DELETE FROM revergen_drive_files WHERE attachment_id = '{{ $('Evaluar borrado').item.json.attachment_id }}'",
+        "options": {}
+      },
+      "id": "29fae374-928b-455a-953f-56ef4d655d2b",
+      "name": "Limpiar DB",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -15584,
+        4528
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "uvp4tn6iPMBcAuTz",
+          "name": "B 2026"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "deleteFile",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.drive_file_id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "1455f2c3-cfef-49e3-96cc-00adbbcce7a0",
+      "name": "Borrar de Drive",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -15808,
+        4528
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "FbTkr8vfX301LSMU",
+          "name": "cuenta1fulanomartin@gmail.com"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "c2",
+              "leftValue": "={{ $json.should_delete }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "looseTypeValidation": true
+        }
+      },
+      "id": "c2fc693e-0dde-45d1-b4b3-9944220c5714",
+      "name": "Borrar?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -16032,
+        4624
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const planeRow = $input.first().json;\nconst dbRecord = $('Tiene registros?1').item.json;\n\n// Si attachment_id no existe en Plane → fue borrado físicamente\n// Si is_deleted = true → fue borrado lógicamente\nconst notFound = !planeRow || !planeRow.attachment_id;\nconst markedDeleted = planeRow && planeRow.is_deleted === true;\nconst shouldDelete = notFound || markedDeleted;\n\nreturn [{json:{\n  ...dbRecord,\n  should_delete: shouldDelete,\n  reason: notFound ? 'not_found' : (markedDeleted ? 'is_deleted' : 'still_exists')\n}}];"
+      },
+      "id": "e94e67e2-434b-4779-b1d2-b9fa0ccafcb7",
+      "name": "Evaluar borrado",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -16256,
+        4624
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT id::text AS attachment_id, is_deleted FROM file_assets WHERE id = '{{ $json.attachment_id }}'",
+        "options": {}
+      },
+      "id": "76d4a5c5-add9-4345-afb5-6d2e3c3973aa",
+      "name": "Verificar en Plane",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -16480,
+        4624
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "3iQF3ioYV3RysjUI",
+          "name": "Plane DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO revergen_drive_files (issue_id, attachment_id, drive_file_id, drive_file_name, asset_url, issue_name) VALUES ('{{ $('ID carpeta quincena').itemMatching($itemIndex).json.issue_id }}', '{{ $('ID carpeta quincena').itemMatching($itemIndex).json.attachment_id }}', '{{ $json.id }}', '{{ $('ID carpeta quincena').itemMatching($itemIndex).json.final_name }}', '{{ $('ID carpeta quincena').itemMatching($itemIndex).json.asset_url }}', '{{ $('ID carpeta quincena').itemMatching($itemIndex).json.issue_name }}') ON CONFLICT (attachment_id) DO NOTHING",
+        "options": {}
+      },
+      "id": "8e7a6f52-81bf-476a-897f-a1d58325008f",
+      "name": "Guardar archivo en DB",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -17376,
+        3776
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "uvp4tn6iPMBcAuTz",
+          "name": "B 2026"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "id": "1122cb36-fd73-489d-8c36-aedc0bdbcde3",
+      "name": "Nada que revisar",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -16480,
+        5328
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "ccb03ae2-02ae-42ec-8b4b-f5ea526f4697",
+      "name": "Sin cambios",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -15808,
+        5232
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE revergen_drive_files SET drive_file_name = '{{ $('Comparar nombres').item.json.new_file_name }}', issue_name = '{{ $('Comparar nombres').item.json.current_issue_name }}' WHERE drive_file_id = '{{ $('Comparar nombres').item.json.drive_file_id }}'\n",
+        "options": {}
+      },
+      "id": "d198a750-3043-461d-a76c-2d18551bed62",
+      "name": "Actualizar DB",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -15584,
+        5040
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "uvp4tn6iPMBcAuTz",
+          "name": "B 2026"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://www.googleapis.com/drive/v3/files/{{ $json.drive_file_id }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"name\":\"{{ $json.new_file_name }}\"}",
+        "options": {}
+      },
+      "id": "66c45241-6fa3-463f-9422-000e297c563d",
+      "name": "Renombrar en Drive",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -15808,
+        5040
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "FbTkr8vfX301LSMU",
+          "name": "cuenta1fulanomartin@gmail.com"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "c2",
+              "leftValue": "={{ $json.name_changed }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "looseTypeValidation": true
+        }
+      },
+      "id": "c6fa34d7-12b4-439b-8fac-9c44b09b56e4",
+      "name": "Nombre cambio?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -16032,
+        5136
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const planeIssue = $input.first().json;\nconst dbRecord = $('Tiene registros?').item.json;\n\nconst currentName = planeIssue.name || '';\nconst savedName = dbRecord.issue_name || '';\n\n// Limpiar nombre igual que al subir\nlet newClean = currentName.replace(/[^a-zA-Z0-9\\u00C0-\\u017F\\s-]/g,'').trim().replace(/\\s+/g,'_').substring(0,60);\nlet oldClean = savedName.replace(/[^a-zA-Z0-9\\u00C0-\\u017F\\s-]/g,'').trim().replace(/\\s+/g,'_').substring(0,60);\n\nconst nameChanged = newClean !== oldClean && newClean.length > 0 && oldClean.length > 0;\n\n// Reconstruir nuevo nombre de archivo\nconst oldFileName = dbRecord.drive_file_name || '';\nconst ext = oldFileName.split('.').pop() || '';\nconst date = oldFileName.match(/\\d{4}-\\d{2}-\\d{2}/) ? oldFileName.match(/\\d{4}-\\d{2}-\\d{2}/)[0] : new Date().toISOString().split('T')[0];\nconst newFileName = `${newClean}_${date}.${ext}`;\n\nreturn [{json:{\n  ...dbRecord,\n  current_issue_name: currentName,\n  name_changed: nameChanged,\n  new_file_name: newFileName,\n  new_clean_name: newClean\n}}];"
+      },
+      "id": "3c362240-5386-44cb-ae9a-d512f2352067",
+      "name": "Comparar nombres",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -16256,
+        5136
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://ucallnow-interno-plane.8avxkq.easypanel.host/api/v1/workspaces/digital-dream/projects/bdaf595a-9f5d-4ef0-b53e-ff973e5b274e/issues/{{ $json.issue_id }}/",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "<PLANE_API_KEY_REDACTED>"
+            }
+          ]
+        },
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 2,
+              "batchInterval": 3000
+            }
+          },
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "da8ff109-0039-45b5-8964-3da1019a1596",
+      "name": "Obtener tarea actual",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -16480,
+        5136
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.skip }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "looseTypeValidation": true
+        }
+      },
+      "id": "9a02b787-da80-4192-b308-223834ede097",
+      "name": "Tiene registros?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -16704,
+        5232
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nif (!items.length || !items[0].json.id) {\n  return [{json:{skip:true}}];\n}\nreturn items;"
+      },
+      "id": "4a11c2a9-e3e7-40e8-8089-1a41fbc176fe",
+      "name": "Hay archivos?",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -16928,
+        5232
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT id, issue_id, attachment_id, drive_file_id, drive_file_name, issue_name FROM revergen_drive_files WHERE issue_name IS NOT NULL ORDER BY synced_at DESC LIMIT 50",
+        "options": {}
+      },
+      "id": "a2233acf-dc52-414a-be6c-1e3a262d2cdf",
+      "name": "Obtener archivos trackeados",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -17152,
+        5232
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "uvp4tn6iPMBcAuTz",
+          "name": "B 2026"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 60
+            }
+          ]
+        }
+      },
+      "id": "8ae6d6da-1ec9-4f40-b451-909f05a56021",
+      "name": "Cada 30 minutos",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -17376,
+        5232
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 40
+            }
+          ]
+        }
+      },
+      "id": "0e50dc6a-ef18-431c-bb63-0d0f373a3473",
+      "name": "Cada 10 minutos",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -17504,
+        3232
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://plane.ucallnow.fun/api/v1/workspaces/digital-dream/projects/bdaf595a-9f5d-4ef0-b53e-ff973e5b274e/labels/",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "<PLANE_API_KEY_REDACTED>"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "b168be46-890f-4273-8db4-0354ff9f2a23",
+      "name": "Obtener labels",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -17264,
+        3232
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://plane.ucallnow.fun/api/v1/workspaces/digital-dream/projects/bdaf595a-9f5d-4ef0-b53e-ff973e5b274e/issues/",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "state_group",
+              "value": "completed"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "<PLANE_API_KEY_REDACTED>"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "09b028d2-9c2c-4e29-aa3f-8fcdd7513602",
+      "name": "Obtener tareas completadas",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -17024,
+        3232
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const ROUTING = {\n  default: { id: '1INHs2pfqiMpnGkp-qrw9GqGBSaFqseKK', label: 'REVERGEN 2026' },\n  byLabel: {\n    'revergen 2026': { id: '1INHs2pfqiMpnGkp-qrw9GqGBSaFqseKK', label: 'REVERGEN 2026' }\n  }\n};\n\nconst labelsResponse = $('Obtener labels').first().json;\nconst labelsArray = Array.isArray(labelsResponse) ? labelsResponse : (labelsResponse.results || []);\nconst labelIdToName = {};\nfor (const label of labelsArray) {\n  if (label && label.id && label.name) {\n    labelIdToName[label.id] = label.name.toLowerCase().trim();\n  }\n}\n\nconst issues = $input.first().json.results || [];\nconst processed = [];\nconst MN = ['01 ENERO','02 FEBRERO','03 MARZO','04 ABRIL','05 MAYO','06 JUNIO','07 JULIO','08 AGOSTO','09 SEPTIEMBRE','10 OCTUBRE','11 NOVIEMBRE','12 DICIEMBRE'];\n\nfor (const issue of issues) {\n  if (!issue.completed_at) continue;\n  const d = new Date(issue.completed_at);\n  const day = d.getDate(), month = d.getMonth(), year = d.getFullYear();\n  const lastDay = new Date(year, month+1, 0).getDate();\n  const q = day <= 15 ? '1-15' : `16-${lastDay}`;\n  let cn = issue.name.replace(/[^a-zA-Z0-9\\u00C0-\\u017F\\s-]/g,'').trim().replace(/\\s+/g,'_').substring(0,60);\n  \n  const issueLabels = (issue.labels || []).map(lid => labelIdToName[lid]).filter(Boolean);\n  let target = ROUTING.default;\n  for (const lblName of issueLabels) {\n    if (ROUTING.byLabel[lblName]) {\n      target = ROUTING.byLabel[lblName];\n      break;\n    }\n  }\n  \n  processed.push({\n    json: {\n      issue_id: issue.id,\n      issue_name: issue.name,\n      clean_name: cn,\n      folder_month: MN[month],\n      folder_quincena: q,\n      created_by: issue.created_by || '',\n      target_parent_id: target.id,\n      target_parent_label: target.label,\n      issue_labels_resolved: issueLabels.join(',') || 'none'\n    }\n  });\n}\n\nif (!processed.length) processed.push({json:{skip:true}});\nreturn processed;"
+      },
+      "id": "916b6b5d-31df-406a-bd06-ad179bd11908",
+      "name": "Filtrar tareas",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -16784,
+        3232
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.skip }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "looseTypeValidation": true
+        }
+      },
+      "id": "f2d4e127-3b9e-44ca-846f-bb49e310fe95",
+      "name": "Hay tareas?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -16544,
+        3232
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT issue_id FROM revergen_drive_sync",
+        "options": {}
+      },
+      "id": "6b5ee722-6fbf-40d8-b86c-713ee00a9aab",
+      "name": "Ya sincronizado?",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -16304,
+        3136
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "uvp4tn6iPMBcAuTz",
+          "name": "B 2026"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const syncedRows = $input.all();\nconst syncedIds = new Set(syncedRows.map(r => r.json.issue_id).filter(Boolean));\n\nconst allIssues = $('Filtrar tareas').all();\n\nconst results = [];\nfor (const item of allIssues) {\n  const issue = item.json;\n  if (issue.skip) continue;\n  results.push({\n    json: {\n      ...issue,\n      already_synced: syncedIds.has(issue.issue_id)\n    }\n  });\n}\n\nreturn results;"
+      },
+      "id": "301ecbe1-4d27-426c-882d-a3129f29b645",
+      "name": "Evaluar sync",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -16064,
+        3136
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "c_sync",
+              "leftValue": "={{ $json.already_synced }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "looseTypeValidation": true
+        }
+      },
+      "id": "bad0d7fc-af33-42fc-8a5a-ed6a6837ecfe",
+      "name": "Es nuevo?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -15824,
+        3136
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT id::text AS attachment_id, attributes->>'name' AS original_name, asset, created_by_id::text AS created_by, issue_id::text AS issue_id_from_db FROM file_assets WHERE is_uploaded = true AND is_deleted = false",
+        "options": {}
+      },
+      "id": "d48e9efb-4c60-4506-ba1c-eb9b41d92a32",
+      "name": "Obtener adjuntos",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -15584,
+        3040
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "3iQF3ioYV3RysjUI",
+          "name": "Plane DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const allAttachments = $input.all();\n\nconst syncedIssues = $('Evaluar sync').all();\nconst issueMap = {};\nfor (const it of syncedIssues) {\n  const j = it.json;\n  if (j && j.issue_id && !j.already_synced) {\n    issueMap[j.issue_id] = j;\n  }\n}\n\nconst seenAttachments = new Set();\nconst items = [];\nfor (const r of allAttachments) {\n  const a = r.json;\n  if (!a || !a.attachment_id) continue;\n  if (seenAttachments.has(a.attachment_id)) continue;\n  seenAttachments.add(a.attachment_id);\n  \n  const issue = issueMap[a.issue_id_from_db];\n  if (!issue) continue;\n  \n  const fn = a.original_name || 'archivo';\n  const ext = (fn.includes('.') ? fn.split('.').pop() : 'bin').toLowerCase();\n  const final_name = `${issue.clean_name}_${new Date().toISOString().split('T')[0]}.${ext}`;\n  \n  items.push({json:{\n    asset_url: a.asset,\n    attachment_id: a.attachment_id,\n    final_name,\n    uploader: '',\n    issue_id: issue.issue_id,\n    issue_name: issue.issue_name,\n    clean_name: issue.clean_name,\n    folder_month: issue.folder_month,\n    folder_quincena: issue.folder_quincena,\n    target_parent_id: issue.target_parent_id,\n    target_parent_label: issue.target_parent_label\n  }});\n}\n\nif(!items.length) items.push({json:{skip:true}});\nreturn items;"
+      },
+      "id": "3e3fb87e-fd13-4490-a309-9f0be765292d",
+      "name": "Preparar archivos",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -15344,
+        3040
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "c2",
+              "leftValue": "={{ $json.skip }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "looseTypeValidation": true
+        }
+      },
+      "id": "98dca02c-2993-4e69-8771-0ff03894261c",
+      "name": "Tiene archivos?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -15104,
+        3040
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// NIVEL 1: Combos únicos de MES solamente (parent + month)\n// Si tenemos 25 items, esto reduce a N (1 por cada parent+mes único)\nconst items = $input.all();\nconst uniqueMonths = new Map();\n\nfor (const item of items) {\n  const j = item.json;\n  const key = `${j.target_parent_id}|${j.folder_month}`;\n  if (!uniqueMonths.has(key)) {\n    uniqueMonths.set(key, {\n      target_parent_id: j.target_parent_id,\n      target_parent_label: j.target_parent_label,\n      folder_month: j.folder_month\n    });\n  }\n}\n\nreturn Array.from(uniqueMonths.values()).map(c => ({json: c}));"
+      },
+      "id": "60794a3f-e341-4013-bf17-c96d40fdab1f",
+      "name": "Combos únicos de mes",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -14864,
+        3040
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/drive/v3/files",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "=name='{{ $json.folder_month }}' and '{{ $json.target_parent_id }}' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false"
+            },
+            {
+              "name": "fields",
+              "value": "files(id,name)"
+            }
+          ]
+        },
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 4000
+            }
+          }
+        }
+      },
+      "id": "cbaa167b-b19d-4cd8-b868-c1af55ce8407",
+      "name": "Buscar carpeta mes",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -14624,
+        3040
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "FbTkr8vfX301LSMU",
+          "name": "cuenta1fulanomartin@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const apiResponse = $json;\nconst files = apiResponse.files || [];\nconst monthId = files.length > 0 ? files[0].id : null;\n\nconst original = $('Combos únicos de mes').itemMatching($itemIndex).json;\n\nreturn {\n  json: {\n    ...original,\n    month_folder_id: monthId\n  }\n};"
+      },
+      "id": "3480ad8a-ded8-4dc2-8824-664d78b575eb",
+      "name": "Resultado mes",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -14384,
+        3040
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "c3",
+              "leftValue": "={{ $json.month_folder_id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "looseTypeValidation": true
+        }
+      },
+      "id": "e3f6fb8f-1c35-4d84-8480-bf73adaad04d",
+      "name": "Crear mes?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -14144,
+        3040
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://www.googleapis.com/drive/v3/files",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"name\":\"{{ $json.folder_month }}\",\"mimeType\":\"application/vnd.google-apps.folder\",\"parents\":[\"{{ $json.target_parent_id }}\"]}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 4000
+            }
+          }
+        }
+      },
+      "id": "14dcc70f-2f2d-4533-bd37-107a406dbdd7",
+      "name": "Crear carpeta mes",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -13904,
+        2928
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "FbTkr8vfX301LSMU",
+          "name": "cuenta1fulanomartin@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const input = $json;\nconst monthId = input.id || input.month_folder_id;\n\nconst original = $('Combos únicos de mes').itemMatching($itemIndex).json;\n\nreturn {\n  json: {\n    ...original,\n    month_folder_id: monthId\n  }\n};"
+      },
+      "id": "f481674b-e627-4d21-abb8-1a3dffed6623",
+      "name": "ID carpeta mes",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -13664,
+        3040
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// NIVEL 2: Expandir a combos únicos de QUINCENA\n// Tomamos los meses resueltos y los cruzamos con las quincenas únicas necesarias\nconst monthsResolved = $input.all();\nconst monthMap = {};\nfor (const m of monthsResolved) {\n  const j = m.json;\n  const key = `${j.target_parent_id}|${j.folder_month}`;\n  monthMap[key] = j.month_folder_id;\n}\n\n// Sacar combos únicos de quincena de los items originales\nconst originals = $('Preparar archivos').all();\nconst uniqueQuincenas = new Map();\n\nfor (const item of originals) {\n  const j = item.json;\n  if (j.skip) continue;\n  const quincenaKey = `${j.target_parent_id}|${j.folder_month}|${j.folder_quincena}`;\n  if (!uniqueQuincenas.has(quincenaKey)) {\n    const monthKey = `${j.target_parent_id}|${j.folder_month}`;\n    uniqueQuincenas.set(quincenaKey, {\n      target_parent_id: j.target_parent_id,\n      target_parent_label: j.target_parent_label,\n      folder_month: j.folder_month,\n      folder_quincena: j.folder_quincena,\n      month_folder_id: monthMap[monthKey]\n    });\n  }\n}\n\nreturn Array.from(uniqueQuincenas.values()).map(c => ({json: c}));"
+      },
+      "id": "e94f9bf0-1777-4fa8-815d-2293e370253a",
+      "name": "Combos únicos de quincena",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -13424,
+        3040
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/drive/v3/files",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "=name='{{ $json.folder_quincena }}' and '{{ $json.month_folder_id }}' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false"
+            },
+            {
+              "name": "fields",
+              "value": "files(id,name)"
+            }
+          ]
+        },
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 4000
+            }
+          }
+        }
+      },
+      "id": "14968bf8-c7c5-418e-a8c5-7ce8968fa2c9",
+      "name": "Buscar carpeta quincena",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -13184,
+        3040
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "FbTkr8vfX301LSMU",
+          "name": "cuenta1fulanomartin@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const apiResponse = $json;\nconst files = apiResponse.files || [];\nconst quincenaId = files.length > 0 ? files[0].id : null;\n\nconst original = $('Combos únicos de quincena').itemMatching($itemIndex).json;\n\nreturn {\n  json: {\n    ...original,\n    quincena_folder_id: quincenaId\n  }\n};"
+      },
+      "id": "e5b1009b-0152-40cb-8059-dc9c21e0a6d0",
+      "name": "Resultado quincena",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -12944,
+        3040
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "c4",
+              "leftValue": "={{ $json.quincena_folder_id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "looseTypeValidation": true
+        }
+      },
+      "id": "e6a78553-782d-4bfd-959f-6dd65f545656",
+      "name": "Crear quincena?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -12704,
+        3040
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://www.googleapis.com/drive/v3/files",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"name\":\"{{ $json.folder_quincena }}\",\"mimeType\":\"application/vnd.google-apps.folder\",\"parents\":[\"{{ $json.month_folder_id }}\"]}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 4000
+            }
+          }
+        }
+      },
+      "id": "61a5db64-c8b0-401c-8329-3340b2372fbf",
+      "name": "Crear carpeta quincena",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -12464,
+        2928
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "FbTkr8vfX301LSMU",
+          "name": "cuenta1fulanomartin@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const input = $json;\nconst quincenaId = input.id || input.quincena_folder_id;\n\nconst original = $('Combos únicos de quincena').itemMatching($itemIndex).json;\n\nreturn {\n  json: {\n    ...original,\n    quincena_folder_id: quincenaId\n  }\n};"
+      },
+      "id": "ea5da4b5-b1b4-4dc9-8037-9d0ef8e789f6",
+      "name": "ID carpeta quincena",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -12224,
+        3040
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Mapear combos resueltos a los items originales\nconst resolved = $input.all();\nconst comboMap = {};\nfor (const item of resolved) {\n  const j = item.json;\n  const key = `${j.target_parent_id}|${j.folder_month}|${j.folder_quincena}`;\n  comboMap[key] = {\n    month_folder_id: j.month_folder_id,\n    quincena_folder_id: j.quincena_folder_id\n  };\n}\n\nconst originals = $('Preparar archivos').all();\nconst output = [];\nfor (const item of originals) {\n  const j = item.json;\n  if (j.skip) continue;\n  const key = `${j.target_parent_id}|${j.folder_month}|${j.folder_quincena}`;\n  const ids = comboMap[key];\n  if (!ids) continue;\n  output.push({\n    json: {\n      ...j,\n      month_folder_id: ids.month_folder_id,\n      quincena_folder_id: ids.quincena_folder_id\n    }\n  });\n}\n\nreturn output;"
+      },
+      "id": "0f2040e6-837a-4eb8-97cd-1669c07437aa",
+      "name": "Aplicar carpetas a items",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -11984,
+        3040
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://plane.ucallnow.fun/uploads/{{ $json.asset_url }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "id": "0422c949-e48f-43bd-b3f6-2cc04b250897",
+      "name": "Descargar archivo",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -11744,
+        3040
+      ]
+    },
+    {
+      "parameters": {
+        "name": "={{ $('Aplicar carpetas a items').item.json.final_name }}",
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $('Aplicar carpetas a items').item.json.quincena_folder_id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "93150377-4699-45af-889f-b0b5bbe2d864",
+      "name": "Subir a Drive",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -11504,
+        3040
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "FbTkr8vfX301LSMU",
+          "name": "cuenta1fulanomartin@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const driveResp = $json;\nconst ctx = $('Aplicar carpetas a items').itemMatching($itemIndex).json;\n\nreturn {\n  json: {\n    ...ctx,\n    drive_file_id: driveResp.id,\n    drive_file_link: driveResp.webViewLink || `https://drive.google.com/file/d/${driveResp.id}/view`,\n    drive_file_name_actual: driveResp.name\n  }\n};"
+      },
+      "id": "f7b23279-9ec5-4785-b4a3-bfac74b2c7e7",
+      "name": "Combinar contexto",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -11264,
+        3040
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const all = $input.all();\nconst seen = new Set();\nconst unique = [];\n\nfor (const item of all) {\n  const id = item.json.issue_id;\n  if (!id) continue;\n  if (!seen.has(id)) {\n    seen.add(id);\n    unique.push({ json: item.json });\n  }\n}\n\nreturn unique;"
+      },
+      "id": "bc4462d9-1256-4e8a-9cd5-7925c65dcef7",
+      "name": "Dedupe por issue",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -11024,
+        3152
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://plane.ucallnow.fun/api/v1/workspaces/digital-dream/projects/bdaf595a-9f5d-4ef0-b53e-ff973e5b274e/issues/{{ $json.issue_id }}/links/",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "<PLANE_API_KEY_REDACTED>"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"url\": \"https://drive.google.com/drive/folders/{{ $json.quincena_folder_id }}\",\n  \"title\": \"📁 [{{ $json.target_parent_label }}] {{ $json.clean_name }} ({{ $json.folder_month }}/{{ $json.folder_quincena }})\"\n}",
+        "options": {}
+      },
+      "id": "571d9c51-81bf-48a5-971a-0924c6bbb0b4",
+      "name": "Enlace carpeta en Plane",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -10784,
+        3152
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const ctx = $('Dedupe por issue').itemMatching($itemIndex).json;\n\nconst current = $json;\nconst planeError = current && current.error ? current.error.message : null;\nconst linkAlreadyExists = planeError && planeError.includes('URL already exists');\n\nreturn {\n  json: {\n    ...ctx,\n    plane_link_status: planeError ? (linkAlreadyExists ? 'already_existed' : 'error') : 'created'\n  }\n};"
+      },
+      "id": "b90c4a86-ab80-4669-a88b-be3276e40b72",
+      "name": "Recuperar contexto",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -10544,
+        3152
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO revergen_drive_sync (issue_id, issue_name, drive_folder_id, drive_file_name) VALUES ('{{ $json.issue_id }}', '{{ $json.issue_name }}', '{{ $json.quincena_folder_id }}', '{{ $json.final_name }}') ON CONFLICT (issue_id) DO NOTHING",
+        "options": {}
+      },
+      "id": "48843c3d-310c-4a72-a99c-9d3d11deed91",
+      "name": "Marcar sincronizado",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -10304,
+        3152
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "uvp4tn6iPMBcAuTz",
+          "name": "B 2026"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "a34567a8-271e-407d-8551-dcf3a8bdd578",
+      "name": "Sin tareas",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -16304,
+        3344
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "af0008a0-c184-4ca4-81cc-68040d213344",
+      "name": "Ya sincronizado",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -15584,
+        3232
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "7072056d-e825-4414-8add-679c4226d0c3",
+      "name": "Sin archivos",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -14896,
+        3216
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO revergen_drive_files (issue_id, attachment_id, drive_file_id, drive_file_name, asset_url, issue_name) VALUES ('{{ $json.issue_id }}', '{{ $json.attachment_id }}', '{{ $json.drive_file_id }}', '{{ $json.final_name }}', '{{ $json.asset_url }}', '{{ $json.issue_name }}') ON CONFLICT (attachment_id) DO NOTHING",
+        "options": {}
+      },
+      "id": "8b69eaf0-3bb0-4a33-9bca-df024103b204",
+      "name": "Guardar archivo en DB1",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -11024,
+        2928
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "uvp4tn6iPMBcAuTz",
+          "name": "B 2026"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Quincena necesita crearse?": {
+      "main": [
+        [
+          {
+            "node": "Crear quincena",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resolver quincena": {
+      "main": [
+        [
+          {
+            "node": "Quincena necesita crearse?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar quincena": {
+      "main": [
+        [
+          {
+            "node": "Resolver quincena",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar quincenas": {
+      "main": [
+        [
+          {
+            "node": "Buscar quincena",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Capturar id mes": {
+      "main": [
+        [
+          {
+            "node": "Preparar quincenas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crear mes": {
+      "main": [
+        [
+          {
+            "node": "Capturar id mes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mes necesita crearse?": {
+      "main": [
+        [
+          {
+            "node": "Crear mes",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Preparar quincenas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resolver mes": {
+      "main": [
+        [
+          {
+            "node": "Mes necesita crearse?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar mes": {
+      "main": [
+        [
+          {
+            "node": "Resolver mes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Plan de meses": {
+      "main": [
+        [
+          {
+            "node": "Buscar mes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ejecutar manualmente": {
+      "main": [
+        [
+          {
+            "node": "Plan de meses",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tiene registros?1": {
+      "main": [
+        [
+          {
+            "node": "Verificar en Plane",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Nada que revisar1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hay archivos?1": {
+      "main": [
+        [
+          {
+            "node": "Tiene registros?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener archivos trackeados1": {
+      "main": [
+        [
+          {
+            "node": "Hay archivos?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cada 30 minutos1": {
+      "main": [
+        [
+          {
+            "node": "Obtener archivos trackeados1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Borrar de Drive": {
+      "main": [
+        [
+          {
+            "node": "Limpiar DB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Borrar?": {
+      "main": [
+        [
+          {
+            "node": "Borrar de Drive",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Sigue existiendo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evaluar borrado": {
+      "main": [
+        [
+          {
+            "node": "Borrar?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verificar en Plane": {
+      "main": [
+        [
+          {
+            "node": "Evaluar borrado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Renombrar en Drive": {
+      "main": [
+        [
+          {
+            "node": "Actualizar DB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Nombre cambio?": {
+      "main": [
+        [
+          {
+            "node": "Renombrar en Drive",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Sin cambios",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Comparar nombres": {
+      "main": [
+        [
+          {
+            "node": "Nombre cambio?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener tarea actual": {
+      "main": [
+        [
+          {
+            "node": "Comparar nombres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tiene registros?": {
+      "main": [
+        [
+          {
+            "node": "Obtener tarea actual",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Nada que revisar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hay archivos?": {
+      "main": [
+        [
+          {
+            "node": "Tiene registros?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener archivos trackeados": {
+      "main": [
+        [
+          {
+            "node": "Hay archivos?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cada 30 minutos": {
+      "main": [
+        [
+          {
+            "node": "Obtener archivos trackeados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cada 10 minutos": {
+      "main": [
+        [
+          {
+            "node": "Obtener labels",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener labels": {
+      "main": [
+        [
+          {
+            "node": "Obtener tareas completadas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener tareas completadas": {
+      "main": [
+        [
+          {
+            "node": "Filtrar tareas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtrar tareas": {
+      "main": [
+        [
+          {
+            "node": "Hay tareas?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hay tareas?": {
+      "main": [
+        [
+          {
+            "node": "Ya sincronizado?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Sin tareas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ya sincronizado?": {
+      "main": [
+        [
+          {
+            "node": "Evaluar sync",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evaluar sync": {
+      "main": [
+        [
+          {
+            "node": "Es nuevo?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Es nuevo?": {
+      "main": [
+        [
+          {
+            "node": "Obtener adjuntos",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Ya sincronizado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener adjuntos": {
+      "main": [
+        [
+          {
+            "node": "Preparar archivos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar archivos": {
+      "main": [
+        [
+          {
+            "node": "Tiene archivos?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tiene archivos?": {
+      "main": [
+        [
+          {
+            "node": "Combos únicos de mes",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Sin archivos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combos únicos de mes": {
+      "main": [
+        [
+          {
+            "node": "Buscar carpeta mes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar carpeta mes": {
+      "main": [
+        [
+          {
+            "node": "Resultado mes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resultado mes": {
+      "main": [
+        [
+          {
+            "node": "Crear mes?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crear mes?": {
+      "main": [
+        [
+          {
+            "node": "Crear carpeta mes",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ID carpeta mes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crear carpeta mes": {
+      "main": [
+        [
+          {
+            "node": "ID carpeta mes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ID carpeta mes": {
+      "main": [
+        [
+          {
+            "node": "Combos únicos de quincena",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combos únicos de quincena": {
+      "main": [
+        [
+          {
+            "node": "Buscar carpeta quincena",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar carpeta quincena": {
+      "main": [
+        [
+          {
+            "node": "Resultado quincena",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resultado quincena": {
+      "main": [
+        [
+          {
+            "node": "Crear quincena?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crear quincena?": {
+      "main": [
+        [
+          {
+            "node": "Crear carpeta quincena",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ID carpeta quincena",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crear carpeta quincena": {
+      "main": [
+        [
+          {
+            "node": "ID carpeta quincena",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ID carpeta quincena": {
+      "main": [
+        [
+          {
+            "node": "Aplicar carpetas a items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aplicar carpetas a items": {
+      "main": [
+        [
+          {
+            "node": "Descargar archivo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Descargar archivo": {
+      "main": [
+        [
+          {
+            "node": "Subir a Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Subir a Drive": {
+      "main": [
+        [
+          {
+            "node": "Combinar contexto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combinar contexto": {
+      "main": [
+        [
+          {
+            "node": "Guardar archivo en DB1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Dedupe por issue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dedupe por issue": {
+      "main": [
+        [
+          {
+            "node": "Enlace carpeta en Plane",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enlace carpeta en Plane": {
+      "main": [
+        [
+          {
+            "node": "Recuperar contexto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recuperar contexto": {
+      "main": [
+        [
+          {
+            "node": "Marcar sincronizado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "errorWorkflow": "GLhxwEnKNRUBqly1",
+    "timezone": "America/Bogota",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "staticData": {
+    "node:Cada 10 minutos": {
+      "recurrenceRules": []
+    },
+    "global": {
+      "processedIssues": {
+        "7aac3d2a-80f2-4608-8619-2cd3dd396546": "2026-04-28T03:30:04.186Z"
+      }
+    },
+    "node:Cada 30 minutos": {
+      "recurrenceRules": []
+    },
+    "node:Cada 30 minutos1": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "Cada 30 minutos1": [
+      {
+        "json": {
+          "timestamp": "2026-05-28T10:30:45.002-05:00",
+          "Readable date": "May 28th 2026, 10:30:45 am",
+          "Readable time": "10:30:45 am",
+          "Day of week": "Thursday",
+          "Year": "2026",
+          "Month": "May",
+          "Day of month": "28",
+          "Hour": "10",
+          "Minute": "30",
+          "Second": "45",
+          "Timezone": "America/Bogota (UTC-05:00)"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "Cada 10 minutos": [
+      {
+        "json": {
+          "timestamp": "2026-06-01T08:40:52.005-05:00",
+          "Readable date": "June 1st 2026, 8:40:52 am",
+          "Readable time": "8:40:52 am",
+          "Day of week": "Monday",
+          "Year": "2026",
+          "Month": "June",
+          "Day of month": "01",
+          "Hour": "08",
+          "Minute": "40",
+          "Second": "52",
+          "Timezone": "America/Bogota (UTC-05:00)"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "activeVersionId": "d584c19b-5792-4d99-96bb-eceee4e2fc66",
+  "versionCounter": 347,
+  "tags": [],
+  "shared": [
+    {
+      "updatedAt": "2026-04-21T03:21:25.275Z",
+      "createdAt": "2026-04-21T03:21:25.275Z",
+      "role": "workflow:owner",
+      "workflowId": "hTK0ouxHQaDB9Mzl",
+      "projectId": "gLrDf84x3OrrLDUi",
+      "project": {
+        "updatedAt": "2025-10-19T17:11:57.262Z",
+        "createdAt": "2025-10-19T16:21:43.632Z",
+        "id": "gLrDf84x3OrrLDUi",
+        "name": "Sebastian Sanchez <d1g1tal.dream.team.2025@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "9572837d-180c-49e0-a542-ce95225e15af"
+      }
+    }
+  ],
+  "versionMetadata": {
+    "name": "Version d584c19b",
+    "description": ""
+  },
+  "id": "7a3m90C0O4vSBgWu"
+}

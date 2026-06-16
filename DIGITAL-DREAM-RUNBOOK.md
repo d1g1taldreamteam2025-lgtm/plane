@@ -195,3 +195,50 @@ Tras un corte de luz y reinicio del servidor se confirmó (sin tocar volúmenes 
 - **Backups a Drive OK:** prueba manual end-to-end exitosa (exit 0), offsite incluido.
   Drive `…/Plane-Backups/db/` contiene los dumps diarios (rotación 14) y `…/uploads/` el espejo
   incremental (85 objetos ≈ 506 MiB, igual al volumen local). Cron diario activo a las 3:30am.
+
+---
+
+## 📂 Workflow n8n "REVERGEN Plane → Drive" (clon de CRYO v14)
+
+Clon del sistema **CRYO Plane → Drive (v14 final)** para el proyecto nuevo **REVERGEN**.
+Sube los adjuntos de tareas completadas en Plane a Google Drive en
+`REVERGEN / CATEGORÍA / MES / QUINCENA`, pega el link en la tarea y sincroniza
+renombrados/borrados contra dos tablas Postgres propias. La lógica de mes/quincena
+y las credenciales (Drive, Plane DB, Postgres) son **idénticas** a CRYO.
+
+### IDs y recursos (REVERGEN)
+- **Proyecto Plane:** `REVERGEN` (identifier `REV`) → **PROJECT_ID `bdaf595a-9f5d-4ef0-b53e-ff973e5b274e`**.
+  Workspace `digital-dream` en https://plane.ucallnow.fun.
+- **Carpetas Google Drive** (cuenta **cuenta1fulanomartin@gmail.com**, la misma del credential n8n):
+  - Raíz `REVERGEN` → `1OczOfhlb4rNdspIyWBOyGUJm1GoPEzRI`
+  - Categoría `REVERGEN 2026` → `1INHs2pfqiMpnGkp-qrw9GqGBSaFqseKK` (los meses/quincenas se crean dentro solos)
+- **Label de ruteo** en el proyecto: `REVERGEN 2026` → `00b36ee4-2152-47d6-bb9d-b20f620b593d`
+  (ruteo label→carpeta; el `default` del routing también apunta a `REVERGEN 2026`).
+- **Tablas Postgres** (base de n8n "B 2026", host `supabase-db`, db `postgres`, credencial `uvp4tn6iPMBcAuTz`):
+  `revergen_drive_sync` y `revergen_drive_files` — **mismo esquema exacto** que `plane_drive_sync` /
+  `plane_drive_files` (no comparten datos con CRYO).
+- **Workflow en n8n:** `REVERGEN Plane → Drive` (ID `7a3m90C0O4vSBgWu`), **activo**, mismos
+  schedules que CRYO. Credenciales reutilizadas: Drive `cuenta1fulanomartin@gmail.com` (`FbTkr8vfX301LSMU`),
+  `Plane DB` (`3iQF3ioYV3RysjUI`), `B 2026` (`uvp4tn6iPMBcAuTz`).
+
+### Diferencias vs CRYO (lo único que cambió)
+- Nombre del workflow y **PROJECT_ID** en los 4 nodos HTTP de Plane.
+- `Plan de meses` (PARENTS) y `Filtrar tareas` (ROUTING) → carpeta/label de REVERGEN.
+- Nodos Postgres: `plane_drive_sync`→`revergen_drive_sync`, `plane_drive_files`→`revergen_drive_files`.
+- **Nombre de archivo SIN prefijo de persona:** `Preparar archivos` deja
+  `${clean_name}_${fecha}.${ext}` y `uploader: ''`; `Comparar nombres` usa `${newClean}_${date}.${ext}`;
+  el título del link en Plane ya no lleva `uploader:`.
+
+### Copia del JSON
+- **Sanitizada (en este repo, sin API key):** `ops/n8n/REVERGEN-Plane-Drive.json`.
+- **Real e importable (solo en el server, con API key):** `/root/plane-rescue/REVERGEN-Plane-Drive.n8n.json`.
+  Reimportar: `docker exec <n8n> n8n import:workflow --input=/tmp/REVERGEN-Plane-Drive.n8n.json`
+  (cópialo antes al contenedor) y luego activar con `n8n update:workflow --id=7a3m90C0O4vSBgWu --active=true`
+  **+ reiniciar n8n** (`docker service update --force ucallnow_interno_n8n`) para que registre los triggers.
+
+### Prueba end-to-end — 2026-06-16 (OK)
+Tarea de prueba `REV-1 "Reel Promo Junio REV"`, completada con un adjunto. Resultado:
+- Archivo en Drive `REVERGEN / REVERGEN 2026 / 06 JUNIO / 16-30 / Reel_Promo_Junio_REV_2026-06-16.mp4`
+  (**sin prefijo de persona**).
+- Link en la tarea: `📁 [REVERGEN 2026] Reel_Promo_Junio_REV (06 JUNIO/16-30)`.
+- Filas creadas en `revergen_drive_sync` y `revergen_drive_files`. Ejecución n8n `success`.
