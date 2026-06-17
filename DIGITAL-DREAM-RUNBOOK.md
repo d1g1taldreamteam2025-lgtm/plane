@@ -242,3 +242,100 @@ Tarea de prueba `REV-1 "Reel Promo Junio REV"`, completada con un adjunto. Resul
   (**sin prefijo de persona**).
 - Link en la tarea: `📁 [REVERGEN 2026] Reel_Promo_Junio_REV (06 JUNIO/16-30)`.
 - Filas creadas en `revergen_drive_sync` y `revergen_drive_files`. Ejecución n8n `success`.
+
+---
+
+## 🏢 Escalado multi-marca (agencia) — 2026-06-17
+
+Se replicó el sistema Plane→Drive para 4 marcas nuevas y se montó el control de accesos por rol.
+Todo reutiliza las mismas credenciales n8n (Drive `FbTkr8vfX301LSMU` = cuenta1fulanomartin@gmail.com,
+Plane DB `3iQF3ioYV3RysjUI`, Postgres "B 2026" `uvp4tn6iPMBcAuTz`) y la API key de Plane
+(cuenta **d1g1tal.dream.team.2025@gmail.com** = dueña del API key y de los backups).
+
+### Proyectos (workspace digital-dream)
+| Proyecto | Identifier | PROJECT_ID | Tipo |
+|---|---|---|---|
+| CRYO ESTHETICS SILUET | CRYO | `d1b1510e-c708-47f6-be0e-ac9ae73b6c0d` | contenido (cliente) |
+| REVERGEN | REV | `bdaf595a-9f5d-4ef0-b53e-ff973e5b274e` | contenido (cliente) |
+| RBS MEDISTORE | RBS | `fd26e357-51d8-4e41-9c7f-c0206db0180e` | contenido (cliente) |
+| PEPTIUM MX | PEP | `d351a415-d883-4af0-99f1-9c51a1728411` | contenido (cliente) |
+| CADCAM | CAD | `e5f5196b-2d7b-427c-9ef3-a4d0127de259` | contenido (cliente, clínica dental) |
+| UCALLNOW | UCN | `d82e4778-083d-4606-82c7-050b53e0a61f` | interno/técnico (NO cliente) |
+
+### Estados (los 6 proyectos, en español, orden + grupo)
+`IDEAS`(backlog) → `POR HACER`(unstarted) → `EN PROCESO`(started) → `REVISIÓN`(started) →
+`AJUSTES`(started) → **`HECHO`(completed — dispara el envío a Drive)** → `CANCELADO`(cancelled).
+Único estado `completed` = HECHO; único default = IDEAS. (CRYO se consolidó quitando los estados
+ingleses/duplicados y un "Aprobado" sobrante, reubicando tareas antes de borrar.)
+
+### Carpetas Google Drive (cuenta cuenta1fulanomartin@gmail.com) + Labels de ruteo
+| Marca | Carpeta raíz (ID) | Categoría → folder ID / label ID |
+|---|---|---|
+| CRYO | `1VYHo1qEUtGycACcBfQk2WfM3IemtToig` | TAREAS ISABELLA `1pl8-47IE…`, MATERIAL SPA `1q5-UBM4…`, IDEAS `1mc7JO9n…` (labels preexistentes) |
+| REVERGEN | `1OczOfhlb4rNdspIyWBOyGUJm1GoPEzRI` | REVERGEN 2026 `1INHs2pf…` / label `00b36ee4-2152-47d6-bb9d-b20f620b593d` |
+| RBS MEDISTORE | `1DXW0PxbNfpm63Z_a14TzvimjxFcUwu_K` | RBS MEDISTORE 2026 `16ZH6DzA…` / label `81ac5114-20a3-43d0-b4ba-c14f8983758c` |
+| PEPTIUM MX | `1zxBj3WWa8MLAL0T23dTk0KKpB3MD8wtT` | PEPTIUM MX 2026 `1jK01hc6…` / label `69e434bf-bef3-499d-b832-ac756797495d` |
+| CADCAM | `1AuRVv8rB5tP8JChW2Eck3B-l1mI6HW2r` | CADCAM 2026 `1SqHX7ad…` / label `17beee26-a81e-4594-a5c5-d161f9ef2d4b` |
+| UCALLNOW | `1b0b3uHicWyd9hWhigEc177QFk0b4a8iS` | USELLNOW `1Oe2Q29a…`/`56f2d35e…`, SOFIA AGENT `1ogwTTmy…`/`beb09255…`, PAGINAS WEB `1KPLvjBz…`/`cf24d410…`, UCALLNOW TEAM `1Zs0nW92…`/`0d4d471c…` (default), BDC CALLCENTER `1klQEDzT…`/`81a077e5…` |
+
+> CRYO: se creó una raíz limpia "CRYO" y se **movieron** dentro las 3 categorías (mover NO cambia el ID
+> en Drive, por eso el workflow CRYO siguió funcionando sin tocarlo).
+
+### Tablas Postgres ("B 2026" / host `supabase-db` / db `postgres`)
+Mismo esquema exacto que `plane_drive_sync` / `plane_drive_files` por marca:
+`cryo_*` (plane_drive_*), `revergen_drive_*`, `rbs_drive_*`, `peptium_drive_*`, `ucallnow_drive_*`, `cadcam_drive_*`
+(cada uno con `_drive_sync` y `_drive_files`).
+
+### Workflows n8n (todos ACTIVOS, clonados de "REVERGEN Plane → Drive" sin prefijo de persona)
+| Workflow | ID n8n |
+|---|---|
+| CRYO Plane → Drive (v14 final) | `hTK0ouxHQaDB9Mzl` |
+| REVERGEN Plane → Drive | `7a3m90C0O4vSBgWu` |
+| RBS MEDISTORE Plane → Drive | `Y2yEG34aG0DFUhSc` |
+| PEPTIUM MX Plane → Drive | `TRehwa0XP493fg5K` |
+| CADCAM Plane → Drive | `xQh35KfpiXPsZYXD` |
+| UCALLNOW Plane → Drive (multi-categoría) | `UsB8s30o3DnyimAm` |
+
+Cambios por clon (lo único): nombre, PROJECT_ID (4 nodos), `Plan de meses` (PARENTS) y
+`Filtrar tareas` (ROUTING: label→carpeta + default), y nombres de tabla. UCALLNOW rutea cada label
+a su carpeta y `UCALLNOW TEAM` es el default. Para activar tras importar: `n8n update:workflow
+--id=<ID> --active=true` **+ reiniciar n8n** (`docker service update --force ucallnow_interno_n8n`).
+JSON sanitizado (sin API key) en `ops/n8n/`. **Prueba end-to-end de las 4 marcas: PASS** (archivo en
+`<RAÍZ>/<CATEGORÍA>/MES/QUINCENA`, link en la tarea, filas en Postgres); datos de prueba borrados.
+
+### Matriz de accesos (proyectos PRIVADOS / solo-miembros)
+Roles Plane: Admin=20, Member=15, Guest=5. **Un Workspace Admin ve TODOS los proyectos** (por eso los
+demás son Member del workspace).
+
+| Persona | Email | Workspace | Proyectos |
+|---|---|---|---|
+| Sebastian (dueño/automatización) | d1g1tal.dream.team.2025@gmail.com | Admin | Admin en TODOS |
+| Isabella (diseñadora 1) | isabella.mposada@gmail.com | Member | Member en CRYO, REVERGEN, RBS, PEPTIUM, CADCAM (no UCALLNOW) |
+| Gynna Navarro (diseñadora 2) | gynnanavarro@gmail.com | Member | Member en CRYO, REVERGEN, RBS, PEPTIUM, CADCAM (no UCALLNOW) |
+| Juan Ochoa | juan.ochoa@ucallnow.net | Member | Member SOLO en UCALLNOW |
+
+Login: https://plane.ucallnow.fun (email + contraseña; Google OAuth desactivado). Gynna y Juan se
+crearon con contraseña temporal (entregada aparte, **no** en el repo; cambiar al primer ingreso).
+Notas: cuenta duplicada `isabela.mposada@gmail.com` (1 "L", sin membresías) pendiente de revisar/borrar;
+el proyecto "Digital Dream" (no es marca) quedó público (el API key no es admin ahí).
+
+### Carpetas compartidas con clientes (Drive)
+Compartidas como **"cualquiera con el enlace → Editor"** (confirmado por el dueño; ⚠️ cualquiera con el
+link puede editar/borrar). UCALLNOW **no** se comparte.
+- CRYO: https://drive.google.com/drive/folders/1VYHo1qEUtGycACcBfQk2WfM3IemtToig
+- REVERGEN: https://drive.google.com/drive/folders/1OczOfhlb4rNdspIyWBOyGUJm1GoPEzRI
+- RBS MEDISTORE: https://drive.google.com/drive/folders/1DXW0PxbNfpm63Z_a14TzvimjxFcUwu_K
+- PEPTIUM MX: https://drive.google.com/drive/folders/1zxBj3WWa8MLAL0T23dTk0KKpB3MD8wtT
+- CADCAM: https://drive.google.com/drive/folders/1AuRVv8rB5tP8JChW2Eck3B-l1mI6HW2r
+
+### Ciclos (sprints) quincenales
+En los 6 proyectos se crearon 2 ciclos del mes actual, alineados a la estructura de Drive:
+`Junio 2026 · 1ª quincena (01–15)` y `Junio 2026 · 2ª quincena (16–30)`. Crear los próximos por API:
+`POST /projects/<id>/cycles/` con `{name, start_date, end_date, project_id}` (el `project_id` va también en el body).
+
+### Uso del equipo (funciones nativas de Plane)
+- **Prioridad:** campo nativo por tarea (Urgent/High/Medium/Low/None) — usarlo para ordenar el trabajo.
+- **Asignados (Assignees):** asignar cada tarea a la persona responsable; las diseñadoras filtran "Assigned to me".
+- **Fechas:** Start date / Due date por tarea; el ciclo quincenal agrupa el sprint.
+- **Flujo:** IDEAS → POR HACER → EN PROCESO → REVISIÓN → AJUSTES → **HECHO** (al pasar a HECHO con adjunto,
+  la automatización sube el archivo a Drive y pega el link). CANCELADO para descartes.
