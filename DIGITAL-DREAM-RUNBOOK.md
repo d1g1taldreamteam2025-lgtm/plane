@@ -260,7 +260,8 @@ Plane DB `3iQF3ioYV3RysjUI`, Postgres "B 2026" `uvp4tn6iPMBcAuTz`) y la API key 
 | RBS MEDISTORE | RBS | `fd26e357-51d8-4e41-9c7f-c0206db0180e` | contenido (cliente) |
 | PEPTIUM MX | PEP | `d351a415-d883-4af0-99f1-9c51a1728411` | contenido (cliente) |
 | CADCAM | CAD | `e5f5196b-2d7b-427c-9ef3-a4d0127de259` | contenido (cliente, clínica dental) |
-| UCALLNOW | UCN | `d82e4778-083d-4606-82c7-050b53e0a61f` | interno/técnico (NO cliente) |
+| UCALLNOW CONTENIDO | UCN | `d82e4778-083d-4606-82c7-050b53e0a61f` | interno — contenido/videos (USELLNOW, SOFIA AGENT) |
+| UCALLNOW TECNICO | UCT | `7dc9390a-9db9-4eb5-b08f-dca803c5da69` | interno — técnico (PAGINAS WEB, UCALLNOW TEAM, BDC CALLCENTER) |
 
 ### Estados (los 6 proyectos, en español, orden + grupo)
 `IDEAS`(backlog) → `POR HACER`(unstarted) → `EN PROCESO`(started) → `REVISIÓN`(started) →
@@ -276,14 +277,15 @@ ingleses/duplicados y un "Aprobado" sobrante, reubicando tareas antes de borrar.
 | RBS MEDISTORE | `1DXW0PxbNfpm63Z_a14TzvimjxFcUwu_K` | RBS MEDISTORE 2026 `16ZH6DzA…` / label `81ac5114-20a3-43d0-b4ba-c14f8983758c` |
 | PEPTIUM MX | `1zxBj3WWa8MLAL0T23dTk0KKpB3MD8wtT` | PEPTIUM MX 2026 `1jK01hc6…` / label `69e434bf-bef3-499d-b832-ac756797495d` |
 | CADCAM | `1AuRVv8rB5tP8JChW2Eck3B-l1mI6HW2r` | CADCAM 2026 `1SqHX7ad…` / label `17beee26-a81e-4594-a5c5-d161f9ef2d4b` |
-| UCALLNOW | `1b0b3uHicWyd9hWhigEc177QFk0b4a8iS` | USELLNOW `1Oe2Q29a…`/`56f2d35e…`, SOFIA AGENT `1ogwTTmy…`/`beb09255…`, PAGINAS WEB `1KPLvjBz…`/`cf24d410…`, UCALLNOW TEAM `1Zs0nW92…`/`0d4d471c…` (default), BDC CALLCENTER `1klQEDzT…`/`81a077e5…` |
+| UCALLNOW CONTENIDO | sub-raíz `CONTENIDO` `10-r7HvBADe-ehd9Xf5Hhn6cdxccM6RRC` (bajo raíz UCALLNOW `1b0b3uHicWyd9hWhigEc177QFk0b4a8iS`) | USELLNOW `1Oe2Q29a…`/`56f2d35e…`, SOFIA AGENT `1ogwTTmy…`/`beb09255…` (default → USELLNOW) |
+| UCALLNOW TECNICO | sub-raíz `TECNICO` `1SMinYJiBUFDWPbrdbChz_snEzC_KrUx0` (bajo raíz UCALLNOW) | PAGINAS WEB `1KPLvjBz…`/`8c4d4341…`, UCALLNOW TEAM `1Zs0nW92…`/`32847877…` (default), BDC CALLCENTER `1klQEDzT…`/`1f707269…` |
 
 > CRYO: se creó una raíz limpia "CRYO" y se **movieron** dentro las 3 categorías (mover NO cambia el ID
 > en Drive, por eso el workflow CRYO siguió funcionando sin tocarlo).
 
 ### Tablas Postgres ("B 2026" / host `supabase-db` / db `postgres`)
 Mismo esquema exacto que `plane_drive_sync` / `plane_drive_files` por marca:
-`cryo_*` (plane_drive_*), `revergen_drive_*`, `rbs_drive_*`, `peptium_drive_*`, `ucallnow_drive_*`, `cadcam_drive_*`
+`cryo_*` (plane_drive_*), `revergen_drive_*`, `rbs_drive_*`, `peptium_drive_*`, `ucallnow_contenido_drive_*`, `ucallnow_tecnico_drive_*`, `cadcam_drive_*`
 (cada uno con `_drive_sync` y `_drive_files`).
 
 ### Workflows n8n (todos ACTIVOS, clonados de "REVERGEN Plane → Drive" sin prefijo de persona)
@@ -294,11 +296,15 @@ Mismo esquema exacto que `plane_drive_sync` / `plane_drive_files` por marca:
 | RBS MEDISTORE Plane → Drive | `Y2yEG34aG0DFUhSc` |
 | PEPTIUM MX Plane → Drive | `TRehwa0XP493fg5K` |
 | CADCAM Plane → Drive | `xQh35KfpiXPsZYXD` |
-| UCALLNOW Plane → Drive (multi-categoría) | `UsB8s30o3DnyimAm` |
+| UCALLNOW CONTENIDO Plane → Drive | `UsB8s30o3DnyimAm` |
+| UCALLNOW TECNICO Plane → Drive | `UcnTecPlaneDrv01` |
 
 Cambios por clon (lo único): nombre, PROJECT_ID (4 nodos), `Plan de meses` (PARENTS) y
 `Filtrar tareas` (ROUTING: label→carpeta + default), y nombres de tabla. UCALLNOW rutea cada label
-a su carpeta y `UCALLNOW TEAM` es el default. Para activar tras importar: `n8n update:workflow
+a su carpeta. UCALLNOW se dividió en dos workflows (ver sección "División de UCALLNOW"):
+CONTENIDO rutea USELLNOW + SOFIA AGENT (default USELLNOW) a la sub-raíz `CONTENIDO`; TECNICO rutea
+PAGINAS WEB + UCALLNOW TEAM + BDC CALLCENTER (default UCALLNOW TEAM) a la sub-raíz `TECNICO`.
+Para activar tras importar: `n8n update:workflow
 --id=<ID> --active=true` **+ reiniciar n8n** (`docker service update --force ucallnow_interno_n8n`).
 JSON sanitizado (sin API key) en `ops/n8n/`. **Prueba end-to-end de las 4 marcas: PASS** (archivo en
 `<RAÍZ>/<CATEGORÍA>/MES/QUINCENA`, link en la tarea, filas en Postgres); datos de prueba borrados.
@@ -310,9 +316,9 @@ demás son Member del workspace).
 | Persona | Email | Workspace | Proyectos |
 |---|---|---|---|
 | Sebastian (dueño/automatización) | d1g1tal.dream.team.2025@gmail.com | Admin | Admin en TODOS |
-| Isabella (diseñadora 1) | isabella.mposada@gmail.com | Member | Member en CRYO, REVERGEN, RBS, PEPTIUM, CADCAM (no UCALLNOW) |
-| Gynna Navarro (diseñadora 2) | gynnanavarro@gmail.com | Member | Member en CRYO, REVERGEN, RBS, PEPTIUM, CADCAM (no UCALLNOW) |
-| Juan Ochoa | juan.ochoa@ucallnow.net | Member | Member SOLO en UCALLNOW |
+| Isabella (diseñadora 1) | isabella.mposada@gmail.com | Member | Member en CRYO, REVERGEN, RBS, PEPTIUM, CADCAM, **UCALLNOW CONTENIDO** (NO UCALLNOW TECNICO) |
+| Gynna Navarro (diseñadora 2) | gynnanavarro@gmail.com | Member | Member en CRYO, REVERGEN, RBS, PEPTIUM, CADCAM, **UCALLNOW CONTENIDO** (NO UCALLNOW TECNICO) |
+| Juan Ochoa | juan.ochoa@ucallnow.net | Member | Member en **UCALLNOW CONTENIDO** y **UCALLNOW TECNICO** |
 
 Login: https://plane.ucallnow.fun (email + contraseña; Google OAuth desactivado). Gynna y Juan se
 crearon con contraseña temporal (entregada aparte, **no** en el repo; cambiar al primer ingreso).
@@ -339,3 +345,67 @@ En los 6 proyectos se crearon 2 ciclos del mes actual, alineados a la estructura
 - **Fechas:** Start date / Due date por tarea; el ciclo quincenal agrupa el sprint.
 - **Flujo:** IDEAS → POR HACER → EN PROCESO → REVISIÓN → AJUSTES → **HECHO** (al pasar a HECHO con adjunto,
   la automatización sube el archivo a Drive y pega el link). CANCELADO para descartes.
+
+---
+
+## ✂️ División de UCALLNOW en CONTENIDO + TECNICO — 2026-06-17
+
+El proyecto interno **UCALLNOW** se partió en dos para que las **diseñadoras vean el contenido
+(videos) pero NO la parte técnica**. UCALLNOW casi no tenía datos reales (solo ejemplos), que se
+recrearon en el proyecto correcto. **No se tocaron las otras marcas ni los volúmenes de datos.**
+
+### Proyectos Plane (workspace `digital-dream`, ambos PRIVADOS `network=0`)
+| Proyecto | Identifier | PROJECT_ID | Categorías (labels) |
+|---|---|---|---|
+| **UCALLNOW CONTENIDO** | UCN | `d82e4778-083d-4606-82c7-050b53e0a61f` (el UCALLNOW original, renombrado) | USELLNOW `56f2d35e-1731-433e-ac7b-d443170eebb4`, SOFIA AGENT `beb09255-d500-4e30-9a09-7bad721fa2c4` |
+| **UCALLNOW TECNICO** | UCT | `7dc9390a-9db9-4eb5-b08f-dca803c5da69` (nuevo) | PAGINAS WEB `8c4d4341-038c-40dc-b5f0-99b0e364d67d`, UCALLNOW TEAM `32847877-c180-43f3-9130-1e899eba1c10`, BDC CALLCENTER `1f707269-a3e8-46b1-b9aa-e8a9dc31b4b6` |
+
+- TECNICO se creó con los **7 estados en español** (mismos grupos; IDEAS=default backlog,
+  **HECHO=completed** dispara el envío a Drive; CANCELADO=cancelled), sus **3 labels** y los **2 ciclos
+  quincenales** de junio (idénticos a los demás proyectos). Sus 3 ejemplos `[EJEMPLO] …` se recrearon ahí.
+- CONTENIDO quedó solo con los labels/ejemplos de **USELLNOW** y **SOFIA AGENT** (se borraron de él los
+  labels y ejemplos de las 3 categorías técnicas, que viven ahora en TECNICO).
+
+### Carpetas Google Drive (cuenta `cuenta1fulanomartin@gmail.com`)
+Bajo la **raíz UCALLNOW** `1b0b3uHicWyd9hWhigEc177QFk0b4a8iS` se crearon dos sub-raíces y se **movieron**
+las carpetas de categoría dentro (mover **NO cambia el ID** en Drive → la automatización siguió sin tocar
+los IDs de carpeta):
+- **CONTENIDO** `10-r7HvBADe-ehd9Xf5Hhn6cdxccM6RRC` ← USELLNOW `1Oe2Q29a12kgYmaJ7GJ3PmdkctuVyD85B`, SOFIA AGENT `1ogwTTmyqj09dbEmWfqlwmbPr3Jev8IYH`
+- **TECNICO** `1SMinYJiBUFDWPbrdbChz_snEzC_KrUx0` ← PAGINAS WEB `1KPLvjBzQbJmOADkdlsGToDO-DJ5gTUsK`, UCALLNOW TEAM `1Zs0nW92qrvx6iBgV5IwYtd10MuNZNVB9`, BDC CALLCENTER `1klQEDzTsLnqi67KkUm7MO8--9CHbKecW`
+
+### Workflows n8n (ambos ACTIVOS)
+| Workflow | ID n8n | Rutea (label→carpeta) | Tablas Postgres |
+|---|---|---|---|
+| **UCALLNOW CONTENIDO Plane → Drive** | `UsB8s30o3DnyimAm` (el original, re-apuntado) | USELLNOW, SOFIA AGENT (default → USELLNOW) | `ucallnow_contenido_drive_sync` / `ucallnow_contenido_drive_files` |
+| **UCALLNOW TECNICO Plane → Drive** | `UcnTecPlaneDrv01` (clon) | PAGINAS WEB, UCALLNOW TEAM, BDC CALLCENTER (default → UCALLNOW TEAM) | `ucallnow_tecnico_drive_sync` / `ucallnow_tecnico_drive_files` |
+
+- Lo único que cambió por workflow: nombre, **PROJECT_ID** (4 nodos HTTP de Plane; CONTENIDO mantiene
+  `d82e4778…`, TECNICO usa `7dc9390a…`), `Plan de meses` (PARENTS) y `Filtrar tareas` (ROUTING) recortados
+  a sus categorías, y los nombres de tabla. Credenciales reutilizadas (Drive `FbTkr8vfX301LSMU`,
+  `Plane DB` `3iQF3ioYV3RysjUI`, `B 2026` `uvp4tn6iPMBcAuTz`). **Sin prefijo de persona** en el nombre del archivo.
+- Las 4 tablas Postgres nuevas se crearon con `CREATE TABLE … (LIKE ucallnow_drive_* INCLUDING ALL)`
+  (mismo esquema). Las viejas `ucallnow_drive_*` quedaron vacías/obsoletas.
+- JSON sanitizado (sin API key) en `ops/n8n/UCALLNOW CONTENIDO …` y `… TECNICO …`; importable real (con
+  API key) en `/root/plane-rescue/UCALLNOW-{CONTENIDO,TECNICO}-Plane-Drive.n8n.json`.
+- **Importar/activar:** `n8n import:workflow --input=<json>` (un clon nuevo necesita un `id` en el JSON);
+  `n8n update:workflow --id=<ID> --active=true` **+ reiniciar n8n** (`docker service update --force
+  ucallnow_interno_n8n`). Para **probar a mano** sin esperar el schedule (el broker 5679 choca con la
+  instancia viva): `docker exec -e N8N_RUNNERS_BROKER_PORT=5690 <n8n> n8n execute --id=<ID>` — ojo: el
+  trigger manual está cableado a `Plan de meses` (crea carpetas de mes), **no** a la subida; para probar la
+  subida se ejecutó un clon temporal con el trigger manual cableado a `Obtener labels`, ya borrado.
+
+### Prueba end-to-end — 2026-06-17 (PASS, sin datos de prueba)
+- CONTENIDO: archivo en `UCALLNOW / CONTENIDO / USELLNOW / 06 JUNIO / 16-30 /`, link `📁 [USELLNOW] … (06 JUNIO/16-30)` en la tarea, filas en `ucallnow_contenido_drive_*`.
+- TECNICO: archivo en `UCALLNOW / TECNICO / PAGINAS WEB / 06 JUNIO / 16-30 /`, link `📁 [PAGINAS WEB] …` en la tarea, filas en `ucallnow_tecnico_drive_*`.
+- Tras verificar se **borró todo lo de prueba**: tareas, adjuntos (objetos MinIO + filas `file_assets`),
+  filas en las 4 tablas, archivos/carpetas de prueba en Drive y los clones temporales de n8n.
+
+### Matriz de accesos aplicada (vía DB `project_members`, verificada por la API de Plane)
+| Proyecto | Admin | Members | NO acceden |
+|---|---|---|---|
+| UCALLNOW CONTENIDO | Sebastian (dueño, 20) | Gynna, Isabella, Juan (15) | — |
+| UCALLNOW TECNICO | Sebastian (dueño, 20) | Juan (15) | **Gynna, Isabella** (diseñadoras) |
+
+Ambos `network=0` (privados). Regla Plane: un **Workspace Admin** ve todos los proyectos; un **Workspace
+Member** solo ve los privados donde es project member. Gynna/Isabella son WS Member y **no** son miembros
+de TECNICO → no lo ven. Juan es miembro de ambos → ve ambos. Verificado: CONTENIDO 4 miembros, TECNICO 2.

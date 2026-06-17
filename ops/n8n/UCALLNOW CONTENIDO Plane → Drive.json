@@ -1,16 +1,16 @@
 {
-  "updatedAt": "2026-06-16T23:13:24.127Z",
+  "updatedAt": "2026-06-17T05:30:41.974Z",
   "createdAt": "2026-04-21T03:21:25.272Z",
   "id": "UsB8s30o3DnyimAm",
-  "name": "UCALLNOW Plane → Drive",
+  "name": "UCALLNOW CONTENIDO Plane → Drive",
   "description": null,
-  "active": false,
+  "active": true,
   "isArchived": false,
   "nodes": [
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "DELETE FROM ucallnow_drive_sync;\n   DELETE FROM ucallnow_drive_files;",
+        "query": "DELETE FROM ucallnow_contenido_drive_sync;\n   DELETE FROM ucallnow_contenido_drive_files;",
         "options": {}
       },
       "id": "b503f4ed-f95b-421f-96ff-d982ada929b1",
@@ -297,7 +297,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const MONTH_NAMES = [\n  '01 ENERO','02 FEBRERO','03 MARZO','04 ABRIL',\n  '05 MAYO','06 JUNIO','07 JULIO','08 AGOSTO',\n  '09 SEPTIEMBRE','10 OCTUBRE','11 NOVIEMBRE','12 DICIEMBRE'\n];\n\nconst PARENTS = [\n  { id: '1Oe2Q29a12kgYmaJ7GJ3PmdkctuVyD85B', label: 'USELLNOW' },\n  { id: '1ogwTTmyqj09dbEmWfqlwmbPr3Jev8IYH', label: 'SOFIA AGENT' },\n  { id: '1KPLvjBzQbJmOADkdlsGToDO-DJ5gTUsK', label: 'PAGINAS WEB' },\n  { id: '1Zs0nW92qrvx6iBgV5IwYtd10MuNZNVB9', label: 'UCALLNOW TEAM' },\n  { id: '1klQEDzTsLnqi67KkUm7MO8--9CHbKecW', label: 'BDC CALLCENTER' }\n];\n\nconst YEAR = 2026;\nconst START_MONTH_IDX = 4;\nconst END_MONTH_IDX = 11;\n\nconst items = [];\nfor (const parent of PARENTS) {\n  for (let m = START_MONTH_IDX; m <= END_MONTH_IDX; m++) {\n    const lastDay = new Date(YEAR, m + 1, 0).getDate();\n    items.push({\n      json: {\n        parent_id: parent.id,\n        parent_label: parent.label,\n        month_name: MONTH_NAMES[m],\n        last_day: lastDay,\n        year: YEAR\n      }\n    });\n  }\n}\nreturn items;"
+        "jsCode": "const MONTH_NAMES = [\n  '01 ENERO','02 FEBRERO','03 MARZO','04 ABRIL',\n  '05 MAYO','06 JUNIO','07 JULIO','08 AGOSTO',\n  '09 SEPTIEMBRE','10 OCTUBRE','11 NOVIEMBRE','12 DICIEMBRE'\n];\n\nconst PARENTS = [\n  { id: '1Oe2Q29a12kgYmaJ7GJ3PmdkctuVyD85B', label: 'USELLNOW' },\n  { id: '1ogwTTmyqj09dbEmWfqlwmbPr3Jev8IYH', label: 'SOFIA AGENT' }\n];\n\nconst YEAR = 2026;\nconst START_MONTH_IDX = 4;\nconst END_MONTH_IDX = 11;\n\nconst items = [];\nfor (const parent of PARENTS) {\n  for (let m = START_MONTH_IDX; m <= END_MONTH_IDX; m++) {\n    const lastDay = new Date(YEAR, m + 1, 0).getDate();\n    items.push({\n      json: {\n        parent_id: parent.id,\n        parent_label: parent.label,\n        month_name: MONTH_NAMES[m],\n        last_day: lastDay,\n        year: YEAR\n      }\n    });\n  }\n}\nreturn items;"
       },
       "id": "326e5781-314a-404e-9f2e-c9133622dfb7",
       "name": "Plan de meses",
@@ -382,7 +382,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT id, issue_id, attachment_id, drive_file_id, drive_file_name FROM ucallnow_drive_files ORDER BY synced_at DESC LIMIT 200",
+        "query": "SELECT id, issue_id, attachment_id, drive_file_id, drive_file_name FROM ucallnow_contenido_drive_files ORDER BY synced_at DESC LIMIT 200",
         "options": {}
       },
       "id": "d213715e-50ab-4530-bb73-5945885696cb",
@@ -435,7 +435,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "DELETE FROM ucallnow_drive_files WHERE attachment_id = '{{ $('Evaluar borrado').item.json.attachment_id }}'",
+        "query": "DELETE FROM ucallnow_contenido_drive_files WHERE attachment_id = '{{ $('Evaluar borrado').item.json.attachment_id }}'",
         "options": {}
       },
       "id": "29fae374-928b-455a-953f-56ef4d655d2b",
@@ -552,7 +552,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "INSERT INTO ucallnow_drive_files (issue_id, attachment_id, drive_file_id, drive_file_name, asset_url, issue_name) VALUES ('{{ $('ID carpeta quincena').itemMatching($itemIndex).json.issue_id }}', '{{ $('ID carpeta quincena').itemMatching($itemIndex).json.attachment_id }}', '{{ $json.id }}', '{{ $('ID carpeta quincena').itemMatching($itemIndex).json.final_name }}', '{{ $('ID carpeta quincena').itemMatching($itemIndex).json.asset_url }}', '{{ $('ID carpeta quincena').itemMatching($itemIndex).json.issue_name }}') ON CONFLICT (attachment_id) DO NOTHING",
+        "query": "INSERT INTO ucallnow_contenido_drive_files (issue_id, attachment_id, drive_file_id, drive_file_name, asset_url, issue_name) VALUES ('{{ $('ID carpeta quincena').itemMatching($itemIndex).json.issue_id }}', '{{ $('ID carpeta quincena').itemMatching($itemIndex).json.attachment_id }}', '{{ $json.id }}', '{{ $('ID carpeta quincena').itemMatching($itemIndex).json.final_name }}', '{{ $('ID carpeta quincena').itemMatching($itemIndex).json.asset_url }}', '{{ $('ID carpeta quincena').itemMatching($itemIndex).json.issue_name }}') ON CONFLICT (attachment_id) DO NOTHING",
         "options": {}
       },
       "id": "8e7a6f52-81bf-476a-897f-a1d58325008f",
@@ -596,7 +596,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "UPDATE ucallnow_drive_files SET drive_file_name = '{{ $('Comparar nombres').item.json.new_file_name }}', issue_name = '{{ $('Comparar nombres').item.json.current_issue_name }}' WHERE drive_file_id = '{{ $('Comparar nombres').item.json.drive_file_id }}'\n",
+        "query": "UPDATE ucallnow_contenido_drive_files SET drive_file_name = '{{ $('Comparar nombres').item.json.new_file_name }}', issue_name = '{{ $('Comparar nombres').item.json.current_issue_name }}' WHERE drive_file_id = '{{ $('Comparar nombres').item.json.drive_file_id }}'\n",
         "options": {}
       },
       "id": "d198a750-3043-461d-a76c-2d18551bed62",
@@ -706,7 +706,7 @@
           "parameters": [
             {
               "name": "X-API-Key",
-              "value": "<PLANE_API_KEY_REDACTED>"
+              "value": "REDACTED_PLANE_API_KEY"
             }
           ]
         },
@@ -786,7 +786,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT id, issue_id, attachment_id, drive_file_id, drive_file_name, issue_name FROM ucallnow_drive_files WHERE issue_name IS NOT NULL ORDER BY synced_at DESC LIMIT 50",
+        "query": "SELECT id, issue_id, attachment_id, drive_file_id, drive_file_name, issue_name FROM ucallnow_contenido_drive_files WHERE issue_name IS NOT NULL ORDER BY synced_at DESC LIMIT 50",
         "options": {}
       },
       "id": "a2233acf-dc52-414a-be6c-1e3a262d2cdf",
@@ -853,7 +853,7 @@
           "parameters": [
             {
               "name": "X-API-Key",
-              "value": "<PLANE_API_KEY_REDACTED>"
+              "value": "REDACTED_PLANE_API_KEY"
             }
           ]
         },
@@ -891,7 +891,7 @@
           "parameters": [
             {
               "name": "X-API-Key",
-              "value": "<PLANE_API_KEY_REDACTED>"
+              "value": "REDACTED_PLANE_API_KEY"
             }
           ]
         },
@@ -914,7 +914,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const ROUTING = {\n  default: { id: '1Zs0nW92qrvx6iBgV5IwYtd10MuNZNVB9', label: 'UCALLNOW TEAM' },\n  byLabel: {\n    'usellnow': { id: '1Oe2Q29a12kgYmaJ7GJ3PmdkctuVyD85B', label: 'USELLNOW' },\n    'sofia agent': { id: '1ogwTTmyqj09dbEmWfqlwmbPr3Jev8IYH', label: 'SOFIA AGENT' },\n    'paginas web': { id: '1KPLvjBzQbJmOADkdlsGToDO-DJ5gTUsK', label: 'PAGINAS WEB' },\n    'ucallnow team': { id: '1Zs0nW92qrvx6iBgV5IwYtd10MuNZNVB9', label: 'UCALLNOW TEAM' },\n    'bdc callcenter': { id: '1klQEDzTsLnqi67KkUm7MO8--9CHbKecW', label: 'BDC CALLCENTER' }\n  }\n};\n\nconst labelsResponse = $('Obtener labels').first().json;\nconst labelsArray = Array.isArray(labelsResponse) ? labelsResponse : (labelsResponse.results || []);\nconst labelIdToName = {};\nfor (const label of labelsArray) {\n  if (label && label.id && label.name) {\n    labelIdToName[label.id] = label.name.toLowerCase().trim();\n  }\n}\n\nconst issues = $input.first().json.results || [];\nconst processed = [];\nconst MN = ['01 ENERO','02 FEBRERO','03 MARZO','04 ABRIL','05 MAYO','06 JUNIO','07 JULIO','08 AGOSTO','09 SEPTIEMBRE','10 OCTUBRE','11 NOVIEMBRE','12 DICIEMBRE'];\n\nfor (const issue of issues) {\n  if (!issue.completed_at) continue;\n  const d = new Date(issue.completed_at);\n  const day = d.getDate(), month = d.getMonth(), year = d.getFullYear();\n  const lastDay = new Date(year, month+1, 0).getDate();\n  const q = day <= 15 ? '1-15' : `16-${lastDay}`;\n  let cn = issue.name.replace(/[^a-zA-Z0-9\\u00C0-\\u017F\\s-]/g,'').trim().replace(/\\s+/g,'_').substring(0,60);\n  \n  const issueLabels = (issue.labels || []).map(lid => labelIdToName[lid]).filter(Boolean);\n  let target = ROUTING.default;\n  for (const lblName of issueLabels) {\n    if (ROUTING.byLabel[lblName]) {\n      target = ROUTING.byLabel[lblName];\n      break;\n    }\n  }\n  \n  processed.push({\n    json: {\n      issue_id: issue.id,\n      issue_name: issue.name,\n      clean_name: cn,\n      folder_month: MN[month],\n      folder_quincena: q,\n      created_by: issue.created_by || '',\n      target_parent_id: target.id,\n      target_parent_label: target.label,\n      issue_labels_resolved: issueLabels.join(',') || 'none'\n    }\n  });\n}\n\nif (!processed.length) processed.push({json:{skip:true}});\nreturn processed;"
+        "jsCode": "const ROUTING = {\n  default: { id: '1Oe2Q29a12kgYmaJ7GJ3PmdkctuVyD85B', label: 'USELLNOW' },\n  byLabel: {\n    'usellnow': { id: '1Oe2Q29a12kgYmaJ7GJ3PmdkctuVyD85B', label: 'USELLNOW' },\n    'sofia agent': { id: '1ogwTTmyqj09dbEmWfqlwmbPr3Jev8IYH', label: 'SOFIA AGENT' }\n  }\n};\n\nconst labelsResponse = $('Obtener labels').first().json;\nconst labelsArray = Array.isArray(labelsResponse) ? labelsResponse : (labelsResponse.results || []);\nconst labelIdToName = {};\nfor (const label of labelsArray) {\n  if (label && label.id && label.name) {\n    labelIdToName[label.id] = label.name.toLowerCase().trim();\n  }\n}\n\nconst issues = $input.first().json.results || [];\nconst processed = [];\nconst MN = ['01 ENERO','02 FEBRERO','03 MARZO','04 ABRIL','05 MAYO','06 JUNIO','07 JULIO','08 AGOSTO','09 SEPTIEMBRE','10 OCTUBRE','11 NOVIEMBRE','12 DICIEMBRE'];\n\nfor (const issue of issues) {\n  if (!issue.completed_at) continue;\n  const d = new Date(issue.completed_at);\n  const day = d.getDate(), month = d.getMonth(), year = d.getFullYear();\n  const lastDay = new Date(year, month+1, 0).getDate();\n  const q = day <= 15 ? '1-15' : `16-${lastDay}`;\n  let cn = issue.name.replace(/[^a-zA-Z0-9\\u00C0-\\u017F\\s-]/g,'').trim().replace(/\\s+/g,'_').substring(0,60);\n  \n  const issueLabels = (issue.labels || []).map(lid => labelIdToName[lid]).filter(Boolean);\n  let target = ROUTING.default;\n  for (const lblName of issueLabels) {\n    if (ROUTING.byLabel[lblName]) {\n      target = ROUTING.byLabel[lblName];\n      break;\n    }\n  }\n  \n  processed.push({\n    json: {\n      issue_id: issue.id,\n      issue_name: issue.name,\n      clean_name: cn,\n      folder_month: MN[month],\n      folder_quincena: q,\n      created_by: issue.created_by || '',\n      target_parent_id: target.id,\n      target_parent_label: target.label,\n      issue_labels_resolved: issueLabels.join(',') || 'none'\n    }\n  });\n}\n\nif (!processed.length) processed.push({json:{skip:true}});\nreturn processed;"
       },
       "id": "916b6b5d-31df-406a-bd06-ad179bd11908",
       "name": "Filtrar tareas",
@@ -964,7 +964,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT issue_id FROM ucallnow_drive_sync",
+        "query": "SELECT issue_id FROM ucallnow_contenido_drive_sync",
         "options": {}
       },
       "id": "6b5ee722-6fbf-40d8-b86c-713ee00a9aab",
@@ -1524,7 +1524,7 @@
           "parameters": [
             {
               "name": "X-API-Key",
-              "value": "<PLANE_API_KEY_REDACTED>"
+              "value": "REDACTED_PLANE_API_KEY"
             },
             {
               "name": "Content-Type",
@@ -1564,7 +1564,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "INSERT INTO ucallnow_drive_sync (issue_id, issue_name, drive_folder_id, drive_file_name) VALUES ('{{ $json.issue_id }}', '{{ $json.issue_name }}', '{{ $json.quincena_folder_id }}', '{{ $json.final_name }}') ON CONFLICT (issue_id) DO NOTHING",
+        "query": "INSERT INTO ucallnow_contenido_drive_sync (issue_id, issue_name, drive_folder_id, drive_file_name) VALUES ('{{ $json.issue_id }}', '{{ $json.issue_name }}', '{{ $json.quincena_folder_id }}', '{{ $json.final_name }}') ON CONFLICT (issue_id) DO NOTHING",
         "options": {}
       },
       "id": "48843c3d-310c-4a72-a99c-9d3d11deed91",
@@ -1618,7 +1618,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "INSERT INTO ucallnow_drive_files (issue_id, attachment_id, drive_file_id, drive_file_name, asset_url, issue_name) VALUES ('{{ $json.issue_id }}', '{{ $json.attachment_id }}', '{{ $json.drive_file_id }}', '{{ $json.final_name }}', '{{ $json.asset_url }}', '{{ $json.issue_name }}') ON CONFLICT (attachment_id) DO NOTHING",
+        "query": "INSERT INTO ucallnow_contenido_drive_files (issue_id, attachment_id, drive_file_id, drive_file_name, asset_url, issue_name) VALUES ('{{ $json.issue_id }}', '{{ $json.attachment_id }}', '{{ $json.drive_file_id }}', '{{ $json.final_name }}', '{{ $json.asset_url }}', '{{ $json.issue_name }}') ON CONFLICT (attachment_id) DO NOTHING",
         "options": {}
       },
       "id": "8b69eaf0-3bb0-4a33-9bca-df024103b204",
@@ -2415,15 +2415,17 @@
       }
     ]
   },
-  "activeVersionId": "b2ee068d-a996-4dc3-8791-51af9db480c4",
+  "versionId": "44d5ee85-c541-4691-bed7-fbe8ceef1a35",
+  "activeVersionId": "44d5ee85-c541-4691-bed7-fbe8ceef1a35",
   "versionCounter": 347,
+  "triggerCount": 3,
   "tags": [],
   "shared": [
     {
-      "updatedAt": "2026-06-16T16:44:13.947Z",
-      "createdAt": "2026-06-16T16:44:13.947Z",
+      "updatedAt": "2026-06-17T00:39:00.874Z",
+      "createdAt": "2026-06-17T00:39:00.874Z",
       "role": "workflow:owner",
-      "workflowId": "7a3m90C0O4vSBgWu",
+      "workflowId": "UsB8s30o3DnyimAm",
       "projectId": "gLrDf84x3OrrLDUi",
       "project": {
         "updatedAt": "2025-10-19T17:11:57.262Z",
