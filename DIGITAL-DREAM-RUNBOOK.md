@@ -409,3 +409,35 @@ los IDs de carpeta):
 Ambos `network=0` (privados). Regla Plane: un **Workspace Admin** ve todos los proyectos; un **Workspace
 Member** solo ve los privados donde es project member. Gynna/Isabella son WS Member y **no** son miembros
 de TECNICO → no lo ven. Juan es miembro de ambos → ve ambos. Verificado: CONTENIDO 4 miembros, TECNICO 2.
+
+---
+
+## ⏱️ Schedules escalonados de la rama de SUBIDA (anti-colisión) — 2026-06-17
+
+Para que los archivos lleguen a Drive **más rápido** y sin los errores de cuando varios workflows
+chocaban a la vez, la **rama de subida** de los 7 workflows Plane→Drive pasó de un intervalo de **~40 min**
+a **cada 10 min con cron escalonado**: cada workflow dispara en un **minuto-offset distinto** (~1 min de
+separación), así nunca coinciden en la API de Plane/Drive ni en la DB.
+
+| Workflow | ID n8n | Cron rama SUBIDA (cada 10 min) | Dispara en minuto |
+|---|---|---|---|
+| CRYO Plane → Drive | `hTK0ouxHQaDB9Mzl` | `0,10,20,30,40,50 * * * *` | :00 |
+| REVERGEN Plane → Drive | `7a3m90C0O4vSBgWu` | `1,11,21,31,41,51 * * * *` | :01 |
+| RBS MEDISTORE Plane → Drive | `Y2yEG34aG0DFUhSc` | `2,12,22,32,42,52 * * * *` | :02 |
+| PEPTIUM MX Plane → Drive | `TRehwa0XP493fg5K` | `3,13,23,33,43,53 * * * *` | :03 |
+| CADCAM Plane → Drive | `xQh35KfpiXPsZYXD` | `4,14,24,34,44,54 * * * *` | :04 |
+| UCALLNOW CONTENIDO Plane → Drive | `UsB8s30o3DnyimAm` | `5,15,25,35,45,55 * * * *` | :05 |
+| UCALLNOW TECNICO Plane → Drive | `UcnTecPlaneDrv01` | `6,16,26,36,46,56 * * * *` | :06 |
+
+- **Solo se tocó el trigger de SUBIDA** (el nodo `Cada 10 minutos`, que alimenta `Obtener labels`); se
+  conservó el **nombre del nodo** (las conexiones lo referencian por nombre). Las otras dos ramas
+  (renombrado/borrado, triggers de **50 y 60 min**) quedaron **sin cambios**, igual que el
+  **batching/delays de los nodos de Drive** (necesarios para el rate limit).
+- **No-solapamiento (#3):** n8n OSS no tiene un toggle nativo de "saltar si ya hay una corriendo". El
+  escalonado a minutos distintos + corridas que terminan en segundos (muy por debajo del hueco de 10 min)
+  hace que un workflow no se solape consigo mismo ni con otro. (Si en el futuro se quisiera un *skip*
+  formal garantizado ante una corrida colgada >10 min, habría que añadir un guard por API de n8n.)
+- **Aplicar/cambiar el cron:** editar `rule` del trigger de subida a
+  `{"interval":[{"field":"cronExpression","expression":"<min,...> * * * *"}]}`, `n8n import:workflow`,
+  `n8n update:workflow --id=<ID> --active=true` y **reiniciar n8n**
+  (`docker service update --force ucallnow_interno_n8n`).

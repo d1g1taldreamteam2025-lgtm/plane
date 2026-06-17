@@ -829,8 +829,8 @@
         "rule": {
           "interval": [
             {
-              "field": "minutes",
-              "minutesInterval": 40
+              "field": "cronExpression",
+              "expression": "1,11,21,31,41,51 * * * *"
             }
           ]
         }
