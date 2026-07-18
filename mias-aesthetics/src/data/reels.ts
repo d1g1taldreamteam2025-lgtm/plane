@@ -125,39 +125,40 @@ export const REELS: Reel[] = [
 // Imágenes verticales 9:16 (1920x1080) — van en el mismo grid que los videos
 // porque comparten formato. Las imágenes 1:1 (1080x1080) van aparte en un
 // grid cuadrado.
+// NOTA: assets locales en /public/media/ (recovery post-Cloudinary).
 export const IV_VISUALS_VERTICAL = [
-  "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779355854/2_02_hijc8p.png",
-  "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779355854/2_01_aukdck.png",
-  "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779357210/8_01_ufrke9.png",
-  "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779357210/8_02_ea0lco.png",
+  "/media/iv-visual-vertical-2.png",
+  "/media/iv-visual-vertical-1.png",
+  "/media/iv-visual-vertical-3.png",
+  "/media/iv-visual-vertical-4.png",
 ];
 
 export const IV_VISUALS_SQUARE = [
-  "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779357211/post_1_yzxnmu.png",
-  "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779357210/Posr_copia_krbtwe.png",
+  "/media/iv-visual-square-1.png",
+  "/media/iv-visual-square-2.png",
 ];
 
 // Esperma de salmón (PDRN): contenido cerrado del cliente. 1 video 9:16 (reel)
 // + 1 imagen. No se espera más material para este servicio.
 export const SALMON_MEDIA = {
   video:
-    "https://res.cloudinary.com/drbc4wbvw/video/upload/v1779762531/SaveClip.App_AQPvhd5cShVK-Pixsc96W2Qtmo8k_F3HF4qGCN5y7_opegTNzE8NvSQqc2VcsdWU0Yhn35aOijR3Nb25VXuMt9zs_mkcdpy.mp4",
+    "/media/salmon-video.mp4",
   poster:
-    "https://res.cloudinary.com/drbc4wbvw/video/upload/so_0,f_jpg,q_auto/v1779762531/SaveClip.App_AQPvhd5cShVK-Pixsc96W2Qtmo8k_F3HF4qGCN5y7_opegTNzE8NvSQqc2VcsdWU0Yhn35aOijR3Nb25VXuMt9zs_mkcdpy.jpg",
+    "/media/salmon-video-poster.jpg",
   image:
-    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779762559/SaveClip.App_522385632_18364606645150544_274130291725021475_n_iydifk.jpg",
+    "/media/salmon-image.jpg",
 };
 
 // Limpieza facial premium ("Cara bonita facial"): 1 video 9:16 + 2 imágenes
 // del mismo tratamiento (tomas distintas de la misma clienta).
 export const FACIAL_MEDIA = {
   video:
-    "https://res.cloudinary.com/drbc4wbvw/video/upload/v1779764370/SaveClip.App_AQOo1SIvO4VxbibY8HK3dECs1l3HVatIu4WgCIV6VUVJRiI_u1DnIYJwvMiD1wGxaWUh9szPvXwL_xc2jj3Viyl9JQYbhXclZEPvC1s_hm8xcv.mp4",
+    "/media/facial-video.mp4",
   poster:
-    "https://res.cloudinary.com/drbc4wbvw/video/upload/so_0,f_jpg,q_auto/v1779764370/SaveClip.App_AQOo1SIvO4VxbibY8HK3dECs1l3HVatIu4WgCIV6VUVJRiI_u1DnIYJwvMiD1wGxaWUh9szPvXwL_xc2jj3Viyl9JQYbhXclZEPvC1s_hm8xcv.jpg",
+    "/media/facial-video-poster.jpg",
   images: [
-    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779764369/SaveClip.App_684620899_18100067354319616_9215194501862653536_n_qeiytg.jpg",
-    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779764370/SaveClip.App_687870839_18100067363319616_7705718227054544239_n_nrn45p.jpg",
+    "/media/facial-image-1.jpg",
+    "/media/facial-image-2.jpg",
   ],
 };
 
@@ -165,14 +166,14 @@ export const FACIAL_MEDIA = {
 // compuestos y tomas de cliente mostrando los labios.
 export const LIPS_MEDIA = {
   video:
-    "https://res.cloudinary.com/drbc4wbvw/video/upload/v1779809317/SaveClip.App_AQN6qLg59IeI4yLRlX8aNf5v1N4G0wyIKLl_i8nruROcUXIXCtYjZ-v3yj9Jxjr4U8NsJcbTtNJz0lZgmDdYJDDdmLPFlOm4IPwlxsI_ntmtqs.mp4",
+    "/media/lips-video.mp4",
   poster:
-    "https://res.cloudinary.com/drbc4wbvw/video/upload/so_0,f_jpg,q_auto/v1779809317/SaveClip.App_AQN6qLg59IeI4yLRlX8aNf5v1N4G0wyIKLl_i8nruROcUXIXCtYjZ-v3yj9Jxjr4U8NsJcbTtNJz0lZgmDdYJDDdmLPFlOm4IPwlxsI_ntmtqs.jpg",
+    "/media/lips-video-poster.jpg",
   images: [
-    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779809317/SaveClip.App_684145299_18315256438257331_3719632616539177969_n_yllyuc.jpg",
-    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779809317/SaveClip.App_705229114_18103691726102230_2785700437246520319_n_fkiscg.jpg",
-    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779809316/SaveClip.App_704636931_18103691699102230_5601088055226191573_n_ktxukd.jpg",
-    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779809316/SaveClip.App_704731828_18103691708102230_1520745183553020035_n_w6k0fy.jpg",
+    "/media/lips-image-1.jpg",
+    "/media/lips-image-2.jpg",
+    "/media/lips-image-3.jpg",
+    "/media/lips-image-4.jpg",
   ],
 };
 
@@ -181,15 +182,16 @@ export const LIPS_MEDIA = {
 export const BOTOX_MEDIA = {
   videos: [
     {
+      // Video sigue en Cloudinary dehvpdo4z (aún vivo). Migrar cuando decidas
+      // CDN propio. Poster ya vive localmente.
       src: "https://res.cloudinary.com/dehvpdo4z/video/upload/v1779355862/0828_scvesj.mp4",
-      poster:
-        "https://res.cloudinary.com/dehvpdo4z/video/upload/so_0,f_jpg,q_auto/v1779355862/0828_scvesj.jpg",
+      poster: "/media/botox-erlym-poster.jpg",
       erlym: true,
     },
     {
-      src: "https://res.cloudinary.com/drbc4wbvw/video/upload/v1779809193/SaveClip.App_AQOwIeiO2v8kP9oeQ_-zI-avlRCjw19K3GvtFcSWS3qhCKZ9OJ-LNC7ZSl-9YC4P0fHvnL-idF27ewdaUilLw4luVW1Lo1wosrpnPlo_fnnipt.mp4",
+      src: "/media/botox-video-2.mp4",
       poster:
-        "https://res.cloudinary.com/drbc4wbvw/video/upload/so_0,f_jpg,q_auto/v1779809193/SaveClip.App_AQOwIeiO2v8kP9oeQ_-zI-avlRCjw19K3GvtFcSWS3qhCKZ9OJ-LNC7ZSl-9YC4P0fHvnL-idF27ewdaUilLw4luVW1Lo1wosrpnPlo_fnnipt.jpg",
+        "/media/botox-video-2-poster.jpg",
       erlym: false,
     },
   ],
@@ -198,21 +200,21 @@ export const BOTOX_MEDIA = {
 // Depilación láser: 1 video 9:16 + 1 imagen.
 export const DEPILATION_MEDIA = {
   video:
-    "https://res.cloudinary.com/drbc4wbvw/video/upload/v1779809134/SaveClip.App_AQMyPjs_J0I_81l3EYCufZ701MKeguzHvrM6jB4zFRSg7NXn26VD_Q0OOYT3kA7-dMyUiH-3WIQjwK2tTlKSJy3okiNwUa0Wvb0vVOA_yhmftx.mp4",
+    "/media/depilation-video.mp4",
   poster:
-    "https://res.cloudinary.com/drbc4wbvw/video/upload/so_0,f_jpg,q_auto/v1779809134/SaveClip.App_AQMyPjs_J0I_81l3EYCufZ701MKeguzHvrM6jB4zFRSg7NXn26VD_Q0OOYT3kA7-dMyUiH-3WIQjwK2tTlKSJy3okiNwUa0Wvb0vVOA_yhmftx.jpg",
+    "/media/depilation-video-poster.jpg",
   image:
-    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779809134/SaveClip.App_688964391_18354503521242182_56855528722126690_n_cj180f.jpg",
+    "/media/depilation-image.jpg",
 };
 
 // Dermapen: 1 video 9:16 + 1 imagen antes/después compuesta.
 export const DERMAPEN_MEDIA = {
   video:
-    "https://res.cloudinary.com/drbc4wbvw/video/upload/v1779808755/SaveClip.App_AQN4HOlpB50e06cOQEYG-3a0G95jiez-Hm_uiT6cLdU-ZiRX315Jzzl9Ny_EhlyLG04bLJxo-jAGeCapRVmlNHXgsop6hj8nFvo5ZhU_ov1fyi.mp4",
+    "/media/dermapen-video.mp4",
   poster:
-    "https://res.cloudinary.com/drbc4wbvw/video/upload/so_0,f_jpg,q_auto/v1779808755/SaveClip.App_AQN4HOlpB50e06cOQEYG-3a0G95jiez-Hm_uiT6cLdU-ZiRX315Jzzl9Ny_EhlyLG04bLJxo-jAGeCapRVmlNHXgsop6hj8nFvo5ZhU_ov1fyi.jpg",
+    "/media/dermapen-video-poster.jpg",
   image:
-    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779808757/SaveClip.App_495051886_17922346569073154_516711458015911548_n_dvxksj.jpg",
+    "/media/dermapen-image.jpg",
 };
 
 // DPL cicatrices de acné: 1 video 9:16 (nuevo) + 1 imagen 1:1.
@@ -220,54 +222,54 @@ export const DERMAPEN_MEDIA = {
 // el showcase del home).
 export const DPL_MEDIA = {
   video:
-    "https://res.cloudinary.com/drbc4wbvw/video/upload/v1779807091/SaveClip.App_AQOBdwOwdeQ62wEpAGkl09FpnNI6--r8wLGrPq1JEVk40ATs-qpIXdyV8OAYls0vNGzkfiLaqrfw3f2uHUNDDQTR0WutYRStWfl7jlg_ztbpcg.mp4",
+    "/media/dpl-video.mp4",
   poster:
-    "https://res.cloudinary.com/drbc4wbvw/video/upload/so_0,f_jpg,q_auto/v1779807091/SaveClip.App_AQOBdwOwdeQ62wEpAGkl09FpnNI6--r8wLGrPq1JEVk40ATs-qpIXdyV8OAYls0vNGzkfiLaqrfw3f2uHUNDDQTR0WutYRStWfl7jlg_ztbpcg.jpg",
+    "/media/dpl-video-poster.jpg",
   image:
-    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779808243/SaveClip.App_705326927_18268748017294421_4604449087039333561_n_f2yokz.jpg",
+    "/media/dpl-image.jpg",
 };
 
 // Morpheus 8: 2 videos 9:16 + 1 imagen "antes y después" compuesta.
 export const MORPHEUS_MEDIA = {
   videos: [
     {
-      src: "https://res.cloudinary.com/drbc4wbvw/video/upload/v1779762776/SaveClip.App_AQOSVUpeNTRjR-9F_CWqgwabyUAkAwr5JrVDTrCUmC4f65IxLd_09hlii2HRCSd5eQfrdPZ4O5b6bIKmJ4xbChs5wEGRtw3wkUFYsnI_dkop2x.mp4",
+      src: "/media/morpheus-video-1.mp4",
       poster:
-        "https://res.cloudinary.com/drbc4wbvw/video/upload/so_0,f_jpg,q_auto/v1779762776/SaveClip.App_AQOSVUpeNTRjR-9F_CWqgwabyUAkAwr5JrVDTrCUmC4f65IxLd_09hlii2HRCSd5eQfrdPZ4O5b6bIKmJ4xbChs5wEGRtw3wkUFYsnI_dkop2x.jpg",
+        "/media/morpheus-video-1-poster.jpg",
     },
     {
-      src: "https://res.cloudinary.com/drbc4wbvw/video/upload/v1779762780/SaveClip.App_AQNNj_ll5X9PQFQX7VYrcIrpVTI7LyTf8jEeoXrcfdQvl1DoTipo0gAegGiPKEmPRZtClNXHI3P4Ooy2_vK0-AsjZWm4E8KMKO8yJPY_wct2ef.mp4",
+      src: "/media/morpheus-video-2.mp4",
       poster:
-        "https://res.cloudinary.com/drbc4wbvw/video/upload/so_0,f_jpg,q_auto/v1779762780/SaveClip.App_AQNNj_ll5X9PQFQX7VYrcIrpVTI7LyTf8jEeoXrcfdQvl1DoTipo0gAegGiPKEmPRZtClNXHI3P4Ooy2_vK0-AsjZWm4E8KMKO8yJPY_wct2ef.jpg",
+        "/media/morpheus-video-2-poster.jpg",
     },
   ],
   beforeAfter:
-    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779762782/SaveClip.App_583712300_18493124635077862_3224149055901972673_n_lgjs4l.jpg",
+    "/media/morpheus-image.jpg",
 };
 
 // Pestañas pelo a pelo: 1 video 9:16 + 3 imágenes "antes y después juntas".
 // Las imágenes ya traen el antes/después compuesto, no se necesita slider.
 export const LASHES_MEDIA = {
   video:
-    "https://res.cloudinary.com/drbc4wbvw/video/upload/v1779762725/SaveClip.App_AQOV24WJYMECJls_6Srk6MfJiEnwZTbqr9-uMYXJ29B6h__pkxoJXqYjwDoP9WRZYMK-zsvw8Xd5WxOZxvmiSw0gS7MagbkWT8AAoO8_yu0lyy.mp4",
+    "/media/lashes-video.mp4",
   poster:
-    "https://res.cloudinary.com/drbc4wbvw/video/upload/so_0,f_jpg,q_auto/v1779762725/SaveClip.App_AQOV24WJYMECJls_6Srk6MfJiEnwZTbqr9-uMYXJ29B6h__pkxoJXqYjwDoP9WRZYMK-zsvw8Xd5WxOZxvmiSw0gS7MagbkWT8AAoO8_yu0lyy.jpg",
+    "/media/lashes-video-poster.jpg",
   beforeAfter: [
-    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779762617/SaveClip.App_608264652_18276728188303114_4023936625881933481_n_s1udgr.jpg",
-    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779762616/SaveClip.App_607430952_18276728206303114_4974195390126426643_n_fky2hu.jpg",
-    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779762615/SaveClip.App_607259020_18276728197303114_4521815148200121655_n_tcvzk4.jpg",
+    "/media/lashes-image-1.jpg",
+    "/media/lashes-image-2.jpg",
+    "/media/lashes-image-3.jpg",
   ],
 };
 
 // Thermage: tiene su propio set porque su video es landscape 16:9 (no 9:16
 // como el resto). 1 video + 2 imágenes cuadradas. Único set, no se espera más.
 export const THERMAGE_MEDIA = {
-  video: "https://res.cloudinary.com/drbc4wbvw/video/upload/v1779762194/SaveClip.App_AQPKuQ1f0-I2TDxEM4iLWXLmezWEbOTEfvRbhdeVm9lTEwLEoYxAhl-J7tI2LbBr2lARWNq0iXi8I6kibXg49ygf2XkunocU6g2bKSg_vnrvsv.mp4",
+  video: "/media/thermage-video.mp4",
   poster:
-    "https://res.cloudinary.com/drbc4wbvw/video/upload/so_0,f_jpg,q_auto/v1779762194/SaveClip.App_AQPKuQ1f0-I2TDxEM4iLWXLmezWEbOTEfvRbhdeVm9lTEwLEoYxAhl-J7tI2LbBr2lARWNq0iXi8I6kibXg49ygf2XkunocU6g2bKSg_vnrvsv.jpg",
+    "/media/thermage-video-poster.jpg",
   squares: [
-    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779762207/SaveClip.App_702223984_18535974715072216_9158287249791732785_n_nzqew0.jpg",
-    "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779762205/SaveClip.App_702946371_18535974706072216_3928399222044985701_n_xhmius.jpg",
+    "/media/thermage-image-1.jpg",
+    "/media/thermage-image-2.jpg",
   ],
 };
 

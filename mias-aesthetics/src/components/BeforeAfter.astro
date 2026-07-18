@@ -11,20 +11,22 @@ const items: { title: { es: string; en: string }; real?: boolean; before: Slot; 
   {
     title: { es: "Diseño de cejas", en: "Eyebrow design" },
     real: true,
-    before: { image: "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779650046/Mesa_de_trabajo_17_copia_4_swntgj.png" },
-    after:  { image: "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779650044/Mesa_de_trabajo_17_copia_5_hzpyfd.png" },
+    before: { image: "/media/before-eyebrows.png" },
+    after:  { image: "/media/after-eyebrows.png" },
   },
   {
     title: { es: "Aumento de labios", en: "Lip filler" },
     real: true,
-    before: { image: "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779649969/Mesa_de_trabajo_17_copia_2_r9tbse.png" },
-    after:  { image: "https://res.cloudinary.com/dehvpdo4z/image/upload/v1779649994/Mesa_de_trabajo_17_copia_3_df2002.png" },
+    before: { image: "/media/before-lips.png" },
+    after:  { image: "/media/after-lips.png" },
   },
   {
+    // TODO Morpheus: re-subir /public/media/before-morpheus.png y after-morpheus.png
+    // (los archivos originales vivían en drbc4wbvw Cloudinary — cuenta muerta)
+    // Mientras tanto usa placeholder gradient para no romper la card.
     title: { es: "Morpheus 8", en: "Morpheus 8" },
-    real: true,
-    before: { image: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779809467/Mesa-de-trabajo-17_g6yyow.png" },
-    after:  { image: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779809466/Mesa-de-trabajo-18_zku93x.png" },
+    before: { from: "#f0e3d5", to: "#d4b18e", icon: "skin-marks" },
+    after:  { from: "#fff3d4", to: "#e8c878", icon: "skin-clear" },
   },
 ];
 

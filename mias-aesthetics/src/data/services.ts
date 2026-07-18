@@ -118,8 +118,8 @@ export const SERVICES: ServiceDetail[] = [
       ],
     },
     palette: { from: "#ffe6f1", to: "#d4a85a", accent: "#b88a36", text: "#4a3210" },
-    iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412111/Mesa_de_trabajo_1_gwfbln.png",
-    heroImage: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780008665/iv_therapy_hvsera.png",
+    iconUrl: "/media/service-icon-iv.png",
+    heroImage: "/media/service-hero-iv.png",
   },
   {
     id: "botox",
@@ -214,7 +214,7 @@ export const SERVICES: ServiceDetail[] = [
       ],
     },
     palette: { from: "#ffe6f1", to: "#ec6f9c", accent: "#d04b7e", text: "#fff" },
-    iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412112/Mesa_de_trabajo_1_copia_w6pjj9.png",
+    iconUrl: "/media/service-icon-botox.png",
   },
   {
     id: "morpheus",
@@ -309,8 +309,8 @@ export const SERVICES: ServiceDetail[] = [
       ],
     },
     palette: { from: "#fff3d4", to: "#d4a85a", accent: "#b88a36", text: "#4a3210" },
-    iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412110/Mesa_de_trabajo_1_copia_3_upt8ip.png",
-    heroImage: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780008517/Morpheus_8_uwiagf.png",
+    iconUrl: "/media/service-icon-morpheus.png",
+    heroImage: "/media/service-hero-morpheus.png",
   },
   {
     id: "thermage",
@@ -403,8 +403,8 @@ export const SERVICES: ServiceDetail[] = [
       ],
     },
     palette: { from: "#e6d5ec", to: "#6b3a73", accent: "#3d1f48", text: "#fff" },
-    iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780006780/Thermage_f2jds5.png",
-    heroImage: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780007374/thermage_1_1_dbhnwi.png",
+    iconUrl: "/media/service-icon-thermage.png",
+    heroImage: "/media/service-hero-thermage.png",
   },
   {
     id: "lips",
@@ -499,8 +499,8 @@ export const SERVICES: ServiceDetail[] = [
       ],
     },
     palette: { from: "#ffc6dd", to: "#ff7eaf", accent: "#d04b7e", text: "#3d1f48" },
-    iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412111/Mesa_de_trabajo_1_copia_4_c06ctj.png",
-    heroImage: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780008654/Labios_umts7s.png",
+    iconUrl: "/media/service-icon-lips.png",
+    heroImage: "/media/service-hero-lips.png",
   },
   {
     id: "lashes",
@@ -595,8 +595,8 @@ export const SERVICES: ServiceDetail[] = [
       ],
     },
     palette: { from: "#3d1f48", to: "#1a0f1f", accent: "#d4a85a", text: "#fff" },
-    iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412110/Mesa_de_trabajo_1_copia_5_yogrkw.png",
-    heroImage: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780008442/Pesta%C3%B1a_pelo_a_pelo_lkuyiq.png",
+    iconUrl: "/media/service-icon-lashes.png",
+    heroImage: "/media/service-hero-lashes.png",
   },
   {
     id: "facial",
@@ -691,8 +691,8 @@ export const SERVICES: ServiceDetail[] = [
       ],
     },
     palette: { from: "#ffe6f1", to: "#ffa3c6", accent: "#d04b7e", text: "#3d1f48" },
-    iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779761844/Mesa_de_trabajo_1_copia_16_vqnh4k.png",
-    heroImage: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780008533/Limpieza_facial_jgcj7b.png",
+    iconUrl: "/media/service-icon-facial.png",
+    heroImage: "/media/service-hero-facial.png",
   },
   {
     id: "depilation",
@@ -787,8 +787,8 @@ export const SERVICES: ServiceDetail[] = [
       ],
     },
     palette: { from: "#e6d5ec", to: "#6b3a73", accent: "#3d1f48", text: "#fff" },
-    iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779761844/Mesa_de_trabajo_1_copia_22_fzdwol.png",
-    heroImage: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780008706/Depilacion_laser_ki1e8k.png",
+    iconUrl: "/media/service-icon-depilation.png",
+    heroImage: "/media/service-hero-depilation.png",
   },
   {
     id: "dpl",
@@ -883,8 +883,8 @@ export const SERVICES: ServiceDetail[] = [
       ],
     },
     palette: { from: "#fff3d4", to: "#d4a85a", accent: "#b88a36", text: "#4a3210" },
-    iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412110/Mesa_de_trabajo_1_copia_2_w7qnsc.png",
-    heroImage: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780008689/DPL_gfs3wb.png",
+    iconUrl: "/media/service-icon-dpl.png",
+    heroImage: "/media/service-hero-dpl.png",
   },
   {
     id: "salmon",
@@ -979,8 +979,8 @@ export const SERVICES: ServiceDetail[] = [
       ],
     },
     palette: { from: "#ffe6f1", to: "#ec6f9c", accent: "#d04b7e", text: "#fff" },
-    iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779761844/Mesa_de_trabajo_1_copia_23_yhelrz.png",
-    heroImage: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780008677/esperma_de_salmon_x9hhzi.png",
+    iconUrl: "/media/service-icon-salmon.png",
+    heroImage: "/media/service-hero-salmon.png",
   },
   {
     id: "dermapen",
@@ -1075,8 +1075,8 @@ export const SERVICES: ServiceDetail[] = [
       ],
     },
     palette: { from: "#fff3d4", to: "#e8c878", accent: "#b88a36", text: "#4a3210" },
-    iconUrl: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779761844/Mesa_de_trabajo_1_copia_17_qscnon.png",
-    heroImage: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780008704/Dermaphen_o0gwaj.png",
+    iconUrl: "/media/service-icon-dermapen.png",
+    heroImage: "/media/service-hero-dermapen.png",
   },
 ];
 

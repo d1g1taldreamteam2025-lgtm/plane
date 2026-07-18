@@ -25,20 +25,24 @@ export const SITE = {
     tiktok: "https://www.tiktok.com/@mialashseu",
     googleMaps: "https://maps.app.goo.gl/ZWDJmPyHTrUUqbH5A",
   },
+  // Iconos: TODOS vivían en Cloudinary drbc4wbvw (cuenta muerta). Ahora
+  // apuntan a /public/media/ con nombres semánticos. Cuando se re-suban
+  // los archivos con esos nombres, cargan automáticamente. Los faltantes
+  // simplemente muestran alt text hasta entonces (los componentes ya tienen
+  // fallback SVG donde importa).
   icons: {
-    instagram: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779761706/Mesa_de_trabajo_1_copia_18_cnf3lc.png",
-    facebook: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779761706/Mesa_de_trabajo_1_copia_19_rxdrsx.png",
-    tiktok:
-      "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779761706/Mesa_de_trabajo_1_copia_21_neulwq.png",
-    googleMaps: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1778897809/Google_Maps_icon__2026.svg_waaes9.webp",
-    google: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1778898217/Google_Favicon_2025.svg_gjvcm8.webp",
-    gmail: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779353635/Gmail_icon__2020.svg_f7gjpe.png",
-    whatsapp: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1778898491/WhatsApp_icon_ym0yfu.png",
-    logoFull: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780008364/logo_pwdbju.png",
-    logoMark: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779354322/Icono_4_jwnaxj.png",
-    erlymPhoto: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779353797/Captura_de_pantalla_2026-05-21_035619_rzdzga.png",
-    flagEs: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779353875/Bandera_Nacional_de_Espa%C3%B1a_sin_escudo_dizj1a.png",
-    flagEn: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1779353895/Flag_of_the_United_States_dlf8pb.png",
+    instagram:  "/media/social-instagram.png",
+    facebook:   "/media/social-facebook.png",
+    tiktok:     "/media/social-tiktok.png",
+    googleMaps: "/media/social-google-maps.png",
+    google:     "/media/icon-google.png",
+    gmail:      "/media/icon-gmail.png",
+    whatsapp:   "/media/icon-whatsapp.png",
+    logoFull:   "/LOGO-02.png", // ya existe local
+    logoMark:   "/LOGO-02.png", // reutiliza mismo logo
+    erlymPhoto: "/media/erlym-photo.jpg",
+    flagEs:     "/media/flag-es.png",
+    flagEn:     "/media/flag-en.png",
   },
   payments: [
     { name: "Visa", icon: "/payments/visa.svg" },

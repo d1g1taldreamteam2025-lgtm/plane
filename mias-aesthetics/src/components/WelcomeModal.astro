@@ -33,28 +33,19 @@ const waHref = waLink(
     </button>
 
     <div class="grid sm:grid-cols-2">
-      <!-- IZQUIERDA: imagen completa SIN recortes. La misma imagen vive
-           detrás como fondo borroso para llenar cualquier espacio sin
-           que se vean franjas vacías feas (look profesional tipo
-           e-commerce premium). -->
-      <div class="relative aspect-[5/4] overflow-hidden bg-gradient-to-br from-[var(--color-blush-200)] via-[var(--color-blush-100)] to-[var(--color-gold-300)] sm:aspect-auto">
-        <!-- Fondo borroso de la misma imagen -->
-        <img
-          src="https://res.cloudinary.com/drbc4wbvw/image/upload/f_auto,q_auto,c_limit,w_300,e_blur:600/v1780009037/pesta%C3%B1a_de_oferta_uiqovk.png"
-          alt=""
-          class="absolute inset-0 h-full w-full scale-110 object-cover object-center opacity-90"
-          aria-hidden="true"
-          loading="lazy"
-          decoding="async"
-        />
-        <!-- Imagen real al frente, completa, sin recortes -->
-        <img
-          src="https://res.cloudinary.com/drbc4wbvw/image/upload/f_auto,q_auto,c_limit,w_900/v1780009037/pesta%C3%B1a_de_oferta_uiqovk.png"
-          alt=""
-          class="absolute inset-0 h-full w-full object-contain object-center drop-shadow-[0_8px_24px_rgba(107,58,115,0.35)]"
-          loading="lazy"
-          decoding="async"
-        />
+      <!-- IZQUIERDA: banner con degradado + icono corazón + sparkles.
+           TODO: cuando el cliente re-suba /public/media/modal-offer.png
+           (era pestaña_de_oferta_uiqovk.png), reactivar los <img> comentados
+           abajo y quitar el fallback SVG. -->
+      <div class="relative aspect-[5/4] overflow-hidden bg-gradient-to-br from-[var(--color-blush-200)] via-[var(--color-blush-100)] to-[var(--color-gold-300)] sm:aspect-auto sm:min-h-[380px]">
+        <!-- Fallback visual mientras vuelve la imagen real -->
+        <div class="absolute inset-0 grid place-items-center">
+          <div class="grid h-24 w-24 place-items-center rounded-full bg-white shadow-xl pulse-ring sm:h-32 sm:w-32">
+            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#ec6f9c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </div>
+        </div>
         <!-- Sparkles -->
         <span class="twinkle absolute top-4 left-6 z-10 h-1.5 w-1.5 rounded-full bg-white"></span>
         <span class="twinkle absolute top-10 right-8 z-10 h-2 w-2 rounded-full bg-white" style="animation-delay:0.6s"></span>

@@ -118,7 +118,7 @@ export const COURSES: CourseDetail[] = [
       en: "Official certificate signed by Erlym Monasterios with studio stamp.",
     },
     palette: { from: "#3d1f48", to: "#1a0f1f", accent: "#d4a85a", text: "#fff" },
-    cover: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780009492/Curso_de_pesta%C3%B1as_pelo_a_pelo_cqybst.png",
+    cover: "/media/course-cover-lashes-classic.png",
   },
   {
     id: "lashes-volume",
@@ -206,7 +206,7 @@ export const COURSES: CourseDetail[] = [
       en: "Russian Volume specialization certificate signed by Erlym Monasterios.",
     },
     palette: { from: "#ffe6f1", to: "#ec6f9c", accent: "#d04b7e", text: "#fff" },
-    cover: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780008068/Curso_de_volumen_ruso_cv2sll.png",
+    cover: "/media/course-cover-lashes-volume.png",
   },
   {
     id: "bbglow",
@@ -296,7 +296,7 @@ export const COURSES: CourseDetail[] = [
       en: "Official BB Glow certificate signed by Erlym Monasterios.",
     },
     palette: { from: "#fff3d4", to: "#d4a85a", accent: "#b88a36", text: "#4a3210" },
-    cover: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780008162/Curso_de_BB_Glow_s4kr0o.png",
+    cover: "/media/course-cover-bbglow.png",
   },
   {
     id: "facials",
@@ -386,7 +386,7 @@ export const COURSES: CourseDetail[] = [
       en: "Premium Facials certificate signed by Erlym Monasterios.",
     },
     palette: { from: "#ffe6f1", to: "#ffa3c6", accent: "#d04b7e", text: "#fff" },
-    cover: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780008191/Curso_de_faciales_premium_kad52h.png",
+    cover: "/media/course-cover-facials.png",
   },
   {
     id: "fullstack",
@@ -482,7 +482,7 @@ export const COURSES: CourseDetail[] = [
     // videoEmbed: cuando subas el video de 2h a Vimeo, pegá acá el ID
     // ejemplo: videoEmbed: "https://player.vimeo.com/video/123456789",
     palette: { from: "#fff3d4", to: "#d4a85a", accent: "#b88a36", text: "#4a3210" },
-    cover: "https://res.cloudinary.com/drbc4wbvw/image/upload/v1780008008/Programa_Mia_Academy_completo_x3nnsz.png",
+    cover: "/media/course-cover-fullstack.png",
   },
 ];
 

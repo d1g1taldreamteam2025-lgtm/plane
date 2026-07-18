@@ -4,16 +4,14 @@ interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const items = getDict(lang).trust_badges;
 
-// Iconos PNG personalizados de la marca (Cloudinary del cliente).
-// Aplicamos `e_trim` para que Cloudinary recorte automáticamente el
-// padding transparente y el ícono visible llene bien el halo.
-// Orden alineado con i18n.trust_badges: técnica, google, productos, trato.
-const trim = (url: string) => url.replace("/image/upload/", "/image/upload/e_trim/");
+// Iconos PNG personalizados de la marca en /public/media/
+// (recovery post-Cloudinary). Orden alineado con i18n.trust_badges.
+// Cuando el cliente los re-suba a esos paths, salen automáticamente.
 const icons = [
-  trim("https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412111/Mesa_de_trabajo_1_copia_6_lgvqzq.png"),
-  trim("https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412110/Mesa_de_trabajo_1_copia_7_wi2qpk.png"),
-  trim("https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412111/Mesa_de_trabajo_1_copia_8_qujqb2.png"),
-  trim("https://res.cloudinary.com/drbc4wbvw/image/upload/v1779412110/Mesa_de_trabajo_1_copia_9_mv1l8c.png"),
+  "/media/trust-badge-1-tecnica.png",
+  "/media/trust-badge-2-google.png",
+  "/media/trust-badge-3-productos.png",
+  "/media/trust-badge-4-trato.png",
 ];
 ---
 <section class="relative -mt-12 z-10 px-5 sm:-mt-16">
