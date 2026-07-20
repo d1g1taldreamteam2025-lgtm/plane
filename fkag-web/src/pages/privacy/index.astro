@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Política de Privacidad" description="Política de Privacidad de Family Key Auto Group: qué información recopilamos, cómo la usamos, consentimiento SMS y tus derechos.">
+  <section class="fkag-legal-page">
+    <div class="fkag-legal__inner">
+      <div class="fkag-legal__content">
+        <h1 data-i18n="legal_privacy_title">Privacy Policy</h1>
+        <p class="fkag-legal__updated" data-i18n="legal_updated">Last updated: April 2026</p>
+
+        <h2 data-i18n="legal_privacy_h1">1. Information We Collect</h2>
+        <p data-i18n="legal_privacy_p1">When you visit our website, fill out a form, or apply for financing, we collect information you voluntarily provide such as your name, email, phone number, address, employment information, and any other details you submit. We may also collect technical data automatically (IP address, browser type, pages visited).</p>
+
+        <h2 data-i18n="legal_privacy_h2">2. How We Use Your Information</h2>
+        <p data-i18n="legal_privacy_p2">We use the information you provide to respond to inquiries, process credit applications, communicate about vehicles, and send you updates about new arrivals or special offers (only if you opt in). We never sell your personal data to third parties.</p>
+
+        <h2 data-i18n="legal_privacy_h3">3. Sharing With Lenders</h2>
+        <p data-i18n="legal_privacy_p3">If you apply for financing, your application is shared with our network of trusted lenders solely for the purpose of evaluating your credit and offering loan terms. We only share what is necessary to complete the application process.</p>
+
+        <h2 data-i18n="legal_privacy_h4">4. Cookies and Analytics</h2>
+        <p data-i18n="legal_privacy_p4">We use cookies and analytics tools (like Google Analytics) to understand how visitors use our website and to improve your experience. You can disable cookies in your browser settings at any time.</p>
+
+        <h2 data-i18n="legal_privacy_h5">5. Your Rights</h2>
+        <p data-i18n="legal_privacy_p5">You can request access to, correction of, or deletion of your personal data at any time by contacting us at <a href="mailto:info@familykeyautogroup.com">info@familykeyautogroup.com</a> or calling <a href="tel:+19495147366">(949) 514-7366</a>. We will respond within 30 days.</p>
+
+        <h2 data-i18n="legal_privacy_h_sms">SMS / Mobile Data Collection</h2>
+        <p data-i18n="legal_privacy_p_sms">When you provide your mobile phone number through any form on our website, you expressly consent to receive text messages (SMS) and phone calls from Family Key Auto Group regarding your inquiry, vehicle availability, financing updates, appointment reminders, and promotional offers. We do not sell or share your phone number with third parties for marketing purposes.</p>
+        <p data-i18n="legal_privacy_p_sms2">You may opt out of SMS communications at any time by replying <strong>STOP</strong> to any message. Reply <strong>HELP</strong> for assistance. Message and data rates may apply depending on your carrier plan. Messaging frequency may vary based on your interaction with us.</p>
+        <p data-i18n="legal_privacy_p_sms3">For any concerns about how we handle your mobile data, contact us at <a href="mailto:info@familykeyautogroup.com">info@familykeyautogroup.com</a> or <a href="tel:+19495147366">(949) 514-7366</a>.</p>
+
+        <h2 data-i18n="legal_privacy_h6">6. Contact</h2>
+        <p data-i18n="legal_privacy_p6">For any privacy concerns, contact us at:<br>Family Key Auto Group<br>170 N Arrowhead Ave STE C 175, Rialto, CA 92376<br>Phone: <a href="tel:+19495147366">(949) 514-7366</a><br>Email: <a href="mailto:info@familykeyautogroup.com">info@familykeyautogroup.com</a></p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  (function () {
+    var LANG = (function () { try { var x = localStorage.getItem('fkag_lang'); return (x === 'en' || x === 'es') ? x : 'es'; } catch (e) { return 'es'; } })();
+    var TR = {
+      legal_privacy_title: { en: 'Privacy Policy', es: 'Política de Privacidad' },
+      legal_updated:       { en: 'Last updated: April 2026', es: 'Última actualización: Abril 2026' },
+      legal_privacy_h1:    { en: '1. Information We Collect', es: '1. Información que Recopilamos' },
+      legal_privacy_p1:    { en: 'When you visit our website, fill out a form, or apply for financing, we collect information you voluntarily provide such as your name, email, phone number, address, employment information, and any other details you submit. We may also collect technical data automatically (IP address, browser type, pages visited).', es: 'Cuando visitas nuestro sitio web, completas un formulario o aplicas para financiamiento, recopilamos la información que proporcionas voluntariamente como tu nombre, email, teléfono, dirección, información laboral y cualquier otro dato que envíes. También podemos recopilar datos técnicos automáticamente (dirección IP, tipo de navegador, páginas visitadas).' },
+      legal_privacy_h2:    { en: '2. How We Use Your Information', es: '2. Cómo Usamos tu Información' },
+      legal_privacy_p2:    { en: 'We use the information you provide to respond to inquiries, process credit applications, communicate about vehicles, and send you updates about new arrivals or special offers (only if you opt in). We never sell your personal data to third parties.', es: 'Usamos la información que proporcionas para responder consultas, procesar solicitudes de crédito, comunicarnos sobre vehículos y enviarte actualizaciones sobre nuevos modelos u ofertas especiales (solo si aceptas). Nunca vendemos tus datos personales a terceros.' },
+      legal_privacy_h3:    { en: '3. Sharing With Lenders', es: '3. Compartir con Prestamistas' },
+      legal_privacy_p3:    { en: 'If you apply for financing, your application is shared with our network of trusted lenders solely for the purpose of evaluating your credit and offering loan terms. We only share what is necessary to complete the application process.', es: 'Si aplicas para financiamiento, tu solicitud se comparte con nuestra red de prestamistas confiables únicamente con el propósito de evaluar tu crédito y ofrecerte términos de préstamo. Solo compartimos lo necesario para completar el proceso de solicitud.' },
+      legal_privacy_h4:    { en: '4. Cookies and Analytics', es: '4. Cookies y Analítica' },
+      legal_privacy_p4:    { en: 'We use cookies and analytics tools (like Google Analytics) to understand how visitors use our website and to improve your experience. You can disable cookies in your browser settings at any time.', es: 'Usamos cookies y herramientas de analítica (como Google Analytics) para entender cómo los visitantes usan nuestro sitio y mejorar tu experiencia. Puedes deshabilitar las cookies en la configuración de tu navegador en cualquier momento.' },
+      legal_privacy_h5:    { en: '5. Your Rights', es: '5. Tus Derechos' },
+      legal_privacy_p5:    { en: 'You can request access to, correction of, or deletion of your personal data at any time by contacting us at <a href="mailto:info@familykeyautogroup.com">info@familykeyautogroup.com</a> or calling <a href="tel:+19495147366">(949) 514-7366</a>. We will respond within 30 days.', es: 'Puedes solicitar acceso, corrección o eliminación de tus datos personales en cualquier momento contactándonos en <a href="mailto:info@familykeyautogroup.com">info@familykeyautogroup.com</a> o llamando al <a href="tel:+19495147366">(949) 514-7366</a>. Responderemos en 30 días.' },
+      legal_privacy_h_sms: { en: 'SMS / Mobile Data Collection', es: 'SMS / Recopilación de Datos Móviles' },
+      legal_privacy_p_sms: { en: 'When you provide your mobile phone number through any form on our website, you expressly consent to receive text messages (SMS) and phone calls from Family Key Auto Group regarding your inquiry, vehicle availability, financing updates, appointment reminders, and promotional offers. We do not sell or share your phone number with third parties for marketing purposes.', es: 'Cuando proporcionas tu número de teléfono móvil a través de cualquier formulario en nuestro sitio web, das tu consentimiento expreso para recibir mensajes de texto (SMS) y llamadas telefónicas de Family Key Auto Group sobre tu consulta, disponibilidad de vehículos, actualizaciones de financiamiento, recordatorios de citas y ofertas promocionales. No vendemos ni compartimos tu número de teléfono con terceros con fines de marketing.' },
+      legal_privacy_p_sms2:{ en: 'You may opt out of SMS communications at any time by replying <strong>STOP</strong> to any message. Reply <strong>HELP</strong> for assistance. Message and data rates may apply depending on your carrier plan. Messaging frequency may vary based on your interaction with us.', es: 'Puedes cancelar las comunicaciones por SMS en cualquier momento respondiendo <strong>STOP</strong> a cualquier mensaje. Responde <strong>HELP</strong> para asistencia. Pueden aplicar tarifas de mensajes y datos según tu plan. La frecuencia de mensajes puede variar según tu interacción con nosotros.' },
+      legal_privacy_p_sms3:{ en: 'For any concerns about how we handle your mobile data, contact us at <a href="mailto:info@familykeyautogroup.com">info@familykeyautogroup.com</a> or <a href="tel:+19495147366">(949) 514-7366</a>.', es: 'Para cualquier inquietud sobre cómo manejamos tus datos móviles, contáctanos en <a href="mailto:info@familykeyautogroup.com">info@familykeyautogroup.com</a> o al <a href="tel:+19495147366">(949) 514-7366</a>.' },
+      legal_privacy_h6:    { en: '6. Contact', es: '6. Contacto' },
+      legal_privacy_p6:    { en: 'For any privacy concerns, contact us at:<br>Family Key Auto Group<br>170 N Arrowhead Ave STE C 175, Rialto, CA 92376<br>Phone: <a href="tel:+19495147366">(949) 514-7366</a><br>Email: <a href="mailto:info@familykeyautogroup.com">info@familykeyautogroup.com</a>', es: 'Para cualquier inquietud de privacidad, contáctanos en:<br>Family Key Auto Group<br>170 N Arrowhead Ave STE C 175, Rialto, CA 92376<br>Teléfono: <a href="tel:+19495147366">(949) 514-7366</a><br>Email: <a href="mailto:info@familykeyautogroup.com">info@familykeyautogroup.com</a>' }
+    };
+    function t(k) { return TR[k] ? (TR[k][LANG] || TR[k].en) : k; }
+    function applyTr() {
+      document.querySelectorAll('.fkag-legal-page [data-i18n]').forEach(function (el) {
+        var k = el.getAttribute('data-i18n');
+        if (TR[k]) el.innerHTML = t(k);
+      });
+    }
+    applyTr();
+    window.addEventListener('fkag-lang-change', function (e) {
+      var nl = (e.detail && e.detail.lang) || LANG;
+      if (nl === LANG) return;
+      LANG = nl;
+      applyTr();
+    });
+  })();
+</script>
+
+<style>
+  .fkag-legal-page { background: #fff; padding: 60px 24px 80px; color: #0c0c0c; }
+  .fkag-legal__inner { max-width: 860px; margin: 0 auto; }
+  .fkag-legal__content { font-size: 15px; line-height: 1.75; color: #2a2a2a; }
+  .fkag-legal__content h1 { font-family: 'Poppins', sans-serif; font-size: 38px; font-weight: 800; color: #0c0c0c; margin: 0 0 8px; letter-spacing: -0.5px; line-height: 1.2; }
+  .fkag-legal__updated { font-size: 13px; color: #5b6a7e; margin: 0 0 36px; padding-bottom: 18px; border-bottom: 1px solid #e3e8ef; }
+  .fkag-legal__content h2 { font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 700; color: #0c0c0c; margin: 36px 0 14px; letter-spacing: -0.2px; border-left: 3px solid #c9a961; padding-left: 12px; }
+  .fkag-legal__content h2:first-of-type { margin-top: 8px; }
+  .fkag-legal__content p { margin: 0 0 16px; }
+  .fkag-legal__content p strong { color: #0c0c0c; font-weight: 700; }
+  .fkag-legal__content a { color: #a88a47; font-weight: 600; text-decoration: none; }
+  .fkag-legal__content a:hover { text-decoration: underline; }
+  @media (max-width: 600px) {
+    .fkag-legal-page { padding: 40px 18px 60px; }
+    .fkag-legal__content { font-size: 14.5px; }
+    .fkag-legal__content h1 { font-size: 30px; }
+    .fkag-legal__content h2 { font-size: 18px; }
+  }
+</style>
