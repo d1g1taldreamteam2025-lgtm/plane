@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Términos de Uso" description="Términos de Uso de Family Key Auto Group: información de vehículos, aviso de financiamiento, programa de SMS, limitación de responsabilidad y más.">
+  <section class="fkag-legal-page">
+    <div class="fkag-legal__inner">
+      <div class="fkag-legal__content">
+        <h1 data-i18n="legal_terms_title">Terms of Use</h1>
+        <p class="fkag-legal__updated" data-i18n="legal_updated">Last updated: April 2026</p>
+
+        <h2 data-i18n="legal_terms_h1">1. Acceptance of Terms</h2>
+        <p data-i18n="legal_terms_p1">By accessing or using familykeyautogroup.com (the "Site"), you agree to be bound by these Terms of Use. If you do not agree, please do not use the Site.</p>
+
+        <h2 data-i18n="legal_terms_h2">2. Vehicle Information</h2>
+        <p data-i18n="legal_terms_p2">All vehicle prices, specifications, photos, and availability information are provided in good faith but may contain errors or be subject to change without notice. Confirm all details directly with our sales team before purchasing. Vehicles are sold "as is" unless a written warranty is provided.</p>
+
+        <h2 data-i18n="legal_terms_h3">3. Financing Disclaimer</h2>
+        <p data-i18n="legal_terms_p3">Pre-qualification estimates are not guarantees of approval. Final loan terms depend on lender review of your full application, credit history, income verification, and other factors. Family Key Auto Group is not a lender; we connect customers with our network of partner lenders.</p>
+
+        <h2 data-i18n="legal_terms_h4">4. User Conduct</h2>
+        <p data-i18n="legal_terms_p4">You agree to use the Site only for lawful purposes. You may not submit false information, attempt to disrupt the Site's operation, or use it to harass, abuse, or harm others.</p>
+
+        <h2 data-i18n="legal_terms_h5">5. Limitation of Liability</h2>
+        <p data-i18n="legal_terms_p5">Family Key Auto Group is not liable for any indirect, incidental, or consequential damages arising from your use of the Site or any transaction. Our total liability is limited to the amount you paid for the vehicle in question.</p>
+
+        <h2 data-i18n="legal_terms_h6">6. Changes to Terms</h2>
+        <p data-i18n="legal_terms_p6">We may update these Terms at any time. Continued use of the Site after changes are posted constitutes acceptance of the updated Terms.</p>
+
+        <h2 data-i18n="legal_terms_h_sms">SMS Communications Program</h2>
+        <p data-i18n="legal_terms_p_sms1"><strong>Program Description:</strong> By providing your mobile phone number on our website, you opt in to receive SMS communications from Family Key Auto Group, including appointment reminders, vehicle availability updates, financing notifications, and promotional offers. Message frequency varies based on user activity.</p>
+        <p data-i18n="legal_terms_p_sms2"><strong>Opt-In:</strong> You consent to receive SMS messages by submitting any form that includes your phone number and the SMS consent checkbox.</p>
+        <p data-i18n="legal_terms_p_sms3"><strong>Opt-Out:</strong> Reply <strong>STOP</strong> to any message to cancel. You will receive a confirmation message and no further SMS communications will be sent.</p>
+        <p data-i18n="legal_terms_p_sms4"><strong>Help:</strong> Reply <strong>HELP</strong> for support, or contact us at <a href="tel:+19495147366">(949) 514-7366</a>.</p>
+        <p data-i18n="legal_terms_p_sms5"><strong>Carrier Disclaimer:</strong> Message and data rates may apply. Family Key Auto Group is not responsible for delivery delays or message failures caused by your carrier or network conditions.</p>
+        <p data-i18n="legal_terms_p_sms6"><strong>Eligibility:</strong> You must be 18 years or older and the authorized account holder of the mobile number provided to opt in to our SMS program.</p>
+        <p data-i18n="legal_terms_p_sms7"><strong>Privacy:</strong> Your mobile information is governed by our <a href="/privacy/">Privacy Policy</a>. We do not sell or share your phone number with third parties for their marketing purposes.</p>
+
+        <h2 data-i18n="legal_terms_h7">7. Contact</h2>
+        <p data-i18n="legal_terms_p7">Questions about these Terms? Contact us at <a href="mailto:info@familykeyautogroup.com">info@familykeyautogroup.com</a> or <a href="tel:+19495147366">(949) 514-7366</a>.</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  (function () {
+    var LANG = (function () { try { var x = localStorage.getItem('fkag_lang'); return (x === 'en' || x === 'es') ? x : 'es'; } catch (e) { return 'es'; } })();
+    var TR = {
+      legal_terms_title:  { en: 'Terms of Use', es: 'Términos de Uso' },
+      legal_updated:      { en: 'Last updated: April 2026', es: 'Última actualización: Abril 2026' },
+      legal_terms_h1:     { en: '1. Acceptance of Terms', es: '1. Aceptación de los Términos' },
+      legal_terms_p1:     { en: 'By accessing or using familykeyautogroup.com (the "Site"), you agree to be bound by these Terms of Use. If you do not agree, please do not use the Site.', es: 'Al acceder o usar familykeyautogroup.com (el "Sitio"), aceptas estar sujeto a estos Términos de Uso. Si no estás de acuerdo, por favor no uses el Sitio.' },
+      legal_terms_h2:     { en: '2. Vehicle Information', es: '2. Información de Vehículos' },
+      legal_terms_p2:     { en: 'All vehicle prices, specifications, photos, and availability information are provided in good faith but may contain errors or be subject to change without notice. Confirm all details directly with our sales team before purchasing. Vehicles are sold "as is" unless a written warranty is provided.', es: 'Todos los precios de vehículos, especificaciones, fotos e información de disponibilidad se proporcionan de buena fe pero pueden contener errores o estar sujetos a cambios sin previo aviso. Confirma todos los detalles directamente con nuestro equipo de ventas antes de comprar. Los vehículos se venden "como están" a menos que se proporcione una garantía por escrito.' },
+      legal_terms_h3:     { en: '3. Financing Disclaimer', es: '3. Aviso sobre Financiamiento' },
+      legal_terms_p3:     { en: 'Pre-qualification estimates are not guarantees of approval. Final loan terms depend on lender review of your full application, credit history, income verification, and other factors. Family Key Auto Group is not a lender; we connect customers with our network of partner lenders.', es: 'Las estimaciones de pre-calificación no son garantías de aprobación. Los términos finales del préstamo dependen de la revisión del prestamista de tu solicitud completa, historial crediticio, verificación de ingresos y otros factores. Family Key Auto Group no es un prestamista; conectamos clientes con nuestra red de prestamistas aliados.' },
+      legal_terms_h4:     { en: '4. User Conduct', es: '4. Conducta del Usuario' },
+      legal_terms_p4:     { en: "You agree to use the Site only for lawful purposes. You may not submit false information, attempt to disrupt the Site's operation, or use it to harass, abuse, or harm others.", es: 'Aceptas usar el Sitio solo con fines legales. No puedes enviar información falsa, intentar interrumpir el funcionamiento del Sitio, ni usarlo para acosar, abusar o dañar a otros.' },
+      legal_terms_h5:     { en: '5. Limitation of Liability', es: '5. Limitación de Responsabilidad' },
+      legal_terms_p5:     { en: 'Family Key Auto Group is not liable for any indirect, incidental, or consequential damages arising from your use of the Site or any transaction. Our total liability is limited to the amount you paid for the vehicle in question.', es: 'Family Key Auto Group no es responsable de daños indirectos, incidentales o consecuentes derivados del uso del Sitio o de cualquier transacción. Nuestra responsabilidad total se limita al monto que pagaste por el vehículo en cuestión.' },
+      legal_terms_h6:     { en: '6. Changes to Terms', es: '6. Cambios a los Términos' },
+      legal_terms_p6:     { en: 'We may update these Terms at any time. Continued use of the Site after changes are posted constitutes acceptance of the updated Terms.', es: 'Podemos actualizar estos Términos en cualquier momento. El uso continuado del Sitio después de publicarse los cambios constituye la aceptación de los Términos actualizados.' },
+      legal_terms_h_sms:  { en: 'SMS Communications Program', es: 'Programa de Comunicaciones por SMS' },
+      legal_terms_p_sms1: { en: '<strong>Program Description:</strong> By providing your mobile phone number on our website, you opt in to receive SMS communications from Family Key Auto Group, including appointment reminders, vehicle availability updates, financing notifications, and promotional offers. Message frequency varies based on user activity.', es: '<strong>Descripción del Programa:</strong> Al proporcionar tu número de teléfono móvil en nuestro sitio, aceptas recibir comunicaciones por SMS de Family Key Auto Group, incluyendo recordatorios de citas, actualizaciones de disponibilidad de vehículos, notificaciones de financiamiento y ofertas promocionales. La frecuencia de mensajes varía según la actividad del usuario.' },
+      legal_terms_p_sms2: { en: '<strong>Opt-In:</strong> You consent to receive SMS messages by submitting any form that includes your phone number and the SMS consent checkbox.', es: '<strong>Aceptación:</strong> Das tu consentimiento para recibir mensajes SMS al enviar cualquier formulario que incluya tu número de teléfono y la casilla de consentimiento SMS.' },
+      legal_terms_p_sms3: { en: '<strong>Opt-Out:</strong> Reply <strong>STOP</strong> to any message to cancel. You will receive a confirmation message and no further SMS communications will be sent.', es: '<strong>Cancelación:</strong> Responde <strong>STOP</strong> a cualquier mensaje para cancelar. Recibirás un mensaje de confirmación y no se enviarán más comunicaciones por SMS.' },
+      legal_terms_p_sms4: { en: '<strong>Help:</strong> Reply <strong>HELP</strong> for support, or contact us at <a href="tel:+19495147366">(949) 514-7366</a>.', es: '<strong>Ayuda:</strong> Responde <strong>HELP</strong> para soporte, o contáctanos al <a href="tel:+19495147366">(949) 514-7366</a>.' },
+      legal_terms_p_sms5: { en: '<strong>Carrier Disclaimer:</strong> Message and data rates may apply. Family Key Auto Group is not responsible for delivery delays or message failures caused by your carrier or network conditions.', es: '<strong>Aviso del Operador:</strong> Pueden aplicar tarifas de mensajes y datos. Family Key Auto Group no es responsable de retrasos en la entrega o fallas de mensajes causados por tu operador o las condiciones de la red.' },
+      legal_terms_p_sms6: { en: '<strong>Eligibility:</strong> You must be 18 years or older and the authorized account holder of the mobile number provided to opt in to our SMS program.', es: '<strong>Elegibilidad:</strong> Debes tener 18 años o más y ser el titular autorizado de la cuenta del número móvil proporcionado para inscribirte en nuestro programa de SMS.' },
+      legal_terms_p_sms7: { en: '<strong>Privacy:</strong> Your mobile information is governed by our <a href="/privacy/">Privacy Policy</a>. We do not sell or share your phone number with third parties for their marketing purposes.', es: '<strong>Privacidad:</strong> Tu información móvil se rige por nuestra <a href="/privacy/">Política de Privacidad</a>. No vendemos ni compartimos tu número de teléfono con terceros para sus fines de marketing.' },
+      legal_terms_h7:     { en: '7. Contact', es: '7. Contacto' },
+      legal_terms_p7:     { en: 'Questions about these Terms? Contact us at <a href="mailto:info@familykeyautogroup.com">info@familykeyautogroup.com</a> or <a href="tel:+19495147366">(949) 514-7366</a>.', es: '¿Preguntas sobre estos Términos? Contáctanos en <a href="mailto:info@familykeyautogroup.com">info@familykeyautogroup.com</a> o al <a href="tel:+19495147366">(949) 514-7366</a>.' }
+    };
+    function t(k) { return TR[k] ? (TR[k][LANG] || TR[k].en) : k; }
+    function applyTr() {
+      document.querySelectorAll('.fkag-legal-page [data-i18n]').forEach(function (el) {
+        var k = el.getAttribute('data-i18n');
+        if (TR[k]) el.innerHTML = t(k);
+      });
+    }
+    applyTr();
+    window.addEventListener('fkag-lang-change', function (e) {
+      var nl = (e.detail && e.detail.lang) || LANG;
+      if (nl === LANG) return;
+      LANG = nl;
+      applyTr();
+    });
+  })();
+</script>
+
+<style>
+  .fkag-legal-page { background: #fff; padding: 60px 24px 80px; color: #0c0c0c; }
+  .fkag-legal__inner { max-width: 860px; margin: 0 auto; }
+  .fkag-legal__content { font-size: 15px; line-height: 1.75; color: #2a2a2a; }
+  .fkag-legal__content h1 { font-family: 'Poppins', sans-serif; font-size: 38px; font-weight: 800; color: #0c0c0c; margin: 0 0 8px; letter-spacing: -0.5px; line-height: 1.2; }
+  .fkag-legal__updated { font-size: 13px; color: #5b6a7e; margin: 0 0 36px; padding-bottom: 18px; border-bottom: 1px solid #e3e8ef; }
+  .fkag-legal__content h2 { font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 700; color: #0c0c0c; margin: 36px 0 14px; letter-spacing: -0.2px; border-left: 3px solid #c9a961; padding-left: 12px; }
+  .fkag-legal__content h2:first-of-type { margin-top: 8px; }
+  .fkag-legal__content p { margin: 0 0 16px; }
+  .fkag-legal__content p strong { color: #0c0c0c; font-weight: 700; }
+  .fkag-legal__content a { color: #a88a47; font-weight: 600; text-decoration: none; }
+  .fkag-legal__content a:hover { text-decoration: underline; }
+  @media (max-width: 600px) {
+    .fkag-legal-page { padding: 40px 18px 60px; }
+    .fkag-legal__content { font-size: 14.5px; }
+    .fkag-legal__content h1 { font-size: 30px; }
+    .fkag-legal__content h2 { font-size: 18px; }
+  }
+</style>
