@@ -64,7 +64,18 @@ export const assets = {
   googleIcon: '/images/google-icon.svg', // ✅ generado local
   placeholder: '/images/placeholder.svg',
   invHeroBg: '/images/inv-hero-bg.png', // ⛔ pendiente (fondo del hero de inventario, opcional)
+  finHeroBg: '/images/fin-hero-bg.png', // ⛔ pendiente (fondo del hero de financiamiento, opcional)
 } as const;
+
+/** Prestamistas mostrados en /financing (logo local; si falta, cae a texto) */
+export const lenders = [
+  { name: 'Ally Financial', img: '/images/lender-ally.svg' },
+  { name: 'Capital One', img: '/images/lender-capitalone.svg' },
+  { name: 'Chase', img: '/images/lender-chase.svg' },
+  { name: 'Wells Fargo', img: '/images/lender-wellsfargo.svg' },
+  { name: 'Santander', img: '/images/lender-santander.svg' },
+  { name: 'Service Credit Union', img: '/images/lender-scu.svg' },
+] as const;
 
 /** Marcas que se muestran en el home (logos locales) */
 export const brands = [
