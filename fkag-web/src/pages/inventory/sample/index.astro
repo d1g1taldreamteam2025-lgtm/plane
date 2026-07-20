@@ -1,0 +1,538 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Detalle del Vehículo">
+  <section class="fkag-vdp">
+    <div class="fkag-vdp__container" id="fkagVdpRoot">
+      <div class="fkag-vdp__state">
+        <span class="material-icons-outlined">hourglass_top</span>
+        <h2 id="fkagVdpLoadingMsg">Loading vehicle...</h2>
+      </div>
+    </div>
+  </section>
+
+  <div class="fkag-vdp__modal" id="fkagVdpModal" role="dialog" aria-modal="true">
+    <div class="fkag-vdp__modal-bg" data-vdp-close></div>
+    <div class="fkag-vdp__modal-box">
+      <button class="fkag-vdp__modal-x" data-vdp-close aria-label="Close">×</button>
+      <h3 class="fkag-vdp__modal-title" id="fkagVdpModalTitle">Contact Us</h3>
+      <p class="fkag-vdp__modal-sub" id="fkagVdpModalSub">We'll respond within 1 business hour.</p>
+      <div class="fkag-vdp__modal-vehicle" id="fkagVdpModalVehicle">
+        <span class="material-icons-outlined">directions_car</span>
+        <span id="fkagVdpModalVehicleText">—</span>
+      </div>
+      <form class="fkag-vdp__modal-form" id="fkagVdpModalForm">
+        <div class="fkag-vdp__field"><label data-vdp-i18n="field_name">Full Name</label><input type="text" name="name" required /></div>
+        <div class="fkag-vdp__field"><label data-vdp-i18n="field_email">Email</label><input type="email" name="email" required /></div>
+        <div class="fkag-vdp__field"><label data-vdp-i18n="field_phone">Phone</label><input type="tel" name="phone" required /></div>
+        <div class="fkag-vdp__field" id="fkagVdpModalDate" hidden><label data-vdp-i18n="field_date">Preferred Date</label><input type="date" name="date" /></div>
+        <div class="fkag-vdp__field"><label data-vdp-i18n="field_message">Message</label><textarea name="message" data-vdp-i18n-placeholder="msg_placeholder" placeholder="Tell us a bit about what you're looking for..."></textarea></div>
+        <input type="hidden" name="vehicle_id" id="fkagVdpModalVid" />
+        <input type="hidden" name="action_type" id="fkagVdpModalAtype" />
+        <button type="submit" class="fkag-vdp__modal-submit" id="fkagVdpModalBtn"><span class="material-icons-outlined">send</span> <span data-vdp-i18n="send_request">Send Request</span></button>
+      </form>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import { getVehicleById, getAllVehicles } from '../../../lib/supabase';
+  import { site } from '../../../config/site';
+
+  (function () {
+    var $root = document.getElementById('fkagVdpRoot');
+    var $modal = document.getElementById('fkagVdpModal');
+    var $modalForm = document.getElementById('fkagVdpModalForm');
+    var WEBHOOK_URL = site.webhookUrl;
+    var PH = '/images/placeholder.svg';
+
+    var LANG = (function () { try { var x = localStorage.getItem('fkag_lang'); return (x === 'en' || x === 'es') ? x : 'es'; } catch (e) { return 'es'; } })();
+
+    var TR = {
+      loading: { en: 'Loading vehicle...', es: 'Cargando vehículo...' },
+      not_found: { en: 'Vehicle Not Found', es: 'Vehículo No Encontrado' },
+      sold_or_removed: { en: 'This vehicle may have been sold or removed from inventory.', es: 'Este vehículo puede haber sido vendido o eliminado del inventario.' },
+      no_id: { en: 'No vehicle ID provided in URL.', es: 'No se proporcionó ID de vehículo en la URL.' },
+      back_inventory: { en: 'Back to Inventory', es: 'Volver al Inventario' },
+      home: { en: 'Home', es: 'Inicio' },
+      inventory: { en: 'Inventory', es: 'Inventario' },
+      exterior: { en: 'Exterior', es: 'Exterior' },
+      interior: { en: 'Interior', es: 'Interior' },
+      stock_label: { en: 'Stock #', es: 'Stock #' },
+      vin_label: { en: 'VIN', es: 'VIN' },
+      msrp: { en: 'MSRP', es: 'MSRP' },
+      discount: { en: 'Family Key Discount', es: 'Descuento Family Key' },
+      sale_price: { en: 'Sale Price', es: 'Precio de Venta' },
+      dealer_fee: { en: 'Dealer Fee', es: 'Cargo del Concesionario' },
+      final_price: { en: 'Final Price', es: 'Precio Final' },
+      est_label: { en: 'Est.', es: 'Aprox.' },
+      est_detail: { en: 'with 10% down at 7.99% APR for 60 months*', es: 'con 10% inicial al 7.99% APR por 60 meses*' },
+      mo: { en: '/mo', es: '/mes' },
+      reserve_now: { en: 'Reserve Now', es: 'Reservar Ahora' },
+      apply_financing: { en: 'Apply for Financing', es: 'Aplicar a Financiamiento' },
+      ask_question: { en: 'Ask a Question', es: 'Hacer una Pregunta' },
+      schedule_test: { en: 'Schedule Test Drive', es: 'Agendar Prueba de Manejo' },
+      mileage: { en: 'Mileage', es: 'Millaje' },
+      fuel: { en: 'Fuel', es: 'Combustible' },
+      trans_short: { en: 'Trans', es: 'Trans.' },
+      drive: { en: 'Drive', es: 'Tracción' },
+      city_mpg: { en: 'City MPG', es: 'MPG Ciudad' },
+      hwy_mpg: { en: 'Hwy MPG', es: 'MPG Carretera' },
+      about: { en: 'About This Vehicle', es: 'Acerca de Este Vehículo' },
+      details: { en: 'Vehicle Details', es: 'Detalles del Vehículo' },
+      key_features: { en: 'Key Features', es: 'Características Principales' },
+      other_vehicles: { en: 'Other Vehicles You May Like', es: 'Otros Vehículos Que Te Pueden Interesar' },
+      year: { en: 'Year', es: 'Año' },
+      make: { en: 'Make', es: 'Marca' },
+      model: { en: 'Model', es: 'Modelo' },
+      trim_lbl: { en: 'Trim', es: 'Versión' },
+      body_type: { en: 'Body Type', es: 'Tipo de Carrocería' },
+      engine: { en: 'Engine', es: 'Motor' },
+      transmission: { en: 'Transmission', es: 'Transmisión' },
+      drivetrain: { en: 'Drivetrain', es: 'Tracción' },
+      fuel_type: { en: 'Fuel Type', es: 'Combustible' },
+      ext_color: { en: 'Exterior Color', es: 'Color Exterior' },
+      int_color: { en: 'Interior Color', es: 'Color Interior' },
+      mpg_city_full: { en: 'MPG City', es: 'MPG Ciudad' },
+      mpg_hwy_full: { en: 'MPG Highway', es: 'MPG Carretera' },
+      reserve_t: { en: 'Reserve This Vehicle', es: 'Reservar Este Vehículo' },
+      reserve_s: { en: "Lock this vehicle in. We'll contact you within 1 business hour.", es: 'Asegura este vehículo. Te contactaremos en 1 hora hábil.' },
+      quote_t: { en: 'Get Your Best Price', es: 'Obtén Tu Mejor Precio' },
+      quote_s: { en: "Tell us about you and we'll send our best offer.", es: 'Cuéntanos sobre ti y te enviaremos nuestra mejor oferta.' },
+      question_t: { en: 'Ask a Question', es: 'Hacer una Pregunta' },
+      question_s: { en: 'A specialist will get back to you shortly.', es: 'Un especialista te contactará pronto.' },
+      testdrive_t: { en: 'Schedule Test Drive', es: 'Agendar Prueba de Manejo' },
+      testdrive_s: { en: "Pick a date and we'll confirm by phone or email.", es: 'Elige una fecha y la confirmaremos por teléfono o email.' },
+      field_name: { en: 'Full Name', es: 'Nombre Completo' },
+      field_email: { en: 'Email', es: 'Email' },
+      field_phone: { en: 'Phone', es: 'Teléfono' },
+      field_date: { en: 'Preferred Date', es: 'Fecha Preferida' },
+      field_message: { en: 'Message', es: 'Mensaje' },
+      msg_placeholder: { en: "Tell us a bit about what you're looking for...", es: 'Cuéntanos un poco sobre lo que estás buscando...' },
+      send_request: { en: 'Send Request', es: 'Enviar Solicitud' },
+      sending: { en: 'Sending...', es: 'Enviando...' },
+      thank_you: { en: 'Thank You!', es: '¡Gracias!' },
+      request_received: { en: 'Your request has been received. A Family Key Auto Group specialist will contact you shortly.', es: 'Hemos recibido tu solicitud. Un especialista de Family Key Auto Group te contactará pronto.' },
+      reserve_mobile: { en: 'Reserve', es: 'Reservar' },
+      photo_label: { en: 'Photo', es: 'Foto' },
+      trust_clean: { en: 'Clean Title', es: 'Título Limpio' },
+      trust_carfax: { en: 'Free CARFAX', es: 'CARFAX Gratis' },
+      trust_inspection: { en: '150+ Point Inspection', es: 'Inspección 150+ Puntos' },
+      trust_certified: { en: 'Certified Pre-Owned', es: 'Vehículo Certificado' }
+    };
+    var FEAT_TR = {
+      'Bluetooth': 'Bluetooth', 'Backup Camera': 'Cámara de Reversa', 'Cruise Control': 'Control de Crucero',
+      'Power Windows': 'Vidrios Eléctricos', 'Power Locks': 'Seguros Eléctricos', 'Air Conditioning': 'Aire Acondicionado',
+      'Keyless Entry': 'Apertura sin Llave', 'Tow Hitch Ready': 'Listo para Remolque', 'All-Wheel Drive': 'Tracción Total',
+      'Eco-Mode': 'Modo Eco', 'Regenerative Braking': 'Freno Regenerativo', 'Leather Seats': 'Asientos de Cuero',
+      'Heated Seats': 'Asientos Calefactables', 'Sunroof': 'Techo Solar', 'Premium Sound': 'Sonido Premium',
+      'Apple CarPlay': 'Apple CarPlay', 'Android Auto': 'Android Auto', 'USB-C Ports': 'Puertos USB-C',
+      'Lane Keep Assist': 'Asistente de Carril', 'Adaptive Cruise': 'Crucero Adaptativo'
+    };
+    function t(k) { return TR[k] ? (TR[k][LANG] || TR[k].en) : k; }
+    function tFeat(f) { return (LANG === 'es' && FEAT_TR[f]) ? FEAT_TR[f] : f; }
+    function cap(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
+
+    var FKAG_CARS = [];
+    try { var st = localStorage.getItem('fkag_inventory'); if (st) FKAG_CARS = JSON.parse(st); } catch (e) {}
+
+    var fmt = function (n) { return n != null ? '$' + n.toLocaleString('en-US') : '—'; };
+    var fmtNum = function (n) { return n != null ? n.toLocaleString('en-US') : '—'; };
+    var DEALER_FEE = 799;
+    var currentCar = null;
+
+    function getId() { return new URLSearchParams(window.location.search).get('id'); }
+    function getAction() { return new URLSearchParams(window.location.search).get('action'); }
+    function findCar(id) { if (!id) return null; for (var i = 0; i < FKAG_CARS.length; i++) if (FKAG_CARS[i].id === id) return FKAG_CARS[i]; return null; }
+    function getSimilar(car, n) {
+      n = n || 3;
+      var pool = FKAG_CARS.filter(function (c) { return c.id !== car.id; });
+      var same = pool.filter(function (c) { return c.bodyType === car.bodyType; });
+      var rest = pool.filter(function (c) { return c.bodyType !== car.bodyType; });
+      return same.concat(rest).slice(0, n);
+    }
+    function estPayment(price) {
+      var down = price * 0.10, loan = price - down, rate = 0.0799 / 12, n = 60;
+      return Math.round((loan * rate) / (1 - Math.pow(1 + rate, -n)));
+    }
+    function buildGallery(car) {
+      var isValid = function (u) { return u && typeof u === 'string' && u.trim().length > 5; };
+      if (window.__fkagOverridePhotos && window.__fkagOverridePhotos.length) {
+        var f1 = window.__fkagOverridePhotos.filter(isValid);
+        if (f1.length) return f1;
+      }
+      if (car.photoArray && car.photoArray.length) {
+        var f2 = car.photoArray.filter(isValid);
+        if (f2.length) return f2;
+      }
+      return [car.image || PH];
+    }
+    function buildFeatures(car) {
+      var bt = (car.bodyType || '').toLowerCase();
+      var dt = (car.drivetrain || '').toUpperCase();
+      var base = ['Bluetooth', 'Backup Camera', 'Cruise Control', 'Power Windows', 'Power Locks', 'Air Conditioning', 'Keyless Entry'];
+      if (bt === 'suv' || bt === 'truck') base.push('Tow Hitch Ready');
+      if (dt === 'AWD' || dt === '4WD') base.push('All-Wheel Drive');
+      if (car.fuel === 'Hybrid' || car.fuel === 'Electric') base.push('Eco-Mode', 'Regenerative Braking');
+      if (car.badge === 'Luxury' || car.badge === 'Premium') base.push('Leather Seats', 'Heated Seats', 'Sunroof', 'Premium Sound');
+      if (car.year >= 2022) base.push('Apple CarPlay', 'Android Auto', 'USB-C Ports');
+      if (car.year >= 2023) base.push('Lane Keep Assist', 'Adaptive Cruise');
+      return base.map(tFeat);
+    }
+    function buildDesc(car) {
+      var dt = (car.drivetrain || '').toUpperCase();
+      if (LANG === 'es') {
+        var p = [];
+        p.push('Este ' + car.year + ' ' + car.make + ' ' + car.model + (car.trim ? ' ' + car.trim : '') + ' está en excelente condición con solo ' + fmtNum(car.mileage) + ' millas en el odómetro.');
+        if (car.msrp) p.push('Precio original de ' + fmt(car.msrp) + ' MSRP, ahorras ' + fmt(car.msrp - car.price) + ' sobre el precio inicial.');
+        if (car.mpgCity && car.mpgHighway) p.push('Rinde ' + car.mpgCity + ' MPG en ciudad y ' + car.mpgHighway + ' MPG en carretera para excelente eficiencia.');
+        if (dt === 'AWD' || dt === '4WD') p.push('Equipado con ' + car.drivetrain + ' para manejo confiable en cualquier clima.');
+        p.push('Totalmente inspeccionado por nuestros técnicos certificados, viene con título limpio y listo para su próximo dueño.');
+        p.push('Visita Family Key Auto Group hoy o aplica a financiamiento en línea para llevártelo el mismo día.');
+        return p.join(' ');
+      }
+      var q = [];
+      q.push('This ' + car.year + ' ' + car.make + ' ' + car.model + (car.trim ? ' ' + car.trim : '') + ' is in excellent condition with only ' + fmtNum(car.mileage) + ' miles on the odometer.');
+      if (car.msrp) q.push('Originally listed at ' + fmt(car.msrp) + ' MSRP, you save ' + fmt(car.msrp - car.price) + ' off the original price.');
+      if (car.mpgCity && car.mpgHighway) q.push('Get ' + car.mpgCity + ' MPG city and ' + car.mpgHighway + ' MPG highway for excellent fuel efficiency.');
+      if (dt === 'AWD' || dt === '4WD') q.push('Equipped with ' + car.drivetrain + ' for confident driving in any weather.');
+      q.push('Fully inspected by our certified technicians, this vehicle comes with a clean title and is ready for its next owner.');
+      q.push('Visit Family Key Auto Group today or apply for financing online to drive home today.');
+      return q.join(' ');
+    }
+    function renderError(msg) {
+      $root.innerHTML = '<div class="fkag-vdp__state"><span class="material-icons-outlined">error_outline</span><h2>' + t('not_found') + '</h2><p>' + (msg || t('sold_or_removed')) + '</p><a class="fkag-vdp__state-btn" href="/inventory/"><span class="material-icons-outlined">arrow_back</span> ' + t('back_inventory') + '</a></div>';
+    }
+
+    function renderCar(car) {
+      currentCar = car;
+      var gallery = buildGallery(car), features = buildFeatures(car), desc = buildDesc(car), similar = getSimilar(car, 3);
+      var savings = car.msrp ? car.msrp - car.price : 0;
+      var finalPrice = car.price + DEALER_FEE;
+      var monthly = estPayment(car.price);
+      var title = car.year + ' ' + car.make + ' ' + car.model + (car.trim ? ' ' + car.trim : '');
+
+      var html = '<nav class="fkag-vdp__crumb"><a href="/">' + t('home') + '</a><span class="material-icons-outlined">chevron_right</span><a href="/inventory/">' + t('inventory') + '</a><span class="material-icons-outlined">chevron_right</span><span>' + title + '</span></nav>'
+        + '<div class="fkag-vdp__top"><div class="fkag-vdp__left"><div class="fkag-vdp__gallery"><div class="fkag-vdp__main">'
+        + (car.badge ? '<span class="fkag-vdp__main-badge">' + car.badge + '</span>' : '')
+        + '<img id="fkagVdpMainImg" src="' + gallery[0] + '" alt="' + title + '" onerror="this.src=\'' + PH + '\'" />'
+        + '<button class="fkag-vdp__nav fkag-vdp__nav--prev" id="fkagVdpPrev"><span class="material-icons-outlined">chevron_left</span></button>'
+        + '<button class="fkag-vdp__nav fkag-vdp__nav--next" id="fkagVdpNext"><span class="material-icons-outlined">chevron_right</span></button>'
+        + '<div class="fkag-vdp__counter"><span class="material-icons-outlined">photo_camera</span><span id="fkagVdpCounter">1 / ' + gallery.length + '</span></div></div>'
+        + '<div class="fkag-vdp__thumbs" id="fkagVdpThumbs">'
+        + gallery.map(function (src, i) { return '<button class="fkag-vdp__thumb' + (i === 0 ? ' fkag-vdp__thumb--active' : '') + '" data-idx="' + i + '"><img src="' + src + '" alt="' + t('photo_label') + ' ' + (i + 1) + '" onerror="this.closest(\'.fkag-vdp__thumb\').style.display=\'none\'" /></button>'; }).join('')
+        + '</div></div>'
+        + '<div class="fkag-vdp__trust">'
+        + '<div class="fkag-vdp__trust-item"><span class="material-icons-outlined">verified</span><span>' + t('trust_clean') + '</span></div>'
+        + '<div class="fkag-vdp__trust-item"><span class="material-icons-outlined">description</span><span>' + t('trust_carfax') + '</span></div>'
+        + '<div class="fkag-vdp__trust-item"><span class="material-icons-outlined">checklist</span><span>' + t('trust_inspection') + '</span></div>'
+        + '<div class="fkag-vdp__trust-item"><span class="material-icons-outlined">workspace_premium</span><span>' + t('trust_certified') + '</span></div>'
+        + '</div>'
+        + '<div class="fkag-vdp__section fkag-vdp__section--inline"><h2 class="fkag-vdp__sec-title"><span class="material-icons-outlined">description</span> ' + t('about') + '</h2><p class="fkag-vdp__desc">' + desc + '</p></div>'
+        + '</div>'
+        + '<aside class="fkag-vdp__side"><div class="fkag-vdp__card">'
+        + (car.badge ? '<span class="fkag-vdp__badge-pill"><span class="material-icons-outlined">verified</span>' + car.badge + '</span>' : '')
+        + '<h1 class="fkag-vdp__title">' + title + '</h1>'
+        + '<div class="fkag-vdp__sub">' + cap(car.bodyType) + ' • ' + car.exteriorColor + ' ' + t('exterior') + ' • ' + (car.interiorColor || '—') + ' ' + t('interior') + '</div>'
+        + '<div class="fkag-vdp__meta"><div class="fkag-vdp__meta-item"><strong>' + (car.stock || '—') + '</strong>' + t('stock_label') + '</div><div class="fkag-vdp__meta-item"><strong>' + (car.vin || '—') + '</strong>' + t('vin_label') + '</div></div></div>'
+        + '<div class="fkag-vdp__card">'
+        + (car.msrp ? '<div class="fkag-vdp__price-row fkag-vdp__price-row--msrp"><span>' + t('msrp') + '</span><span><s>' + fmt(car.msrp) + '</s></span></div>' : '')
+        + (savings > 0 ? '<div class="fkag-vdp__price-row fkag-vdp__price-row--disc"><span>' + t('discount') + '</span><span>-' + fmt(savings) + '</span></div>' : '')
+        + '<div class="fkag-vdp__price-row fkag-vdp__price-row--sale"><span>' + t('sale_price') + '</span><span>' + fmt(car.price) + '</span></div>'
+        + '<div class="fkag-vdp__price-row"><span style="color:#888">' + t('dealer_fee') + '</span><span style="color:#888">+' + fmt(DEALER_FEE) + '</span></div>'
+        + '<div class="fkag-vdp__price-row fkag-vdp__price-row--final"><span>' + t('final_price') + '</span><strong>' + fmt(finalPrice) + '</strong></div>'
+        + '<div class="fkag-vdp__est">' + t('est_label') + ' <strong>' + fmt(monthly) + t('mo') + '</strong> ' + t('est_detail') + '</div></div>'
+        + '<div class="fkag-vdp__card fkag-vdp__ctas">'
+        + '<button class="fkag-vdp__cta fkag-vdp__cta--primary" data-vdp-action="reserve"><span class="material-icons-outlined">verified</span> ' + t('reserve_now') + '</button>'
+        + '<a class="fkag-vdp__cta fkag-vdp__cta--secondary" href="/financing/apply/?vin=' + car.id + '"><span class="material-icons-outlined">credit_score</span> ' + t('apply_financing') + '</a>'
+        + '<button class="fkag-vdp__cta fkag-vdp__cta--ghost" data-vdp-action="question"><span class="material-icons-outlined">chat</span> ' + t('ask_question') + '</button>'
+        + '<button class="fkag-vdp__cta fkag-vdp__cta--ghost" data-vdp-action="testdrive"><span class="material-icons-outlined">event</span> ' + t('schedule_test') + '</button></div>'
+        + '<div class="fkag-vdp__card fkag-vdp__qi">'
+        + '<div class="fkag-vdp__qi-item"><span class="material-icons-outlined">speed</span><span><span class="fkag-vdp__qi-label">' + t('mileage') + '</span><span class="fkag-vdp__qi-val">' + fmtNum(car.mileage) + ' mi</span></span></div>'
+        + '<div class="fkag-vdp__qi-item"><span class="material-icons-outlined">local_gas_station</span><span><span class="fkag-vdp__qi-label">' + t('fuel') + '</span><span class="fkag-vdp__qi-val">' + car.fuel + '</span></span></div>'
+        + '<div class="fkag-vdp__qi-item"><span class="material-icons-outlined">settings</span><span><span class="fkag-vdp__qi-label">' + t('trans_short') + '</span><span class="fkag-vdp__qi-val">' + car.transmission + '</span></span></div>'
+        + '<div class="fkag-vdp__qi-item"><span class="material-icons-outlined">directions_car</span><span><span class="fkag-vdp__qi-label">' + t('drive') + '</span><span class="fkag-vdp__qi-val">' + car.drivetrain + '</span></span></div>'
+        + (car.mpgCity ? '<div class="fkag-vdp__qi-item"><span class="material-icons-outlined">eco</span><span><span class="fkag-vdp__qi-label">' + t('city_mpg') + '</span><span class="fkag-vdp__qi-val">' + car.mpgCity + '</span></span></div>' : '')
+        + (car.mpgHighway ? '<div class="fkag-vdp__qi-item"><span class="material-icons-outlined">timeline</span><span><span class="fkag-vdp__qi-label">' + t('hwy_mpg') + '</span><span class="fkag-vdp__qi-val">' + car.mpgHighway + '</span></span></div>' : '')
+        + '</div></aside></div>'
+        + '<div class="fkag-vdp__section"><h2 class="fkag-vdp__sec-title"><span class="material-icons-outlined">tune</span> ' + t('details') + '</h2><div class="fkag-vdp__specs">'
+        + '<div class="fkag-vdp__spec"><span class="fkag-vdp__spec-lbl">' + t('year') + '</span><span class="fkag-vdp__spec-val">' + car.year + '</span></div>'
+        + '<div class="fkag-vdp__spec"><span class="fkag-vdp__spec-lbl">' + t('make') + '</span><span class="fkag-vdp__spec-val">' + car.make + '</span></div>'
+        + '<div class="fkag-vdp__spec"><span class="fkag-vdp__spec-lbl">' + t('model') + '</span><span class="fkag-vdp__spec-val">' + car.model + '</span></div>'
+        + (car.trim ? '<div class="fkag-vdp__spec"><span class="fkag-vdp__spec-lbl">' + t('trim_lbl') + '</span><span class="fkag-vdp__spec-val">' + car.trim + '</span></div>' : '')
+        + '<div class="fkag-vdp__spec"><span class="fkag-vdp__spec-lbl">' + t('body_type') + '</span><span class="fkag-vdp__spec-val">' + car.bodyType + '</span></div>'
+        + '<div class="fkag-vdp__spec"><span class="fkag-vdp__spec-lbl">' + t('mileage') + '</span><span class="fkag-vdp__spec-val">' + fmtNum(car.mileage) + ' mi</span></div>'
+        + (car.engine ? '<div class="fkag-vdp__spec"><span class="fkag-vdp__spec-lbl">' + t('engine') + '</span><span class="fkag-vdp__spec-val">' + car.engine + '</span></div>' : '')
+        + '<div class="fkag-vdp__spec"><span class="fkag-vdp__spec-lbl">' + t('transmission') + '</span><span class="fkag-vdp__spec-val">' + car.transmission + '</span></div>'
+        + '<div class="fkag-vdp__spec"><span class="fkag-vdp__spec-lbl">' + t('drivetrain') + '</span><span class="fkag-vdp__spec-val">' + car.drivetrain + '</span></div>'
+        + '<div class="fkag-vdp__spec"><span class="fkag-vdp__spec-lbl">' + t('fuel_type') + '</span><span class="fkag-vdp__spec-val">' + car.fuel + '</span></div>'
+        + '<div class="fkag-vdp__spec"><span class="fkag-vdp__spec-lbl">' + t('ext_color') + '</span><span class="fkag-vdp__spec-val">' + car.exteriorColor + '</span></div>'
+        + (car.interiorColor ? '<div class="fkag-vdp__spec"><span class="fkag-vdp__spec-lbl">' + t('int_color') + '</span><span class="fkag-vdp__spec-val">' + car.interiorColor + '</span></div>' : '')
+        + (car.mpgCity ? '<div class="fkag-vdp__spec"><span class="fkag-vdp__spec-lbl">' + t('mpg_city_full') + '</span><span class="fkag-vdp__spec-val">' + car.mpgCity + '</span></div>' : '')
+        + (car.mpgHighway ? '<div class="fkag-vdp__spec"><span class="fkag-vdp__spec-lbl">' + t('mpg_hwy_full') + '</span><span class="fkag-vdp__spec-val">' + car.mpgHighway + '</span></div>' : '')
+        + (car.vin ? '<div class="fkag-vdp__spec"><span class="fkag-vdp__spec-lbl">' + t('vin_label') + '</span><span class="fkag-vdp__spec-val" style="font-size:12px">' + car.vin + '</span></div>' : '')
+        + (car.stock ? '<div class="fkag-vdp__spec"><span class="fkag-vdp__spec-lbl">' + t('stock_label') + '</span><span class="fkag-vdp__spec-val">' + car.stock + '</span></div>' : '')
+        + '</div></div>'
+        + '<div class="fkag-vdp__section"><h2 class="fkag-vdp__sec-title"><span class="material-icons-outlined">star</span> ' + t('key_features') + '</h2><ul class="fkag-vdp__features">'
+        + features.map(function (f) { return '<li>' + f + '</li>'; }).join('')
+        + '</ul></div>'
+        + (similar.length ? '<div class="fkag-vdp__section"><h2 class="fkag-vdp__sec-title"><span class="material-icons-outlined">recommend</span> ' + t('other_vehicles') + '</h2><div class="fkag-vdp__sim-grid">'
+          + similar.map(function (s) { return '<a class="fkag-vdp__sim" href="/inventory/sample/?id=' + s.id + '"><div class="fkag-vdp__sim-img"><img src="' + s.image + '" alt="' + s.year + ' ' + s.make + ' ' + s.model + '" onerror="this.src=\'' + PH + '\'" /></div><div class="fkag-vdp__sim-body"><h3 class="fkag-vdp__sim-title">' + s.year + ' ' + s.make + ' ' + s.model + '</h3><div class="fkag-vdp__sim-meta">' + fmtNum(s.mileage) + ' mi • ' + cap(s.bodyType) + '</div><div class="fkag-vdp__sim-price">' + fmt(s.price) + '</div></div></a>'; }).join('')
+          + '</div></div>' : '')
+        + '<div class="fkag-vdp__mbar"><div class="fkag-vdp__mbar-price"><small>' + t('final_price') + '</small><strong>' + fmt(finalPrice) + '</strong></div><button class="fkag-vdp__mbar-btn" data-vdp-action="reserve"><span class="material-icons-outlined">verified</span> ' + t('reserve_mobile') + '</button></div>';
+
+      $root.innerHTML = html;
+
+      var idx = 0;
+      var $img = document.getElementById('fkagVdpMainImg');
+      var $cnt = document.getElementById('fkagVdpCounter');
+      var $thumbs = document.getElementById('fkagVdpThumbs');
+
+      function showImg(i) {
+        idx = (i + gallery.length) % gallery.length;
+        $img.style.opacity = '0';
+        setTimeout(function () { $img.src = gallery[idx]; $img.style.opacity = '1'; }, 120);
+        $cnt.textContent = (idx + 1) + ' / ' + gallery.length;
+        Array.prototype.forEach.call($thumbs.querySelectorAll('.fkag-vdp__thumb'), function (th, j) { th.classList.toggle('fkag-vdp__thumb--active', j === idx); });
+      }
+      document.getElementById('fkagVdpPrev').addEventListener('click', function () { showImg(idx - 1); });
+      document.getElementById('fkagVdpNext').addEventListener('click', function () { showImg(idx + 1); });
+      $thumbs.addEventListener('click', function (e) { var tt = e.target.closest('.fkag-vdp__thumb'); if (tt) showImg(parseInt(tt.dataset.idx, 10)); });
+      updateModalLabels();
+    }
+
+    function updateModalLabels() {
+      document.querySelectorAll('[data-vdp-i18n]').forEach(function (el) { var k = el.getAttribute('data-vdp-i18n'); el.textContent = t(k); });
+      document.querySelectorAll('[data-vdp-i18n-placeholder]').forEach(function (el) { var k = el.getAttribute('data-vdp-i18n-placeholder'); el.setAttribute('placeholder', t(k)); });
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (document.getElementById('fkagVdpModal').classList.contains('is-open')) return;
+      if (!currentCar) return;
+      if (e.key === 'ArrowLeft') { var p = document.getElementById('fkagVdpPrev'); if (p) p.click(); }
+      if (e.key === 'ArrowRight') { var nx = document.getElementById('fkagVdpNext'); if (nx) nx.click(); }
+    });
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-vdp-action]');
+      if (!btn || !currentCar) return;
+      openModal(btn.dataset.vdpAction, currentCar);
+    });
+
+    function openModal(type, car) {
+      var titles = {
+        reserve: { t: t('reserve_t'), s: t('reserve_s') },
+        quote: { t: t('quote_t'), s: t('quote_s') },
+        question: { t: t('question_t'), s: t('question_s') },
+        testdrive: { t: t('testdrive_t'), s: t('testdrive_s') }
+      };
+      var info = titles[type] || titles.question;
+      document.getElementById('fkagVdpModalTitle').textContent = info.t;
+      document.getElementById('fkagVdpModalSub').textContent = info.s;
+      document.getElementById('fkagVdpModalVehicleText').textContent = car.year + ' ' + car.make + ' ' + car.model + (car.trim ? ' ' + car.trim : '');
+      document.getElementById('fkagVdpModalVid').value = car.id;
+      document.getElementById('fkagVdpModalAtype').value = type;
+      document.getElementById('fkagVdpModalDate').hidden = (type !== 'testdrive');
+      updateModalLabels();
+      var box = $modal.querySelector('.fkag-vdp__modal-box');
+      var existing = box.querySelector('.fkag-vdp__modal-success');
+      if (existing) { $modalForm.reset(); $modalForm.style.display = ''; existing.remove(); }
+      $modal.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() { $modal.classList.remove('is-open'); document.body.style.overflow = ''; }
+    $modal.addEventListener('click', function (e) { if (e.target.hasAttribute('data-vdp-close')) closeModal(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+
+    $modalForm.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var fd = new FormData($modalForm);
+      var p = {};
+      fd.forEach(function (v, k) { p[k] = v; });
+      var lead = {
+        form_type: p.action_type || 'question',
+        name: p.name || '', email: p.email || '', phone: p.phone || '',
+        message: p.message || '', preferred_date: p.date || '',
+        vehicle_id: p.vehicle_id || '',
+        vehicle_title: (document.getElementById('fkagVdpModalVehicleText') || {}).textContent || '',
+        _lang: LANG
+      };
+      var btn = $modalForm.querySelector('button[type=submit]');
+      if (btn) { btn.disabled = true; btn.innerHTML = '<span class="material-icons-outlined">hourglass_top</span> ' + t('sending'); }
+      try {
+        await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(lead) });
+      } catch (err) { console.error('FKAG lead error:', err); }
+      var box = $modal.querySelector('.fkag-vdp__modal-box');
+      $modalForm.style.display = 'none';
+      var success = document.createElement('div');
+      success.className = 'fkag-vdp__modal-success';
+      success.innerHTML = '<span class="material-icons-outlined">check_circle</span><h3 style="font-family:Poppins,sans-serif;margin:0 0 8px">' + t('thank_you') + '</h3><p style="color:#666;margin:0">' + t('request_received') + '</p>';
+      box.appendChild(success);
+      setTimeout(closeModal, 3500);
+    });
+
+    var $loadingMsg = document.getElementById('fkagVdpLoadingMsg');
+    if ($loadingMsg) $loadingMsg.textContent = t('loading');
+    updateModalLabels();
+
+    window.addEventListener('fkag-lang-change', function (e) {
+      var nl = (e.detail && e.detail.lang) || LANG;
+      if (nl === LANG) return;
+      LANG = nl;
+      if (currentCar) renderCar(currentCar);
+      else updateModalLabels();
+    });
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.fkag-lang__btn,[data-lang]')) return;
+      setTimeout(function () {
+        try {
+          var nl = localStorage.getItem('fkag_lang');
+          if ((nl === 'en' || nl === 'es') && nl !== LANG) { LANG = nl; if (currentCar) renderCar(currentCar); else updateModalLabels(); }
+        } catch (e) {}
+      }, 200);
+    });
+
+    var id = getId();
+    if (!id) { renderError(t('no_id')); return; }
+
+    (async function () {
+      if (!FKAG_CARS.length) { try { FKAG_CARS = await getAllVehicles(); } catch (e) {} }
+      var car = findCar(id);
+      if (!car) car = await getVehicleById(id);
+      if (!car) { renderError(); return; }
+      if (car.photoArray && car.photoArray.length > 0) window.__fkagOverridePhotos = car.photoArray;
+      renderCar(car);
+      var urlAction = getAction();
+      if (urlAction === 'quote') setTimeout(function () { openModal('quote', car); }, 300);
+    })();
+  })();
+</script>
+
+<style is:global>
+.fkag-vdp{font-family:'Inter',system-ui,sans-serif;color:#0c0c0c;background:#f7f7f8;padding:24px 16px 48px;min-height:80vh}
+.fkag-vdp *{box-sizing:border-box}
+.fkag-vdp__container{max-width:1280px;margin:0 auto}
+.fkag-vdp__crumb{font-size:13px;color:#666;margin-bottom:18px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.fkag-vdp__crumb a{color:#a88a47;text-decoration:none}
+.fkag-vdp__crumb a:hover{text-decoration:underline}
+.fkag-vdp__crumb .material-icons-outlined{font-size:14px;color:#aaa}
+.fkag-vdp__top{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:24px;margin-bottom:28px;align-items:start}
+@media (max-width:980px){.fkag-vdp__top{grid-template-columns:1fr}}
+.fkag-vdp__gallery{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.fkag-vdp__main{position:relative;aspect-ratio:16/10;background:#0c0c0c;overflow:hidden}
+.fkag-vdp__main img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .25s}
+.fkag-vdp__nav{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;background:rgba(0,0,0,.55);border:none;color:#fff;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.fkag-vdp__nav,.fkag-vdp__nav:focus,.fkag-vdp__nav:focus-visible,.fkag-vdp__nav:active{background:rgba(0,0,0,.55) !important;color:#fff !important;outline:none !important;box-shadow:none !important;-webkit-tap-highlight-color:transparent !important}
+.fkag-vdp__nav:hover{background:#c9a961 !important;color:#fff !important;transform:translateY(-50%) scale(1.05) !important}
+.fkag-vdp__nav:active{transform:translateY(-50%) scale(.95) !important}
+.fkag-vdp__nav .material-icons-outlined{color:inherit !important;font-size:24px}
+.fkag-vdp__nav--prev{left:14px}
+.fkag-vdp__nav--next{right:14px}
+.fkag-vdp__counter{position:absolute;bottom:14px;right:14px;background:rgba(0,0,0,.7);color:#fff;padding:6px 12px;border-radius:20px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}
+.fkag-vdp__counter .material-icons-outlined{font-size:16px}
+.fkag-vdp__main-badge{position:absolute;top:16px;left:16px;background:linear-gradient(135deg,#c9a961,#a88a47);color:#fff;padding:8px 14px;border-radius:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+.fkag-vdp__thumbs{display:flex;gap:8px;padding:10px;overflow-x:auto;scrollbar-width:thin;scrollbar-color:#c9a961 #f0f0f0}
+.fkag-vdp__thumbs::-webkit-scrollbar{height:6px}
+.fkag-vdp__thumbs::-webkit-scrollbar-thumb{background:#c9a961;border-radius:3px}
+.fkag-vdp__thumb{flex:0 0 96px;height:68px;border-radius:8px;overflow:hidden;cursor:pointer;border:2px solid transparent;background:#f0f0f0;transition:all .2s;padding:0}
+.fkag-vdp__thumb img{width:100%;height:100%;object-fit:cover}
+.fkag-vdp__thumb:hover{border-color:#d4b674}
+.fkag-vdp__thumb--active{border-color:#c9a961;box-shadow:0 0 0 2px rgba(201,169,97,.2)}
+.fkag-vdp__left{display:flex;flex-direction:column;gap:14px;min-width:0}
+.fkag-vdp__trust{background:#fff;border-radius:16px;padding:18px 20px;box-shadow:0 2px 12px rgba(0,0,0,.06);display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.fkag-vdp__trust-item{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:#333}
+.fkag-vdp__trust-item .material-icons-outlined{font-size:24px;color:#c9a961;flex-shrink:0}
+@media(max-width:780px){.fkag-vdp__trust{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:420px){.fkag-vdp__trust{grid-template-columns:1fr}}
+.fkag-vdp__side{display:flex;flex-direction:column;gap:14px}
+.fkag-vdp__card{background:#fff;border-radius:16px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.fkag-vdp__badge-pill{display:inline-flex;align-items:center;gap:5px;background:rgba(201,169,97,.12);color:#a88a47;padding:5px 10px;border-radius:4px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.fkag-vdp__badge-pill .material-icons-outlined{font-size:14px}
+.fkag-vdp__title{font-family:'Poppins',sans-serif;font-size:24px;font-weight:700;margin:0 0 4px;line-height:1.2;color:#0c0c0c}
+.fkag-vdp__sub{color:#666;font-size:14px;margin-bottom:14px}
+.fkag-vdp__meta{display:flex;gap:16px;font-size:12px;color:#888;border-top:1px solid #f0f0f0;padding-top:12px;flex-wrap:wrap}
+.fkag-vdp__meta-item strong{color:#0c0c0c;font-weight:600;display:block;font-size:13px}
+.fkag-vdp__price-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;font-size:14px}
+.fkag-vdp__price-row--msrp{color:#888}
+.fkag-vdp__price-row--msrp s{text-decoration:line-through}
+.fkag-vdp__price-row--disc{color:#2f7d4f;font-weight:600}
+.fkag-vdp__price-row--sale{font-size:15px;font-weight:700;border-top:1px solid #f0f0f0;padding-top:11px;margin-top:4px}
+.fkag-vdp__price-row--final{font-size:15px;font-weight:800;color:#c9a961;border-top:2px solid #c9a961;padding-top:12px;margin-top:6px}
+.fkag-vdp__price-row--final strong{font-family:'Poppins',sans-serif;font-size:26px;line-height:1}
+.fkag-vdp__est{background:rgba(201,169,97,.08);border-radius:8px;padding:10px 12px;margin-top:12px;font-size:13px;color:#555;text-align:center}
+.fkag-vdp__est strong{color:#c9a961;font-weight:700}
+.fkag-vdp__ctas{display:flex;flex-direction:column;gap:9px}
+.fkag-vdp__cta{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 18px;border-radius:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;font-size:13px;cursor:pointer;border:none;text-decoration:none;transition:all .2s;font-family:inherit;width:100%}
+.fkag-vdp__cta--primary{background:linear-gradient(135deg,#c9a961,#a88a47);color:#fff;box-shadow:0 2px 8px rgba(201,169,97,.25)}
+.fkag-vdp__cta--primary:hover{background:linear-gradient(135deg,#d4b674,#c9a961);transform:translateY(-1px);box-shadow:0 6px 16px rgba(201,169,97,.4)}
+.fkag-vdp__cta--secondary{background:#0c0c0c;color:#fff}
+.fkag-vdp__cta--secondary:hover{background:#2a2a2a}
+.fkag-vdp__cta--ghost{background:#f5f5f5;color:#0c0c0c}
+.fkag-vdp__cta--ghost:hover{background:#ebebeb}
+.fkag-vdp__cta .material-icons-outlined{font-size:18px}
+.fkag-vdp__qi{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fkag-vdp__qi-item{display:flex;align-items:center;gap:10px}
+.fkag-vdp__qi-item .material-icons-outlined{font-size:24px;color:#c9a961;flex:0 0 auto}
+.fkag-vdp__qi-label{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:.4px;display:block;line-height:1}
+.fkag-vdp__qi-val{font-size:13px;font-weight:600;color:#0c0c0c;display:block;margin-top:3px}
+.fkag-vdp__section{background:#fff;border-radius:16px;padding:28px;margin-bottom:18px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.fkag-vdp__section--inline{margin-bottom:0}
+.fkag-vdp__sec-title{font-family:'Poppins',sans-serif;font-size:20px;font-weight:700;margin:0 0 18px;display:flex;align-items:center;gap:10px;color:#0c0c0c}
+.fkag-vdp__sec-title .material-icons-outlined{color:#c9a961;font-size:24px}
+.fkag-vdp__specs{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0 24px}
+.fkag-vdp__spec{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:11px 0;border-bottom:1px solid #f2f2f2;font-size:14px;line-height:1.45}
+.fkag-vdp__spec-lbl{color:#666;flex-shrink:0;white-space:nowrap}
+.fkag-vdp__spec-val{font-weight:600;color:#0c0c0c;text-align:right;min-width:0;word-break:break-word;text-transform:capitalize}
+.fkag-vdp__features{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px 18px;list-style:none;padding:0;margin:0}
+.fkag-vdp__features li{display:flex;align-items:center;gap:8px;padding:6px 0;font-size:14px;color:#333}
+.fkag-vdp__features li::before{content:'check_circle';font-family:'Material Icons Outlined';color:#c9a961;font-size:18px;flex:0 0 auto}
+.fkag-vdp__desc{color:#444;line-height:1.7;font-size:15px;margin:0}
+.fkag-vdp__sim-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media(max-width:780px){.fkag-vdp__sim-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){.fkag-vdp__sim-grid{grid-template-columns:1fr}}
+.fkag-vdp__sim{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);text-decoration:none;color:inherit;transition:all .25s;display:block}
+.fkag-vdp__sim:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(0,0,0,.1)}
+.fkag-vdp__sim-img{aspect-ratio:16/10;background:#f0f0f0;overflow:hidden}
+.fkag-vdp__sim-img img{width:100%;height:100%;object-fit:cover}
+.fkag-vdp__sim-body{padding:14px}
+.fkag-vdp__sim-title{font-family:'Poppins',sans-serif;font-size:15px;font-weight:700;margin:0 0 4px;color:#0c0c0c}
+.fkag-vdp__sim-meta{font-size:12px;color:#888;margin-bottom:8px}
+.fkag-vdp__sim-price{font-size:18px;font-weight:800;color:#c9a961;font-family:'Poppins',sans-serif}
+.fkag-vdp__modal{position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;padding:16px}
+.fkag-vdp__modal.is-open{display:flex}
+.fkag-vdp__modal-bg{position:absolute;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(4px)}
+.fkag-vdp__modal-box{position:relative;background:#fff;border-radius:16px;padding:32px;max-width:480px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.fkag-vdp__modal-x{position:absolute;top:12px;right:12px;background:#f5f5f5;border:none;width:36px;height:36px;border-radius:50%;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#666}
+.fkag-vdp__modal-x:hover{background:#ebebeb;color:#0c0c0c}
+.fkag-vdp__modal-title{font-family:'Poppins',sans-serif;font-size:22px;font-weight:700;margin:0 0 6px}
+.fkag-vdp__modal-sub{color:#666;font-size:14px;margin-bottom:20px}
+.fkag-vdp__modal-vehicle{background:rgba(201,169,97,.08);border-radius:8px;padding:10px 14px;margin-bottom:18px;font-size:13px;color:#555;display:flex;align-items:center;gap:10px}
+.fkag-vdp__modal-vehicle .material-icons-outlined{color:#c9a961}
+.fkag-vdp__modal-form{display:flex;flex-direction:column;gap:12px}
+.fkag-vdp__field label{font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px;display:block}
+.fkag-vdp__field input,.fkag-vdp__field textarea,.fkag-vdp__field select{width:100%;padding:11px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;font-family:inherit;outline:none;transition:border-color .2s;background:#fff;color:#0c0c0c}
+.fkag-vdp__field input:focus,.fkag-vdp__field textarea:focus,.fkag-vdp__field select:focus{border-color:#c9a961;box-shadow:0 0 0 3px rgba(201,169,97,.1)}
+.fkag-vdp__field textarea{min-height:90px;resize:vertical}
+.fkag-vdp__modal-submit{background:linear-gradient(135deg,#c9a961,#a88a47);color:#fff;border:none;padding:14px;border-radius:8px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;font-size:13px;cursor:pointer;margin-top:6px;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px}
+.fkag-vdp__modal-submit:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(201,169,97,.3)}
+.fkag-vdp__modal-success{text-align:center;padding:20px 0}
+.fkag-vdp__modal-success .material-icons-outlined{font-size:64px;color:#2f7d4f;margin-bottom:12px}
+.fkag-vdp__state{text-align:center;padding:80px 20px;background:#fff;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.fkag-vdp__state .material-icons-outlined{font-size:64px;color:#c9a961;margin-bottom:16px;display:block}
+.fkag-vdp__state h2{font-family:'Poppins',sans-serif;font-size:24px;margin:0 0 8px;color:#0c0c0c}
+.fkag-vdp__state p{color:#666;margin:0 0 20px}
+.fkag-vdp__state-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#c9a961,#a88a47);color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:700;text-transform:uppercase;font-size:13px;letter-spacing:.4px}
+.fkag-vdp__mbar{display:none}
+@media (max-width:980px){
+  .fkag-vdp__mbar{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;padding:12px 14px;box-shadow:0 -4px 12px rgba(0,0,0,.12);z-index:9990;gap:10px;align-items:center}
+  .fkag-vdp__mbar-price{flex:1}
+  .fkag-vdp__mbar-price small{display:block;font-size:10px;color:#888;text-transform:uppercase;letter-spacing:.4px;line-height:1}
+  .fkag-vdp__mbar-price strong{font-family:'Poppins',sans-serif;font-size:20px;font-weight:800;color:#c9a961;line-height:1.2}
+  .fkag-vdp__mbar-btn{background:linear-gradient(135deg,#c9a961,#a88a47);color:#fff;border:none;padding:12px 18px;border-radius:8px;font-weight:700;text-transform:uppercase;font-size:12px;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px}
+  .fkag-vdp__mbar-btn .material-icons-outlined{font-size:16px}
+  .fkag-vdp{padding-bottom:90px}
+  .fkag-vdp__title{font-size:20px}
+  .fkag-vdp__section{padding:20px}
+  .fkag-vdp__qi{grid-template-columns:1fr 1fr}
+}
+</style>
