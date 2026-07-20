@@ -63,12 +63,13 @@ src/
 
 | Sección | Estado |
 |---|---|
-| Header (top bar, nav, marquee, móvil) | ✅ primera versión (ajustable a tu diseño real) |
+| Header (top bar, banderas, dropdown, marquee, móvil) | ✅ migrado (fiel al WP) |
 | Footer | ✅ migrado |
 | Chat widget (lateral + WhatsApp) | ✅ migrado |
 | Sistema i18n + tokens de diseño | ✅ |
-| Supabase / webhook / Cloudinary | ✅ conectados |
-| **Home** | ⏳ pendiente (pegar código WP) |
+| Supabase / webhook | ✅ conectados |
+| Imágenes 100% locales (sin Cloudinary) | ✅ |
+| **Home** (hero, CTAs, destacados, marcas, reseñas, SEO) | ✅ migrado |
 | Inventory | ⏳ |
 | VDP (detalle de vehículo) | ⏳ |
 | Financing + Apply | ⏳ |

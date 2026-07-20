@@ -48,7 +48,6 @@ export const site = {
   webhookUrl:
     import.meta.env.PUBLIC_WEBHOOK_URL ||
     'https://n8n-ucallnow.ucallnow.fun/webhook/fkag-leads',
-  cloudinaryCloud: import.meta.env.PUBLIC_CLOUDINARY_CLOUD || 'drbc4wbvw',
 } as const;
 
 /**
@@ -56,12 +55,54 @@ export const site = {
  * las que se perdieron en un solo lugar).
  */
 export const assets = {
-  logoHeader:
-    'https://res.cloudinary.com/drbc4wbvw/image/upload/v1778669606/dorado_ezwn0e.svg', // TODO confirmar logo del header
-  logoFooter:
-    'https://res.cloudinary.com/drbc4wbvw/image/upload/v1778669606/dorado_ezwn0e.svg',
-  placeholder: 'https://via.placeholder.com/900x600?text=No+Photo',
+  // Locales (servidas desde /public/images) — SIN dependencia de Cloudinary.
+  // ⚠️ FALTAN: hay que colocar estos archivos reales en public/images/
+  logoHeader: '/images/logo-header.png', // ⛔ pendiente (logo FKAG real)
+  logoFooter: '/images/logo-footer.svg', // ⛔ pendiente (logo dorado FKAG)
+  flagEs: '/images/flag-es.svg', // ✅ generado local
+  flagEn: '/images/flag-en.svg', // ✅ generado local
+  googleIcon: '/images/google-icon.svg', // ✅ generado local
+  placeholder: '/images/placeholder.svg',
 } as const;
+
+/** Marcas que se muestran en el home (logos locales) */
+export const brands = [
+  { key: 'jeep', name: 'Jeep', img: '/images/brand-jeep.svg' },
+  { key: 'ford', name: 'Ford', img: '/images/brand-ford.svg' },
+  { key: 'hyundai', name: 'Hyundai', img: '/images/brand-hyundai.svg' },
+  { key: 'toyota', name: 'Toyota', img: '/images/brand-toyota.svg' },
+  { key: 'nissan', name: 'Nissan', img: '/images/brand-nissan.svg' },
+  { key: 'chevrolet', name: 'Chevrolet', img: '/images/brand-chevrolet.svg' },
+  { key: 'honda', name: 'Honda', img: '/images/brand-honda.svg' },
+  { key: 'kia', name: 'Kia', img: '/images/brand-kia.svg' },
+  { key: 'mazda', name: 'Mazda', img: '/images/brand-mazda.svg' },
+  { key: 'renault', name: 'Renault', img: '/images/brand-renault.svg' },
+] as const;
+
+/**
+ * Slides del hero (imágenes por idioma y por dispositivo).
+ * ⛔ Los archivos aún no existen — se colocan en public/images/ cuando estén.
+ */
+export const heroSlides = [
+  {
+    es: '/images/hero-1-es.png',
+    en: '/images/hero-1-en.png',
+    esMobile: '/images/hero-1-es-mobile.png',
+    enMobile: '/images/hero-1-en-mobile.png',
+  },
+  {
+    es: '/images/hero-2-es.png',
+    en: '/images/hero-2-en.png',
+    esMobile: '/images/hero-2-es-mobile.png',
+    enMobile: '/images/hero-2-en-mobile.png',
+  },
+  {
+    es: '/images/hero-3-es.png',
+    en: '/images/hero-3-en.png',
+    esMobile: '/images/hero-3-es-mobile.png',
+    enMobile: '/images/hero-3-en-mobile.png',
+  },
+] as const;
 
 /** Enlaces de navegación (se traducen vía data-i18n en el Header) */
 export const nav = [
@@ -71,8 +112,8 @@ export const nav = [
     key: 'nav_financing',
     href: '/financing/',
     children: [
-      { key: 'nav_fin_overview', href: '/financing/' },
-      { key: 'nav_fin_apply', href: '/financing/apply/' },
+      { key: 'nav_financing_overview', href: '/financing/' },
+      { key: 'nav_financing_apply', href: '/financing/apply/' },
     ],
   },
   { key: 'nav_about', href: '/about/' },

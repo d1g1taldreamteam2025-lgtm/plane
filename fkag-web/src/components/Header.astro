@@ -1,122 +1,123 @@
 ---
-import { site, assets, nav } from '../config/site';
+import { site, assets } from '../config/site';
 import { t } from '../i18n';
 
 const L = 'es';
-const path = Astro.url.pathname;
-const isActive = (href: string) =>
-  href === '/' ? path === '/' : path.startsWith(href);
-
-const marquee = [
-  'marquee_sold',
-  'marquee_low_down',
-  'marquee_approval',
-  'marquee_carfax',
-  'marquee_inspection',
-] as const;
+const marquee = ['m_sold', 'm_down', 'm_approval', 'm_carfax', 'm_inspection'] as const;
 ---
 
-<header class="fkag-hd">
+<header class="xkag" id="xkagHeader">
   <!-- Top bar -->
-  <div class="fkag-hd__top">
-    <div class="fkag-hd__top-inner">
-      <div class="fkag-hd__top-left">
-        <span class="fkag-hd__top-item">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          <span data-i18n="topbar_hours">{t('topbar_hours', L)}</span>
+  <div class="xkag__top">
+    <div class="xkag__top-inner">
+      <div class="xkag__top-left">
+        <span class="xkag__top-item">
+          <span class="material-icons-outlined">schedule</span>
+          <span data-i18n="header_hours">{t('header_hours', L)}</span>
         </span>
-        <span class="fkag-hd__top-item">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span>{site.address.full}</span>
+        <span class="xkag__top-item">
+          <span class="material-icons-outlined">place</span>
+          <span data-i18n="header_address">{t('header_address', L)}</span>
         </span>
       </div>
-      <div class="fkag-hd__top-right">
-        <div class="fkag-hd__lang">
-          <button type="button" class="fkag-lang__btn" data-lang="es" aria-label="Español">ES</button>
-          <button type="button" class="fkag-lang__btn" data-lang="en" aria-label="English">EN</button>
+      <div class="xkag__top-right">
+        <div class="xkag__lang">
+          <button class="fkag-lang__btn" type="button" data-lang="es" aria-label="Español">
+            <img src={assets.flagEs} alt="ES" width="18" height="13" /><span>ES</span>
+          </button>
+          <button class="fkag-lang__btn" type="button" data-lang="en" aria-label="English">
+            <img src={assets.flagEn} alt="EN" width="18" height="13" /><span>EN</span>
+          </button>
         </div>
-        <a href="/financing/apply/" class="fkag-hd__cta" data-i18n="nav_get_prequalified">{t('nav_get_prequalified', L)}</a>
+        <a href="/financing/apply/" class="xkag__cta"><span data-i18n="cta_prequalify">{t('cta_prequalify', L)}</span></a>
       </div>
     </div>
   </div>
 
   <!-- Main bar -->
-  <div class="fkag-hd__main">
-    <div class="fkag-hd__main-inner">
-      <a href="/" class="fkag-hd__logo" aria-label={site.name}>
-        <img src={assets.logoHeader} alt={site.name} width="190" height="48" />
+  <div class="xkag__main">
+    <div class="xkag__main-inner">
+      <a href="/" class="xkag__logo" aria-label={site.name}>
+        <img
+          src={assets.logoHeader}
+          alt={site.name}
+          width="180"
+          height="50"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex';"
+        />
+        <span class="xkag__logo-fallback">FAMILY KEY<b>AUTO GROUP</b></span>
       </a>
 
-      <nav class="fkag-hd__nav" id="fkagNav" aria-label="Principal">
-        {
-          nav.map((item) =>
-            'children' in item && item.children ? (
-              <div class="fkag-hd__dropdown">
-                <a
-                  href={item.href}
-                  class:list={['fkag-hd__link', 'fkag-hd__link--parent', isActive(item.href) && 'is-active']}
-                >
-                  <span data-i18n={item.key}>{t(item.key, L)}</span>
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-                </a>
-                <div class="fkag-hd__menu">
-                  {item.children.map((c) => (
-                    <a href={c.href} class="fkag-hd__menu-link">
-                      <span data-i18n={c.key}>{t(c.key, L)}</span>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <a
-                href={item.href}
-                class:list={['fkag-hd__link', isActive(item.href) && 'is-active']}
-              >
-                <span data-i18n={item.key}>{t(item.key, L)}</span>
-              </a>
-            )
-          )
-        }
+      <!-- Desktop nav -->
+      <nav class="xkag__nav" aria-label="Principal">
+        <a href="/" class="xkag__nav-item"><span data-i18n="nav_home">{t('nav_home', L)}</span></a>
+        <a href="/inventory/" class="xkag__nav-item"><span data-i18n="nav_inventory">{t('nav_inventory', L)}</span></a>
+        <div class="xkag__dropdown">
+          <a href="/financing/" class="xkag__nav-item"><span data-i18n="nav_financing">{t('nav_financing', L)}</span> <span class="xkag__caret">▾</span></a>
+          <div class="xkag__menu">
+            <a href="/financing/" class="xkag__menu-link"><span data-i18n="nav_financing_overview">{t('nav_financing_overview', L)}</span></a>
+            <a href="/financing/apply/" class="xkag__menu-link xkag__menu-link--gold"><span data-i18n="nav_financing_apply">{t('nav_financing_apply', L)}</span></a>
+          </div>
+        </div>
+        <a href="/about/" class="xkag__nav-item"><span data-i18n="nav_about">{t('nav_about', L)}</span></a>
+        <a href="/contact/" class="xkag__nav-item"><span data-i18n="nav_contact">{t('nav_contact', L)}</span></a>
+        <a href="/faqs/" class="xkag__nav-item"><span data-i18n="nav_faqs">{t('nav_faqs', L)}</span></a>
       </nav>
 
-      <button class="fkag-hd__burger" id="fkagBurger" aria-label="Menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+      <!-- Mobile controls -->
+      <div class="xkag__mobile-ctrls">
+        <div class="xkag__lang xkag__lang--mobile">
+          <button class="fkag-lang__btn" type="button" data-lang="es" aria-label="Español"><img src={assets.flagEs} alt="ES" width="22" height="16" /></button>
+          <button class="fkag-lang__btn" type="button" data-lang="en" aria-label="English"><img src={assets.flagEn} alt="EN" width="22" height="16" /></button>
+        </div>
+        <button id="xkagBurger" class="xkag__burger" type="button" aria-label="Menú" aria-expanded="false">
+          <span class="material-icons-outlined">menu</span>
+        </button>
+      </div>
     </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="xkag__mobile-menu" id="xkagMobileMenu">
+    <a href="/"><span data-i18n="nav_home">{t('nav_home', L)}</span></a>
+    <a href="/inventory/"><span data-i18n="nav_inventory">{t('nav_inventory', L)}</span></a>
+    <a href="/financing/"><span data-i18n="nav_financing">{t('nav_financing', L)}</span></a>
+    <a href="/financing/apply/" class="xkag__mobile-cta"><span data-i18n="nav_financing_apply">{t('nav_financing_apply', L)}</span></a>
+    <a href="/about/"><span data-i18n="nav_about">{t('nav_about', L)}</span></a>
+    <a href="/contact/"><span data-i18n="nav_contact">{t('nav_contact', L)}</span></a>
+    <a href="/faqs/"><span data-i18n="nav_faqs">{t('nav_faqs', L)}</span></a>
   </div>
 
   <!-- Marquee -->
-  <div class="fkag-hd__marquee" aria-hidden="true">
-    <div class="fkag-hd__marquee-track">
-      {
-        [0, 1, 2].map(() =>
-          marquee.map((k) => (
-            <span class="fkag-hd__marquee-item">★ <span data-i18n={k}>{t(k, L)}</span></span>
-          ))
-        )
-      }
+  <section class="xkag-marquee" aria-hidden="true">
+    <div class="xkag-marquee__track">
+      {[0, 1, 2, 3].map(() => (
+        <div class="xkag-marquee__group">
+          {marquee.map((k) => (
+            <>
+              <span class="xkag-marquee__item">★ <span data-i18n={k}>{t(k, L)}</span></span>
+              <span class="xkag-marquee__sep">●</span>
+            </>
+          ))}
+        </div>
+      ))}
     </div>
-  </div>
+  </section>
 </header>
 
 <script>
   (function () {
-    var burger = document.getElementById('fkagBurger');
-    var nav = document.getElementById('fkagNav');
-    if (burger && nav) {
+    var burger = document.getElementById('xkagBurger');
+    var menu = document.getElementById('xkagMobileMenu');
+    if (burger && menu) {
       burger.addEventListener('click', function () {
-        var open = nav.classList.toggle('is-open');
-        burger.classList.toggle('is-open', open);
+        var open = menu.classList.toggle('is-open');
         burger.setAttribute('aria-expanded', String(open));
-        document.body.style.overflow = open ? 'hidden' : '';
       });
-      nav.addEventListener('click', function (e) {
-        var target = e.target as HTMLElement;
-        if (target.closest('a')) {
-          nav.classList.remove('is-open');
-          burger.classList.remove('is-open');
+      menu.addEventListener('click', function (e) {
+        if ((e.target as HTMLElement).closest('a')) {
+          menu.classList.remove('is-open');
           burger.setAttribute('aria-expanded', 'false');
-          document.body.style.overflow = '';
         }
       });
     }
@@ -124,245 +125,346 @@ const marquee = [
 </script>
 
 <style>
-  .fkag-hd {
+  .xkag {
     position: sticky;
     top: 0;
-    z-index: 500;
+    z-index: 9999;
     background: #fff;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    font-family: 'Inter', sans-serif;
   }
 
   /* Top bar */
-  .fkag-hd__top {
-    background: #0a0a0a;
-    color: #cbd5e1;
-    font-size: 12.5px;
+  .xkag__top {
+    background: #0c0c0c;
+    color: #fff;
+    font-size: 13px;
   }
-  .fkag-hd__top-inner {
+  .xkag__top-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 24px;
     max-width: 1280px;
     margin: 0 auto;
-    padding: 8px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     gap: 16px;
   }
-  .fkag-hd__top-left {
+  .xkag__top-left {
     display: flex;
-    gap: 22px;
-    flex-wrap: wrap;
+    gap: 18px;
+    align-items: center;
   }
-  .fkag-hd__top-item {
+  .xkag__top-item {
     display: inline-flex;
     align-items: center;
     gap: 6px;
   }
-  .fkag-hd__top-item svg {
+  .xkag__top-item .material-icons-outlined {
+    font-size: 16px;
     color: #c9a961;
   }
-  .fkag-hd__top-right {
+  .xkag__top-right {
     display: flex;
-    align-items: center;
     gap: 14px;
+    align-items: center;
   }
-  .fkag-hd__lang {
+  .xkag__lang {
     display: inline-flex;
-    border: 1px solid rgba(201, 169, 97, 0.4);
-    border-radius: 999px;
-    overflow: hidden;
+    gap: 6px;
+    align-items: center;
   }
   .fkag-lang__btn {
-    background: transparent;
-    color: #cbd5e1;
-    border: 0;
-    padding: 4px 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    color: #fff;
     font-size: 12px;
     font-weight: 700;
     cursor: pointer;
+    transition: all 0.2s ease;
     font-family: inherit;
-    transition: all 0.2s;
+  }
+  .fkag-lang__btn img {
+    width: 18px;
+    height: 13px;
+    border-radius: 2px;
   }
   .fkag-lang__btn.active {
-    background: #c9a961;
-    color: #0c0c0c;
+    background: #c9a961 !important;
+    border-color: #c9a961 !important;
+    color: #0c0c0c !important;
   }
-  .fkag-hd__cta {
+  .fkag-lang__btn:not(.active):hover {
+    background: rgba(201, 169, 97, 0.2) !important;
+    border-color: rgba(201, 169, 97, 0.5) !important;
+  }
+  .xkag__cta {
     background: #c9a961;
     color: #0c0c0c;
-    padding: 6px 16px;
-    border-radius: 6px;
-    font-size: 12.5px;
+    padding: 6px 14px;
+    font-size: 13px;
     font-weight: 700;
+    border-radius: 6px;
     text-decoration: none;
-    transition: background 0.2s;
+    white-space: nowrap;
   }
-  .fkag-hd__cta:hover {
+  .xkag__cta:hover {
     background: #d4b674;
   }
 
   /* Main bar */
-  .fkag-hd__main-inner {
+  .xkag__main-inner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 24px;
     max-width: 1280px;
     margin: 0 auto;
-    padding: 14px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
   }
-  .fkag-hd__logo img {
-    height: 48px;
+  .xkag__logo {
+    margin-right: auto;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+  }
+  .xkag__logo img {
+    height: 50px;
+    max-height: 50px;
     width: auto;
+    max-width: 220px;
+    object-fit: contain;
+    display: block;
   }
-  .fkag-hd__nav {
+  .xkag__logo-fallback {
+    display: none;
+    flex-direction: column;
+    line-height: 1;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: 1px;
+    color: #0c0c0c;
+  }
+  .xkag__logo-fallback b {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: #c9a961;
+  }
+  .xkag__nav {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 2px;
   }
-  .fkag-hd__link {
+  .xkag__nav-item {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    padding: 8px 14px;
-    color: #0c0c0c;
-    text-decoration: none;
+    padding: 10px 14px;
+    color: #1a1a1a;
     font-size: 15px;
     font-weight: 600;
-    border-radius: 6px;
-    transition: color 0.2s, background 0.2s;
+    text-decoration: none;
+    border-radius: 8px;
+    white-space: nowrap;
+    transition: all 0.2s;
   }
-  .fkag-hd__link:hover,
-  .fkag-hd__link.is-active {
-    color: #a88a47;
+  .xkag__nav-item:hover {
+    background: #fafaf7;
+    color: #c9a961;
   }
-  .fkag-hd__dropdown {
+  .xkag__caret {
+    font-size: 13px;
+  }
+  .xkag__dropdown {
     position: relative;
   }
-  .fkag-hd__menu {
+  .xkag__menu {
     position: absolute;
     top: 100%;
-    left: 0;
-    min-width: 220px;
+    right: 0;
+    min-width: 240px;
     background: #fff;
     border: 1px solid #e8e4dc;
-    border-radius: 10px;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
-    padding: 8px;
+    border-radius: 12px;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.18);
+    padding: 12px;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(6px);
-    transition: all 0.2s;
-    z-index: 10;
+    transform: translateY(8px);
+    transition: all 0.2s ease;
   }
-  .fkag-hd__dropdown:hover .fkag-hd__menu {
+  .xkag__dropdown:hover .xkag__menu {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
   }
-  .fkag-hd__menu-link {
+  .xkag__menu-link {
     display: block;
-    padding: 10px 14px;
-    color: #0c0c0c;
-    text-decoration: none;
+    padding: 12px 16px;
+    color: #1a1a1a;
     font-size: 14px;
     font-weight: 600;
-    border-radius: 6px;
+    border-radius: 8px;
+    text-decoration: none;
   }
-  .fkag-hd__menu-link:hover {
-    background: #fdf8ec;
-    color: #a88a47;
+  .xkag__menu-link:hover {
+    background: #fafaf7;
+    color: #c9a961;
+  }
+  .xkag__menu-link--gold {
+    background: linear-gradient(135deg, #c9a961, #d4b674);
+    color: #0c0c0c;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 13px;
+    margin-top: 6px;
+  }
+  .xkag__menu-link--gold:hover {
+    color: #0c0c0c;
+    filter: brightness(1.05);
   }
 
-  /* Burger */
-  .fkag-hd__burger {
+  /* Mobile */
+  .xkag__mobile-ctrls {
     display: none;
-    flex-direction: column;
-    gap: 5px;
+    align-items: center;
+    gap: 10px;
+  }
+  .xkag__lang--mobile {
+    border: 1.5px solid #c9a961;
+    border-radius: 999px;
+    padding: 0 6px;
+    height: 42px;
+    gap: 2px;
+  }
+  .xkag__lang--mobile .fkag-lang__btn {
     background: transparent;
     border: 0;
+    padding: 4px 8px;
+  }
+  .xkag__lang--mobile .fkag-lang__btn img {
+    width: 22px;
+    height: 16px;
+    border-radius: 3px;
+  }
+  .xkag__lang--mobile .fkag-lang__btn.active {
+    background: rgba(201, 169, 97, 0.18) !important;
+  }
+  .xkag__burger {
+    width: 42px;
+    height: 42px;
+    background: #fff;
+    border: 1.5px solid #c9a961;
+    border-radius: 10px;
     cursor: pointer;
-    padding: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
   }
-  .fkag-hd__burger span {
-    width: 24px;
-    height: 2px;
-    background: #0c0c0c;
-    border-radius: 2px;
-    transition: all 0.25s;
+  .xkag__burger .material-icons-outlined {
+    font-size: 24px;
+    color: #c9a961;
   }
-  .fkag-hd__burger.is-open span:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
+  .xkag__mobile-menu {
+    display: none;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    padding: 12px 16px;
   }
-  .fkag-hd__burger.is-open span:nth-child(2) {
-    opacity: 0;
+  .xkag__mobile-menu.is-open {
+    display: block;
   }
-  .fkag-hd__burger.is-open span:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
+  .xkag__mobile-menu a {
+    display: block;
+    padding: 14px 8px;
+    border-bottom: 1px solid #e8e4dc;
+    color: #1a1a1a;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .xkag__mobile-menu a:last-child {
+    border-bottom: 0;
+  }
+  .xkag__mobile-cta {
+    background: linear-gradient(135deg, #c9a961, #d4b674);
+    color: #0c0c0c !important;
+    border-radius: 8px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700 !important;
+    font-size: 13px !important;
+    border-bottom: 0 !important;
+    margin: 8px 0;
   }
 
   /* Marquee */
-  .fkag-hd__marquee {
-    background: linear-gradient(135deg, #c9a961, #d4b674);
-    overflow: hidden;
-    white-space: nowrap;
-  }
-  .fkag-hd__marquee-track {
-    display: inline-flex;
-    gap: 40px;
-    padding: 9px 0;
-    animation: fkagMarquee 30s linear infinite;
-  }
-  .fkag-hd__marquee-item {
+  .xkag-marquee {
+    background: #c9a961;
     color: #0c0c0c;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+    overflow: hidden;
+    padding: 14px 0;
+    width: 100%;
   }
-  @keyframes fkagMarquee {
+  .xkag-marquee__track {
+    display: flex;
+    width: max-content;
+    animation: xkM 18s linear infinite;
+    will-change: transform;
+  }
+  .xkag-marquee__group {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .xkag-marquee__item {
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 0 24px;
+    color: #0c0c0c;
+  }
+  .xkag-marquee__sep {
+    font-size: 8px;
+    opacity: 0.6;
+    padding: 0 4px;
+  }
+  @keyframes xkM {
     from {
-      transform: translateX(0);
+      transform: translate3d(0, 0, 0);
     }
     to {
-      transform: translateX(-33.33%);
+      transform: translate3d(-25%, 0, 0);
     }
   }
 
-  @media (max-width: 980px) {
-    .fkag-hd__top-left {
+  @media (max-width: 1024px) {
+    .xkag__top {
       display: none;
     }
-    .fkag-hd__burger {
+    .xkag__nav {
+      display: none;
+    }
+    .xkag__mobile-ctrls {
       display: flex;
     }
-    .fkag-hd__nav {
-      position: fixed;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      width: 300px;
-      max-width: 85vw;
-      background: #fff;
-      flex-direction: column;
-      align-items: stretch;
-      gap: 0;
-      padding: 80px 20px 20px;
-      box-shadow: -8px 0 30px rgba(0, 0, 0, 0.15);
-      transform: translateX(100%);
-      transition: transform 0.3s ease;
-      overflow-y: auto;
+  }
+  @media (max-width: 640px) {
+    .xkag-marquee__track {
+      animation-duration: 13s;
     }
-    .fkag-hd__nav.is-open {
-      transform: translateX(0);
-    }
-    .fkag-hd__menu {
-      position: static;
-      opacity: 1;
-      visibility: visible;
-      transform: none;
-      box-shadow: none;
-      border: 0;
-      padding: 0 0 0 14px;
+    .xkag-marquee__item {
+      font-size: 11px;
+      padding: 0 14px;
     }
   }
 </style>

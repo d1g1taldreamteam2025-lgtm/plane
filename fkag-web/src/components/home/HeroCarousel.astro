@@ -1,0 +1,169 @@
+---
+import { heroSlides } from '../../config/site';
+import { t } from '../../i18n';
+---
+
+<section class="fkag-hero fkag-hero--clean">
+  <div class="fkag-hero__slides">
+    {
+      heroSlides.map((s, i) => (
+        <div
+          class:list={['fkag-hero__slide', i === 0 && 'fkag-hero__slide--active']}
+          data-img-es={s.es}
+          data-img-en={s.en}
+          data-img-es-mobile={s.esMobile}
+          data-img-en-mobile={s.enMobile}
+          style={`background-image:url('${s.es}')`}
+        />
+      ))
+    }
+  </div>
+  <div class="fkag-hero__cta-fixed">
+    <a href="/inventory/" class="fkag-hero__cta-btn" data-i18n="hero_cta_static">{t('hero_cta_static', 'es')}</a>
+  </div>
+</section>
+
+<script>
+  (function () {
+    function init() {
+      var h = document.querySelector('.fkag-hero--clean');
+      if (!h) return;
+      var sl = h.querySelectorAll('.fkag-hero__slide');
+      if (!sl.length) return;
+      var c = 0;
+      function gl() {
+        try {
+          var s = localStorage.getItem('fkag_lang');
+          if (s === 'es' || s === 'en') return s;
+        } catch (e) {}
+        return 'es';
+      }
+      function im() {
+        return window.innerWidth < 768;
+      }
+      function pl(u) {
+        if (!u) return;
+        var i = new Image();
+        i.src = u;
+      }
+      function ap() {
+        var l = gl(),
+          m = im();
+        sl.forEach(function (s) {
+          var img;
+          if (m) img = l === 'en' ? s.getAttribute('data-img-en-mobile') : s.getAttribute('data-img-es-mobile');
+          if (!img) img = l === 'en' ? s.getAttribute('data-img-en') : s.getAttribute('data-img-es');
+          if (img) {
+            pl(img);
+            s.style.backgroundImage = "url('" + img + "')";
+          }
+        });
+      }
+      function go(i) {
+        sl.forEach(function (s, j) {
+          s.classList.toggle('fkag-hero__slide--active', j === i);
+        });
+        c = i;
+      }
+      ap();
+      setInterval(function () {
+        go((c + 1) % sl.length);
+      }, 5000);
+      window.addEventListener('resize', ap);
+      window.addEventListener('fkag-lang-change', ap);
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
+  })();
+</script>
+
+<style>
+  .fkag-hero--clean {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1838 / 787;
+    padding-top: 40px;
+    background-origin: content-box;
+    overflow: hidden;
+    background: #fff;
+  }
+  .fkag-hero--clean .fkag-hero__slides {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  .fkag-hero--clean .fkag-hero__slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #eef1f5;
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+    transition: opacity 0.6s ease-in-out;
+  }
+  .fkag-hero--clean .fkag-hero__slide--active {
+    opacity: 1;
+    z-index: 2;
+    pointer-events: auto;
+  }
+  .fkag-hero--clean .fkag-hero__cta-fixed {
+    position: absolute;
+    left: 50%;
+    bottom: 12%;
+    transform: translateX(-50%);
+    z-index: 10;
+    pointer-events: none;
+  }
+  .fkag-hero--clean .fkag-hero__cta-btn {
+    pointer-events: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 36px;
+    background: #c9a961;
+    color: #0a0a0a;
+    font-size: 16px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+    transition: all 0.2s;
+    border: 0;
+  }
+  .fkag-hero--clean .fkag-hero__cta-btn:hover {
+    background: #d4b674;
+    transform: translateY(-2px);
+  }
+  .fkag-hero--clean .fkag-hero__cta-btn::after {
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 8px solid #0a0a0a;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    margin-left: 4px;
+  }
+  @media (max-width: 768px) {
+    .fkag-hero--clean {
+      aspect-ratio: 1080 / 800;
+      padding: 0;
+    }
+    .fkag-hero--clean .fkag-hero__cta-fixed {
+      bottom: 8%;
+    }
+    .fkag-hero--clean .fkag-hero__cta-btn {
+      padding: 11px 22px;
+      font-size: 13px;
+    }
+  }
+</style>

@@ -1,73 +1,189 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroCarousel from '../components/home/HeroCarousel.astro';
+import FeaturedVehicles from '../components/home/FeaturedVehicles.astro';
+import { brands, assets } from '../config/site';
+import { t } from '../i18n';
+
+const L = 'es';
+const reviews = [
+  { key: 'review_1_quote', author: 'Maricela Ibarra' },
+  { key: 'review_2_quote', author: 'Ana María Lecaros' },
+  { key: 'review_3_quote', author: 'Carolina Ramirez' },
+] as const;
 ---
 
 <BaseLayout title="Inicio">
-  <section class="placeholder">
-    <div class="fkag-container">
-      <span class="placeholder__eyebrow">MIGRACIÓN EN CURSO</span>
-      <h1>Base del sitio lista ✅</h1>
-      <p>
-        El header, footer y chat ya están migrados como componentes compartidos.
-        Aquí va el contenido del <strong>Home</strong> cuando lo pases desde WordPress.
-      </p>
-      <div class="placeholder__grid">
-        <div class="placeholder__card">Header · Footer · Chat<br /><small>listos</small></div>
-        <div class="placeholder__card">i18n ES/EN<br /><small>centralizado</small></div>
-        <div class="placeholder__card">Supabase · Webhook<br /><small>conectados</small></div>
+  <HeroCarousel />
+
+  <!-- Quick CTA cards -->
+  <section class="fkag-cta">
+    <div class="fkag-cta__inner">
+      <a href="/inventory/" class="fkag-cta__card">
+        <div class="fkag-cta__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg>
+        </div>
+        <h3 data-i18n="cta_search_cars">{t('cta_search_cars', L)}</h3>
+        <p data-i18n="cta_search_cars_sub">{t('cta_search_cars_sub', L)}</p>
+      </a>
+      <a href="/inventory/?filter=under-20k" class="fkag-cta__card">
+        <div class="fkag-cta__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+        </div>
+        <h3 data-i18n="cta_promotions">{t('cta_promotions', L)}</h3>
+        <p data-i18n="cta_promotions_sub">{t('cta_promotions_sub', L)}</p>
+      </a>
+      <a href="/financing/apply/" class="fkag-cta__card">
+        <div class="fkag-cta__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        </div>
+        <h3 data-i18n="cta_financing">{t('cta_financing', L)}</h3>
+        <p data-i18n="cta_financing_sub">{t('cta_financing_sub', L)}</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- Divider -->
+  <section class="fkag-divider">
+    <div class="fkag-divider__inner">
+      <span class="fkag-divider__icon">★</span>
+      <span class="fkag-divider__text"><span data-i18n="divider_quality">{t('divider_quality', L)}</span></span>
+      <span class="fkag-divider__icon">★</span>
+    </div>
+  </section>
+
+  <FeaturedVehicles />
+
+  <!-- Brands -->
+  <section class="fkag-brands">
+    <div class="fkag-brands__container">
+      <div class="fkag-brands__head">
+        <span class="fkag-brands__eyebrow"><span data-i18n="brands_eyebrow">{t('brands_eyebrow', L)}</span></span>
+        <h2 class="fkag-brands__title"><span data-i18n="brands_title">{t('brands_title', L)}</span></h2>
+        <p class="fkag-brands__subtitle"><span data-i18n="brands_sub">{t('brands_sub', L)}</span></p>
       </div>
+      <div class="fkag-brands__grid">
+        {
+          brands.map((b) => (
+            <a href={`/inventory/?make=${b.key}`} class="fkag-brands__item">
+              <img src={b.img} alt={b.name} loading="lazy" onerror="this.style.opacity='0.15'" />
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Divider alt -->
+  <section class="fkag-divider fkag-divider--alt">
+    <div class="fkag-divider__inner">
+      <span class="fkag-divider__icon">★</span>
+      <span class="fkag-divider__text"><span data-i18n="divider_family">{t('divider_family', L)}</span></span>
+      <span class="fkag-divider__icon">★</span>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section class="fkag-reviews">
+    <div class="fkag-reviews__inner">
+      <div class="fkag-reviews__head">
+        <img src={assets.googleIcon} alt="Google" class="fkag-reviews__google" width="56" height="56" />
+        <h2 data-i18n="reviews_title">{t('reviews_title', L)}</h2>
+        <div class="fkag-reviews__rating">
+          <span class="fkag-reviews__stars">★★★★★</span>
+          <span class="fkag-reviews__score">4.9 / 5</span>
+          <span class="fkag-reviews__count"><span data-i18n="reviews_count">{t('reviews_count', L)}</span></span>
+        </div>
+      </div>
+      <div class="fkag-reviews__grid">
+        {
+          reviews.map((r) => (
+            <article class="fkag-reviews__card">
+              <div class="fkag-reviews__stars">★★★★★</div>
+              <p data-i18n={r.key} set:html={t(r.key, L)} />
+              <div class="fkag-reviews__author">
+                <strong>{r.author}</strong>
+                <span>· <span data-i18n="review_verified">{t('review_verified', L)}</span></span>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- SEO block -->
+  <section class="fkag-seo">
+    <div class="fkag-seo__inner">
+      <h2 data-i18n="seo_title">{t('seo_title', L)}</h2>
+      <p data-i18n="seo_p1">{t('seo_p1', L)}</p>
+      <h3 data-i18n="seo_h3_1">{t('seo_h3_1', L)}</h3>
+      <p data-i18n="seo_p2">{t('seo_p2', L)}</p>
+      <h3 data-i18n="seo_h3_2">{t('seo_h3_2', L)}</h3>
+      <p data-i18n="seo_p3">{t('seo_p3', L)}</p>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .placeholder {
-    padding: 90px 0;
-    background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 100%);
-    color: #fff;
-    text-align: center;
-  }
-  .placeholder__eyebrow {
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 2px;
-    color: #c9a961;
-    background: rgba(201, 169, 97, 0.12);
-    border: 1px solid rgba(201, 169, 97, 0.35);
-    padding: 6px 14px;
-    border-radius: 99px;
-    margin-bottom: 20px;
-  }
-  .placeholder h1 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 42px;
-    font-weight: 800;
-    margin: 0 0 14px;
-    letter-spacing: -0.5px;
-  }
-  .placeholder p {
-    max-width: 560px;
-    margin: 0 auto 36px;
-    color: rgba(255, 255, 255, 0.82);
-    line-height: 1.6;
-  }
-  .placeholder__grid {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  .placeholder__card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(201, 169, 97, 0.25);
-    border-radius: 14px;
-    padding: 22px 28px;
-    font-weight: 700;
-    color: #d4b674;
-  }
-  .placeholder__card small {
-    color: rgba(255, 255, 255, 0.6);
-    font-weight: 500;
-  }
+  /* CTA cards */
+  .fkag-cta { background: #f5f7fa; padding: 80px 0; width: 100%; }
+  .fkag-cta__inner { max-width: 1280px; margin: 0 auto; padding: 0 48px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .fkag-cta__card { background: #fff; border-radius: 14px; padding: 44px 32px; text-align: center; text-decoration: none; color: #0c1929; border: 1px solid #eef1f5; transition: all 0.25s; display: flex; flex-direction: column; align-items: center; }
+  .fkag-cta__card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(10, 10, 10, 0.12); border-color: #0a0a0a; }
+  .fkag-cta__icon { width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, #0a0a0a, #1a1a1a); color: #fff; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+  .fkag-cta__card h3 { font-size: 22px; font-weight: 700; margin: 0 0 8px; color: #0c1929; }
+  .fkag-cta__card p { font-size: 15px; color: #5b6b7c; margin: 0; line-height: 1.5; }
+  @media (max-width: 980px) { .fkag-cta { padding: 60px 0; } .fkag-cta__inner { padding: 0 24px; grid-template-columns: 1fr; gap: 16px; } .fkag-cta__card { padding: 32px 24px; } }
+
+  /* Dividers */
+  .fkag-divider { background: linear-gradient(135deg, #c9a961, #d4b674); padding: 24px 0; width: 100%; }
+  .fkag-divider--alt { background: linear-gradient(135deg, #0a0a0a, #1a1a1a); }
+  .fkag-divider__inner { max-width: 1280px; margin: 0 auto; padding: 0 48px; display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; }
+  .fkag-divider__text { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 18px; letter-spacing: 2px; text-transform: uppercase; color: #0c1929; text-align: center; }
+  .fkag-divider--alt .fkag-divider__text { color: #c9a961; }
+  .fkag-divider__icon { font-size: 20px; color: #0c1929; opacity: 0.7; }
+  .fkag-divider--alt .fkag-divider__icon { color: #c9a961; opacity: 1; }
+  @media (max-width: 640px) { .fkag-divider__text { font-size: 13px; letter-spacing: 1px; } .fkag-divider__inner { padding: 0 16px; gap: 10px; } }
+
+  /* Brands */
+  .fkag-brands { background: #fff; padding: 80px 0; width: 100%; }
+  .fkag-brands__container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+  .fkag-brands__head { text-align: center; margin-bottom: 56px; }
+  .fkag-brands__eyebrow { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #a88a47; margin-bottom: 12px; }
+  .fkag-brands__title { font-size: 36px; font-weight: 800; color: #0c1929; margin: 0 0 12px; }
+  .fkag-brands__subtitle { font-size: 17px; color: #5b6b7c; margin: 0; }
+  .fkag-brands__grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; align-items: center; }
+  .fkag-brands__item { display: flex; align-items: center; justify-content: center; height: 120px; padding: 20px; background: #fafbfc; border-radius: 12px; border: 1px solid #eef1f5; transition: all 0.25s; text-decoration: none; }
+  .fkag-brands__item img { max-height: 52px; max-width: 110px; width: auto; height: auto; object-fit: contain; opacity: 0.55; transition: all 0.25s; }
+  .fkag-brands__item:hover { border-color: #c9a961; background: #fff; box-shadow: 0 8px 24px rgba(201, 169, 97, 0.18); transform: translateY(-2px); }
+  .fkag-brands__item:hover img { opacity: 1; transform: scale(1.05); }
+  @media (max-width: 980px) { .fkag-brands { padding: 60px 0; } .fkag-brands__grid { grid-template-columns: repeat(4, 1fr); gap: 16px; } .fkag-brands__title { font-size: 30px; } }
+  @media (max-width: 640px) { .fkag-brands__grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } .fkag-brands__item { height: 96px; padding: 14px; } }
+
+  /* Reviews */
+  .fkag-reviews { background: #f5f7fa; padding: 90px 0; width: 100%; }
+  .fkag-reviews__inner { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+  .fkag-reviews__head { text-align: center; margin-bottom: 48px; display: flex; flex-direction: column; align-items: center; }
+  .fkag-reviews__google { display: block; margin: 0 auto 16px; width: 56px; height: 56px; }
+  .fkag-reviews__head h2 { font-size: 42px; font-weight: 800; color: #0c1929; margin: 0 0 14px; }
+  .fkag-reviews__rating { display: inline-flex; align-items: center; gap: 10px; font-size: 16px; color: #5b6b7c; flex-wrap: wrap; justify-content: center; }
+  .fkag-reviews__rating .fkag-reviews__stars { color: #c9a961; font-size: 22px; }
+  .fkag-reviews__rating .fkag-reviews__score { font-weight: 700; color: #0c1929; }
+  .fkag-reviews__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .fkag-reviews__card { background: #fff; padding: 28px 24px; border-radius: 12px; border: 1px solid #eef1f5; transition: all 0.25s; }
+  .fkag-reviews__card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08); border-color: #c9a961; }
+  .fkag-reviews__card .fkag-reviews__stars { color: #c9a961; font-size: 18px; margin-bottom: 14px; }
+  .fkag-reviews__card p { font-size: 15px; line-height: 1.6; color: #37475a; margin: 0 0 18px; font-style: italic; }
+  .fkag-reviews__author { display: flex; flex-direction: column; gap: 2px; font-size: 13px; color: #7a8595; }
+  .fkag-reviews__author strong { color: #0c1929; font-size: 14px; }
+  @media (max-width: 980px) { .fkag-reviews { padding: 60px 0; } .fkag-reviews__inner { padding: 0 24px; } .fkag-reviews__head h2 { font-size: 32px; } .fkag-reviews__grid { grid-template-columns: 1fr; } }
+
+  /* SEO block */
+  .fkag-seo { background: #fff; padding: 80px 0; width: 100%; border-top: 4px solid #c9a961; }
+  .fkag-seo__inner { max-width: 920px; margin: 0 auto; padding: 0 48px; }
+  .fkag-seo__inner h2 { font-size: 34px; font-weight: 800; color: #0a0a0a; margin: 0 0 20px; }
+  .fkag-seo__inner h3 { font-size: 22px; font-weight: 700; color: #0c1929; margin: 32px 0 12px; }
+  .fkag-seo__inner p { font-size: 16px; line-height: 1.7; color: #37475a; margin: 0 0 16px; }
+  @media (max-width: 980px) { .fkag-seo { padding: 60px 0; } .fkag-seo__inner { padding: 0 24px; } .fkag-seo__inner h2 { font-size: 26px; } }
 </style>
