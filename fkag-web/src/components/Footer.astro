@@ -16,7 +16,9 @@ const L = 'es'; // idioma por defecto para el render inicial (SSR); el cliente l
           class="fkag-footer__logo"
           width="200"
           height="55"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
         />
+        <span class="fkag-footer__logo-fallback">FAMILY KEY<b>AUTO GROUP</b></span>
         <p class="fkag-footer__tagline">
           <span data-i18n="footer_tagline">{t('footer_tagline', L)}</span>
         </p>
@@ -154,6 +156,23 @@ const L = 'es'; // idioma por defecto para el render inicial (SSR); el cliente l
     height: 50px;
     width: auto;
     margin-bottom: 16px;
+  }
+  .fkag-footer__logo-fallback {
+    display: none;
+    flex-direction: column;
+    line-height: 1;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: 1px;
+    color: #c9a961;
+    margin-bottom: 16px;
+  }
+  .fkag-footer__logo-fallback b {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    color: #94a3b8;
   }
   .fkag-footer__tagline {
     font-size: 15px;
