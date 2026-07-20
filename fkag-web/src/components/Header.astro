@@ -1,0 +1,368 @@
+---
+import { site, assets, nav } from '../config/site';
+import { t } from '../i18n';
+
+const L = 'es';
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === '/' ? path === '/' : path.startsWith(href);
+
+const marquee = [
+  'marquee_sold',
+  'marquee_low_down',
+  'marquee_approval',
+  'marquee_carfax',
+  'marquee_inspection',
+] as const;
+---
+
+<header class="fkag-hd">
+  <!-- Top bar -->
+  <div class="fkag-hd__top">
+    <div class="fkag-hd__top-inner">
+      <div class="fkag-hd__top-left">
+        <span class="fkag-hd__top-item">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span data-i18n="topbar_hours">{t('topbar_hours', L)}</span>
+        </span>
+        <span class="fkag-hd__top-item">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>{site.address.full}</span>
+        </span>
+      </div>
+      <div class="fkag-hd__top-right">
+        <div class="fkag-hd__lang">
+          <button type="button" class="fkag-lang__btn" data-lang="es" aria-label="Español">ES</button>
+          <button type="button" class="fkag-lang__btn" data-lang="en" aria-label="English">EN</button>
+        </div>
+        <a href="/financing/apply/" class="fkag-hd__cta" data-i18n="nav_get_prequalified">{t('nav_get_prequalified', L)}</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main bar -->
+  <div class="fkag-hd__main">
+    <div class="fkag-hd__main-inner">
+      <a href="/" class="fkag-hd__logo" aria-label={site.name}>
+        <img src={assets.logoHeader} alt={site.name} width="190" height="48" />
+      </a>
+
+      <nav class="fkag-hd__nav" id="fkagNav" aria-label="Principal">
+        {
+          nav.map((item) =>
+            'children' in item && item.children ? (
+              <div class="fkag-hd__dropdown">
+                <a
+                  href={item.href}
+                  class:list={['fkag-hd__link', 'fkag-hd__link--parent', isActive(item.href) && 'is-active']}
+                >
+                  <span data-i18n={item.key}>{t(item.key, L)}</span>
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </a>
+                <div class="fkag-hd__menu">
+                  {item.children.map((c) => (
+                    <a href={c.href} class="fkag-hd__menu-link">
+                      <span data-i18n={c.key}>{t(c.key, L)}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <a
+                href={item.href}
+                class:list={['fkag-hd__link', isActive(item.href) && 'is-active']}
+              >
+                <span data-i18n={item.key}>{t(item.key, L)}</span>
+              </a>
+            )
+          )
+        }
+      </nav>
+
+      <button class="fkag-hd__burger" id="fkagBurger" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Marquee -->
+  <div class="fkag-hd__marquee" aria-hidden="true">
+    <div class="fkag-hd__marquee-track">
+      {
+        [0, 1, 2].map(() =>
+          marquee.map((k) => (
+            <span class="fkag-hd__marquee-item">★ <span data-i18n={k}>{t(k, L)}</span></span>
+          ))
+        )
+      }
+    </div>
+  </div>
+</header>
+
+<script>
+  (function () {
+    var burger = document.getElementById('fkagBurger');
+    var nav = document.getElementById('fkagNav');
+    if (burger && nav) {
+      burger.addEventListener('click', function () {
+        var open = nav.classList.toggle('is-open');
+        burger.classList.toggle('is-open', open);
+        burger.setAttribute('aria-expanded', String(open));
+        document.body.style.overflow = open ? 'hidden' : '';
+      });
+      nav.addEventListener('click', function (e) {
+        var target = e.target as HTMLElement;
+        if (target.closest('a')) {
+          nav.classList.remove('is-open');
+          burger.classList.remove('is-open');
+          burger.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        }
+      });
+    }
+  })();
+</script>
+
+<style>
+  .fkag-hd {
+    position: sticky;
+    top: 0;
+    z-index: 500;
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  /* Top bar */
+  .fkag-hd__top {
+    background: #0a0a0a;
+    color: #cbd5e1;
+    font-size: 12.5px;
+  }
+  .fkag-hd__top-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 8px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .fkag-hd__top-left {
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+  }
+  .fkag-hd__top-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .fkag-hd__top-item svg {
+    color: #c9a961;
+  }
+  .fkag-hd__top-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .fkag-hd__lang {
+    display: inline-flex;
+    border: 1px solid rgba(201, 169, 97, 0.4);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .fkag-lang__btn {
+    background: transparent;
+    color: #cbd5e1;
+    border: 0;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+  .fkag-lang__btn.active {
+    background: #c9a961;
+    color: #0c0c0c;
+  }
+  .fkag-hd__cta {
+    background: #c9a961;
+    color: #0c0c0c;
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .fkag-hd__cta:hover {
+    background: #d4b674;
+  }
+
+  /* Main bar */
+  .fkag-hd__main-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .fkag-hd__logo img {
+    height: 48px;
+    width: auto;
+  }
+  .fkag-hd__nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .fkag-hd__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 14px;
+    color: #0c0c0c;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 6px;
+    transition: color 0.2s, background 0.2s;
+  }
+  .fkag-hd__link:hover,
+  .fkag-hd__link.is-active {
+    color: #a88a47;
+  }
+  .fkag-hd__dropdown {
+    position: relative;
+  }
+  .fkag-hd__menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 220px;
+    background: #fff;
+    border: 1px solid #e8e4dc;
+    border-radius: 10px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    padding: 8px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(6px);
+    transition: all 0.2s;
+    z-index: 10;
+  }
+  .fkag-hd__dropdown:hover .fkag-hd__menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .fkag-hd__menu-link {
+    display: block;
+    padding: 10px 14px;
+    color: #0c0c0c;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+  }
+  .fkag-hd__menu-link:hover {
+    background: #fdf8ec;
+    color: #a88a47;
+  }
+
+  /* Burger */
+  .fkag-hd__burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 8px;
+  }
+  .fkag-hd__burger span {
+    width: 24px;
+    height: 2px;
+    background: #0c0c0c;
+    border-radius: 2px;
+    transition: all 0.25s;
+  }
+  .fkag-hd__burger.is-open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .fkag-hd__burger.is-open span:nth-child(2) {
+    opacity: 0;
+  }
+  .fkag-hd__burger.is-open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Marquee */
+  .fkag-hd__marquee {
+    background: linear-gradient(135deg, #c9a961, #d4b674);
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .fkag-hd__marquee-track {
+    display: inline-flex;
+    gap: 40px;
+    padding: 9px 0;
+    animation: fkagMarquee 30s linear infinite;
+  }
+  .fkag-hd__marquee-item {
+    color: #0c0c0c;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  @keyframes fkagMarquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-33.33%);
+    }
+  }
+
+  @media (max-width: 980px) {
+    .fkag-hd__top-left {
+      display: none;
+    }
+    .fkag-hd__burger {
+      display: flex;
+    }
+    .fkag-hd__nav {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 300px;
+      max-width: 85vw;
+      background: #fff;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding: 80px 20px 20px;
+      box-shadow: -8px 0 30px rgba(0, 0, 0, 0.15);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      overflow-y: auto;
+    }
+    .fkag-hd__nav.is-open {
+      transform: translateX(0);
+    }
+    .fkag-hd__menu {
+      position: static;
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      box-shadow: none;
+      border: 0;
+      padding: 0 0 0 14px;
+    }
+  }
+</style>

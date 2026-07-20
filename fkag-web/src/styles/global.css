@@ -1,0 +1,102 @@
+/* ==========================================================
+   Family Key Auto Group — estilos globales + tokens
+   Tailwind 4 con @theme (los tokens generan utilidades:
+   bg-gold, text-ink, font-display, etc.)
+   ========================================================== */
+@import 'tailwindcss';
+
+/* Fuentes self-hosted (sin CDN de Google) */
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+@import '@fontsource/inter/800.css';
+@import '@fontsource/poppins/500.css';
+@import '@fontsource/poppins/600.css';
+@import '@fontsource/poppins/700.css';
+@import '@fontsource/poppins/800.css';
+
+@theme {
+  /* Marca */
+  --color-gold: #c9a961;
+  --color-gold-hover: #d4b674;
+  --color-gold-dark: #a88a47;
+
+  /* Neutros */
+  --color-ink: #0c0c0c;
+  --color-night: #0a0a0a;
+  --color-slate-txt: #5b6b7c;
+  --color-bg-light: #f5f7fa;
+  --color-line: #e8e4dc;
+
+  /* Estado */
+  --color-ok: #2f7d4f;
+  --color-err: #c0392b;
+
+  /* Tipografía */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Poppins', 'Inter', sans-serif;
+}
+
+/* Variables CSS planas para los <style> con scope de los componentes
+   (los que reutilizamos tal cual del WordPress) */
+:root {
+  --gold: #c9a961;
+  --gold-hover: #d4b674;
+  --gold-dark: #a88a47;
+  --ink: #0c0c0c;
+  --night: #0a0a0a;
+  --slate-txt: #5b6b7c;
+  --bg-light: #f5f7fa;
+  --line: #e8e4dc;
+  --ok: #2f7d4f;
+  --err: #c0392b;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--ink);
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+/* Contenedor estándar reutilizable */
+.fkag-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Utilidad de accesibilidad */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

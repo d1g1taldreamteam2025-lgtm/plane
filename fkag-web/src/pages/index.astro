@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Inicio">
+  <section class="placeholder">
+    <div class="fkag-container">
+      <span class="placeholder__eyebrow">MIGRACIÓN EN CURSO</span>
+      <h1>Base del sitio lista ✅</h1>
+      <p>
+        El header, footer y chat ya están migrados como componentes compartidos.
+        Aquí va el contenido del <strong>Home</strong> cuando lo pases desde WordPress.
+      </p>
+      <div class="placeholder__grid">
+        <div class="placeholder__card">Header · Footer · Chat<br /><small>listos</small></div>
+        <div class="placeholder__card">i18n ES/EN<br /><small>centralizado</small></div>
+        <div class="placeholder__card">Supabase · Webhook<br /><small>conectados</small></div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .placeholder {
+    padding: 90px 0;
+    background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 100%);
+    color: #fff;
+    text-align: center;
+  }
+  .placeholder__eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #c9a961;
+    background: rgba(201, 169, 97, 0.12);
+    border: 1px solid rgba(201, 169, 97, 0.35);
+    padding: 6px 14px;
+    border-radius: 99px;
+    margin-bottom: 20px;
+  }
+  .placeholder h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 42px;
+    font-weight: 800;
+    margin: 0 0 14px;
+    letter-spacing: -0.5px;
+  }
+  .placeholder p {
+    max-width: 560px;
+    margin: 0 auto 36px;
+    color: rgba(255, 255, 255, 0.82);
+    line-height: 1.6;
+  }
+  .placeholder__grid {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .placeholder__card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(201, 169, 97, 0.25);
+    border-radius: 14px;
+    padding: 22px 28px;
+    font-weight: 700;
+    color: #d4b674;
+  }
+  .placeholder__card small {
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 500;
+  }
+</style>

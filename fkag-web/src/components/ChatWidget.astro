@@ -1,0 +1,185 @@
+---
+import { site } from '../config/site';
+---
+
+<div class="fkcw3" id="fkcw3">
+  <a
+    href="#"
+    class="fkcw3__chat"
+    id="fkcw3Chat"
+    target="_blank"
+    rel="noopener"
+    aria-label="Chat con nosotros"
+  >
+    <span class="fkcw3__chat-icon">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        width="18"
+        height="18"
+      >
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+      </svg>
+    </span>
+    <span class="fkcw3__chat-text" id="fkcw3ChatText">Chat con Nosotros</span>
+  </a>
+  <a
+    href="#"
+    class="fkcw3__wa"
+    id="fkcw3Wa"
+    target="_blank"
+    rel="noopener"
+    aria-label="WhatsApp"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="34" height="34">
+      <path
+        fill="#fff"
+        d="M16 4C9.4 4 4 9.4 4 16c0 2.1.5 4.1 1.5 5.9L4 28l6.3-1.5c1.7.9 3.7 1.5 5.7 1.5 6.6 0 12-5.4 12-12S22.6 4 16 4zm0 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.7.9.9-3.6-.2-.4c-1-1.6-1.5-3.4-1.5-5.2 0-5.5 4.4-9.9 9.9-9.9s9.9 4.4 9.9 9.9c0 5.5-4.4 9.9-9.9 9.9zm5.4-7.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.4.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.4z"
+      ></path>
+    </svg>
+  </a>
+</div>
+
+<script define:vars={{ waNumber: site.whatsappNumber }}>
+  (function () {
+    if (window.__fkcw3Ready) return;
+    window.__fkcw3Ready = true;
+    var MESSAGES = {
+      es: { chatText: 'Chat con Nosotros', waMessage: 'Hola, quiero información para comprar un carro' },
+      en: { chatText: 'Chat with Us', waMessage: 'Hi, I want information about buying a car' },
+    };
+    function getLang() {
+      try {
+        var s = localStorage.getItem('fkag_lang');
+        if (s === 'es' || s === 'en') return s;
+      } catch (e) {}
+      return 'es';
+    }
+    function waUrl(lang) {
+      var msg = (MESSAGES[lang] || MESSAGES.es).waMessage;
+      return 'https://wa.me/' + waNumber + '?text=' + encodeURIComponent(msg);
+    }
+    function update(lang) {
+      var txt = document.getElementById('fkcw3ChatText');
+      var chat = document.getElementById('fkcw3Chat');
+      var wa = document.getElementById('fkcw3Wa');
+      if (!txt || !chat || !wa) return;
+      var pack = MESSAGES[lang] || MESSAGES.es;
+      txt.textContent = pack.chatText;
+      var u = waUrl(lang);
+      chat.setAttribute('href', u);
+      wa.setAttribute('href', u);
+    }
+    function init() {
+      update(getLang());
+      window.addEventListener('fkag-lang-change', function (e) {
+        update((e && e.detail && e.detail.lang) || getLang());
+      });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
+  })();
+</script>
+
+<style>
+  .fkcw3 {
+    position: fixed;
+    z-index: 9998;
+    pointer-events: none;
+  }
+  .fkcw3 a {
+    pointer-events: auto;
+  }
+  .fkcw3__chat {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #c9a961;
+    color: #0c0c0c;
+    padding: 14px 22px;
+    border-radius: 0 8px 8px 0;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    box-shadow: 4px 0 16px rgba(0, 0, 0, 0.25);
+    transition: all 0.25s ease;
+    white-space: nowrap;
+    writing-mode: vertical-rl;
+    transform: translateY(-50%) rotate(180deg);
+    transform-origin: center center;
+  }
+  .fkcw3__chat:hover {
+    background: #a88a47;
+    padding-right: 28px;
+  }
+  .fkcw3__chat-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(90deg);
+  }
+  .fkcw3__wa {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #25d366;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45), 0 0 0 0 rgba(37, 211, 102, 0.5);
+    transition: all 0.25s ease;
+    animation: fkcw3Pulse 2.4s infinite;
+  }
+  .fkcw3__wa:hover {
+    transform: scale(1.08);
+    background: #1fb855;
+    animation: none;
+  }
+  @keyframes fkcw3Pulse {
+    0% {
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45), 0 0 0 0 rgba(37, 211, 102, 0.5);
+    }
+    70% {
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45), 0 0 0 18px rgba(37, 211, 102, 0);
+    }
+    100% {
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45), 0 0 0 0 rgba(37, 211, 102, 0);
+    }
+  }
+  @media (max-width: 768px) {
+    .fkcw3__chat {
+      padding: 10px 14px;
+      font-size: 11px;
+      letter-spacing: 0.8px;
+    }
+    .fkcw3__wa {
+      right: 16px;
+      bottom: 16px;
+      width: 56px;
+      height: 56px;
+    }
+    .fkcw3__wa svg {
+      width: 30px;
+      height: 30px;
+    }
+  }
+  @media print {
+    .fkcw3 {
+      display: none;
+    }
+  }
+</style>
