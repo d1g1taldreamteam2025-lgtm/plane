@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Mapa del Sitio" description="Mapa del sitio de Family Key Auto Group: todas las páginas y secciones organizadas para una navegación fácil.">
+  <section class="fkag-legal-page">
+    <div class="fkag-legal__inner">
+      <div class="fkag-legal__content">
+        <h1 data-i18n="legal_sitemap_title">Sitemap</h1>
+        <p class="fkag-legal__updated" data-i18n="legal_sitemap_sub">All pages and sections of our website, organized for easy navigation.</p>
+
+        <h2 data-i18n="legal_sitemap_main">Main Pages</h2>
+        <ul>
+          <li><a href="/" data-i18n="nav_home">Home</a></li>
+          <li><a href="/inventory/" data-i18n="nav_inventory">Inventory</a></li>
+          <li><a href="/financing/" data-i18n="nav_financing">Financing</a></li>
+          <li><a href="/about/" data-i18n="nav_about">About</a></li>
+          <li><a href="/contact/" data-i18n="nav_contact">Contact Us</a></li>
+          <li><a href="/faqs/" data-i18n="nav_faqs">FAQs</a></li>
+        </ul>
+
+        <h2 data-i18n="legal_sitemap_inv">Inventory</h2>
+        <ul>
+          <li><a href="/inventory/" data-i18n="footer_view_all">View All Inventory</a></li>
+          <li><a href="/inventory/?price=under-20k" data-i18n="footer_under_20k">Under $20k</a></li>
+          <li><a href="/inventory/?price=under-10k" data-i18n="footer_under_10k">Under $10k</a></li>
+          <li><a href="/inventory/?body=suv" data-i18n="footer_suv">SUVs</a></li>
+          <li><a href="/inventory/?body=sedan" data-i18n="footer_sedan">Sedans</a></li>
+          <li><a href="/inventory/?body=truck" data-i18n="footer_truck">Trucks</a></li>
+        </ul>
+
+        <h2 data-i18n="legal_sitemap_fin">Financing</h2>
+        <ul>
+          <li><a href="/financing/" data-i18n="nav_financing_overview">Financing Overview</a></li>
+          <li><a href="/financing/apply/" data-i18n="nav_financing_apply">Apply for Financing</a></li>
+        </ul>
+
+        <h2 data-i18n="legal_sitemap_legal">Legal</h2>
+        <ul>
+          <li><a href="/privacy/" data-i18n="footer_privacy">Privacy Policy</a></li>
+          <li><a href="/terms/" data-i18n="footer_terms">Terms of Use</a></li>
+          <li><a href="/sitemap/" data-i18n="footer_sitemap">Sitemap</a></li>
+          <li><a href="/accessibility/" data-i18n="footer_accessibility">Accessibility</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  (function () {
+    var LANG = (function () { try { var x = localStorage.getItem('fkag_lang'); return (x === 'en' || x === 'es') ? x : 'es'; } catch (e) { return 'es'; } })();
+    var TR = {
+      legal_sitemap_title:  { en: 'Sitemap', es: 'Mapa del Sitio' },
+      legal_sitemap_sub:    { en: 'All pages and sections of our website, organized for easy navigation.', es: 'Todas las páginas y secciones de nuestro sitio, organizadas para una navegación fácil.' },
+      legal_sitemap_main:   { en: 'Main Pages', es: 'Páginas Principales' },
+      legal_sitemap_inv:    { en: 'Inventory', es: 'Inventario' },
+      legal_sitemap_fin:    { en: 'Financing', es: 'Financiamiento' },
+      legal_sitemap_legal:  { en: 'Legal', es: 'Legal' },
+      nav_home:             { en: 'Home', es: 'Inicio' },
+      nav_inventory:        { en: 'Inventory', es: 'Inventario' },
+      nav_financing:        { en: 'Financing', es: 'Financiamiento' },
+      nav_financing_overview:{ en: 'Financing Overview', es: 'Resumen de Financiamiento' },
+      nav_financing_apply:  { en: 'Apply for Financing', es: 'Aplicar para Financiamiento' },
+      nav_about:            { en: 'About', es: 'Nosotros' },
+      nav_contact:          { en: 'Contact Us', es: 'Contáctanos' },
+      nav_faqs:             { en: 'FAQs', es: 'Preguntas Frecuentes' },
+      footer_view_all:      { en: 'View All Inventory', es: 'Ver Todo el Inventario' },
+      footer_under_20k:     { en: 'Under $20k', es: 'Menos de $20k' },
+      footer_under_10k:     { en: 'Under $10k', es: 'Menos de $10k' },
+      footer_suv:           { en: 'SUVs', es: 'SUVs' },
+      footer_sedan:         { en: 'Sedans', es: 'Sedanes' },
+      footer_truck:         { en: 'Trucks', es: 'Camionetas' },
+      footer_privacy:       { en: 'Privacy Policy', es: 'Política de Privacidad' },
+      footer_terms:         { en: 'Terms of Use', es: 'Términos de Uso' },
+      footer_sitemap:       { en: 'Sitemap', es: 'Mapa del Sitio' },
+      footer_accessibility: { en: 'Accessibility', es: 'Accesibilidad' }
+    };
+    function t(k) { return TR[k] ? (TR[k][LANG] || TR[k].en) : k; }
+    function applyTr() {
+      document.querySelectorAll('.fkag-legal-page [data-i18n]').forEach(function (el) {
+        var k = el.getAttribute('data-i18n');
+        if (TR[k]) el.innerHTML = t(k);
+      });
+    }
+    applyTr();
+    window.addEventListener('fkag-lang-change', function (e) {
+      var nl = (e.detail && e.detail.lang) || LANG;
+      if (nl === LANG) return;
+      LANG = nl;
+      applyTr();
+    });
+  })();
+</script>
+
+<style>
+  .fkag-legal-page { background: #fff; padding: 60px 24px 80px; color: #0c0c0c; }
+  .fkag-legal__inner { max-width: 860px; margin: 0 auto; }
+  .fkag-legal__content { font-size: 15px; line-height: 1.75; color: #2a2a2a; }
+  .fkag-legal__content h1 { font-family: 'Poppins', sans-serif; font-size: 38px; font-weight: 800; color: #0c0c0c; margin: 0 0 8px; letter-spacing: -0.5px; line-height: 1.2; }
+  .fkag-legal__updated { font-size: 13px; color: #5b6a7e; margin: 0 0 36px; padding-bottom: 18px; border-bottom: 1px solid #e3e8ef; }
+  .fkag-legal__content h2 { font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 700; color: #0c0c0c; margin: 36px 0 14px; letter-spacing: -0.2px; border-left: 3px solid #c9a961; padding-left: 12px; }
+  .fkag-legal__content h2:first-of-type { margin-top: 8px; }
+  .fkag-legal__content p { margin: 0 0 16px; }
+  .fkag-legal__content ul { list-style: none; padding: 0; margin: 0 0 8px; }
+  .fkag-legal__content ul li { padding: 8px 0; border-bottom: 1px solid #eef1f5; }
+  .fkag-legal__content ul li:last-child { border-bottom: 0; }
+  .fkag-legal__content ul li a { color: #a88a47; font-weight: 600; text-decoration: none; display: inline-block; }
+  .fkag-legal__content ul li a:hover { text-decoration: underline; color: #c9a961; }
+  @media (max-width: 600px) {
+    .fkag-legal-page { padding: 40px 18px 60px; }
+    .fkag-legal__content { font-size: 14.5px; }
+    .fkag-legal__content h1 { font-size: 30px; }
+    .fkag-legal__content h2 { font-size: 18px; }
+  }
+</style>
