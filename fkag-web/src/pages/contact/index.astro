@@ -1,0 +1,283 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { site } from '../../config/site';
+
+const osmSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${encodeURIComponent(site.address.osmBbox)}&layer=mapnik&marker=${encodeURIComponent(site.address.osmMarker)}`;
+const gmapsHref = `https://maps.google.com/?q=${site.address.googleMapsQuery}`;
+---
+
+<BaseLayout title="Contacto" description="Contáctanos en Family Key Auto Group. Teléfono, WhatsApp, email y visita a nuestro concesionario en Rialto, CA. Respondemos en un día hábil.">
+  <div class="fkag-ct-page">
+    <section class="fkag-ct-hero">
+      <div class="fkag-container">
+        <h1 data-i18n="contact_title">Get in Touch</h1>
+        <p data-i18n="contact_sub">Have a question, ready to schedule a visit, or want help finding the right car? We're here for you.</p>
+      </div>
+    </section>
+
+    <section class="fkag-ct-body">
+      <div class="fkag-container">
+        <div class="fkag-ct-grid">
+          <div class="fkag-ct-form-card" id="fkagContactWrap">
+            <h2 data-i18n="contact_form_title">Send Us a Message</h2>
+            <p class="sub" data-i18n="contact_form_sub">We'll respond within one business day — usually much sooner.</p>
+            <form class="fkag-ct-form" id="fkagContactForm" novalidate>
+              <div class="fkag-row2">
+                <div class="fkag-fld"><label><span data-i18n="form_fname">First Name</span> <span class="req">*</span></label><input type="text" name="first_name" required></div>
+                <div class="fkag-fld"><label><span data-i18n="form_lname">Last Name</span> <span class="req">*</span></label><input type="text" name="last_name" required></div>
+              </div>
+              <div class="fkag-row2">
+                <div class="fkag-fld"><label><span data-i18n="form_email">Email</span> <span class="req">*</span></label><input type="email" name="email" required></div>
+                <div class="fkag-fld"><label><span data-i18n="form_phone">Phone</span></label><input type="tel" name="phone"></div>
+              </div>
+              <div class="fkag-fld">
+                <label><span data-i18n="form_help">How can we help?</span> <span class="req">*</span></label>
+                <select name="topic" required>
+                  <option value="" data-i18n="topic_default">Select a topic...</option>
+                  <option data-i18n="topic_vehicle">I'm interested in a vehicle</option>
+                  <option data-i18n="topic_financing">Financing questions</option>
+                  <option data-i18n="topic_general">General inquiry</option>
+                  <option data-i18n="topic_prequal">Pre-qualification status</option>
+                  <option data-i18n="topic_other">Other</option>
+                </select>
+              </div>
+              <div class="fkag-fld"><label><span data-i18n="form_message">Message</span> <span class="req">*</span></label><textarea name="message" placeholder="Tell us a bit about what you're looking for..." data-i18n-placeholder="form_message_placeholder" required></textarea></div>
+              <label class="fkag-consent"><input type="checkbox" name="contact_consent" required><span data-i18n="contact_consent">I agree to be contacted by Family Key Auto Group regarding my inquiry. Standard message and data rates may apply.</span></label>
+              <div class="fkag-sms-consent"><label class="fkag-sms-consent__label"><input type="checkbox" name="sms_consent" required><span class="fkag-sms-consent__text" data-i18n="sms_consent_text">By checking this box, I consent to receive SMS and calls from <strong>Family Key Auto Group</strong> regarding my inquiry about vehicles, financing, and related services. Reply <strong>STOP</strong> to opt-out. Reply <strong>HELP</strong> for support. Message &amp; data rates may apply. Messaging frequency may vary. <a href="/privacy/" target="_blank">Privacy Policy</a> and <a href="/terms/" target="_blank">Terms of Service</a>.</span></label></div>
+              <button type="submit"><span data-i18n="form_send">Send Message</span></button>
+              <div class="fkag-ct-error" id="fkagContactError" style="display:none" data-i18n="form_error">Something went wrong. Please try again or call us at (949) 514-7366.</div>
+            </form>
+          </div>
+
+          <div class="fkag-ct-info">
+            <div class="fkag-ct-card">
+              <h3 data-i18n="contact_reach">Reach Us Directly</h3>
+              <div class="row"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div><b data-i18n="contact_phone">Phone</b><a href={`tel:${site.phoneHref}`}>{site.phoneDisplay}</a></div></div>
+              <div class="row"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 5.2 8.38 8.38 0 0 1-3.8-.9L3 21l1.4-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 5.2-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div><div><b data-i18n="contact_whatsapp">WhatsApp</b><a href={`https://wa.me/${site.whatsappNumber}`} data-i18n="whatsapp_chat">Chat on WhatsApp</a></div></div>
+              <div class="row"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><b data-i18n="contact_email_label">Email</b><a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a></div></div>
+              <div class="row"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><b data-i18n="contact_visit">Visit Us</b><span>{site.address.line1}<br>{site.address.line2}</span></div></div>
+            </div>
+
+            <div class="fkag-ct-card">
+              <h3 data-i18n="contact_hours">Hours</h3>
+              <div class="fkag-hours-list">
+                <div class="fkag-hours-row"><span class="fkag-hours-day"><span data-i18n="day_mon">Monday</span></span><span class="fkag-hours-time">9:00am – 7:00pm</span></div>
+                <div class="fkag-hours-row"><span class="fkag-hours-day"><span data-i18n="day_tue">Tuesday</span></span><span class="fkag-hours-time">9:00am – 7:00pm</span></div>
+                <div class="fkag-hours-row"><span class="fkag-hours-day"><span data-i18n="day_wed">Wednesday</span></span><span class="fkag-hours-time">9:00am – 7:00pm</span></div>
+                <div class="fkag-hours-row"><span class="fkag-hours-day"><span data-i18n="day_thu">Thursday</span></span><span class="fkag-hours-time">9:00am – 7:00pm</span></div>
+                <div class="fkag-hours-row"><span class="fkag-hours-day"><span data-i18n="day_fri">Friday</span></span><span class="fkag-hours-time">9:00am – 7:00pm</span></div>
+                <div class="fkag-hours-row"><span class="fkag-hours-day"><span data-i18n="day_sat">Saturday</span></span><span class="fkag-hours-time">9:00am – 7:00pm</span></div>
+                <div class="fkag-hours-row fkag-hours-row--accent"><span class="fkag-hours-day"><span data-i18n="day_sun">Sunday</span></span><span class="fkag-hours-time">11:00am – 5:00pm</span></div>
+              </div>
+            </div>
+
+            <div class="fkag-ct-card">
+              <h3 data-i18n="connect_title">Connect With Us</h3>
+              <div class="fkag-ct-socials">
+                <a href={site.social.facebook || '#'} aria-label="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07c0 6.03 4.39 11.03 10.13 11.93v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg></a>
+                <a href={site.social.instagram || '#'} aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                <a href={`https://wa.me/${site.whatsappNumber}`} aria-label="WhatsApp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2zm5.4 14.1c-.2.6-1.3 1.1-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 .9-2.2.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5.2.5.7 1.8.8 1.9.1.1.1.3 0 .5-.1.2-.1.3-.3.5l-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.7-.1.2-.2.8-.9 1-1.2.2-.3.4-.2.6-.1.2.1 1.5.7 1.7.8.2.1.4.2.5.3.1.2.1.7-.1 1.3z"/></svg></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="fkag-ct-map">
+          <div class="fkag-ct-mapbox">
+            <iframe src={osmSrc} loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Family Key Auto Group Location"></iframe>
+          </div>
+          <a href={gmapsHref} target="_blank" rel="noopener" class="fkag-ct-map-link" data-i18n="map_open">Open in Google Maps →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="fkag-ct-cta">
+      <div class="fkag-container">
+        <h2 data-i18n="cta_prefer_title">Prefer to start with a number?</h2>
+        <p data-i18n="cta_prefer_sub">Pre-qualify in 2 minutes — no SSN, no hard credit pull, no obligation.</p>
+        <a href="/financing/apply/" class="fkag-btn fkag-btn-pri" data-i18n="cta_prequalify">Get Pre-Qualified</a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  import { site } from '../../config/site';
+
+  (function () {
+    var LANG = (function () { try { var x = localStorage.getItem('fkag_lang'); return (x === 'en' || x === 'es') ? x : 'es'; } catch (e) { return 'es'; } })();
+    var TR = {
+      contact_title:       { en: 'Get in Touch', es: 'Contáctanos' },
+      contact_sub:         { en: "Have a question, ready to schedule a visit, or want help finding the right car? We're here for you.", es: '¿Tienes una pregunta, listo para agendar una visita, o quieres ayuda para encontrar el carro ideal? Aquí estamos para ti.' },
+      contact_form_title:  { en: 'Send Us a Message', es: 'Envíanos un Mensaje' },
+      contact_form_sub:    { en: "We'll respond within one business day — usually much sooner.", es: 'Respondemos en un día hábil — usualmente mucho antes.' },
+      form_fname:          { en: 'First Name', es: 'Nombre' },
+      form_lname:          { en: 'Last Name', es: 'Apellido' },
+      form_email:          { en: 'Email', es: 'Email' },
+      form_phone:          { en: 'Phone', es: 'Teléfono' },
+      form_help:           { en: 'How can we help?', es: '¿Cómo podemos ayudarte?' },
+      topic_default:       { en: 'Select a topic...', es: 'Selecciona un tema...' },
+      topic_vehicle:       { en: "I'm interested in a vehicle", es: 'Estoy interesado en un vehículo' },
+      topic_financing:     { en: 'Financing questions', es: 'Preguntas de financiamiento' },
+      topic_general:       { en: 'General inquiry', es: 'Consulta general' },
+      topic_prequal:       { en: 'Pre-qualification status', es: 'Estado de pre-calificación' },
+      topic_other:         { en: 'Other', es: 'Otro' },
+      form_message:        { en: 'Message', es: 'Mensaje' },
+      form_message_placeholder: { en: "Tell us a bit about what you're looking for...", es: 'Cuéntanos un poco sobre lo que buscas...' },
+      contact_consent:     { en: 'I agree to be contacted by Family Key Auto Group regarding my inquiry. Standard message and data rates may apply.', es: 'Acepto ser contactado por Family Key Auto Group sobre mi consulta. Pueden aplicar tarifas estándar de mensajería y datos.' },
+      sms_consent_text:    { en: 'By checking this box, I consent to receive SMS and calls from <strong>Family Key Auto Group</strong> regarding my inquiry about vehicles, financing, and related services. Reply <strong>STOP</strong> to opt-out. Reply <strong>HELP</strong> for support. Message &amp; data rates may apply. Messaging frequency may vary. <a href="/privacy/" target="_blank">Privacy Policy</a> and <a href="/terms/" target="_blank">Terms of Service</a>.', es: 'Al marcar esta casilla, doy mi consentimiento para recibir SMS y llamadas de <strong>Family Key Auto Group</strong> sobre mi consulta de vehículos, financiamiento y servicios relacionados. Responde <strong>STOP</strong> para cancelar. Responde <strong>HELP</strong> para soporte. Pueden aplicar tarifas. La frecuencia puede variar. <a href="/privacy/" target="_blank">Política de Privacidad</a> y <a href="/terms/" target="_blank">Términos de Servicio</a>.' },
+      form_send:           { en: 'Send Message', es: 'Enviar Mensaje' },
+      form_sending:        { en: 'Sending...', es: 'Enviando...' },
+      form_error:          { en: 'Something went wrong. Please try again or call us at (949) 514-7366.', es: 'Algo salió mal. Intenta de nuevo o llámanos al (949) 514-7366.' },
+      form_success_title:  { en: 'Message Sent!', es: '¡Mensaje Enviado!' },
+      form_success_msg:    { en: 'Thanks for reaching out. A team member will be in touch shortly.', es: 'Gracias por escribirnos. Un miembro del equipo te contactará pronto.' },
+      contact_reach:       { en: 'Reach Us Directly', es: 'Contáctanos Directamente' },
+      contact_phone:       { en: 'Phone', es: 'Teléfono' },
+      contact_whatsapp:    { en: 'WhatsApp', es: 'WhatsApp' },
+      whatsapp_chat:       { en: 'Chat on WhatsApp', es: 'Chatea por WhatsApp' },
+      contact_email_label: { en: 'Email', es: 'Email' },
+      contact_visit:       { en: 'Visit Us', es: 'Visítanos' },
+      contact_hours:       { en: 'Hours', es: 'Horarios' },
+      day_mon:             { en: 'Monday', es: 'Lunes' },
+      day_tue:             { en: 'Tuesday', es: 'Martes' },
+      day_wed:             { en: 'Wednesday', es: 'Miércoles' },
+      day_thu:             { en: 'Thursday', es: 'Jueves' },
+      day_fri:             { en: 'Friday', es: 'Viernes' },
+      day_sat:             { en: 'Saturday', es: 'Sábado' },
+      day_sun:             { en: 'Sunday', es: 'Domingo' },
+      connect_title:       { en: 'Connect With Us', es: 'Conéctate con Nosotros' },
+      map_open:            { en: 'Open in Google Maps →', es: 'Abrir en Google Maps →' },
+      cta_prefer_title:    { en: 'Prefer to start with a number?', es: '¿Prefieres empezar con un número?' },
+      cta_prefer_sub:      { en: 'Pre-qualify in 2 minutes — no SSN, no hard credit pull, no obligation.', es: 'Pre-califica en 2 minutos — sin SSN, sin consulta dura, sin obligación.' },
+      cta_prequalify:      { en: 'Get Pre-Qualified', es: 'Pre-Calificar' }
+    };
+    function t(k) { return TR[k] ? (TR[k][LANG] || TR[k].en) : k; }
+    function applyTr() {
+      document.querySelectorAll('.fkag-ct-page [data-i18n]').forEach(function (el) {
+        var k = el.getAttribute('data-i18n');
+        if (TR[k]) el.innerHTML = t(k);
+      });
+      document.querySelectorAll('.fkag-ct-page [data-i18n-placeholder]').forEach(function (el) {
+        var k = el.getAttribute('data-i18n-placeholder');
+        if (TR[k]) el.setAttribute('placeholder', t(k));
+      });
+    }
+    applyTr();
+    window.addEventListener('fkag-lang-change', function (e) {
+      var nl = (e.detail && e.detail.lang) || LANG;
+      if (nl === LANG) return;
+      LANG = nl;
+      applyTr();
+    });
+
+    var form = document.getElementById('fkagContactForm');
+    if (!form) return;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = form.querySelector('button[type="submit"]');
+      var errorBox = document.getElementById('fkagContactError');
+      var wrap = document.getElementById('fkagContactWrap');
+      if (errorBox) errorBox.style.display = 'none';
+      if (btn) { btn.disabled = true; btn.style.opacity = '0.7'; var s = btn.querySelector('span'); if (s) s.textContent = t('form_sending'); else btn.textContent = t('form_sending'); }
+      var d = {};
+      new FormData(form).forEach(function (v, k) { d[k] = v; });
+      var fullName = ((d.first_name || '') + ' ' + (d.last_name || '')).trim();
+      var topic = d.topic || '';
+      var msg = d.message || '';
+      var combined = (topic ? '[Topic: ' + topic + ']\n\n' : '') + msg;
+      var payload = {
+        form_type: 'contact',
+        name: fullName,
+        email: d.email || '',
+        phone: d.phone || '',
+        message: combined,
+        vehicle_id: '', vehicle_title: '', preferred_date: '',
+        _source_url: window.location.href,
+        _submitted_at: new Date().toISOString(),
+        _lang: LANG
+      };
+      fetch(site.webhookUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+        .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json().catch(function () { return {}; }); })
+        .then(function () {
+          if (wrap) {
+            wrap.innerHTML = '<div class="fkag-ct-success"><h3>✓ ' + t('form_success_title') + '</h3><p>' + t('form_success_msg') + '</p></div>';
+            wrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        })
+        .catch(function (err) {
+          console.error('Webhook error:', err);
+          if (errorBox) errorBox.style.display = 'block';
+          if (btn) { btn.disabled = false; btn.style.opacity = '1'; var s2 = btn.querySelector('span'); if (s2) s2.textContent = t('form_send'); else btn.textContent = t('form_send'); }
+        });
+    });
+  })();
+</script>
+
+<style>
+  .fkag-ct-page { width: 100%; }
+  .fkag-ct-hero { background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 100%); color: #fff; padding: 80px 0 60px; text-align: center; }
+  .fkag-ct-hero h1 { font-family: 'Poppins', sans-serif; font-size: 46px; font-weight: 800; margin: 0 0 14px; letter-spacing: -1px; color: #fff; }
+  .fkag-ct-hero p { font-size: 17px; color: rgba(255, 255, 255, 0.92); margin: 0 auto; max-width: 580px; }
+  .fkag-ct-body { padding: 80px 0; background: #f5f7fa; }
+  .fkag-ct-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; }
+  @media (max-width: 900px) { .fkag-ct-grid { grid-template-columns: 1fr; } }
+  .fkag-ct-form-card { background: #fff; border-radius: 14px; padding: 40px; border: 1px solid #e3e8ef; box-shadow: 0 6px 20px rgba(10, 10, 10, 0.05); }
+  .fkag-ct-form-card h2 { font-family: 'Poppins', sans-serif; font-size: 26px; font-weight: 800; color: #0c0c0c; margin: 0 0 8px; letter-spacing: -0.3px; }
+  .fkag-ct-form-card .sub { color: #5b6a7e; font-size: 15px; margin: 0 0 28px; }
+  .fkag-ct-form { display: grid; gap: 18px; }
+  .fkag-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 480px) { .fkag-row2 { grid-template-columns: 1fr; } }
+  .fkag-fld label { display: block; font-size: 13px; font-weight: 600; color: #0a0a0a; margin-bottom: 6px; }
+  .fkag-fld label .req { color: #c9a961; }
+  .fkag-fld input, .fkag-fld select, .fkag-fld textarea { width: 100%; padding: 11px 14px; border: 1px solid #e3e8ef; border-radius: 6px; font-size: 14px; font-family: inherit; color: #0a0a0a; background: #fff; }
+  .fkag-fld textarea { resize: vertical; min-height: 120px; }
+  .fkag-fld input:focus, .fkag-fld select:focus, .fkag-fld textarea:focus { outline: none; border-color: #c9a961; box-shadow: 0 0 0 3px rgba(201, 169, 97, 0.15); }
+  .fkag-ct-form button[type="submit"] { background: #c9a961; color: #0c0c0c; border: 0; padding: 14px; border-radius: 6px; font-weight: 700; font-size: 15px; cursor: pointer; letter-spacing: 0.3px; }
+  .fkag-ct-form button[type="submit"]:hover { background: #d4b674; }
+  .fkag-ct-form button:disabled { opacity: 0.6; cursor: not-allowed; }
+  .fkag-consent { font-size: 12px; color: #5b6a7e; display: flex; align-items: flex-start; gap: 8px; line-height: 1.5; }
+  .fkag-consent input { accent-color: #c9a961; margin-top: 3px; }
+  .fkag-sms-consent__label { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; }
+  .fkag-sms-consent__label input { accent-color: #c9a961; margin-top: 3px; flex-shrink: 0; }
+  .fkag-sms-consent__text { font-size: 12px; color: #5b6a7e; line-height: 1.5; }
+  .fkag-sms-consent__text a { color: #c9a961; font-weight: 600; text-decoration: none; }
+  .fkag-sms-consent__text a:hover { text-decoration: underline; }
+  .fkag-ct-success { background: #fff; border-radius: 14px; padding: 48px 32px; text-align: center; border: 1px solid #e3e8ef; box-shadow: 0 6px 20px rgba(10, 10, 10, 0.05); }
+  .fkag-ct-success h3 { color: #0c0c0c; font-size: 26px; margin: 0 0 10px; font-weight: 800; }
+  .fkag-ct-success p { color: #5b6a7e; font-size: 15px; margin: 0; }
+  .fkag-ct-error { margin-top: 12px; padding: 14px; background: #fef2f2; border: 1px solid #fecaca; color: #c0392b; border-radius: 8px; font-size: 14px; text-align: center; }
+  .fkag-ct-info { display: grid; gap: 18px; align-content: start; }
+  .fkag-ct-card { background: #fff; border-radius: 12px; padding: 28px; border: 1px solid #e3e8ef; }
+  .fkag-ct-card h3 { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: #0c0c0c; margin: 0 0 14px; }
+  .fkag-ct-card .row { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 12px; font-size: 14px; color: #0a0a0a; }
+  .fkag-ct-card .row:last-child { margin: 0; }
+  .fkag-ct-card .row .ico { width: 36px; height: 36px; background: rgba(201, 169, 97, 0.1); color: #a88a47; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .fkag-ct-card .row b { display: block; color: #0a0a0a; margin-bottom: 2px; font-weight: 700; }
+  .fkag-ct-card .row span { color: #5b6a7e; font-size: 13px; line-height: 1.6; }
+  .fkag-ct-card .row a { color: #c9a961; font-weight: 600; text-decoration: none; }
+  .fkag-ct-card .row a:hover { color: #a88a47; text-decoration: underline; }
+  .fkag-ct-socials { display: flex; gap: 10px; }
+  .fkag-ct-socials a { width: 42px; height: 42px; background: #f5f7fa; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #0c0c0c; transition: 0.2s; }
+  .fkag-ct-socials a:hover { background: #0c0c0c; color: #c9a961; transform: translateY(-2px); }
+  .fkag-hours-list { display: flex; flex-direction: column; background: #fff; border-radius: 12px; overflow: hidden; border: 1px solid #eef1f5; box-shadow: 0 4px 16px rgba(10, 10, 10, 0.06); }
+  .fkag-hours-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-bottom: 1px solid #eef1f5; transition: background 0.2s; }
+  .fkag-hours-row:last-child { border-bottom: 0; }
+  .fkag-hours-row:hover { background: #fafbfc; }
+  .fkag-hours-day { font-weight: 600; color: #0a0a0a; font-size: 15px; letter-spacing: 0.3px; }
+  .fkag-hours-time { color: #5b6b7c; font-size: 14px; font-weight: 500; }
+  .fkag-hours-row--accent { background: linear-gradient(135deg, rgba(201, 169, 97, 0.08), rgba(201, 169, 97, 0.02)); border-left: 3px solid #c9a961; }
+  .fkag-hours-row--accent .fkag-hours-day { color: #0c0c0c; }
+  .fkag-hours-row--accent .fkag-hours-time { color: #c9a961; font-weight: 700; }
+  @media (max-width: 480px) { .fkag-hours-row { padding: 12px 14px; } .fkag-hours-day { font-size: 14px; } .fkag-hours-time { font-size: 13px; } }
+  .fkag-ct-map { margin-top: 24px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 16px rgba(10, 10, 10, 0.08); border: 1px solid #eef1f5; background: #fff; }
+  .fkag-ct-mapbox { width: 100%; min-height: 320px; background: #eef2f7; overflow: hidden; }
+  .fkag-ct-mapbox iframe { display: block; width: 100%; height: 320px; border: 0; }
+  .fkag-ct-map-link { display: block; padding: 12px 16px; background: #c9a961; color: #0a0a0a; text-align: center; font-weight: 700; font-size: 14px; text-decoration: none; transition: background 0.2s; }
+  .fkag-ct-map-link:hover { background: #d4b674; }
+  .fkag-ct-cta { background: #0a0a0a; color: #fff; padding: 60px 0; text-align: center; }
+  .fkag-ct-cta h2 { font-family: 'Poppins', sans-serif; font-size: 28px; font-weight: 800; margin: 0 0 12px; color: #fff; }
+  .fkag-ct-cta p { font-size: 15px; opacity: 0.85; margin: 0 auto 24px; max-width: 520px; }
+  .fkag-btn { padding: 14px 28px; border-radius: 6px; font-weight: 700; font-size: 14px; display: inline-block; text-decoration: none; }
+  .fkag-btn-pri { background: #c9a961; color: #0c0c0c; }
+  .fkag-btn-pri:hover { background: #d4b674; }
+</style>
