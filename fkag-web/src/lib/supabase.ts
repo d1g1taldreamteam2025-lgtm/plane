@@ -70,7 +70,7 @@ export interface Vehicle {
   featured: boolean;
 }
 
-const PLACEHOLDER = 'https://via.placeholder.com/900x600?text=No+Photo';
+const PLACEHOLDER = '/images/placeholder.svg';
 
 export function mapVehicle(r: InventoryRow): Vehicle {
   const gallery = Array.isArray(r.gallery) ? r.gallery : [];

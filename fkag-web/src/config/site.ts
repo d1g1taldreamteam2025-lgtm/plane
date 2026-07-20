@@ -63,6 +63,7 @@ export const assets = {
   flagEn: '/images/flag-en.svg', // ✅ generado local
   googleIcon: '/images/google-icon.svg', // ✅ generado local
   placeholder: '/images/placeholder.svg',
+  invHeroBg: '/images/inv-hero-bg.png', // ⛔ pendiente (fondo del hero de inventario, opcional)
 } as const;
 
 /** Marcas que se muestran en el home (logos locales) */

@@ -107,6 +107,15 @@ const marquee = ['m_sold', 'm_down', 'm_approval', 'm_carfax', 'm_inspection'] a
 
 <script>
   (function () {
+    // Expone la altura real del header como --fkag-header-h (para stickies de otras páginas)
+    var hdr = document.getElementById('xkagHeader');
+    function setH() {
+      if (hdr) document.documentElement.style.setProperty('--fkag-header-h', hdr.offsetHeight + 'px');
+    }
+    setH();
+    window.addEventListener('resize', setH);
+    window.addEventListener('load', setH);
+
     var burger = document.getElementById('xkagBurger');
     var menu = document.getElementById('xkagMobileMenu');
     if (burger && menu) {

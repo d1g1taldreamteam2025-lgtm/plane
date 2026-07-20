@@ -70,7 +70,7 @@ src/
 | Supabase / webhook | ✅ conectados |
 | Imágenes 100% locales (sin Cloudinary) | ✅ |
 | **Home** (hero, CTAs, destacados, marcas, reseñas, SEO) | ✅ migrado |
-| Inventory | ⏳ |
+| **Inventory** (filtros rápidos, búsqueda, sidebar, chips, paginación) | ✅ migrado |
 | VDP (detalle de vehículo) | ⏳ |
 | Financing + Apply | ⏳ |
 | About / Contact / FAQs | ⏳ |

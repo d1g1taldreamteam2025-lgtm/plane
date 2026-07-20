@@ -1,0 +1,422 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Inventario"
+  description="Explora el inventario de vehículos usados de Family Key Auto Group. Filtra por marca, precio, año, tipo y más."
+>
+  <section class="fkag-inv">
+    <div class="fkag-inv__hero">
+      <div class="fkag-inv__hero-inner">
+        <span class="fkag-inv__eyebrow" data-inv-i18n="eyebrow">Pre-Owned Vehicles</span>
+        <h1 data-inv-i18n="hero_title">Find Your Perfect Ride</h1>
+        <p data-inv-i18n="hero_sub">Hand-picked vehicles, honest pricing, flexible financing</p>
+        <div class="fkag-inv__stats">
+          <span class="fkag-inv__stat"><strong id="fkagStatCount">0</strong> <span data-inv-i18n="stat_available">Available</span></span>
+          <span class="fkag-inv__stat"><strong>4.9★</strong> <span data-inv-i18n="stat_rating">Rating</span></span>
+          <span class="fkag-inv__stat"><strong>+1,000</strong> <span data-inv-i18n="stat_sold">Sold</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="fkag-inv__toolbar">
+      <div class="fkag-inv__toolbar-inner">
+        <div class="fkag-inv__quick-filters" role="tablist">
+          <button class="fkag-qf active" data-quick="all"><span class="material-icons-outlined">apps</span><span data-inv-i18n="qf_all">All</span></button>
+          <button class="fkag-qf" data-quick="under-20k"><span class="material-icons-outlined">attach_money</span><span data-inv-i18n="qf_under_20k">Under $20k</span></button>
+          <button class="fkag-qf" data-quick="under-10k"><span class="material-icons-outlined">savings</span><span data-inv-i18n="qf_under_10k">Under $10k</span></button>
+          <button class="fkag-qf" data-quick="suv"><span class="material-icons-outlined">airport_shuttle</span><span data-inv-i18n="qf_suvs">SUVs</span></button>
+          <button class="fkag-qf" data-quick="sedan"><span class="material-icons-outlined">directions_car</span><span data-inv-i18n="qf_sedans">Sedans</span></button>
+          <button class="fkag-qf" data-quick="truck"><span class="material-icons-outlined">local_shipping</span><span data-inv-i18n="qf_trucks">Trucks</span></button>
+          <button class="fkag-qf" data-quick="coupe"><span class="material-icons-outlined">car_rental</span><span data-inv-i18n="qf_coupes">Coupes</span></button>
+        </div>
+        <div class="fkag-inv__controls">
+          <label class="fkag-inv__search"><span class="material-icons-outlined">search</span><input type="search" data-inv-i18n-placeholder="search_placeholder" placeholder="Search by make, model, year, VIN..." id="fkagSearch"><button type="button" class="fkag-inv__search-clear" id="fkagSearchClear" aria-label="Clear">✕</button></label>
+          <select class="fkag-inv__sort" id="fkagSort" aria-label="Sort">
+            <option value="newest" data-inv-i18n="sort_newest">Newest Listings</option>
+            <option value="price-asc" data-inv-i18n="sort_price_asc">Price: Low → High</option>
+            <option value="price-desc" data-inv-i18n="sort_price_desc">Price: High → Low</option>
+            <option value="mileage-asc" data-inv-i18n="sort_mileage_asc">Mileage: Low → High</option>
+            <option value="year-desc" data-inv-i18n="sort_year_desc">Year: New → Old</option>
+            <option value="year-asc" data-inv-i18n="sort_year_asc">Year: Old → New</option>
+          </select>
+          <button class="fkag-inv__filter-btn" id="fkagFilterBtn"><span class="material-icons-outlined">tune</span><span data-inv-i18n="filters">Filters</span> <span class="fkag-inv__filter-count" id="fkagFilterCount"></span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="fkag-inv__main">
+      <aside class="fkag-inv__sidebar" id="fkagSidebar">
+        <div class="fkag-inv__sidebar-head">
+          <h3><span class="material-icons-outlined">tune</span><span data-inv-i18n="refine">Refine Search</span></h3>
+          <button class="fkag-inv__sidebar-close" id="fkagSidebarClose"><span class="material-icons-outlined">close</span></button>
+        </div>
+        <div class="fkag-inv__active-chips" id="fkagActiveChips"></div>
+        <button class="fkag-inv__clear-all hidden" id="fkagClearAll"><span class="material-icons-outlined">delete_sweep</span><span data-inv-i18n="clear_all">Clear All Filters</span></button>
+        <details class="fkag-fg" open><summary data-inv-i18n="make">Make</summary><div class="fkag-fg__body" id="fkagMakeFilter"></div></details>
+        <details class="fkag-fg" open><summary data-inv-i18n="body_type">Body Type</summary><div class="fkag-fg__body fkag-fg__body--icons" id="fkagBodyFilter"></div></details>
+        <details class="fkag-fg"><summary data-inv-i18n="price_range">Price Range</summary><div class="fkag-fg__body"><div class="fkag-range"><input type="number" data-inv-i18n-placeholder="min" placeholder="Min" id="fkagPriceMin" min="0"><span>—</span><input type="number" data-inv-i18n-placeholder="max" placeholder="Max" id="fkagPriceMax" min="0"></div></div></details>
+        <details class="fkag-fg"><summary data-inv-i18n="year">Year</summary><div class="fkag-fg__body"><div class="fkag-range"><input type="number" data-inv-i18n-placeholder="from" placeholder="From" id="fkagYearMin" min="1990" max="2030"><span>—</span><input type="number" data-inv-i18n-placeholder="to" placeholder="To" id="fkagYearMax" min="1990" max="2030"></div></div></details>
+        <details class="fkag-fg"><summary data-inv-i18n="mileage">Mileage</summary><div class="fkag-fg__body"><div class="fkag-range"><input type="number" data-inv-i18n-placeholder="max_miles" placeholder="Max miles" id="fkagMileageMax" min="0"></div></div></details>
+        <details class="fkag-fg"><summary data-inv-i18n="fuel_type">Fuel Type</summary><div class="fkag-fg__body" id="fkagFuelFilter"></div></details>
+        <details class="fkag-fg"><summary data-inv-i18n="drivetrain">Drivetrain</summary><div class="fkag-fg__body" id="fkagDriveFilter"></div></details>
+      </aside>
+
+      <div class="fkag-inv__results">
+        <div class="fkag-inv__results-bar">
+          <span class="fkag-inv__count-badge"><strong id="fkagCount">0</strong> <span data-inv-i18n="match">vehicles match</span></span>
+          <a href="/contact/" class="fkag-inv__help"><span class="material-icons-outlined">support_agent</span><span data-inv-i18n="need_help">Need help? Talk to us</span></a>
+        </div>
+        <div class="fkag-inv__grid" id="fkagGrid"></div>
+        <div class="fkag-inv__pagination" id="fkagPagination"></div>
+      </div>
+    </div>
+    <div class="fkag-inv__sidebar-overlay" id="fkagSidebarOverlay"></div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+.fkag-inv{background:#fafaf7;font-family:'Inter',sans-serif;color:#0c0c0c;}
+.fkag-inv *{box-sizing:border-box;}
+.fkag-inv__hero{background:linear-gradient(135deg,rgba(12,12,12,.88) 0%,rgba(26,26,26,.75) 100%),url('/images/inv-hero-bg.png') center/cover no-repeat #0c0c0c;color:#fff;padding:70px 24px 80px;position:relative;overflow:hidden;}
+.fkag-inv__hero::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,#c9a961,#d4b674,#c9a961);}
+.fkag-inv__hero::after{content:'';position:absolute;top:-150px;right:-150px;width:500px;height:500px;background:radial-gradient(circle,rgba(201,169,97,.15) 0%,transparent 70%);pointer-events:none;}
+.fkag-inv__hero-inner{max-width:1280px;margin:0 auto;text-align:center;position:relative;z-index:1;}
+.fkag-inv__eyebrow{display:inline-flex;align-items:center;padding:6px 14px;background:rgba(201,169,97,.15);border:1px solid rgba(201,169,97,.4);border-radius:999px;color:#d4b674;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:18px;}
+.fkag-inv__hero h1{font-family:'Poppins',sans-serif;font-size:52px;font-weight:800;margin:0 0 14px;letter-spacing:-1.2px;}
+.fkag-inv__hero p{font-size:18px;color:rgba(255,255,255,.85);margin:0 0 28px;}
+.fkag-inv__stats{display:inline-flex;gap:32px;flex-wrap:wrap;justify-content:center;}
+.fkag-inv__stat{display:flex;flex-direction:column;align-items:center;gap:4px;color:rgba(255,255,255,.7);font-size:13px;text-transform:uppercase;letter-spacing:1px;}
+.fkag-inv__stat strong{font-family:'Poppins',sans-serif;color:#d4b674;font-size:28px;font-weight:800;}
+.fkag-inv__toolbar{background:#fff;border-bottom:1px solid #e8e4dc;position:sticky;top:var(--fkag-header-h,150px);z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.04);}
+.fkag-inv__toolbar-inner{max-width:1280px;margin:0 auto;padding:16px 24px;}
+.fkag-inv__quick-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.fkag-qf{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border:2px solid #e8e4dc;background:#fff;border-radius:999px;font-family:inherit;font-size:13px;font-weight:600;color:#0c0c0c;cursor:pointer;transition:all .2s;letter-spacing:.3px;}
+.fkag-qf .material-icons-outlined{font-size:18px;color:#c9a961;}
+.fkag-qf:hover{border-color:#c9a961;background:#fdf8ec;color:#a88a47;transform:translateY(-1px);}
+.fkag-qf.active{background:#0c0c0c;color:#c9a961;border-color:#0c0c0c;}
+.fkag-qf.active .material-icons-outlined{color:#c9a961;}
+.fkag-inv__controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+.fkag-inv__search{flex:1;min-width:220px;display:inline-flex;align-items:center;gap:8px;padding:0 14px;border:2px solid #e8e4dc;border-radius:10px;background:#fafaf7;transition:all .2s;}
+.fkag-inv__search:focus-within{border-color:#c9a961;background:#fff;box-shadow:0 0 0 4px rgba(201,169,97,.12);}
+.fkag-inv__search .material-icons-outlined{color:#9a9a9a;font-size:20px;}
+.fkag-inv__search input{flex:1;border:0;background:transparent;padding:12px 0;font-family:inherit;font-size:14px;outline:0;color:#0c0c0c;}
+.fkag-inv__search-clear{background:transparent;border:0;color:#9a9a9a;cursor:pointer;padding:4px 8px;font-size:14px;display:none;}
+.fkag-inv__search-clear.visible{display:inline-block;}
+.fkag-inv__sort{padding:11px 36px 11px 14px;border:2px solid #e8e4dc;border-radius:10px;background:#fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='%23c9a961' height='20' viewBox='0 0 24 24' width='20'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 8px center;font-family:inherit;font-size:14px;font-weight:600;color:#0c0c0c;cursor:pointer;appearance:none;}
+.fkag-inv__filter-btn{display:none;align-items:center;gap:6px;padding:11px 18px;border:2px solid #0c0c0c;background:#0c0c0c;color:#c9a961;border-radius:10px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;}
+.fkag-inv__filter-btn .material-icons-outlined{font-size:18px;}
+.fkag-inv__filter-count{background:#c9a961;color:#0c0c0c;padding:2px 7px;border-radius:999px;font-size:11px;font-weight:800;}
+.fkag-inv__filter-count:empty{display:none;}
+.fkag-inv__main{display:grid;grid-template-columns:280px 1fr;gap:32px;max-width:1280px;margin:0 auto;padding:32px 24px 80px;}
+.fkag-inv__sidebar{background:#fff;border:1px solid #e8e4dc;border-radius:14px;padding:24px;height:fit-content;position:sticky;top:calc(var(--fkag-header-h,150px) + 96px);}
+.fkag-inv__sidebar-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid #e8e4dc;}
+.fkag-inv__sidebar-head h3{font-family:'Poppins',sans-serif;font-size:18px;font-weight:700;margin:0;display:inline-flex;align-items:center;gap:8px;}
+.fkag-inv__sidebar-head h3 .material-icons-outlined{color:#c9a961;font-size:22px;}
+.fkag-inv__sidebar-close{display:none;background:transparent;border:0;cursor:pointer;color:#0c0c0c;}
+.fkag-inv__active-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+.fkag-inv__active-chips:empty{display:none;}
+.fkag-active-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;background:rgba(201,169,97,.15);color:#a88a47;border:1px solid rgba(201,169,97,.3);border-radius:999px;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}
+.fkag-active-chip:hover{background:#c9a961;color:#fff;}
+.fkag-active-chip .material-icons-outlined{font-size:14px;}
+.fkag-inv__clear-all{display:inline-flex;align-items:center;gap:6px;background:transparent;border:1px solid #e8e4dc;color:#0c0c0c;padding:8px 14px;border-radius:8px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:16px;width:100%;justify-content:center;}
+.fkag-inv__clear-all.hidden{display:none;}
+.fkag-inv__clear-all:hover{background:#0c0c0c;color:#c9a961;border-color:#0c0c0c;}
+.fkag-fg{border-bottom:1px solid #f0ede5;padding:14px 0;}
+.fkag-fg:last-child{border-bottom:0;}
+.fkag-fg summary{cursor:pointer;font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;color:#0c0c0c;list-style:none;display:flex;align-items:center;justify-content:space-between;padding:4px 0;}
+.fkag-fg summary::-webkit-details-marker{display:none;}
+.fkag-fg summary::after{content:'+';color:#c9a961;font-size:20px;font-weight:300;transition:transform .2s;}
+.fkag-fg[open] summary::after{content:'−';}
+.fkag-fg__body{padding-top:12px;display:flex;flex-direction:column;gap:8px;max-height:240px;overflow-y:auto;}
+.fkag-fg__body--icons{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.fkag-check{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:#2a2a2a;padding:5px 6px;border-radius:6px;transition:all .15s;}
+.fkag-check:hover{background:#fafaf7;}
+.fkag-check input{accent-color:#c9a961;width:16px;height:16px;}
+.fkag-check span{flex:1;}
+.fkag-check .fkag-count{color:#9a9a9a;font-size:11px;font-weight:600;}
+.fkag-icon-check{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:10px 6px;border:1.5px solid #e8e4dc;border-radius:8px;font-size:11px;font-weight:600;text-align:center;color:#5b6b7c;transition:all .15s;}
+.fkag-icon-check input{display:none;}
+.fkag-icon-check .material-icons-outlined{font-size:24px;color:#c9a961;}
+.fkag-icon-check:hover{border-color:#c9a961;background:#fdf8ec;color:#0c0c0c;}
+.fkag-icon-check.checked{background:#0c0c0c;color:#c9a961;border-color:#0c0c0c;}
+.fkag-icon-check.checked .material-icons-outlined{color:#c9a961;}
+.fkag-range{display:flex;align-items:center;gap:8px;}
+.fkag-range input{flex:1;padding:9px 11px;border:1.5px solid #e8e4dc;border-radius:8px;font-family:inherit;font-size:13px;outline:0;background:#fafaf7;transition:all .2s;min-width:0;}
+.fkag-range input:focus{border-color:#c9a961;background:#fff;}
+.fkag-range span{color:#9a9a9a;font-weight:700;}
+.fkag-inv__results{min-height:600px;}
+.fkag-inv__results-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;}
+.fkag-inv__count-badge{font-size:14px;color:#5b6b7c;display:inline-flex;align-items:baseline;gap:5px;}
+.fkag-inv__count-badge strong{font-family:'Poppins',sans-serif;color:#0c0c0c;font-size:24px;font-weight:800;}
+.fkag-inv__help{display:inline-flex;align-items:center;gap:6px;color:#a88a47;font-weight:600;font-size:13px;text-decoration:none;transition:color .2s;}
+.fkag-inv__help:hover{color:#c9a961;text-decoration:underline;}
+.fkag-inv__help .material-icons-outlined{font-size:18px;}
+.fkag-inv__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.fkag-inv__empty{grid-column:1/-1;text-align:center;padding:80px 20px;background:#fff;border:2px dashed #e8e4dc;border-radius:16px;}
+.fkag-inv__empty .material-icons-outlined{font-size:64px;color:#c9a961;margin-bottom:14px;}
+.fkag-inv__empty h3{font-family:'Poppins',sans-serif;font-size:22px;margin:0 0 8px;color:#0c0c0c;}
+.fkag-inv__empty p{color:#5b6b7c;margin:0 0 20px;font-size:15px;}
+.fkag-inv__empty button{background:#c9a961;color:#0c0c0c;border:0;padding:12px 22px;border-radius:8px;font-family:inherit;font-weight:700;cursor:pointer;font-size:14px;transition:all .2s;}
+.fkag-inv__empty button:hover{background:#a88a47;color:#fff;}
+.fkag-car{background:#fff;border:1px solid #e8e4dc;border-radius:14px;overflow:hidden;transition:all .3s ease;display:flex;flex-direction:column;position:relative;}
+.fkag-car:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(201,169,97,.18);border-color:#c9a961;}
+.fkag-car__img{position:relative;height:220px;background-size:cover;background-position:center;background-color:#e8edf2;overflow:hidden;}
+.fkag-car__img-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 0%,transparent 60%,rgba(0,0,0,.35) 100%);}
+.fkag-car__badge{position:absolute;top:12px;left:12px;background:linear-gradient(135deg,#c9a961,#d4b674);color:#0c0c0c;font-weight:800;font-size:10px;letter-spacing:1.2px;padding:6px 11px;border-radius:5px;text-transform:uppercase;box-shadow:0 4px 12px rgba(201,169,97,.4);z-index:1;}
+.fkag-car__type{position:absolute;top:12px;right:12px;background:rgba(12,12,12,.85);backdrop-filter:blur(6px);color:#fff;font-weight:700;font-size:10px;letter-spacing:1px;padding:6px 11px;border-radius:5px;text-transform:uppercase;z-index:1;display:inline-flex;align-items:center;gap:4px;}
+.fkag-car__type .material-icons-outlined{font-size:14px;}
+.fkag-car__photos{position:absolute;bottom:12px;right:12px;background:rgba(12,12,12,.7);color:#fff;font-size:11px;font-weight:600;padding:4px 10px;border-radius:999px;display:inline-flex;align-items:center;gap:4px;z-index:1;}
+.fkag-car__photos .material-icons-outlined{font-size:14px;}
+.fkag-car__body{padding:18px;flex:1;display:flex;flex-direction:column;}
+.fkag-car__title{font-family:'Poppins',sans-serif;font-size:17px;font-weight:700;color:#0c0c0c;margin:0 0 4px;line-height:1.3;letter-spacing:-.2px;}
+.fkag-car__sub{color:#5b6b7c;font-size:13px;margin:0 0 12px;font-weight:500;}
+.fkag-car__specs{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-bottom:14px;}
+.fkag-car__spec{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:#5b6b7c;font-weight:600;}
+.fkag-car__spec .material-icons-outlined{font-size:15px;color:#c9a961;}
+.fkag-car__price-row{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:14px;padding-bottom:14px;border-bottom:1px dashed #e8e4dc;gap:10px;}
+.fkag-car__price-block{display:flex;flex-direction:column;gap:2px;}
+.fkag-car__price-label{font-size:10px;color:#9a9a9a;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+.fkag-car__price{font-family:'Poppins',sans-serif;font-size:24px;font-weight:800;color:#0c0c0c;line-height:1;}
+.fkag-car__msrp{font-size:12px;color:#9a9a9a;text-decoration:line-through;font-weight:600;}
+.fkag-car__savings{display:inline-flex;align-items:center;gap:3px;background:rgba(0,173,54,.1);color:#00ad36;font-size:11px;font-weight:800;padding:5px 9px;border-radius:6px;text-transform:uppercase;letter-spacing:.5px;}
+.fkag-car__actions{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;}
+.fkag-btn{padding:11px 12px;font-family:inherit;font-size:12.5px;font-weight:700;text-align:center;text-decoration:none;border-radius:8px;transition:all .2s;cursor:pointer;border:2px solid transparent;display:inline-flex;align-items:center;justify-content:center;gap:5px;letter-spacing:.3px;}
+.fkag-btn--gold{background:linear-gradient(135deg,#c9a961,#d4b674);color:#0c0c0c;box-shadow:0 4px 10px rgba(201,169,97,.25);}
+.fkag-btn--gold:hover{background:linear-gradient(135deg,#a88a47,#c9a961);color:#fff;transform:translateY(-2px);box-shadow:0 8px 18px rgba(201,169,97,.4);}
+.fkag-btn--dark{background:transparent;color:#0c0c0c;border-color:#0c0c0c;}
+.fkag-btn--dark:hover{background:#0c0c0c;color:#c9a961;transform:translateY(-2px);}
+.fkag-car__finance{display:flex;align-items:center;justify-content:center;gap:5px;text-align:center;font-size:11.5px;font-weight:700;color:#a88a47;text-decoration:none;padding:9px;background:linear-gradient(135deg,#fdf6e3,#f5efe1);border-radius:8px;text-transform:uppercase;letter-spacing:.6px;transition:all .2s;border:1px solid rgba(201,169,97,.2);}
+.fkag-car__finance:hover{background:linear-gradient(135deg,#fdf0c0,#f5e8b8);color:#0c0c0c;}
+.fkag-car__finance .material-icons-outlined{font-size:14px;}
+.fkag-inv__pagination{display:flex;justify-content:center;gap:6px;margin-top:32px;flex-wrap:wrap;}
+.fkag-page{min-width:38px;height:38px;padding:0 12px;border:2px solid #e8e4dc;background:#fff;color:#0c0c0c;border-radius:8px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;justify-content:center;gap:4px;}
+.fkag-page:hover{border-color:#c9a961;background:#fdf8ec;}
+.fkag-page.active{background:#0c0c0c;color:#c9a961;border-color:#0c0c0c;}
+.fkag-page:disabled{opacity:.4;cursor:not-allowed;}
+.fkag-inv__sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:998;}
+.fkag-inv__sidebar-overlay.visible{display:block;}
+@media(max-width:980px){
+.fkag-inv__hero{padding:50px 20px 60px;}
+.fkag-inv__hero h1{font-size:34px;letter-spacing:-.8px;}
+.fkag-inv__hero p{font-size:15px;}
+.fkag-inv__stats{gap:18px;}
+.fkag-inv__stat strong{font-size:22px;}
+.fkag-inv__main{grid-template-columns:1fr;padding:24px 16px 60px;gap:20px;}
+.fkag-inv__filter-btn{display:inline-flex;}
+.fkag-inv__sidebar{position:fixed;top:0;left:0;bottom:0;width:320px;max-width:90vw;height:100vh;border-radius:0;border:0;border-right:1px solid #e8e4dc;z-index:999;transform:translateX(-100%);transition:transform .3s ease;overflow-y:auto;padding:20px;}
+.fkag-inv__sidebar.open{transform:translateX(0);}
+.fkag-inv__sidebar-close{display:inline-flex;}
+.fkag-inv__grid{grid-template-columns:repeat(2,1fr);gap:14px;}
+.fkag-car__img{height:180px;}
+.fkag-car__title{font-size:15px;}
+.fkag-car__price{font-size:20px;}
+}
+@media(max-width:640px){
+.fkag-inv__hero h1{font-size:28px;}
+.fkag-inv__quick-filters{overflow-x:auto;flex-wrap:nowrap;padding-bottom:6px;-webkit-overflow-scrolling:touch;}
+.fkag-qf{flex-shrink:0;}
+.fkag-inv__controls{flex-direction:column;align-items:stretch;}
+.fkag-inv__sort,.fkag-inv__filter-btn{width:100%;}
+.fkag-inv__grid{grid-template-columns:1fr;}
+.fkag-car__img{height:220px;}
+}
+</style>
+
+<script>
+  import { getAllVehicles, type Vehicle } from '../../lib/supabase';
+
+  // ============ I18N (self-contained: términos específicos del inventario) ============
+  var LANG = (function () { try { var x = localStorage.getItem('fkag_lang'); return (x === 'en' || x === 'es') ? x : 'es'; } catch (e) { return 'es'; } })();
+  var INV_TR: Record<string, { en: string; es: string }> = {
+    eyebrow:            { en: 'Pre-Owned Vehicles', es: 'Vehículos Usados' },
+    hero_title:         { en: 'Find Your Perfect Ride', es: 'Encuentra Tu Vehículo Ideal' },
+    hero_sub:           { en: 'Hand-picked vehicles, honest pricing, flexible financing', es: 'Vehículos seleccionados, precios honestos, financiamiento flexible' },
+    stat_available:     { en: 'Available', es: 'Disponibles' },
+    stat_rating:        { en: 'Rating', es: 'Calificación' },
+    stat_sold:          { en: 'Sold', es: 'Vendidos' },
+    qf_all:             { en: 'All', es: 'Todos' },
+    qf_under_20k:       { en: 'Under $20k', es: 'Bajo $20k' },
+    qf_under_10k:       { en: 'Under $10k', es: 'Bajo $10k' },
+    qf_suvs:            { en: 'SUVs', es: 'SUVs' },
+    qf_sedans:          { en: 'Sedans', es: 'Sedanes' },
+    qf_trucks:          { en: 'Trucks', es: 'Camionetas' },
+    qf_coupes:          { en: 'Coupes', es: 'Coupés' },
+    search_placeholder: { en: 'Search by make, model, year, VIN...', es: 'Buscar por marca, modelo, año, VIN...' },
+    sort_newest:        { en: 'Newest Listings', es: 'Más Recientes' },
+    sort_price_asc:     { en: 'Price: Low → High', es: 'Precio: Bajo → Alto' },
+    sort_price_desc:    { en: 'Price: High → Low', es: 'Precio: Alto → Bajo' },
+    sort_mileage_asc:   { en: 'Mileage: Low → High', es: 'Millaje: Bajo → Alto' },
+    sort_year_desc:     { en: 'Year: New → Old', es: 'Año: Nuevo → Viejo' },
+    sort_year_asc:      { en: 'Year: Old → New', es: 'Año: Viejo → Nuevo' },
+    filters:            { en: 'Filters', es: 'Filtros' },
+    refine:             { en: 'Refine Search', es: 'Refinar Búsqueda' },
+    clear_all:          { en: 'Clear All Filters', es: 'Limpiar Todos los Filtros' },
+    make:               { en: 'Make', es: 'Marca' },
+    body_type:          { en: 'Body Type', es: 'Tipo de Carrocería' },
+    price_range:        { en: 'Price Range', es: 'Rango de Precio' },
+    year:               { en: 'Year', es: 'Año' },
+    mileage:            { en: 'Mileage', es: 'Millaje' },
+    fuel_type:          { en: 'Fuel Type', es: 'Tipo de Combustible' },
+    drivetrain:         { en: 'Drivetrain', es: 'Tracción' },
+    min:                { en: 'Min', es: 'Mín' },
+    max:                { en: 'Max', es: 'Máx' },
+    from:               { en: 'From', es: 'Desde' },
+    to:                 { en: 'To', es: 'Hasta' },
+    max_miles:          { en: 'Max miles', es: 'Millas máx' },
+    match:              { en: 'vehicles match', es: 'vehículos coinciden' },
+    need_help:          { en: 'Need help? Talk to us', es: '¿Necesitas ayuda? Habla con nosotros' },
+    loading:            { en: 'Loading vehicles...', es: 'Cargando vehículos...' },
+    fetching:           { en: 'Fetching latest inventory', es: 'Obteniendo el inventario más reciente' },
+    empty_title:        { en: 'No vehicles match your search', es: 'Ningún vehículo coincide con tu búsqueda' },
+    empty_sub:          { en: 'Try adjusting your filters or browse all inventory', es: 'Ajusta los filtros o explora todo el inventario' },
+    reset_search:       { en: 'Reset Search', es: 'Reiniciar Búsqueda' },
+    conn_title:         { en: 'Unable to load inventory', es: 'No se pudo cargar el inventario' },
+    conn_sub:           { en: 'Please refresh the page or try again later.', es: 'Recarga la página o intenta más tarde.' },
+    best_price:         { en: 'Best Price', es: 'Mejor Precio' },
+    msrp:               { en: 'MSRP', es: 'MSRP' },
+    save:               { en: 'Save', es: 'Ahorra' },
+    view_details:       { en: 'View Details', es: 'Ver Detalles' },
+    get_best_price:     { en: 'Get Best Price', es: 'Mejor Precio' },
+    apply_financing:    { en: 'Apply for Financing', es: 'Aplicar a Financiamiento' },
+    stock_short:        { en: 'Stock #', es: 'Stock #' },
+    prev:               { en: 'Prev', es: 'Anterior' },
+    next:               { en: 'Next', es: 'Siguiente' },
+  };
+  function t(k: string) { return INV_TR[k] ? (INV_TR[k][LANG] || INV_TR[k].en) : k; }
+  function applyStaticTranslations() {
+    document.querySelectorAll('[data-inv-i18n]').forEach(function (el) {
+      var k = el.getAttribute('data-inv-i18n');
+      if (k && INV_TR[k]) el.textContent = t(k);
+    });
+    document.querySelectorAll('[data-inv-i18n-placeholder]').forEach(function (el) {
+      var k = el.getAttribute('data-inv-i18n-placeholder');
+      if (k && INV_TR[k]) el.setAttribute('placeholder', t(k));
+    });
+  }
+
+  var FKAG_CARS: Vehicle[] = [];
+
+  var fmt = function (n: number) { return n.toLocaleString('en-US'); };
+  const PER_PAGE = 9;
+  var state: any = { quick: 'all', search: '', sort: 'newest', page: 1, filters: { make: [], body: [], fuel: [], drive: [], priceMin: null, priceMax: null, yearMin: null, yearMax: null, mileageMax: null } };
+
+  function bodyLabel(bt: string) {
+    var en: any = { sedan: 'SEDAN', suv: 'SUV', truck: 'TRUCK', coupe: 'COUPE' };
+    var es: any = { sedan: 'SEDÁN', suv: 'SUV', truck: 'CAMIONETA', coupe: 'COUPÉ' };
+    var d = (LANG === 'es') ? es : en;
+    return d[bt] || bt.toUpperCase();
+  }
+  function bodyIcon(bt: string) { return ({ sedan: 'directions_car', suv: 'airport_shuttle', truck: 'local_shipping', coupe: 'car_rental' } as any)[bt] || 'directions_car'; }
+
+  function applyAll(cars: Vehicle[]) {
+    let r = cars.slice();
+    if (state.quick === 'under-20k') r = r.filter(c => c.price < 20000);
+    else if (state.quick === 'under-10k') r = r.filter(c => c.price < 10000);
+    else if (['suv', 'sedan', 'truck', 'coupe'].indexOf(state.quick) > -1) r = r.filter(c => c.bodyType === state.quick);
+    if (state.search) { var q = state.search.toLowerCase(); r = r.filter(c => (c.year + ' ' + c.make + ' ' + c.model + ' ' + c.trim + ' ' + c.id).toLowerCase().indexOf(q) > -1); }
+    if (state.filters.make.length) r = r.filter(c => state.filters.make.indexOf(c.make) > -1);
+    if (state.filters.body.length) r = r.filter(c => state.filters.body.indexOf(c.bodyType) > -1);
+    if (state.filters.fuel.length) r = r.filter(c => state.filters.fuel.indexOf(c.fuel) > -1);
+    if (state.filters.drive.length) r = r.filter(c => state.filters.drive.indexOf(c.drivetrain) > -1);
+    if (state.filters.priceMin) r = r.filter(c => c.price >= state.filters.priceMin);
+    if (state.filters.priceMax) r = r.filter(c => c.price <= state.filters.priceMax);
+    if (state.filters.yearMin) r = r.filter(c => c.year >= state.filters.yearMin);
+    if (state.filters.yearMax) r = r.filter(c => c.year <= state.filters.yearMax);
+    if (state.filters.mileageMax) r = r.filter(c => c.mileage <= state.filters.mileageMax);
+    switch (state.sort) { case 'price-asc': r.sort((a, b) => a.price - b.price); break; case 'price-desc': r.sort((a, b) => b.price - a.price); break; case 'mileage-asc': r.sort((a, b) => a.mileage - b.mileage); break; case 'year-desc': r.sort((a, b) => b.year - a.year); break; case 'year-asc': r.sort((a, b) => a.year - b.year); break; default: r.sort((a, b) => b.year - a.year); }
+    return r;
+  }
+
+  function renderCar(c: Vehicle) {
+    var savings = c.msrp && c.msrp > c.price ? c.msrp - c.price : 0;
+    return `<article class="fkag-car"><a href="/inventory/sample/?id=${c.id}" style="display:contents;text-decoration:none;color:inherit;"><div class="fkag-car__img" style="background-image:url('${c.image}');"><div class="fkag-car__img-overlay"></div>${c.badge ? `<span class="fkag-car__badge">${c.badge}</span>` : ''}<span class="fkag-car__type"><span class="material-icons-outlined">${bodyIcon(c.bodyType)}</span>${bodyLabel(c.bodyType)}</span><span class="fkag-car__photos"><span class="material-icons-outlined">photo_camera</span>${c.photos || 0}</span></div></a><div class="fkag-car__body"><h3 class="fkag-car__title">${c.year} ${c.make} ${c.model}</h3><p class="fkag-car__sub">${c.trim} • ${t('stock_short')}${(c.stock || c.id).toString().slice(-6).toUpperCase()}</p><div class="fkag-car__specs"><span class="fkag-car__spec"><span class="material-icons-outlined">speed</span><strong>${fmt(c.mileage)}</strong> mi</span><span class="fkag-car__spec"><span class="material-icons-outlined">local_gas_station</span>${c.fuel}</span><span class="fkag-car__spec"><span class="material-icons-outlined">settings</span>${c.transmission}</span><span class="fkag-car__spec"><span class="material-icons-outlined">trending_up</span>${c.drivetrain}</span></div><div class="fkag-car__price-row"><div class="fkag-car__price-block"><span class="fkag-car__price-label">${t('best_price')}</span><span class="fkag-car__price">$${fmt(c.price)}</span>${c.msrp ? `<span class="fkag-car__msrp">$${fmt(c.msrp)} ${t('msrp')}</span>` : ''}</div>${savings ? `<span class="fkag-car__savings"><span class="material-icons-outlined" style="font-size:13px;">trending_down</span>${t('save')} $${fmt(savings)}</span>` : ''}</div><div class="fkag-car__actions"><a href="/inventory/sample/?id=${c.id}" class="fkag-btn fkag-btn--gold">${t('view_details')}</a><a href="/inventory/sample/?id=${c.id}&action=quote" class="fkag-btn fkag-btn--dark">${t('get_best_price')}</a></div><a href="/financing/apply/?vin=${c.id}" class="fkag-car__finance"><span class="material-icons-outlined">credit_card</span>${t('apply_financing')}</a></div></article>`;
+  }
+
+  function renderLoading() { return `<div class="fkag-inv__empty"><span class="material-icons-outlined">hourglass_top</span><h3>${t('loading')}</h3><p>${t('fetching')}</p></div>`; }
+  function renderEmpty() { return `<div class="fkag-inv__empty"><span class="material-icons-outlined">search_off</span><h3>${t('empty_title')}</h3><p>${t('empty_sub')}</p><button onclick="window.fkagInvReset()">${t('reset_search')}</button></div>`; }
+  function renderConnError() { return `<div class="fkag-inv__empty"><span class="material-icons-outlined">cloud_off</span><h3>${t('conn_title')}</h3><p>${t('conn_sub')}</p></div>`; }
+
+  function renderActiveChips() {
+    var chips: any[] = [];
+    var quickLabels: any = {
+      en: { all: 'All', 'under-20k': 'Under $20k', 'under-10k': 'Under $10k', suv: 'SUVs', sedan: 'Sedans', truck: 'Trucks', coupe: 'Coupes' },
+      es: { all: 'Todos', 'under-20k': 'Bajo $20k', 'under-10k': 'Bajo $10k', suv: 'SUVs', sedan: 'Sedanes', truck: 'Camionetas', coupe: 'Coupés' }
+    };
+    Object.keys(state.filters).forEach(function (k) { var v = state.filters[k]; if (Array.isArray(v)) v.forEach(function (x: any) { chips.push({ key: k, val: x, label: x }); }); else if (v !== null && v !== '') { var lblMap: any = (LANG === 'es') ? { priceMin: 'Mín $' + v, priceMax: 'Máx $' + v, yearMin: 'Desde ' + v, yearMax: 'Hasta ' + v, mileageMax: 'Máx ' + v + ' mi' } : { priceMin: 'Min $' + v, priceMax: 'Max $' + v, yearMin: 'From ' + v, yearMax: 'To ' + v, mileageMax: 'Max ' + v + ' mi' }; var lbl = lblMap[k]; if (lbl) chips.push({ key: k, val: v, label: lbl }); } });
+    if (state.quick !== 'all') chips.unshift({ key: 'quick', val: state.quick, label: quickLabels[LANG][state.quick] || state.quick });
+    if (state.search) chips.unshift({ key: 'search', val: state.search, label: '"' + state.search + '"' });
+    document.getElementById('fkagActiveChips')!.innerHTML = chips.map(c => `<span class="fkag-active-chip" data-chip-key="${c.key}" data-chip-val="${c.val}">${c.label}<span class="material-icons-outlined">close</span></span>`).join('');
+    document.getElementById('fkagClearAll')!.classList.toggle('hidden', chips.length === 0);
+    document.getElementById('fkagFilterCount')!.textContent = String(chips.length || '');
+  }
+
+  function renderPagination(total: number) {
+    var pages = Math.ceil(total / PER_PAGE);
+    if (pages <= 1) { document.getElementById('fkagPagination')!.innerHTML = ''; return; }
+    var html = '';
+    html += `<button class="fkag-page" ${state.page <= 1 ? 'disabled' : ''} data-page="${state.page - 1}"><span class="material-icons-outlined">chevron_left</span> ${t('prev')}</button>`;
+    for (var i = 1; i <= pages; i++) { if (i === 1 || i === pages || (i >= state.page - 1 && i <= state.page + 1)) { html += `<button class="fkag-page ${i === state.page ? 'active' : ''}" data-page="${i}">${i}</button>`; } else if (i === state.page - 2 || i === state.page + 2) { html += '<span class="fkag-page" style="border:0;background:transparent;cursor:default;">…</span>'; } }
+    html += `<button class="fkag-page" ${state.page >= pages ? 'disabled' : ''} data-page="${state.page + 1}">${t('next')} <span class="material-icons-outlined">chevron_right</span></button>`;
+    document.getElementById('fkagPagination')!.innerHTML = html;
+  }
+
+  function render() {
+    var filtered = applyAll(FKAG_CARS);
+    var total = filtered.length;
+    var start = (state.page - 1) * PER_PAGE;
+    var paged = filtered.slice(start, start + PER_PAGE);
+    document.getElementById('fkagCount')!.textContent = String(total);
+    document.getElementById('fkagStatCount')!.textContent = String(FKAG_CARS.length);
+    var grid = document.getElementById('fkagGrid')!;
+    if (total === 0) grid.innerHTML = renderEmpty();
+    else grid.innerHTML = paged.map(renderCar).join('');
+    renderActiveChips(); renderPagination(total);
+  }
+
+  function buildMakeFilter() { var makes: any = {}; FKAG_CARS.forEach(c => { if (c.make) makes[c.make] = (makes[c.make] || 0) + 1; }); document.getElementById('fkagMakeFilter')!.innerHTML = Object.keys(makes).sort().map(m => `<label class="fkag-check"><input type="checkbox" data-ftype="make" value="${m}"><span>${m}</span><span class="fkag-count">${makes[m]}</span></label>`).join(''); }
+  function buildBodyFilter() {
+    var types = (LANG === 'es')
+      ? [{ v: 'sedan', l: 'Sedán', i: 'directions_car' }, { v: 'suv', l: 'SUV', i: 'airport_shuttle' }, { v: 'truck', l: 'Camioneta', i: 'local_shipping' }, { v: 'coupe', l: 'Coupé', i: 'car_rental' }]
+      : [{ v: 'sedan', l: 'Sedan', i: 'directions_car' }, { v: 'suv', l: 'SUV', i: 'airport_shuttle' }, { v: 'truck', l: 'Truck', i: 'local_shipping' }, { v: 'coupe', l: 'Coupe', i: 'car_rental' }];
+    var bf = document.getElementById('fkagBodyFilter')!;
+    bf.innerHTML = types.map(ty => `<label class="fkag-icon-check ${state.filters.body.indexOf(ty.v) > -1 ? 'checked' : ''}"><input type="checkbox" data-ftype="body" value="${ty.v}" ${state.filters.body.indexOf(ty.v) > -1 ? 'checked' : ''}><span class="material-icons-outlined">${ty.i}</span>${ty.l}</label>`).join('');
+    bf.querySelectorAll('input[type="checkbox"]').forEach(input => { input.addEventListener('change', () => { var tt = (input as HTMLInputElement).dataset.ftype!, v = (input as HTMLInputElement).value; if ((input as HTMLInputElement).checked) { if (state.filters[tt].indexOf(v) < 0) state.filters[tt].push(v); } else state.filters[tt] = state.filters[tt].filter((x: any) => x !== v); var lbl = (input as HTMLElement).closest('.fkag-icon-check'); if (lbl) lbl.classList.toggle('checked', (input as HTMLInputElement).checked); state.page = 1; render(); }); });
+  }
+  function buildFuelFilter() { var fuels: any = {}; FKAG_CARS.forEach(c => { if (c.fuel) fuels[c.fuel] = (fuels[c.fuel] || 0) + 1; }); document.getElementById('fkagFuelFilter')!.innerHTML = Object.keys(fuels).sort().map(f => `<label class="fkag-check"><input type="checkbox" data-ftype="fuel" value="${f}" ${state.filters.fuel.indexOf(f) > -1 ? 'checked' : ''}><span>${f}</span><span class="fkag-count">${fuels[f]}</span></label>`).join(''); }
+  function buildDriveFilter() { var drives: any = {}; FKAG_CARS.forEach(c => { if (c.drivetrain) drives[c.drivetrain] = (drives[c.drivetrain] || 0) + 1; }); document.getElementById('fkagDriveFilter')!.innerHTML = Object.keys(drives).sort().map(d => `<label class="fkag-check"><input type="checkbox" data-ftype="drive" value="${d}" ${state.filters.drive.indexOf(d) > -1 ? 'checked' : ''}><span>${d}</span><span class="fkag-count">${drives[d]}</span></label>`).join(''); }
+
+  (window as any).fkagInvReset = function () { state = { quick: 'all', search: '', sort: 'newest', page: 1, filters: { make: [], body: [], fuel: [], drive: [], priceMin: null, priceMax: null, yearMin: null, yearMax: null, mileageMax: null } }; document.querySelectorAll('.fkag-qf').forEach(b => b.classList.toggle('active', (b as HTMLElement).dataset.quick === 'all')); document.querySelectorAll('.fkag-fg__body input[type="checkbox"]').forEach(i => (i as HTMLInputElement).checked = false); document.querySelectorAll('.fkag-icon-check').forEach(l => l.classList.remove('checked')); document.querySelectorAll('.fkag-fg__body input[type="number"]').forEach(i => (i as HTMLInputElement).value = ''); (document.getElementById('fkagSearch') as HTMLInputElement).value = ''; (document.getElementById('fkagSort') as HTMLSelectElement).value = 'newest'; document.getElementById('fkagSearchClear')!.classList.remove('visible'); render(); };
+
+  function refreshLang() { applyStaticTranslations(); buildBodyFilter(); render(); }
+  window.addEventListener('fkag-lang-change', function (e: any) { var nl = (e.detail && e.detail.lang) || LANG; if (nl === LANG) return; LANG = nl; refreshLang(); });
+
+  async function init() {
+    applyStaticTranslations();
+    document.getElementById('fkagGrid')!.innerHTML = renderLoading();
+    FKAG_CARS = await getAllVehicles();
+    try { localStorage.setItem('fkag_inventory', JSON.stringify(FKAG_CARS)); } catch (e) {}
+    if (FKAG_CARS.length === 0) { document.getElementById('fkagGrid')!.innerHTML = renderConnError(); document.getElementById('fkagCount')!.textContent = '0'; document.getElementById('fkagStatCount')!.textContent = '0'; return; }
+    buildMakeFilter(); buildBodyFilter(); buildFuelFilter(); buildDriveFilter();
+    var url = new URLSearchParams(window.location.search);
+    if (url.get('filter')) state.quick = url.get('filter');
+    document.querySelectorAll('.fkag-qf').forEach(b => { var btn = b as HTMLElement; if (btn.dataset.quick === state.quick) { document.querySelectorAll('.fkag-qf').forEach(x => x.classList.remove('active')); btn.classList.add('active'); } btn.addEventListener('click', () => { document.querySelectorAll('.fkag-qf').forEach(x => x.classList.remove('active')); btn.classList.add('active'); state.quick = btn.dataset.quick; state.page = 1; render(); var u = new URL(window.location.href); if (state.quick === 'all') u.searchParams.delete('filter'); else u.searchParams.set('filter', state.quick); window.history.replaceState({}, '', u.toString()); window.scrollTo({ top: (document.querySelector('.fkag-inv__main') as HTMLElement).offsetTop - 200, behavior: 'smooth' }); }); });
+    var search = document.getElementById('fkagSearch') as HTMLInputElement, searchClear = document.getElementById('fkagSearchClear')!;
+    search.addEventListener('input', () => { state.search = search.value.trim(); state.page = 1; searchClear.classList.toggle('visible', !!search.value); render(); });
+    searchClear.addEventListener('click', () => { search.value = ''; state.search = ''; searchClear.classList.remove('visible'); render(); });
+    document.getElementById('fkagSort')!.addEventListener('change', e => { state.sort = (e.target as HTMLSelectElement).value; render(); });
+    document.querySelectorAll('#fkagMakeFilter input[type="checkbox"], #fkagFuelFilter input[type="checkbox"], #fkagDriveFilter input[type="checkbox"]').forEach(input => { input.addEventListener('change', () => { var tt = (input as HTMLInputElement).dataset.ftype!, v = (input as HTMLInputElement).value; if ((input as HTMLInputElement).checked) { if (state.filters[tt].indexOf(v) < 0) state.filters[tt].push(v); } else state.filters[tt] = state.filters[tt].filter((x: any) => x !== v); state.page = 1; render(); }); });
+    ['fkagPriceMin', 'fkagPriceMax', 'fkagYearMin', 'fkagYearMax', 'fkagMileageMax'].forEach(id => { document.getElementById(id)!.addEventListener('change', e => { var key = ({ fkagPriceMin: 'priceMin', fkagPriceMax: 'priceMax', fkagYearMin: 'yearMin', fkagYearMax: 'yearMax', fkagMileageMax: 'mileageMax' } as any)[id]; state.filters[key] = (e.target as HTMLInputElement).value ? parseInt((e.target as HTMLInputElement).value, 10) : null; state.page = 1; render(); }); });
+    document.getElementById('fkagActiveChips')!.addEventListener('click', e => { var chip = (e.target as HTMLElement).closest('.fkag-active-chip') as HTMLElement; if (!chip) return; var k = chip.dataset.chipKey!, v = chip.dataset.chipVal!; if (k === 'quick') { state.quick = 'all'; document.querySelectorAll('.fkag-qf').forEach(x => x.classList.toggle('active', (x as HTMLElement).dataset.quick === 'all')); } else if (k === 'search') { state.search = ''; (document.getElementById('fkagSearch') as HTMLInputElement).value = ''; document.getElementById('fkagSearchClear')!.classList.remove('visible'); } else if (['priceMin', 'priceMax', 'yearMin', 'yearMax', 'mileageMax'].indexOf(k) > -1) { state.filters[k] = null; var inputId = ({ priceMin: 'fkagPriceMin', priceMax: 'fkagPriceMax', yearMin: 'fkagYearMin', yearMax: 'fkagYearMax', mileageMax: 'fkagMileageMax' } as any)[k]; (document.getElementById(inputId) as HTMLInputElement).value = ''; } else { state.filters[k] = state.filters[k].filter((x: any) => x !== v); document.querySelectorAll(`input[data-ftype="${k}"][value="${v}"]`).forEach(i => { (i as HTMLInputElement).checked = false; var l = (i as HTMLElement).closest('.fkag-icon-check'); if (l) l.classList.remove('checked'); }); } state.page = 1; render(); });
+    document.getElementById('fkagClearAll')!.addEventListener('click', (window as any).fkagInvReset);
+    document.getElementById('fkagPagination')!.addEventListener('click', e => { var btn = (e.target as HTMLElement).closest('.fkag-page') as HTMLButtonElement; if (!btn || btn.disabled || !btn.dataset.page) return; state.page = parseInt(btn.dataset.page, 10); render(); window.scrollTo({ top: (document.querySelector('.fkag-inv__results') as HTMLElement).offsetTop - 200, behavior: 'smooth' }); });
+    var sb = document.getElementById('fkagSidebar')!, ov = document.getElementById('fkagSidebarOverlay')!;
+    document.getElementById('fkagFilterBtn')!.addEventListener('click', () => { sb.classList.add('open'); ov.classList.add('visible'); document.body.style.overflow = 'hidden'; });
+    function closeSb() { sb.classList.remove('open'); ov.classList.remove('visible'); document.body.style.overflow = ''; }
+    document.getElementById('fkagSidebarClose')!.addEventListener('click', closeSb);
+    ov.addEventListener('click', closeSb);
+    render();
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+</script>
