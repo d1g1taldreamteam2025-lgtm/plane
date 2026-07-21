@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Accesibilidad" description="Declaración de Accesibilidad de Family Key Auto Group: nuestro compromiso con WCAG 2.1 AA y cómo pedir ayuda.">
+  <section class="fkag-legal-page">
+    <div class="fkag-legal__inner">
+      <div class="fkag-legal__content">
+        <h1 data-i18n="legal_a11y_title">Accessibility Statement</h1>
+        <p class="fkag-legal__updated" data-i18n="legal_updated">Last updated: April 2026</p>
+
+        <h2 data-i18n="legal_a11y_h1">Our Commitment</h2>
+        <p data-i18n="legal_a11y_p1">Family Key Auto Group is committed to making our website accessible to everyone, including people with disabilities. We strive to follow the Web Content Accessibility Guidelines (WCAG) 2.1 Level AA standards.</p>
+
+        <h2 data-i18n="legal_a11y_h2">Features We Provide</h2>
+        <p data-i18n="legal_a11y_p2">Our website includes: alt text on images, semantic HTML markup, keyboard navigation support, sufficient color contrast, resizable text, descriptive link text, and proper form labels. We test our site regularly with screen readers and accessibility tools.</p>
+
+        <h2 data-i18n="legal_a11y_h3">Need Help?</h2>
+        <p data-i18n="legal_a11y_p3">If you experience any difficulty accessing content on our website, please contact us. We are happy to assist you by phone, email, or in person at our dealership.</p>
+        <p data-i18n="legal_a11y_p4">Phone: <a href="tel:+19495147366">(949) 514-7366</a><br>Email: <a href="mailto:info@familykeyautogroup.com">info@familykeyautogroup.com</a><br>Address: 170 N Arrowhead Ave STE C 175, Rialto, CA 92376</p>
+
+        <h2 data-i18n="legal_a11y_h4">Ongoing Effort</h2>
+        <p data-i18n="legal_a11y_p5">Accessibility is an ongoing effort. We continuously work to improve our website and welcome feedback from users to help us identify areas for improvement.</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  (function () {
+    var LANG = (function () { try { var x = localStorage.getItem('fkag_lang'); return (x === 'en' || x === 'es') ? x : 'es'; } catch (e) { return 'es'; } })();
+    var TR = {
+      legal_a11y_title: { en: 'Accessibility Statement', es: 'Declaración de Accesibilidad' },
+      legal_updated:    { en: 'Last updated: April 2026', es: 'Última actualización: Abril 2026' },
+      legal_a11y_h1:    { en: 'Our Commitment', es: 'Nuestro Compromiso' },
+      legal_a11y_p1:    { en: 'Family Key Auto Group is committed to making our website accessible to everyone, including people with disabilities. We strive to follow the Web Content Accessibility Guidelines (WCAG) 2.1 Level AA standards.', es: 'Family Key Auto Group está comprometido a hacer que nuestro sitio web sea accesible para todos, incluyendo personas con discapacidades. Nos esforzamos por seguir las Pautas de Accesibilidad para el Contenido Web (WCAG) 2.1 Nivel AA.' },
+      legal_a11y_h2:    { en: 'Features We Provide', es: 'Características que Ofrecemos' },
+      legal_a11y_p2:    { en: 'Our website includes: alt text on images, semantic HTML markup, keyboard navigation support, sufficient color contrast, resizable text, descriptive link text, and proper form labels. We test our site regularly with screen readers and accessibility tools.', es: 'Nuestro sitio incluye: texto alternativo en imágenes, marcado HTML semántico, navegación por teclado, contraste de color suficiente, texto redimensionable, texto descriptivo en los enlaces y etiquetas apropiadas en los formularios. Probamos el sitio regularmente con lectores de pantalla y herramientas de accesibilidad.' },
+      legal_a11y_h3:    { en: 'Need Help?', es: '¿Necesitas Ayuda?' },
+      legal_a11y_p3:    { en: 'If you experience any difficulty accessing content on our website, please contact us. We are happy to assist you by phone, email, or in person at our dealership.', es: 'Si tienes alguna dificultad para acceder al contenido de nuestro sitio web, contáctanos. Con gusto te asistimos por teléfono, email o en persona en nuestro concesionario.' },
+      legal_a11y_p4:    { en: 'Phone: <a href="tel:+19495147366">(949) 514-7366</a><br>Email: <a href="mailto:info@familykeyautogroup.com">info@familykeyautogroup.com</a><br>Address: 170 N Arrowhead Ave STE C 175, Rialto, CA 92376', es: 'Teléfono: <a href="tel:+19495147366">(949) 514-7366</a><br>Email: <a href="mailto:info@familykeyautogroup.com">info@familykeyautogroup.com</a><br>Dirección: 170 N Arrowhead Ave STE C 175, Rialto, CA 92376' },
+      legal_a11y_h4:    { en: 'Ongoing Effort', es: 'Esfuerzo Continuo' },
+      legal_a11y_p5:    { en: 'Accessibility is an ongoing effort. We continuously work to improve our website and welcome feedback from users to help us identify areas for improvement.', es: 'La accesibilidad es un esfuerzo continuo. Trabajamos constantemente para mejorar nuestro sitio web y agradecemos los comentarios de los usuarios para identificar áreas de mejora.' }
+    };
+    function t(k) { return TR[k] ? (TR[k][LANG] || TR[k].en) : k; }
+    function applyTr() {
+      document.querySelectorAll('.fkag-legal-page [data-i18n]').forEach(function (el) {
+        var k = el.getAttribute('data-i18n');
+        if (TR[k]) el.innerHTML = t(k);
+      });
+    }
+    applyTr();
+    window.addEventListener('fkag-lang-change', function (e) {
+      var nl = (e.detail && e.detail.lang) || LANG;
+      if (nl === LANG) return;
+      LANG = nl;
+      applyTr();
+    });
+  })();
+</script>
+
+<style>
+  .fkag-legal-page { background: #fff; padding: 60px 24px 80px; color: #0c0c0c; }
+  .fkag-legal__inner { max-width: 860px; margin: 0 auto; }
+  .fkag-legal__content { font-size: 15px; line-height: 1.75; color: #2a2a2a; }
+  .fkag-legal__content h1 { font-family: 'Poppins', sans-serif; font-size: 38px; font-weight: 800; color: #0c0c0c; margin: 0 0 8px; letter-spacing: -0.5px; line-height: 1.2; }
+  .fkag-legal__updated { font-size: 13px; color: #5b6a7e; margin: 0 0 36px; padding-bottom: 18px; border-bottom: 1px solid #e3e8ef; }
+  .fkag-legal__content h2 { font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 700; color: #0c0c0c; margin: 36px 0 14px; letter-spacing: -0.2px; border-left: 3px solid #c9a961; padding-left: 12px; }
+  .fkag-legal__content h2:first-of-type { margin-top: 8px; }
+  .fkag-legal__content p { margin: 0 0 16px; }
+  .fkag-legal__content p strong { color: #0c0c0c; font-weight: 700; }
+  .fkag-legal__content a { color: #a88a47; font-weight: 600; text-decoration: none; }
+  .fkag-legal__content a:hover { text-decoration: underline; }
+  @media (max-width: 600px) {
+    .fkag-legal-page { padding: 40px 18px 60px; }
+    .fkag-legal__content { font-size: 14.5px; }
+    .fkag-legal__content h1 { font-size: 30px; }
+    .fkag-legal__content h2 { font-size: 18px; }
+  }
+</style>
