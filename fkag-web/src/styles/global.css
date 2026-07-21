@@ -88,6 +88,24 @@ a {
   padding: 0 24px;
 }
 
+/* Material Icons Outlined — clase base (define la fuente + ligaduras).
+   Así los íconos se dibujan aunque el CSS de Google no traiga la clase. */
+.material-icons-outlined {
+  font-family: 'Material Icons Outlined';
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
 /* Utilidad de accesibilidad */
 .sr-only {
   position: absolute;

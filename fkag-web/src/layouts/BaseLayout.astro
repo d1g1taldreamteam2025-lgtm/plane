@@ -47,10 +47,12 @@ const canonical = new URL(Astro.url.pathname, site.domain).href;
     <meta property="og:image" content={new URL(ogImage, site.domain).href} />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <!-- Material Icons Outlined (los widgets usan estos íconos) -->
+    <!-- Material Icons Outlined (los widgets usan estos íconos).
+         Endpoint 'icon?family=' (NO css2): entrega la @font-face + la clase
+         .material-icons-outlined con ligaduras, para que "schedule" → ⏰. -->
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined&display=swap"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
     />
   </head>
   <body>
