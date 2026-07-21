@@ -226,6 +226,11 @@ const marquee = ['m_sold', 'm_down', 'm_approval', 'm_carfax', 'm_inspection'] a
   }
 
   /* Main bar */
+  .xkag__main {
+    position: relative;
+    z-index: 30; /* por encima de la marquesina para que el menú desplegable no quede tapado */
+    background: #fff;
+  }
   .xkag__main-inner {
     display: flex;
     align-items: center;
@@ -296,6 +301,7 @@ const marquee = ['m_sold', 'm_down', 'm_approval', 'm_carfax', 'm_inspection'] a
     position: absolute;
     top: 100%;
     right: 0;
+    z-index: 50;
     min-width: 240px;
     background: #fff;
     border: 1px solid #e8e4dc;
@@ -416,6 +422,8 @@ const marquee = ['m_sold', 'm_down', 'm_approval', 'm_carfax', 'm_inspection'] a
 
   /* Marquee */
   .xkag-marquee {
+    position: relative;
+    z-index: 1; /* debajo de la barra del nav para no tapar el menú desplegable */
     background: #c9a961;
     color: #0c0c0c;
     overflow: hidden;
