@@ -46,9 +46,11 @@ import { t } from '../../i18n';
   }
 
   function cardHTML(c: Vehicle): string {
-    const img = c.image || '/images/placeholder.svg';
+    const gal = (c.photoArray && c.photoArray.length ? c.photoArray : [c.image]).filter(Boolean);
+    const img = gal[0] || '/images/placeholder.svg';
+    const galAttr = JSON.stringify(gal).replace(/'/g, '&#39;');
     return `<article class="fkag-feat__card">
-      <div class="fkag-feat__img"><img src="${img}" alt="${c.year} ${c.make} ${c.model}" loading="lazy" onerror="this.src='/images/placeholder.svg'"><span class="fkag-feat__badge">${badge(c)}</span></div>
+      <div class="fkag-feat__img"><img src="${img}" alt="${c.year} ${c.make} ${c.model}" loading="lazy" data-g='${galAttr}' data-gi="0" onerror="fkagImgFB(this)"><span class="fkag-feat__badge">${badge(c)}</span></div>
       <div class="fkag-feat__body">
         <h3>${c.year} ${c.make} ${c.model}${c.trim ? ' ' + c.trim : ''}</h3>
         <div class="fkag-feat__specs"><span>${fmt(c.mileage || 0)} mi</span><span>${c.fuel || 'Gasoline'}</span></div>

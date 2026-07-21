@@ -216,7 +216,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       var html = '<nav class="fkag-vdp__crumb"><a href="/">' + t('home') + '</a><span class="material-icons-outlined">chevron_right</span><a href="/inventory/">' + t('inventory') + '</a><span class="material-icons-outlined">chevron_right</span><span>' + title + '</span></nav>'
         + '<div class="fkag-vdp__top"><div class="fkag-vdp__left"><div class="fkag-vdp__gallery"><div class="fkag-vdp__main">'
         + (car.badge ? '<span class="fkag-vdp__main-badge">' + car.badge + '</span>' : '')
-        + '<img id="fkagVdpMainImg" src="' + gallery[0] + '" alt="' + title + '" onerror="this.src=\'' + PH + '\'" />'
+        + '<img id="fkagVdpMainImg" src="' + gallery[0] + '" data-g=\'' + JSON.stringify(gallery).replace(/'/g, '&#39;') + '\' data-gi="0" alt="' + title + '" onerror="fkagImgFB(this)" />'
         + '<button class="fkag-vdp__nav fkag-vdp__nav--prev" id="fkagVdpPrev"><span class="material-icons-outlined">chevron_left</span></button>'
         + '<button class="fkag-vdp__nav fkag-vdp__nav--next" id="fkagVdpNext"><span class="material-icons-outlined">chevron_right</span></button>'
         + '<div class="fkag-vdp__counter"><span class="material-icons-outlined">photo_camera</span><span id="fkagVdpCounter">1 / ' + gallery.length + '</span></div></div>'

@@ -54,6 +54,30 @@ const canonical = new URL(Astro.url.pathname, site.domain).href;
       rel="stylesheet"
       href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
     />
+
+    <!-- Fallback de imágenes de vehículos: si una foto falla (host externo que
+         bloquea el hotlink, URL muerta), prueba la siguiente de la galería
+         (data-g) antes de caer al placeholder. Evita placeholders sueltos. -->
+    <script is:inline>
+      window.fkagImgFB = function (img) {
+        try {
+          var raw = img.getAttribute('data-g');
+          if (raw) {
+            var arr = JSON.parse(raw);
+            var i = parseInt(img.getAttribute('data-gi') || '0', 10) + 1;
+            for (; i < arr.length; i++) {
+              if (arr[i]) {
+                img.setAttribute('data-gi', String(i));
+                img.src = arr[i];
+                return;
+              }
+            }
+          }
+        } catch (e) {}
+        img.onerror = null;
+        img.src = '/images/placeholder.svg';
+      };
+    </script>
   </head>
   <body>
     {!bare && <Header />}
