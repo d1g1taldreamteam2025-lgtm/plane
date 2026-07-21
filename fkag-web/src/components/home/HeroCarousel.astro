@@ -82,7 +82,8 @@ import { t } from '../../i18n';
   .fkag-hero--clean {
     position: relative;
     width: 100%;
-    aspect-ratio: 16 / 9;
+    /* Igual al formato real de las imágenes PC (1838x787 ≈ 2.34:1) para que encajen sin recorte */
+    aspect-ratio: 1838 / 787;
     overflow: hidden;
     background: #0c0c0c;
   }
@@ -154,7 +155,8 @@ import { t } from '../../i18n';
   }
   @media (max-width: 768px) {
     .fkag-hero--clean {
-      aspect-ratio: 1 / 1;
+      /* Formato real de las imágenes de móvil (1080x800 = 1.35:1) */
+      aspect-ratio: 1080 / 800;
     }
     .fkag-hero--clean .fkag-hero__cta-fixed {
       bottom: 8%;
