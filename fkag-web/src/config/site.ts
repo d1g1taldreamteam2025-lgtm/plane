@@ -57,8 +57,8 @@ export const site = {
 export const assets = {
   // Locales (servidas desde /public/images) — SIN dependencia de Cloudinary.
   // ⚠️ FALTAN: hay que colocar estos archivos reales en public/images/
-  logoHeader: '/images/logo-header.png', // ⛔ pendiente (logo FKAG real)
-  logoFooter: '/images/logo-footer.svg', // ⛔ pendiente (logo dorado FKAG)
+  logoHeader: '/images/logo-header.svg', // ✅ logo FKAG real (SVG)
+  logoFooter: '/images/logo-footer.svg', // ✅ logo dorado FKAG (SVG)
   flagEs: '/images/flag-es.svg', // ✅ generado local
   flagEn: '/images/flag-en.svg', // ✅ generado local
   googleIcon: '/images/google-icon.svg', // ✅ generado local
