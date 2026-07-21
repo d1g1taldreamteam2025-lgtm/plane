@@ -13,7 +13,7 @@ import { t } from '../../i18n';
           data-img-en={s.en}
           data-img-es-mobile={s.esMobile}
           data-img-en-mobile={s.enMobile}
-          style={`background-image:url('${s.es}')`}
+          style={`background-image:url('${s.es}'), radial-gradient(circle at 72% 28%, rgba(201,169,97,0.20), rgba(201,169,97,0) 55%), linear-gradient(135deg, #0c0c0c 0%, #17140d 60%, #2a2113 100%)`}
         />
       ))
     }
@@ -55,7 +55,8 @@ import { t } from '../../i18n';
           if (!img) img = l === 'en' ? s.getAttribute('data-img-en') : s.getAttribute('data-img-es');
           if (img) {
             pl(img);
-            s.style.backgroundImage = "url('" + img + "')";
+            s.style.backgroundImage =
+              "url('" + img + "'), radial-gradient(circle at 72% 28%, rgba(201,169,97,0.20), rgba(201,169,97,0) 55%), linear-gradient(135deg, #0c0c0c 0%, #17140d 60%, #2a2113 100%)";
           }
         });
       }
@@ -100,7 +101,7 @@ import { t } from '../../i18n';
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-color: #eef1f5;
+    background-color: #0c0c0c;
     opacity: 0;
     z-index: 1;
     pointer-events: none;
