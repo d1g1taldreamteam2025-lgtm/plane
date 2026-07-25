@@ -72,9 +72,20 @@ export interface Vehicle {
 
 const PLACEHOLDER = '/images/placeholder.svg';
 
+/**
+ * CDNs externos de fotos que se sirven a través de /api/img (mismo dominio).
+ * Evita el hotlink-blocking y los ad-blockers del navegador; una foto muerta
+ * (403/404) sigue fallando y el fallback de galería pasa a la siguiente.
+ */
+const PROXIED_HOSTS = /^https?:\/\/([a-z0-9-]+\.)*(dealer\.com|carsforsale\.com|dealercdn\.com|homenetiol\.com|edmunds-media\.com)\//i;
+
+function proxied(u: string): string {
+  return PROXIED_HOSTS.test(u) ? '/api/img?u=' + encodeURIComponent(u) : u;
+}
+
 export function mapVehicle(r: InventoryRow): Vehicle {
-  const gallery = Array.isArray(r.gallery) ? r.gallery : [];
-  const firstImg = r.cover_image || gallery[0] || PLACEHOLDER;
+  const gallery = (Array.isArray(r.gallery) ? r.gallery : []).filter(Boolean).map(proxied);
+  const firstImg = (r.cover_image ? proxied(r.cover_image) : '') || gallery[0] || PLACEHOLDER;
   const id =
     r.id ||
     r.stock ||
