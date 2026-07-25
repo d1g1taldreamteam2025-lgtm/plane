@@ -1,0 +1,323 @@
+---
+import { t } from '../../i18n';
+---
+
+<section class="fkag-feat">
+  <div class="fkag-feat__inner">
+    <div class="fkag-feat__head">
+      <h2 data-i18n="feat_title">{t('feat_title', 'es')}</h2>
+      <p data-i18n="feat_sub">{t('feat_sub', 'es')}</p>
+      <a href="/inventory/" class="fkag-btn fkag-btn--ghost-blue"><span data-i18n="cta_view_all">{t('cta_view_all', 'es')}</span></a>
+    </div>
+    <div class="fkag-feat__carousel">
+      <button class="fkag-feat__arrow fkag-feat__arrow--prev" id="fkagFeatPrev" aria-label="Previous">‹</button>
+      <div class="fkag-feat__viewport">
+        <div class="fkag-feat__track" id="fkagFeatTrack">
+          <div class="fkag-feat__state" data-i18n="feat_loading">{t('feat_loading', 'es')}</div>
+        </div>
+      </div>
+      <button class="fkag-feat__arrow fkag-feat__arrow--next" id="fkagFeatNext" aria-label="Next">›</button>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { getFeaturedVehicles, type Vehicle } from '../../lib/supabase';
+  import { dict, DEFAULT_LANG, type Lang } from '../../i18n';
+
+  function getLang(): Lang {
+    try {
+      const x = localStorage.getItem('fkag_lang');
+      if (x === 'en' || x === 'es') return x;
+    } catch {}
+    return DEFAULT_LANG;
+  }
+  function tr(key: string): string {
+    const l = getLang();
+    return (dict[l] as Record<string, string>)[key] ?? (dict.en as Record<string, string>)[key] ?? key;
+  }
+  const fmt = (n: number) => n.toLocaleString('en-US');
+
+  let cars: Vehicle[] = [];
+  let idx = 0;
+
+  function badge(c: Vehicle) {
+    return c.badge || (c.featured ? tr('feat_featured') : tr('feat_available'));
+  }
+
+  function cardHTML(c: Vehicle): string {
+    const gal = (c.photoArray && c.photoArray.length ? c.photoArray : [c.image]).filter(Boolean);
+    const img = gal[0] || '/images/placeholder.svg';
+    const galAttr = JSON.stringify(gal).replace(/'/g, '&#39;');
+    return `<article class="fkag-feat__card">
+      <div class="fkag-feat__img"><img src="${img}" alt="${c.year} ${c.make} ${c.model}" loading="lazy" data-g='${galAttr}' data-gi="0" onerror="fkagImgFB(this)"><span class="fkag-feat__badge">${badge(c)}</span></div>
+      <div class="fkag-feat__body">
+        <h3>${c.year} ${c.make} ${c.model}${c.trim ? ' ' + c.trim : ''}</h3>
+        <div class="fkag-feat__specs"><span>${fmt(c.mileage || 0)} mi</span><span>${c.fuel || 'Gasoline'}</span></div>
+        <div class="fkag-feat__price">$${fmt(c.price || 0)}</div>
+        <div class="fkag-feat__actions">
+          <a href="/inventory/sample/?id=${c.id}" class="fkag-btn fkag-btn--gold">${tr('feat_view_details')}</a>
+          <a href="/financing/apply/?vin=${c.id}" class="fkag-btn fkag-btn--outline">${tr('feat_prequalify')}</a>
+        </div>
+      </div>
+    </article>`;
+  }
+
+  function stateHTML(key: string): string {
+    return `<div class="fkag-feat__state">${tr(key)}</div>`;
+  }
+
+  function render() {
+    const track = document.getElementById('fkagFeatTrack');
+    if (!track) return;
+    if (!cars.length) {
+      track.innerHTML = stateHTML('feat_none');
+      return;
+    }
+    track.innerHTML = cars.map(cardHTML).join('');
+    slide(0);
+  }
+
+  function slide(dir: number) {
+    const track = document.getElementById('fkagFeatTrack');
+    const first = track?.children[0] as HTMLElement | undefined;
+    if (!track || !first || !first.classList.contains('fkag-feat__card')) return;
+    const per = window.innerWidth <= 640 ? 1 : window.innerWidth <= 980 ? 2 : 3;
+    const max = Math.max(0, track.children.length - per);
+    idx += dir;
+    if (idx < 0) idx = max;
+    if (idx > max) idx = 0;
+    const step = first.offsetWidth + 24;
+    track.style.transform = `translateX(-${idx * step}px)`;
+  }
+
+  async function load() {
+    const track = document.getElementById('fkagFeatTrack');
+    if (!track) return;
+    try {
+      cars = await getFeaturedVehicles(6);
+      render();
+    } catch (e) {
+      console.error('[featured] error', e);
+      track.innerHTML = stateHTML('feat_error');
+    }
+  }
+
+  document.getElementById('fkagFeatPrev')?.addEventListener('click', () => slide(-1));
+  document.getElementById('fkagFeatNext')?.addEventListener('click', () => slide(1));
+  window.addEventListener('resize', () => slide(0));
+  window.addEventListener('fkag-lang-change', () => {
+    if (cars.length) render();
+  });
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load);
+  else load();
+</script>
+
+<style is:global>
+  .fkag-feat {
+    background: #fff;
+    padding: 90px 0;
+    width: 100%;
+  }
+  .fkag-feat__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+  .fkag-feat__head {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .fkag-feat__head h2 {
+    font-size: 42px;
+    font-weight: 800;
+    color: #0c1929;
+    margin: 0 0 10px;
+  }
+  .fkag-feat__head p {
+    font-size: 17px;
+    color: #5b6b7c;
+    margin: 0 0 24px;
+  }
+  .fkag-btn--ghost-blue {
+    background: transparent;
+    color: #0a0a0a;
+    border: 2px solid #0a0a0a;
+    padding: 12px 28px;
+    display: inline-block;
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 8px;
+  }
+  .fkag-btn--ghost-blue:hover {
+    background: #0a0a0a;
+    color: #fff;
+  }
+  .fkag-feat__carousel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .fkag-feat__viewport {
+    overflow: hidden;
+    flex: 1;
+  }
+  .fkag-feat__track {
+    display: flex;
+    gap: 24px;
+    transition: transform 0.5s cubic-bezier(0.22, 0.9, 0.32, 1);
+  }
+  .fkag-feat__state {
+    width: 100%;
+    text-align: center;
+    padding: 60px 20px;
+    color: #888;
+  }
+  .fkag-feat__track > .fkag-feat__card {
+    flex: 0 0 calc((100% - 48px) / 3);
+    min-width: 0;
+  }
+  .fkag-feat__arrow {
+    width: 48px;
+    height: 96px;
+    border-radius: 8px;
+    background: #fff;
+    border: 2px solid #c9a961;
+    color: #c9a961;
+    font-size: 32px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 12px rgba(201, 169, 97, 0.18);
+    padding: 0;
+    line-height: 1;
+    outline: none;
+  }
+  .fkag-feat__arrow:hover {
+    background: #c9a961;
+    color: #0c0c0c;
+    transform: scale(1.04);
+    box-shadow: 0 6px 18px rgba(201, 169, 97, 0.4);
+  }
+  .fkag-feat__arrow:active {
+    transform: scale(0.98);
+  }
+  .fkag-feat__card {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid #eef1f5;
+    transition: all 0.25s;
+  }
+  .fkag-feat__card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+  }
+  .fkag-feat__img {
+    position: relative;
+    height: 220px;
+    background: #eef1f5;
+    overflow: hidden;
+  }
+  .fkag-feat__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .fkag-feat__badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: #c9a961;
+    color: #1a1a1a;
+    font-weight: 700;
+    font-size: 11px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+  .fkag-feat__body {
+    padding: 24px;
+  }
+  .fkag-feat__body h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0c1929;
+    margin: 0 0 10px;
+  }
+  .fkag-feat__specs {
+    display: flex;
+    gap: 16px;
+    color: #5b6b7c;
+    font-size: 14px;
+    margin-bottom: 14px;
+  }
+  .fkag-feat__price {
+    font-size: 26px;
+    font-weight: 800;
+    color: #0a0a0a;
+    margin-bottom: 18px;
+  }
+  .fkag-feat__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .fkag-btn {
+    padding: 11px 14px;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .fkag-btn--gold {
+    background: linear-gradient(135deg, #c9a961, #d4b674);
+    color: #0a0a0a;
+  }
+  .fkag-btn--outline {
+    background: transparent;
+    color: #0a0a0a;
+    border: 2px solid #0a0a0a;
+  }
+  .fkag-btn--outline:hover {
+    background: #0a0a0a;
+    color: #fff;
+  }
+  @media (max-width: 980px) {
+    .fkag-feat {
+      padding: 60px 0;
+    }
+    .fkag-feat__inner {
+      padding: 0 24px;
+    }
+    .fkag-feat__head h2 {
+      font-size: 32px;
+    }
+    .fkag-feat__img {
+      height: 180px;
+    }
+    .fkag-feat__track > .fkag-feat__card {
+      flex: 0 0 calc((100% - 24px) / 2);
+    }
+    .fkag-feat__arrow {
+      width: 40px;
+      height: 80px;
+      font-size: 24px;
+    }
+  }
+  @media (max-width: 640px) {
+    .fkag-feat__track > .fkag-feat__card {
+      flex: 0 0 100%;
+    }
+  }
+</style>

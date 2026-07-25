@@ -1,0 +1,487 @@
+---
+import { site, assets } from '../config/site';
+import { t } from '../i18n';
+
+const L = 'es';
+const marquee = ['m_sold', 'm_down', 'm_approval', 'm_carfax', 'm_inspection'] as const;
+---
+
+<header class="xkag" id="xkagHeader">
+  <!-- Top bar -->
+  <div class="xkag__top">
+    <div class="xkag__top-inner">
+      <div class="xkag__top-left">
+        <span class="xkag__top-item">
+          <span class="material-icons-outlined">schedule</span>
+          <span data-i18n="header_hours">{t('header_hours', L)}</span>
+        </span>
+        <span class="xkag__top-item">
+          <span class="material-icons-outlined">place</span>
+          <span data-i18n="header_address">{t('header_address', L)}</span>
+        </span>
+      </div>
+      <div class="xkag__top-right">
+        <div class="xkag__lang">
+          <button class="fkag-lang__btn" type="button" data-lang="es" aria-label="Español">
+            <img src={assets.flagEs} alt="ES" width="18" height="13" /><span>ES</span>
+          </button>
+          <button class="fkag-lang__btn" type="button" data-lang="en" aria-label="English">
+            <img src={assets.flagEn} alt="EN" width="18" height="13" /><span>EN</span>
+          </button>
+        </div>
+        <a href="/financing/apply/" class="xkag__cta"><span data-i18n="cta_prequalify">{t('cta_prequalify', L)}</span></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main bar -->
+  <div class="xkag__main">
+    <div class="xkag__main-inner">
+      <a href="/" class="xkag__logo" aria-label={site.name}>
+        <img
+          src={assets.logoHeader}
+          alt={site.name}
+          width="180"
+          height="50"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex';"
+        />
+        <span class="xkag__logo-fallback">FAMILY KEY<b>AUTO GROUP</b></span>
+      </a>
+
+      <!-- Desktop nav -->
+      <nav class="xkag__nav" aria-label="Principal">
+        <a href="/" class="xkag__nav-item"><span data-i18n="nav_home">{t('nav_home', L)}</span></a>
+        <a href="/inventory/" class="xkag__nav-item"><span data-i18n="nav_inventory">{t('nav_inventory', L)}</span></a>
+        <div class="xkag__dropdown">
+          <a href="/financing/" class="xkag__nav-item"><span data-i18n="nav_financing">{t('nav_financing', L)}</span> <span class="xkag__caret">▾</span></a>
+          <div class="xkag__menu">
+            <a href="/financing/" class="xkag__menu-link"><span data-i18n="nav_financing_overview">{t('nav_financing_overview', L)}</span></a>
+            <a href="/financing/apply/" class="xkag__menu-link xkag__menu-link--gold"><span data-i18n="nav_financing_apply">{t('nav_financing_apply', L)}</span></a>
+          </div>
+        </div>
+        <a href="/about/" class="xkag__nav-item"><span data-i18n="nav_about">{t('nav_about', L)}</span></a>
+        <a href="/contact/" class="xkag__nav-item"><span data-i18n="nav_contact">{t('nav_contact', L)}</span></a>
+        <a href="/faqs/" class="xkag__nav-item"><span data-i18n="nav_faqs">{t('nav_faqs', L)}</span></a>
+      </nav>
+
+      <!-- Mobile controls -->
+      <div class="xkag__mobile-ctrls">
+        <div class="xkag__lang xkag__lang--mobile">
+          <button class="fkag-lang__btn" type="button" data-lang="es" aria-label="Español"><img src={assets.flagEs} alt="ES" width="22" height="16" /></button>
+          <button class="fkag-lang__btn" type="button" data-lang="en" aria-label="English"><img src={assets.flagEn} alt="EN" width="22" height="16" /></button>
+        </div>
+        <button id="xkagBurger" class="xkag__burger" type="button" aria-label="Menú" aria-expanded="false">
+          <span class="material-icons-outlined">menu</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="xkag__mobile-menu" id="xkagMobileMenu">
+    <a href="/"><span data-i18n="nav_home">{t('nav_home', L)}</span></a>
+    <a href="/inventory/"><span data-i18n="nav_inventory">{t('nav_inventory', L)}</span></a>
+    <a href="/financing/"><span data-i18n="nav_financing">{t('nav_financing', L)}</span></a>
+    <a href="/financing/apply/" class="xkag__mobile-cta"><span data-i18n="nav_financing_apply">{t('nav_financing_apply', L)}</span></a>
+    <a href="/about/"><span data-i18n="nav_about">{t('nav_about', L)}</span></a>
+    <a href="/contact/"><span data-i18n="nav_contact">{t('nav_contact', L)}</span></a>
+    <a href="/faqs/"><span data-i18n="nav_faqs">{t('nav_faqs', L)}</span></a>
+  </div>
+
+  <!-- Marquee -->
+  <section class="xkag-marquee" aria-hidden="true">
+    <div class="xkag-marquee__track">
+      {[0, 1, 2, 3].map(() => (
+        <div class="xkag-marquee__group">
+          {marquee.map((k) => (
+            <>
+              <span class="xkag-marquee__item">★ <span data-i18n={k}>{t(k, L)}</span></span>
+              <span class="xkag-marquee__sep">●</span>
+            </>
+          ))}
+        </div>
+      ))}
+    </div>
+  </section>
+</header>
+
+<script>
+  (function () {
+    // Expone la altura real del header como --fkag-header-h (para stickies de otras páginas)
+    var hdr = document.getElementById('xkagHeader');
+    function setH() {
+      if (hdr) document.documentElement.style.setProperty('--fkag-header-h', hdr.offsetHeight + 'px');
+    }
+    setH();
+    window.addEventListener('resize', setH);
+    window.addEventListener('load', setH);
+
+    var burger = document.getElementById('xkagBurger');
+    var menu = document.getElementById('xkagMobileMenu');
+    if (burger && menu) {
+      burger.addEventListener('click', function () {
+        var open = menu.classList.toggle('is-open');
+        burger.setAttribute('aria-expanded', String(open));
+      });
+      menu.addEventListener('click', function (e) {
+        if ((e.target as HTMLElement).closest('a')) {
+          menu.classList.remove('is-open');
+          burger.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+  })();
+</script>
+
+<style>
+  .xkag {
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Top bar */
+  .xkag__top {
+    background: #0c0c0c;
+    color: #fff;
+    font-size: 13px;
+  }
+  .xkag__top-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 24px;
+    max-width: 1280px;
+    margin: 0 auto;
+    gap: 16px;
+  }
+  .xkag__top-left {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+  }
+  .xkag__top-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .xkag__top-item .material-icons-outlined {
+    font-size: 16px;
+    color: #c9a961;
+  }
+  .xkag__top-right {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+  .xkag__lang {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .fkag-lang__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+  }
+  .fkag-lang__btn img {
+    width: 18px;
+    height: 13px;
+    border-radius: 2px;
+  }
+  .fkag-lang__btn.active {
+    background: #c9a961 !important;
+    border-color: #c9a961 !important;
+    color: #0c0c0c !important;
+  }
+  .fkag-lang__btn:not(.active):hover {
+    background: rgba(201, 169, 97, 0.2) !important;
+    border-color: rgba(201, 169, 97, 0.5) !important;
+  }
+  .xkag__cta {
+    background: #c9a961;
+    color: #0c0c0c;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 6px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .xkag__cta:hover {
+    background: #d4b674;
+  }
+
+  /* Main bar */
+  .xkag__main {
+    position: relative;
+    z-index: 30; /* por encima de la marquesina para que el menú desplegable no quede tapado */
+    background: #fff;
+  }
+  .xkag__main-inner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 24px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .xkag__logo {
+    margin-right: auto;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+  }
+  .xkag__logo img {
+    height: 50px;
+    max-height: 50px;
+    width: auto;
+    max-width: 220px;
+    object-fit: contain;
+    display: block;
+  }
+  .xkag__logo-fallback {
+    display: none;
+    flex-direction: column;
+    line-height: 1;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: 1px;
+    color: #0c0c0c;
+  }
+  .xkag__logo-fallback b {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: #c9a961;
+  }
+  .xkag__nav {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+  .xkag__nav-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 14px;
+    color: #1a1a1a;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .xkag__nav-item:hover {
+    background: #fafaf7;
+    color: #c9a961;
+  }
+  .xkag__caret {
+    font-size: 13px;
+  }
+  .xkag__dropdown {
+    position: relative;
+  }
+  .xkag__menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 50;
+    min-width: 240px;
+    background: #fff;
+    border: 1px solid #e8e4dc;
+    border-radius: 12px;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.18);
+    padding: 12px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: all 0.2s ease;
+  }
+  .xkag__dropdown:hover .xkag__menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .xkag__menu-link {
+    display: block;
+    padding: 12px 16px;
+    color: #1a1a1a;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+  }
+  .xkag__menu-link:hover {
+    background: #fafaf7;
+    color: #c9a961;
+  }
+  .xkag__menu-link--gold {
+    background: linear-gradient(135deg, #c9a961, #d4b674);
+    color: #0c0c0c;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 13px;
+    margin-top: 6px;
+  }
+  .xkag__menu-link--gold:hover {
+    color: #0c0c0c;
+    filter: brightness(1.05);
+  }
+
+  /* Mobile */
+  .xkag__mobile-ctrls {
+    display: none;
+    align-items: center;
+    gap: 10px;
+  }
+  .xkag__lang--mobile {
+    border: 1.5px solid #c9a961;
+    border-radius: 999px;
+    padding: 0 6px;
+    height: 42px;
+    gap: 2px;
+  }
+  .xkag__lang--mobile .fkag-lang__btn {
+    background: transparent;
+    border: 0;
+    padding: 4px 8px;
+  }
+  .xkag__lang--mobile .fkag-lang__btn img {
+    width: 22px;
+    height: 16px;
+    border-radius: 3px;
+  }
+  .xkag__lang--mobile .fkag-lang__btn.active {
+    background: rgba(201, 169, 97, 0.18) !important;
+  }
+  .xkag__burger {
+    width: 42px;
+    height: 42px;
+    background: #fff;
+    border: 1.5px solid #c9a961;
+    border-radius: 10px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  .xkag__burger .material-icons-outlined {
+    font-size: 24px;
+    color: #c9a961;
+  }
+  .xkag__mobile-menu {
+    display: none;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    padding: 12px 16px;
+  }
+  .xkag__mobile-menu.is-open {
+    display: block;
+  }
+  .xkag__mobile-menu a {
+    display: block;
+    padding: 14px 8px;
+    border-bottom: 1px solid #e8e4dc;
+    color: #1a1a1a;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .xkag__mobile-menu a:last-child {
+    border-bottom: 0;
+  }
+  .xkag__mobile-cta {
+    background: linear-gradient(135deg, #c9a961, #d4b674);
+    color: #0c0c0c !important;
+    border-radius: 8px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700 !important;
+    font-size: 13px !important;
+    border-bottom: 0 !important;
+    margin: 8px 0;
+  }
+
+  /* Marquee */
+  .xkag-marquee {
+    position: relative;
+    z-index: 1; /* debajo de la barra del nav para no tapar el menú desplegable */
+    background: #c9a961;
+    color: #0c0c0c;
+    overflow: hidden;
+    padding: 14px 0;
+    width: 100%;
+  }
+  .xkag-marquee__track {
+    display: flex;
+    width: max-content;
+    animation: xkM 18s linear infinite;
+    will-change: transform;
+  }
+  .xkag-marquee__group {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .xkag-marquee__item {
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 0 24px;
+    color: #0c0c0c;
+  }
+  .xkag-marquee__sep {
+    font-size: 8px;
+    opacity: 0.6;
+    padding: 0 4px;
+  }
+  @keyframes xkM {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-25%, 0, 0);
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .xkag__top {
+      display: none;
+    }
+    .xkag__nav {
+      display: none;
+    }
+    .xkag__mobile-ctrls {
+      display: flex;
+    }
+  }
+  @media (max-width: 640px) {
+    .xkag-marquee__track {
+      animation-duration: 13s;
+    }
+    .xkag-marquee__item {
+      font-size: 11px;
+      padding: 0 14px;
+    }
+  }
+</style>

@@ -1,0 +1,247 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Preguntas Frecuentes" description="Respuestas rápidas sobre comprar, financiar, inventario, garantía y más en Family Key Auto Group.">
+  <div class="fkag-fq-page">
+    <section class="fkag-fq-hero">
+      <div class="fkag-container">
+        <h1 data-i18n="faqs_title">Frequently Asked Questions</h1>
+        <p data-i18n="faqs_sub">Quick answers about buying, financing, and working with Family Key Auto Group.</p>
+        <div class="fkag-fq-search"><input type="text" id="fkagFqSearch" data-i18n-placeholder="faqs_search_placeholder" placeholder="Search FAQs... (e.g. financing, warranty, pre-qualify)"></div>
+      </div>
+    </section>
+
+    <section class="fkag-fq-body">
+      <div class="fkag-container">
+        <div class="fkag-fq-layout">
+          <aside class="fkag-fq-cats">
+            <h3 data-i18n="faq_categories">Categories</h3>
+            <ul>
+              <li><a href="#buying" class="active" data-cat="buying"><svg viewBox="0 0 24 24" fill="none" stroke="#c9a961" stroke-width="2" width="20" height="20" stroke-linecap="round" stroke-linejoin="round"><path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg> <span data-i18n="faq_cat_buying">Buying a Car</span></a></li>
+              <li><a href="#financing" data-cat="financing"><svg viewBox="0 0 24 24" fill="none" stroke="#c9a961" stroke-width="2" width="20" height="20"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg> <span data-i18n="faq_cat_financing">Financing</span></a></li>
+              <li><a href="#inventory" data-cat="inventory"><svg viewBox="0 0 24 24" fill="none" stroke="#c9a961" stroke-width="2" width="20" height="20"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> <span data-i18n="faq_cat_inventory">Inventory</span></a></li>
+              <li><a href="#warranty" data-cat="warranty"><svg viewBox="0 0 24 24" fill="none" stroke="#c9a961" stroke-width="2" width="20" height="20"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> <span data-i18n="faq_cat_warranty">Warranty</span></a></li>
+              <li><a href="#general" data-cat="general"><svg viewBox="0 0 24 24" fill="none" stroke="#c9a961" stroke-width="2" width="20" height="20"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> <span data-i18n="faq_cat_general">General</span></a></li>
+            </ul>
+          </aside>
+
+          <div id="fkagFqContent">
+            <div class="fkag-fq-cat" id="buying">
+              <h2><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#c9a961" stroke-width="2" width="20" height="20" stroke-linecap="round" stroke-linejoin="round"><path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg></span> <span data-i18n="faq_cat_buying">Buying a Car</span></h2>
+              <div class="fkag-fq-list">
+                <details open><summary data-i18n="faqs_q1">How can I see a vehicle before buying?</summary><p data-i18n="faqs_q1_a">You're welcome to visit our lot during business hours, or schedule a private appointment. We can also send you a personalized walk-around video for any vehicle you're interested in.</p></details>
+                <details><summary data-i18n="faqs_q2">Do you offer test drives?</summary><p data-i18n="faqs_q2_a">Absolutely. Bring a valid driver's license and proof of insurance, and you can take any vehicle on our lot for a test drive — no commitment required.</p></details>
+                <details><summary data-i18n="faqs_q3">Can I reserve a vehicle?</summary><p data-i18n="faqs_q3_a">Yes. A small refundable deposit holds any vehicle for up to 48 hours while you arrange financing or transportation.</p></details>
+                <details><summary data-i18n="faqs_q4">Do you negotiate prices?</summary><p data-i18n="faqs_q4_a">Our prices are already set competitively based on market data, but we're happy to discuss the total package — including financing terms, accessories, and protection plans.</p></details>
+              </div>
+            </div>
+
+            <div class="fkag-fq-cat" id="financing">
+              <h2><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#c9a961" stroke-width="2" width="20" height="20" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></span> <span data-i18n="faq_cat_financing">Financing</span></h2>
+              <div class="fkag-fq-list">
+                <details><summary data-i18n="faqs_q5">Will pre-qualifying hurt my credit score?</summary><p data-i18n="faqs_q5_a">No. Pre-qualification uses a soft credit pull with zero impact on your score. A hard inquiry only happens if you accept a final loan offer.</p></details>
+                <details><summary data-i18n="faqs_q6">What credit score do I need?</summary><p data-i18n="faqs_q6_a">We work with lenders covering all credit profiles — from excellent credit to first-time buyers and credit rebuilders. There's likely an option for you.</p></details>
+                <details><summary data-i18n="faqs_q7">How much down payment is required?</summary><p data-i18n="faqs_q7_a">It varies by lender, vehicle, and your credit. Some buyers qualify for $0 down, while others may need 10–20%. We'll show you exact numbers after pre-qualification.</p></details>
+                <details><summary data-i18n="faqs_q8">Can I finance with no credit history?</summary><p data-i18n="faqs_q8_a">Yes. We have lenders specializing in first-time buyers and people building their credit profile. A co-signer or larger down payment can also help unlock better rates.</p></details>
+              </div>
+            </div>
+
+            <div class="fkag-fq-cat" id="inventory">
+              <h2><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#c9a961" stroke-width="2" width="20" height="20" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9z" fill="#c9a961" stroke="none"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="14" y2="16"/></svg></span> <span data-i18n="faq_cat_inventory">Inventory</span></h2>
+              <div class="fkag-fq-list">
+                <details><summary data-i18n="faqs_q9">How often do you get new vehicles?</summary><p data-i18n="faqs_q9_a">We add new arrivals weekly. Sign up for our newsletter or follow us on social media for early access to fresh inventory.</p></details>
+                <details><summary data-i18n="faqs_q10">Are vehicle history reports included?</summary><p data-i18n="faqs_q10_a">Yes. Every vehicle on our lot comes with a free CARFAX or AutoCheck report — no surprises, full transparency.</p></details>
+                <details><summary data-i18n="faqs_q11">Do you have certified pre-owned vehicles?</summary><p data-i18n="faqs_q11_a">Some manufacturers allow certified pre-owned through our partners. Ask about specific vehicles when you visit or contact us.</p></details>
+                <details><summary data-i18n="faqs_q12">What if I don't see what I want in stock?</summary><p data-i18n="faqs_q12_a">Tell us what you're looking for. Our buyers can often source specific vehicles from auctions and trade networks within 1–2 weeks.</p></details>
+              </div>
+            </div>
+
+            <div class="fkag-fq-cat" id="warranty">
+              <h2><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#c9a961" stroke-width="2" width="20" height="20" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span> <span data-i18n="faq_cat_warranty_full">Warranty & Protection</span></h2>
+              <div class="fkag-fq-list">
+                <details><summary data-i18n="faqs_q13">Do your vehicles come with a warranty?</summary><p data-i18n="faqs_q13_a">Many of our newer vehicles still have factory warranty remaining. We also offer extended service contracts and protection packages at competitive rates.</p></details>
+                <details><summary data-i18n="faqs_q14">What is included in extended warranty?</summary><p data-i18n="faqs_q14_a">Coverage varies by plan, but typically includes major mechanical components like engine, transmission, drivetrain, and electrical systems. We'll walk you through every option.</p></details>
+                <details><summary data-i18n="faqs_q15">Can I return or exchange a vehicle?</summary><p data-i18n="faqs_q15_a">We don't offer general returns, but if you're not 100% confident, we'll always work with you to find the right vehicle before purchase. Test drive thoroughly!</p></details>
+              </div>
+            </div>
+
+            <div class="fkag-fq-cat" id="general">
+              <h2><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#c9a961" stroke-width="2" width="20" height="20" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 4"/><circle cx="12" cy="17" r="0.6" fill="#c9a961"/></svg></span> <span data-i18n="faq_cat_general">General</span></h2>
+              <div class="fkag-fq-list">
+                <details><summary data-i18n="faqs_q16">What are your hours?</summary><p data-i18n="faqs_q16_a">Mon–Sat: 9:00am – 7:00pm · Sunday: 11:00am – 5:00pm. Holiday hours may vary — check our Contact page or call ahead.</p></details>
+                <details><summary data-i18n="faqs_q17">Do you speak Spanish?</summary><p data-i18n="faqs_q17_a">Sí. Several team members are bilingual and ready to help you in English or Spanish.</p></details>
+                <details><summary data-i18n="faqs_q18">How do I contact you?</summary><p data-i18n="faqs_q18_a">Call us at (949) 514-7366, email info@familykeyautogroup.com, or use the form on our Contact page. We respond to all messages within one business day.</p></details>
+              </div>
+            </div>
+
+            <div class="fkag-fq-empty" id="fkagFqEmpty" style="display:none" data-i18n="faqs_no_results">No results found. Try a different search term.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="fkag-fq-cta">
+      <div class="fkag-container">
+        <h2 data-i18n="faqs_cta_title">Still have questions?</h2>
+        <p data-i18n="faqs_cta_sub">Our team is here to help. Reach out anytime — no pressure, just real answers.</p>
+        <div class="fkag-fq-cta-btns">
+          <a href="/contact/" class="fkag-btn fkag-btn-pri" data-i18n="faqs_cta_contact">Contact Us</a>
+          <a href="tel:+19495147366" class="fkag-btn fkag-btn-out" data-i18n="faqs_cta_call">Call (949) 514-7366</a>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  (function () {
+    var LANG = (function () { try { var x = localStorage.getItem('fkag_lang'); return (x === 'en' || x === 'es') ? x : 'es'; } catch (e) { return 'es'; } })();
+    var TR = {
+      faqs_title:             { en: 'Frequently Asked Questions', es: 'Preguntas Frecuentes' },
+      faqs_sub:               { en: 'Quick answers about buying, financing, and working with Family Key Auto Group.', es: 'Respuestas rápidas sobre comprar, financiar y trabajar con Family Key Auto Group.' },
+      faqs_search_placeholder:{ en: 'Search FAQs... (e.g. financing, warranty, pre-qualify)', es: 'Buscar preguntas... (ej. financiamiento, garantía, pre-calificar)' },
+      faq_categories:         { en: 'Categories', es: 'Categorías' },
+      faq_cat_buying:         { en: 'Buying a Car', es: 'Comprar un Auto' },
+      faq_cat_financing:      { en: 'Financing', es: 'Financiamiento' },
+      faq_cat_inventory:      { en: 'Inventory', es: 'Inventario' },
+      faq_cat_warranty:       { en: 'Warranty', es: 'Garantía' },
+      faq_cat_warranty_full:  { en: 'Warranty & Protection', es: 'Garantía y Protección' },
+      faq_cat_general:        { en: 'General', es: 'General' },
+      faqs_no_results:        { en: 'No results found. Try a different search term.', es: 'No se encontraron resultados. Intenta con otro término de búsqueda.' },
+      faqs_cta_title:         { en: 'Still have questions?', es: '¿Aún tienes preguntas?' },
+      faqs_cta_sub:           { en: 'Our team is here to help. Reach out anytime — no pressure, just real answers.', es: 'Nuestro equipo está aquí para ayudarte. Contáctanos cuando quieras — sin presión, solo respuestas reales.' },
+      faqs_cta_contact:       { en: 'Contact Us', es: 'Contáctanos' },
+      faqs_cta_call:          { en: 'Call (949) 514-7366', es: 'Llamar (949) 514-7366' },
+      faqs_q1:  { en: 'How can I see a vehicle before buying?', es: '¿Cómo puedo ver un vehículo antes de comprarlo?' },
+      faqs_q1_a:{ en: "You're welcome to visit our lot during business hours, or schedule a private appointment. We can also send you a personalized walk-around video for any vehicle you're interested in.", es: 'Eres bienvenido a visitar nuestro lote en horario hábil, o agendar una cita privada. También podemos enviarte un video personalizado de cualquier vehículo que te interese.' },
+      faqs_q2:  { en: 'Do you offer test drives?', es: '¿Ofrecen pruebas de manejo?' },
+      faqs_q2_a:{ en: "Absolutely. Bring a valid driver's license and proof of insurance, and you can take any vehicle on our lot for a test drive — no commitment required.", es: 'Por supuesto. Trae tu licencia de conducir vigente y prueba de seguro, y puedes probar cualquier vehículo — sin compromiso.' },
+      faqs_q3:  { en: 'Can I reserve a vehicle?', es: '¿Puedo reservar un vehículo?' },
+      faqs_q3_a:{ en: 'Yes. A small refundable deposit holds any vehicle for up to 48 hours while you arrange financing or transportation.', es: 'Sí. Un pequeño depósito reembolsable reserva cualquier vehículo hasta por 48 horas mientras organizas tu financiamiento o transporte.' },
+      faqs_q4:  { en: 'Do you negotiate prices?', es: '¿Negocian precios?' },
+      faqs_q4_a:{ en: "Our prices are already set competitively based on market data, but we're happy to discuss the total package — including financing terms, accessories, and protection plans.", es: 'Nuestros precios ya están fijados de forma competitiva según datos del mercado, pero con gusto hablamos del paquete completo — incluyendo términos de financiamiento, accesorios y planes de protección.' },
+      faqs_q5:  { en: 'Will pre-qualifying hurt my credit score?', es: '¿Pre-calificar afectará mi puntaje de crédito?' },
+      faqs_q5_a:{ en: 'No. Pre-qualification uses a soft credit pull with zero impact on your score. A hard inquiry only happens if you accept a final loan offer.', es: 'No. La pre-calificación usa una consulta suave de crédito con cero impacto en tu puntaje. Una consulta dura solo ocurre si aceptas una oferta final de préstamo.' },
+      faqs_q6:  { en: 'What credit score do I need?', es: '¿Qué puntaje de crédito necesito?' },
+      faqs_q6_a:{ en: "We work with lenders covering all credit profiles — from excellent credit to first-time buyers and credit rebuilders. There's likely an option for you.", es: 'Trabajamos con prestamistas que cubren todos los perfiles de crédito — desde crédito excelente hasta compradores primerizos y reconstrucción de crédito. Seguro hay una opción para ti.' },
+      faqs_q7:  { en: 'How much down payment is required?', es: '¿Cuánto pago inicial se requiere?' },
+      faqs_q7_a:{ en: "It varies by lender, vehicle, and your credit. Some buyers qualify for $0 down, while others may need 10–20%. We'll show you exact numbers after pre-qualification.", es: 'Varía según el prestamista, vehículo y tu crédito. Algunos compradores califican para $0 inicial, otros pueden necesitar 10–20%. Te mostraremos los números exactos después de la pre-calificación.' },
+      faqs_q8:  { en: 'Can I finance with no credit history?', es: '¿Puedo financiar sin historial de crédito?' },
+      faqs_q8_a:{ en: 'Yes. We have lenders specializing in first-time buyers and people building their credit profile. A co-signer or larger down payment can also help unlock better rates.', es: 'Sí. Tenemos prestamistas especializados en compradores primerizos y personas construyendo su perfil crediticio. Un co-firmante o un pago inicial mayor también pueden ayudar a desbloquear mejores tasas.' },
+      faqs_q9:  { en: 'How often do you get new vehicles?', es: '¿Con qué frecuencia reciben vehículos nuevos?' },
+      faqs_q9_a:{ en: 'We add new arrivals weekly. Sign up for our newsletter or follow us on social media for early access to fresh inventory.', es: 'Agregamos nuevos vehículos semanalmente. Suscríbete a nuestro boletín o síguenos en redes sociales para acceso anticipado al inventario.' },
+      faqs_q10: { en: 'Are vehicle history reports included?', es: '¿Incluyen reportes de historial del vehículo?' },
+      faqs_q10_a:{ en: 'Yes. Every vehicle on our lot comes with a free CARFAX or AutoCheck report — no surprises, full transparency.', es: 'Sí. Cada vehículo en nuestro lote viene con un reporte gratuito de CARFAX o AutoCheck — sin sorpresas, total transparencia.' },
+      faqs_q11: { en: 'Do you have certified pre-owned vehicles?', es: '¿Tienen vehículos usados certificados?' },
+      faqs_q11_a:{ en: 'Some manufacturers allow certified pre-owned through our partners. Ask about specific vehicles when you visit or contact us.', es: 'Algunos fabricantes permiten usados certificados a través de nuestros socios. Pregunta por vehículos específicos cuando nos visites o contactes.' },
+      faqs_q12: { en: "What if I don't see what I want in stock?", es: '¿Y si no veo lo que quiero en stock?' },
+      faqs_q12_a:{ en: "Tell us what you're looking for. Our buyers can often source specific vehicles from auctions and trade networks within 1–2 weeks.", es: 'Dinos qué buscas. Nuestros compradores pueden conseguir vehículos específicos desde subastas y redes de intercambio en 1–2 semanas.' },
+      faqs_q13: { en: 'Do your vehicles come with a warranty?', es: '¿Sus vehículos incluyen garantía?' },
+      faqs_q13_a:{ en: 'Many of our newer vehicles still have factory warranty remaining. We also offer extended service contracts and protection packages at competitive rates.', es: 'Muchos de nuestros vehículos más nuevos aún tienen garantía de fábrica vigente. También ofrecemos contratos de servicio extendido y paquetes de protección a precios competitivos.' },
+      faqs_q14: { en: 'What is included in extended warranty?', es: '¿Qué incluye la garantía extendida?' },
+      faqs_q14_a:{ en: "Coverage varies by plan, but typically includes major mechanical components like engine, transmission, drivetrain, and electrical systems. We'll walk you through every option.", es: 'La cobertura varía por plan, pero típicamente incluye componentes mecánicos principales como motor, transmisión, tracción y sistemas eléctricos. Te explicaremos cada opción.' },
+      faqs_q15: { en: 'Can I return or exchange a vehicle?', es: '¿Puedo devolver o cambiar un vehículo?' },
+      faqs_q15_a:{ en: "We don't offer general returns, but if you're not 100% confident, we'll always work with you to find the right vehicle before purchase. Test drive thoroughly!", es: 'No ofrecemos devoluciones generales, pero si no estás 100% seguro, siempre trabajaremos contigo para encontrar el vehículo correcto antes de la compra. ¡Prueba a manejarlo bien!' },
+      faqs_q16: { en: 'What are your hours?', es: '¿Cuáles son sus horarios?' },
+      faqs_q16_a:{ en: 'Mon–Sat: 9:00am – 7:00pm · Sunday: 11:00am – 5:00pm. Holiday hours may vary — check our Contact page or call ahead.', es: 'Lun–Sáb: 9:00am – 7:00pm · Domingo: 11:00am – 5:00pm. Los horarios festivos pueden variar — consulta nuestra página de Contacto o llama antes.' },
+      faqs_q17: { en: 'Do you speak Spanish?', es: '¿Hablan español?' },
+      faqs_q17_a:{ en: 'Sí. Several team members are bilingual and ready to help you in English or Spanish.', es: 'Sí. Varios miembros del equipo son bilingües y están listos para ayudarte en inglés o español.' },
+      faqs_q18: { en: 'How do I contact you?', es: '¿Cómo los contacto?' },
+      faqs_q18_a:{ en: 'Call us at (949) 514-7366, email info@familykeyautogroup.com, or use the form on our Contact page. We respond to all messages within one business day.', es: 'Llámanos al (949) 514-7366, escribe a info@familykeyautogroup.com, o usa el formulario en nuestra página de Contacto. Respondemos todos los mensajes en un día hábil.' }
+    };
+    function t(k) { return TR[k] ? (TR[k][LANG] || TR[k].en) : k; }
+    function applyTr() {
+      document.querySelectorAll('.fkag-fq-page [data-i18n]').forEach(function (el) {
+        var k = el.getAttribute('data-i18n');
+        if (TR[k]) el.innerHTML = t(k);
+      });
+      document.querySelectorAll('.fkag-fq-page [data-i18n-placeholder]').forEach(function (el) {
+        var k = el.getAttribute('data-i18n-placeholder');
+        if (TR[k]) el.setAttribute('placeholder', t(k));
+      });
+    }
+    applyTr();
+    window.addEventListener('fkag-lang-change', function (e) {
+      var nl = (e.detail && e.detail.lang) || LANG;
+      if (nl === LANG) return;
+      LANG = nl;
+      applyTr();
+    });
+
+    // ============ SEARCH ============
+    var searchInput = document.getElementById('fkagFqSearch');
+    var emptyMsg = document.getElementById('fkagFqEmpty');
+    if (searchInput) {
+      searchInput.addEventListener('input', function () {
+        var q = this.value.trim().toLowerCase();
+        var anyVisible = false;
+        document.querySelectorAll('.fkag-fq-cat').forEach(function (cat) {
+          var details = cat.querySelectorAll('details');
+          var catHasMatch = false;
+          details.forEach(function (d) {
+            var text = d.textContent.toLowerCase();
+            var match = !q || text.indexOf(q) > -1;
+            d.style.display = match ? '' : 'none';
+            if (match) catHasMatch = true;
+            if (match && q) d.setAttribute('open', '');
+            else if (q) d.removeAttribute('open');
+          });
+          cat.style.display = catHasMatch ? '' : 'none';
+          if (catHasMatch) anyVisible = true;
+        });
+        if (emptyMsg) emptyMsg.style.display = (q && !anyVisible) ? 'block' : 'none';
+      });
+    }
+
+    // ============ CATEGORY NAV ============
+    document.querySelectorAll('.fkag-fq-cats a[data-cat]').forEach(function (a) {
+      a.addEventListener('click', function () {
+        document.querySelectorAll('.fkag-fq-cats a').forEach(function (x) { x.classList.remove('active'); });
+        a.classList.add('active');
+      });
+    });
+  })();
+</script>
+
+<style>
+  .fkag-fq-page { width: 100%; }
+  .fkag-fq-hero { background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 100%); color: #fff; padding: 88px 0; text-align: center; }
+  .fkag-fq-hero h1 { font-family: 'Poppins', sans-serif; font-size: 46px; font-weight: 800; margin: 0 0 14px; letter-spacing: -1px; }
+  .fkag-fq-hero p { font-size: 17px; opacity: 0.92; margin: 0 auto 28px; max-width: 620px; }
+  .fkag-fq-search { max-width: 580px; margin: 0 auto; position: relative; }
+  .fkag-fq-search input { width: 100%; padding: 15px 20px 15px 48px; border: 0; border-radius: 8px; font-size: 15px; color: #0a0a0a; font-family: inherit; }
+  .fkag-fq-search::before { content: ''; position: absolute; left: 16px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c9a961' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='7'/><line x1='21' y1='21' x2='16.65' y2='16.65'/></svg>") no-repeat center/contain; }
+  .fkag-fq-body { padding: 72px 0; background: #f5f7fa; }
+  .fkag-fq-layout { display: grid; grid-template-columns: 260px 1fr; gap: 40px; }
+  @media (max-width: 900px) { .fkag-fq-layout { grid-template-columns: 1fr; } }
+  .fkag-fq-cats { background: #fff; border-radius: 10px; padding: 24px; border: 1px solid #e3e8ef; height: fit-content; position: sticky; top: calc(var(--fkag-header-h, 150px) + 16px); }
+  .fkag-fq-cats h3 { font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #5b6a7e; margin: 0 0 16px; }
+  .fkag-fq-cats ul { list-style: none; padding: 0; margin: 0; }
+  .fkag-fq-cats li a { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 6px; font-size: 14px; color: #0a0a0a; font-weight: 500; margin-bottom: 4px; transition: 0.2s; text-decoration: none; }
+  .fkag-fq-cats li a:hover { background: #f5f7fa; }
+  .fkag-fq-cats li a.active { background: #0c0c0c; color: #fff; }
+  .fkag-fq-cats li a.active svg { stroke: #c9a961; }
+  .fkag-fq-cat { margin-bottom: 48px; scroll-margin-top: calc(var(--fkag-header-h, 150px) + 16px); }
+  .fkag-fq-cat:last-child { margin-bottom: 0; }
+  .fkag-fq-cat h2 { font-family: 'Poppins', sans-serif; font-size: 24px; font-weight: 800; color: #0a0a0a; margin: 0 0 18px; display: flex; align-items: center; gap: 10px; }
+  .fkag-fq-cat h2 .ico { width: 36px; height: 36px; background: rgba(201, 169, 97, 0.12); color: #c9a961; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-size: 18px; }
+  .fkag-fq-cat .ico svg { display: block; }
+  .fkag-fq-list details { background: #fff; border-radius: 10px; margin-bottom: 10px; border: 1px solid #e3e8ef; overflow: hidden; }
+  .fkag-fq-list summary { padding: 18px 22px; font-weight: 600; cursor: pointer; font-size: 15px; color: #0a0a0a; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 14px; }
+  .fkag-fq-list summary::-webkit-details-marker { display: none; }
+  .fkag-fq-list summary::after { content: '+'; font-size: 24px; color: #c9a961; font-weight: 300; transition: transform 0.2s; flex-shrink: 0; }
+  .fkag-fq-list details[open] summary::after { transform: rotate(45deg); }
+  .fkag-fq-list details[open] summary { border-bottom: 1px solid #eef2f6; }
+  .fkag-fq-list p { padding: 18px 22px; margin: 0; font-size: 14px; color: #5b6a7e; line-height: 1.75; }
+  .fkag-fq-empty { background: #fff; border: 1px dashed #e3e8ef; border-radius: 10px; padding: 32px; text-align: center; color: #5b6a7e; font-size: 14px; }
+  .fkag-fq-cta { background: #0a0a0a; color: #fff; padding: 64px 0; text-align: center; }
+  .fkag-fq-cta h2 { font-family: 'Poppins', sans-serif; font-size: 30px; font-weight: 800; margin: 0 0 12px; color: #fff; }
+  .fkag-fq-cta p { font-size: 15px; opacity: 0.85; margin: 0 auto 24px; max-width: 520px; }
+  .fkag-fq-cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .fkag-btn { padding: 14px 28px; border-radius: 6px; font-weight: 700; font-size: 14px; display: inline-block; transition: 0.2s; text-decoration: none; }
+  .fkag-btn-pri { background: #c9a961; color: #0c0c0c; }
+  .fkag-btn-pri:hover { background: #d4b674; }
+  .fkag-btn-out { background: transparent; color: #fff; border: 2px solid rgba(255, 255, 255, 0.4); }
+  .fkag-btn-out:hover { background: #fff; color: #0a0a0a; border-color: #fff; }
+</style>

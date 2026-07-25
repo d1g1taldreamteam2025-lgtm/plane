@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" width="900" height="600">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f5f7fa"/>
+      <stop offset="1" stop-color="#e7ebf1"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="600" fill="url(#bg)"/>
+  <g transform="translate(450 285)" fill="none" stroke="#c9a961" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M-165 35 h330 a18 18 0 0 0 18 -18 v-22 a26 26 0 0 0 -20 -25 l-70 -16 -55 -52 a40 40 0 0 0 -27 -11 h-95 a40 40 0 0 0 -33 18 l-38 60 -30 10 a24 24 0 0 0 -17 23 v25 a18 18 0 0 0 18 18 h24"/>
+    <path d="M-120 -74 l24 60 h150" stroke-width="8" opacity="0.6"/>
+    <circle cx="-95" cy="38" r="34" fill="#e7ebf1"/>
+    <circle cx="105" cy="38" r="34" fill="#e7ebf1"/>
+  </g>
+  <text x="450" y="430" text-anchor="middle" font-family="Poppins, Inter, Arial, sans-serif" font-size="26" font-weight="700" fill="#a8b1bd" letter-spacing="1">FAMILY KEY AUTO GROUP</text>
+  <text x="450" y="465" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="19" fill="#b6bec9">Imagen próximamente · Image coming soon</text>
+</svg>

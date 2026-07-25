@@ -1,0 +1,95 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ChatWidget from '../components/ChatWidget.astro';
+import { site } from '../config/site';
+import { DEFAULT_LANG } from '../i18n';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  /** Oculta el header/footer/chat (útil para landings puras) */
+  bare?: boolean;
+  /** Imagen para Open Graph (compartir en redes) */
+  ogImage?: string;
+}
+
+const {
+  title,
+  description = 'Family Key Auto Group — concesionario de autos usados con precios honestos, financiamiento flexible e inspección de 150+ puntos.',
+  bare = false,
+  ogImage = '/og-image.jpg',
+} = Astro.props;
+
+const fullTitle = title ? `${title} · ${site.name}` : site.name;
+const canonical = new URL(Astro.url.pathname, site.domain).href;
+---
+
+<!doctype html>
+<html lang={DEFAULT_LANG}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(ogImage, site.domain).href} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Material Icons Outlined (los widgets usan estos íconos).
+         Endpoint 'icon?family=' (NO css2): entrega la @font-face + la clase
+         .material-icons-outlined con ligaduras, para que "schedule" → ⏰. -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+    />
+
+    <!-- Fallback de imágenes de vehículos: si una foto falla (host externo que
+         bloquea el hotlink, URL muerta), prueba la siguiente de la galería
+         (data-g) antes de caer al placeholder. Evita placeholders sueltos. -->
+    <script is:inline>
+      window.fkagImgFB = function (img) {
+        try {
+          var raw = img.getAttribute('data-g');
+          if (raw) {
+            var arr = JSON.parse(raw);
+            var i = parseInt(img.getAttribute('data-gi') || '0', 10) + 1;
+            for (; i < arr.length; i++) {
+              if (arr[i]) {
+                img.setAttribute('data-gi', String(i));
+                img.src = arr[i];
+                return;
+              }
+            }
+          }
+        } catch (e) {}
+        img.onerror = null;
+        img.src = '/images/placeholder.svg';
+      };
+    </script>
+  </head>
+  <body>
+    {!bare && <Header />}
+    <main>
+      <slot />
+    </main>
+    {!bare && <Footer />}
+    {!bare && <ChatWidget />}
+
+    <!-- Runtime de idioma (aplica traducciones + dispara fkag-lang-change) -->
+    <script>
+      import '../scripts/lang.ts';
+    </script>
+  </body>
+</html>
